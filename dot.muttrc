@@ -50,6 +50,8 @@ unignore from: date subject to cc
 lists (current-users|source)@netbsd\.org
 subscribe (current-users|source)@netbsd\.org
 
+auto_view text/html
+
 bind generic h previous-page
 bind generic l next-page
 
