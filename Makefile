@@ -21,13 +21,13 @@ ${RCDIR}:
 	mkdir -p ${RCDIR}
 
 ${RCDIR}/.cvsrc: dot.cvsrc
-	cp ${.ALLSRC} ${.TARGET}
+	cp $> $@
 
 ${RCDIR}/.muttrc: dot.muttrc
-	cp ${.ALLSRC} ${.TARGET}
+	cp $> $@
 
 ${RCDIR}/.vimrc: dot.vimrc
-	cp ${.ALLSRC} ${.TARGET}
+	cp $> $@
 
 ${RCDIR}/.zshrc: dot.zshrc
-	cp ${.ALLSRC} ${.TARGET}
+	cp $> $@
