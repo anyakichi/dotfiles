@@ -119,6 +119,9 @@ ab #L
 \LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY<CR>
 \OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF<CR>
 \SUCH DAMAGE.
+ab #P	
+\This library is free software; you can redistribute it and/or modify<CR>
+\it under the same terms as Perl itself. 
 
 command! -nargs=1 Retab call Retab(<f-args>)
 function! Retab(before)
