@@ -1,0 +1,69 @@
+#	$Id$
+
+set mbox_type=Maildir
+set folder=~/Mail
+set spoolfile=~/Mail
+
+set mbox=+
+set record=+Outbox
+set postponed=+Draft
+set nomove
+
+set sort=threads
+set ispell=/usr/pkg/bin/ispell
+
+mailboxes > < =Draft =netbsd =netbsd/current-users =netbsd/source
+
+set charset=euc-jp
+set send_charset="us-ascii:iso-2022-jp:utf-8"
+
+set thorough_search=yes
+set rfc2047_parameters=yes
+set forward_decode=yes
+set mime_forward_decode=no
+
+set edit_headers=yes
+set fast_reply=yes
+
+set reverse_name
+set noreverse_realname
+
+set alias_file=~/.mail_aliases
+source ~/.mail_aliases
+
+lists (current-users|source)@netbsd\.org
+subscribe (current-users|source)@netbsd\.org
+
+alternates anyakichi@sopht.jp
+
+set editor="vim +"
+
+set index_format="%4C %Z %(%b %d %R) %-15.15L (%?l?%4l&%4c?) %s"
+
+bind pager j next-line
+bind pager k previous-line
+bind pager l next-undeleted
+bind pager h previous-undeleted
+bind pager H display-toggle-weed
+bind pager f next-page
+bind pager b previous-page
+bind pager \cb bounce-message
+bind pager \cf forward-message
+
+reply-hook '~h Content-Type:.*ISO-2022-JP' \
+	   'my_hdr From: 稲島 大輔 <inajima@sopht.jp>'
+reply-hook '~C ^anyakichi@sopht\.jp$' \
+	   'my_hdr From: Anyakichi <anyakichi@sopht.jp>'
+reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
+	   'my_hdr From: あにゃきち <anyakichi@sopht.jp>'
+
+ignore *
+unignore from: date subject to cc
+
+set crypt_autosign
+set pgp_sign_as=DCA4F054
+set pgp_timeout=0
+source /usr/pkg/share/examples/mutt/gpg.rc
+
+macro	index	c	<change-folder>?\t
+macro	pager	c	<change-folder>?\t
