@@ -32,7 +32,7 @@ set noreverse_realname
 
 set editor="vim '+/^$'"
 
-set crypt_autosign
+set nocrypt_autosign
 set pgp_sign_as=DCA4F054
 set pgp_timeout=0
 source /usr/pkg/share/examples/mutt/gpg.rc
@@ -46,6 +46,7 @@ mailboxes =friends
 mailboxes =netbsd =netbsd/current-users =netbsd/source
 mailboxes =sopht
 mailboxes =shopping
+mailboxes =university
 
 alternates anyakichi@sopht.jp
 
