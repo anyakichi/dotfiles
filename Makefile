@@ -1,7 +1,9 @@
 #	$Id$
 
 RCDIR=	rc
-FILES=	${RCDIR}/.muttrc	\
+FILES=	\
+	${RCDIR}/.cvsrc		\
+	${RCDIR}/.muttrc	\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zshrc
 
@@ -18,11 +20,14 @@ clean:
 ${RCDIR}:
 	mkdir -p ${RCDIR}
 
-${RCDIR}/.vimrc: dot.vimrc
-	cp dot.vimrc ${RCDIR}/.vimrc
+${RCDIR}/.cvsrc: dot.cvsrc
+	cp ${.ALLSRC} ${.TARGET}
 
 ${RCDIR}/.muttrc: dot.muttrc
-	cp dot.muttrc ${RCDIR}/.muttrc
+	cp ${.ALLSRC} ${.TARGET}
+
+${RCDIR}/.vimrc: dot.vimrc
+	cp ${.ALLSRC} ${.TARGET}
 
 ${RCDIR}/.zshrc: dot.zshrc
-	cp dot.zshrc ${RCDIR}/.zshrc
+	cp ${.ALLSRC} ${.TARGET}
