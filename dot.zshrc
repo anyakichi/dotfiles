@@ -2,13 +2,14 @@
 
 cdpath=(~ ~/src)
 fpath=($fpath ~/.zfunc)
+mailpath=(~/Mail/**/new)
 
 # Hosts to use for completion (see later zstyle)
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
 	www.jupiter.tj.chiba-u.jp hyper-iq.com hyper-s.jp)
 
 # automatically remove duplicates from these arrays
-typeset -U path cdpath fpath manpath hosts
+typeset -U path cdpath fpath manpath hosts mailpath
 
 # Set up aliases
 alias aclog='less /var/log/httpd/access_log'
