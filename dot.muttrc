@@ -40,7 +40,12 @@ source /usr/pkg/share/examples/mutt/gpg.rc
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
-mailboxes > < =Draft =netbsd =netbsd/current-users =netbsd/source
+mailboxes > < =Draft =Junk
+mailboxes =cleanarchiver
+mailboxes =friends
+mailboxes =netbsd =netbsd/current-users =netbsd/source
+mailboxes =sopht
+mailboxes =shopping
 
 alternates anyakichi@sopht.jp
 
