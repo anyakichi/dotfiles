@@ -4,6 +4,7 @@ RCDIR=	rc
 FILES=	\
 	${RCDIR}/.cvsrc		\
 	${RCDIR}/.muttrc	\
+	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zshrc
 
@@ -12,7 +13,7 @@ FILES=	\
 all: ${RCDIR} ${FILES}
 
 install: all
-	@cp ${RCDIR}/.??* ${HOME}/
+	@cp -r ${RCDIR}/.??* ${HOME}/
 
 clean:
 	rm -rf ${RCDIR}
@@ -25,6 +26,9 @@ ${RCDIR}/.cvsrc: dot.cvsrc
 
 ${RCDIR}/.muttrc: dot.muttrc
 	cp $? $@
+
+${RCDIR}/.vim: dot.vim
+	cp -r $? $@
 
 ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
