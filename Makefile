@@ -6,6 +6,7 @@ FILES=	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
+	${RCDIR}/.zlogin	\
 	${RCDIR}/.zshrc
 
 .PHONY: all install clean
@@ -31,6 +32,9 @@ ${RCDIR}/.vim: dot.vim
 	cp -r $? $@
 
 ${RCDIR}/.vimrc: dot.vimrc
+	cp $? $@
+
+${RCDIR}/.zlogin: dot.zlogin
 	cp $? $@
 
 ${RCDIR}/.zshrc: dot.zshrc
