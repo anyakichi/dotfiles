@@ -1,4 +1,4 @@
-# .zshrc file for zsh 4.0
+#	$Id$
 
 cdpath=(~ ~/src)
 fpath=($fpath ~/.zfunc)
