@@ -12,7 +12,7 @@ set nomove
 set sort=threads
 set ispell=/usr/pkg/bin/ispell
 
-mailboxes > < =Draft =netbsd =netbsd/current-users =netbsd/source
+set include
 
 set charset=euc-jp
 set send_charset="us-ascii:iso-2022-jp:utf-8"
@@ -25,20 +25,33 @@ set mime_forward_decode=no
 set edit_headers=yes
 set fast_reply=yes
 
+set nomarkers
+
 set reverse_name
 set noreverse_realname
+
+set editor="vim '+/^$'"
+
+set crypt_autosign
+set pgp_sign_as=DCA4F054
+set pgp_timeout=0
+source /usr/pkg/share/examples/mutt/gpg.rc
 
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
-lists (current-users|source)@netbsd\.org
-subscribe (current-users|source)@netbsd\.org
+mailboxes > < =Draft =netbsd =netbsd/current-users =netbsd/source
 
 alternates anyakichi@sopht.jp
 
-set editor="vim +"
+ignore *
+unignore from: date subject to cc
 
-set index_format="%4C %Z %(%b %d %R) %-15.15L (%?l?%4l&%4c?) %s"
+lists (current-users|source)@netbsd\.org
+subscribe (current-users|source)@netbsd\.org
+
+bind generic h previous-page
+bind generic l next-page
 
 bind pager j next-line
 bind pager k previous-line
@@ -50,6 +63,15 @@ bind pager b previous-page
 bind pager \cb bounce-message
 bind pager \cf forward-message
 
+bind index f next-page
+bind index b previous-page
+bind index \cb bounce-message
+bind index \cf forward-message
+
+macro	index	i	<change-folder>?\t
+#macro	index	c	<change-folder>?\t
+#macro	pager	c	<change-folder>?\t
+
 reply-hook '~h Content-Type:.*ISO-2022-JP' \
 	   'my_hdr From: 稲島 大輔 <inajima@sopht.jp>'
 reply-hook '~C ^anyakichi@sopht\.jp$' \
@@ -57,13 +79,24 @@ reply-hook '~C ^anyakichi@sopht\.jp$' \
 reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
 	   'my_hdr From: あにゃきち <anyakichi@sopht.jp>'
 
-ignore *
-unignore from: date subject to cc
+#color normal white default
+color hdrdefault brightwhite default
+color header cyan default ^Subject
+color quoted yellow default
+color quoted1 green default
+color quoted2 magenta default
+color signature brightwhite default
+color indicator yellow red
+color error white blue
+color status white red
+#color tree magenta default
+#color tilde magenta default
+#color message brightcyan default
+#color markers brightcyan default
+color attachment magenta default
+color search default green
 
-set crypt_autosign
-set pgp_sign_as=DCA4F054
-set pgp_timeout=0
-source /usr/pkg/share/examples/mutt/gpg.rc
+color body yellow default "(ftp|http)://[^ ]+"
+color body yellow default [-a-z_0-9.]+@[-a-z_0-9.]+
 
-macro	index	c	<change-folder>?\t
-macro	pager	c	<change-folder>?\t
+mono header bold ^Subject
