@@ -1,20 +1,28 @@
 #	$Id$
 
+RCDIR=	rc
+FILES=	${RCDIR}/.muttrc	\
+	${RCDIR}/.vimrc		\
+	${RCDIR}/.zshrc
+
 .PHONY: all install clean
 
-all: rc .muttrc .vimrc
+all: ${RCDIR} ${FILES}
 
 install: all
-	@cp rc/.??* ${HOME}/
+	@cp ${RCDIR}/.??* ${HOME}/
 
 clean:
-	rm -rf rc
+	rm -rf ${RCDIR}
 
-rc:
-	mkdir -p rc
+${RCDIR}:
+	mkdir -p ${RCDIR}
 
-.vimrc: dot.vimrc
-	cp dot.vimrc rc/.vimrc
+${RCDIR}/.vimrc: dot.vimrc
+	cp dot.vimrc ${RCDIR}/.vimrc
 
-.muttrc: dot.muttrc
-	cp dot.muttrc rc/.muttrc
+${RCDIR}/.muttrc: dot.muttrc
+	cp dot.muttrc ${RCDIR}/.muttrc
+
+${RCDIR}/.zshrc: dot.zshrc
+	cp dot.zshrc ${RCDIR}/.zshrc
