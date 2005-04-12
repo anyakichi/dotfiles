@@ -3,6 +3,7 @@
 RCDIR=	rc
 FILES=	\
 	${RCDIR}/.cvsrc		\
+	${RCDIR}/.mailcap	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
@@ -23,6 +24,9 @@ ${RCDIR}:
 	mkdir -p ${RCDIR}
 
 ${RCDIR}/.cvsrc: dot.cvsrc
+	cp $? $@
+
+${RCDIR}/.mailcap: dot.mailcap
 	cp $? $@
 
 ${RCDIR}/.muttrc: dot.muttrc
