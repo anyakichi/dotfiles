@@ -43,7 +43,7 @@ filetype plugin on
 
 
 " Settings for taglist.vim
-let Tlist_Ctags_Cmd = "/usr/local/bin/ctags"
+let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
 " Settings for vimspell.vim
 let spell_language_list = "english"
