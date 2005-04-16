@@ -5,6 +5,7 @@ FILES=	\
 	${RCDIR}/.cvsrc		\
 	${RCDIR}/.mailcap	\
 	${RCDIR}/.muttrc	\
+	${RCDIR}/.profile	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zlogin	\
@@ -30,6 +31,9 @@ ${RCDIR}/.mailcap: dot.mailcap
 	cp $? $@
 
 ${RCDIR}/.muttrc: dot.muttrc
+	cp $? $@
+
+${RCDIR}/.profile: dot.profile
 	cp $? $@
 
 ${RCDIR}/.vim: dot.vim
