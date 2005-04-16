@@ -2,7 +2,7 @@
 
 cdpath=(~ ~/src)
 fpath=($fpath ~/.zfunc)
-mailpath=(~/Mail/**/new)
+[ -d ~/Mail ] && mailpath=(~/Mail/**/new)
 
 # Hosts to use for completion (see later zstyle)
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
