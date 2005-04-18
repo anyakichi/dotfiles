@@ -17,5 +17,5 @@ export EDITOR=vim
 export LC_CTYPE=ja_JP.eucJP
 export LESS=-cM
 export PAGER=less
-export SGML_CATALOG_FILES=/usr/pkg/share/sgml/catalogs
-export XML_CATALOG_FILES=/usr/pkg/share/xml/catalogs
+export SGML_CATALOG_FILES=/usr/pkg/etc/sgml/catalog
+export XML_CATALOG_FILES=/usr/pkg/etc/xml/catalog
