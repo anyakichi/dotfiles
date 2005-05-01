@@ -9,6 +9,7 @@ FILES=	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zlogin	\
+	${RCDIR}/.zshenv	\
 	${RCDIR}/.zshrc
 
 .PHONY: all install clean
@@ -43,6 +44,9 @@ ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
 
 ${RCDIR}/.zlogin: dot.zlogin
+	cp $? $@
+
+${RCDIR}/.zshenv: dot.zshenv
 	cp $? $@
 
 ${RCDIR}/.zshrc: dot.zshrc
