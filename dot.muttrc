@@ -43,7 +43,7 @@ source ~/.mail_aliases
 mailboxes > < =Draft =Junk
 mailboxes =cleanarchiver
 mailboxes =friends
-mailboxes =netbsd =netbsd/current-users =netbsd/source
+mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/source
 mailboxes =sopht
 mailboxes =shopping
 mailboxes =university
@@ -53,8 +53,8 @@ alternates anyakichi@sopht.jp d-inajima@nifty.com
 ignore *
 unignore from: date subject to cc
 
-lists (current-users|source)@netbsd\.org
-subscribe (current-users|source)@netbsd\.org
+lists (netbsd-bugs|current-users|source)@netbsd\.org
+subscribe (netbsd-bugs|current-users|source)@netbsd\.org
 
 auto_view text/html
 
