@@ -41,6 +41,7 @@ set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
 mailboxes > < =Draft =Junk
+mailboxes =anyalog
 mailboxes =cleanarchiver
 mailboxes =friends
 mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/source
