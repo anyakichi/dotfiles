@@ -1,7 +1,5 @@
 "	$Id$
 
-setlocal shiftwidth=2
-
 " Browser setting for Mac OS X
 noremap  <buffer> <LocalLeader>f :update<CR>:silent :!open $PWD/% &<CR><CR>
 
