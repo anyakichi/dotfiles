@@ -94,22 +94,22 @@ reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
 
 #color normal white default
 color hdrdefault brightwhite default
-color header cyan default ^Subject
-color quoted yellow default
+color header yellow default ^Subject
+color quoted cyan default
 color quoted1 green default
 color quoted2 magenta default
 color signature brightwhite default
-color indicator yellow red
-color error white blue
-color status white red
+color indicator cyan blue
+color error white red
+color status white blue
 #color tree magenta default
 #color tilde magenta default
-#color message brightcyan default
-#color markers brightcyan default
+#color message brightyellow default
+#color markers brightyellow default
 color attachment magenta default
 color search default green
 
-color body yellow default "(ftp|http)://[^ ]+"
-color body yellow default [-a-z_0-9.]+@[-a-z_0-9.]+
+color body cyan default "(ftp|http)://[^ ]+"
+color body cyan default [-a-z_0-9.]+@[-a-z_0-9.]+
 
 mono header bold ^Subject
