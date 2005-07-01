@@ -10,6 +10,7 @@ ulimit -c 0
 ulimit -s 8192
 
 export BLOCKSIZE=1k
+export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export CVSROOT=sopht.jp:/cvsroot
 export EDITOR=vim
