@@ -1,10 +1,9 @@
 #	$Id$
 
-cdpath=(~ ~/src)
+cdpath=(~ ~/src ~/Source)
 fpath=($fpath ~/.zfunc)
 [ -d ~/Mail ] && mailpath=(~/Mail/**/new)
 
-# Hosts to use for completion (see later zstyle)
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
 	www.jupiter.tj.chiba-u.jp hyper-iq.com hyper-s.jp)
 
@@ -33,9 +32,18 @@ alias lsd='ls -ld *(-/DN)'	# List only directories and symbolic
 				# links that point to directories
 alias lsa='ls -ld .*'		# List only file beginning with "."
 
-# Mac OS X
-alias keychain='open -a "Keychain Access"'
-alias mi='open -a mi'
+case $OSTYPE in
+	darwin*)
+		alias gmake=/usr/bin/make
+		alias keychain='open -a "Keychain Access"'
+		alias make=/usr/pkg/bin/bmake
+		alias mi='open -a mi'
+		alias vim=/usr/pkg/bin/vim
+		;;
+	netbsd*)
+		;;
+	solaris*)
+esac
 
 # Shell functions
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
