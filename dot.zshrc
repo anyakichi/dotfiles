@@ -6,7 +6,7 @@ fpath=($fpath ~/.zfunc)
 
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
 	www.jupiter.tj.chiba-u.jp hyper-iq.com hyper-s.jp \
-	202.53.20.73)
+	trunk.fujiec.forts.jp)
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath hosts mailpath
