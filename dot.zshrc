@@ -37,8 +37,10 @@ case $OSTYPE in
 	darwin*)
 		alias gmake=/usr/bin/make
 		alias keychain='open -a "Keychain Access"'
+		alias make=/usr/pkg/bin/bmake
 		alias make=/usr/bin/bsdmake
 		[ -x /usr/pkg/bin/bmake ] && alias make=/usr/pkg/bin/bmake
+		alias m='mkdir /Volumes/Music; mount_afp afp://landisk/Music /Volumes/Music'
 		alias mi='open -a mi'
 		[ -x /usr/pkg/bin/vim ] && alias vim=/usr/pkg/bin/vim
 		;;
