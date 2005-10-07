@@ -51,7 +51,7 @@ mailboxes =sopht
 mailboxes =shopping
 mailboxes =university
 
-alternates anyakichi@sopht.jp d-inajima@nifty.com
+alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp
 
 ignore *
 unignore from: date subject to cc
@@ -111,7 +111,7 @@ color status white blue
 color attachment magenta default
 color search default green
 
-color body cyan default "(ftp|http)://[^ ]+"
+color body cyan default "(ftp|https?)://[^ ]+"
 color body cyan default [-a-z_0-9.]+@[-a-z_0-9.]+
 
 mono header bold ^Subject
