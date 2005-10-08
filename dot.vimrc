@@ -12,6 +12,7 @@ set shiftwidth=4
 set noexpandtab
 set autoindent
 set smartindent
+set shiftround
 
 set winminheight=0
 
