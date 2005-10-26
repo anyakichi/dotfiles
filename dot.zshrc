@@ -92,10 +92,10 @@ WATCHFMT='%n %a %l from %m at %t.'
 setopt   notify globdots correct pushdtohome cdablevars autolist
 setopt   correctall autocd recexact longlistjobs
 setopt   autoresume histignoredups pushdsilent noclobber
-setopt   autopushd pushdminus extendedglob rcquotes mailwarning
+setopt   autopushd pushdminus extendedglob rcquotes
 setopt   pushd_ignore_dups
 setopt   hist_ignore_alldups
-unsetopt bgnice autoparamslash
+unsetopt bgnice autoparamslash mailwarning
 
 # Autoload zsh modules when they are referenced
 zmodload -a zsh/stat stat
