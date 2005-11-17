@@ -1,8 +1,15 @@
 #	$Id$
 
+if [ -d ~/Mail ]; then
+    typeset -a mailpath
+    for p in `find ~/Mail -type d \
+	    \! \( -name cur -or -name new -or -name tmp -or -name Junk \)`; do
+	mailpath+=("${p}?You have new mail in ${p:t}.")
+    done
+fi
+
 cdpath=(~ ~/src ~/Source)
 fpath=($fpath ~/.zfunc)
-[ -d ~/Mail ] && mailpath=(~/Mail/**/new)
 
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
 	www.jupiter.tj.chiba-u.jp hyper-iq.com hyper-s.jp \
