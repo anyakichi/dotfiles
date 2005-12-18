@@ -58,7 +58,7 @@ hi Statement	ctermfg=DarkGreen
 " hi Keyword
 " hi Exception
 
-hi PreProc	ctermfg=DarkYellow
+hi PreProc	ctermfg=DarkRed
 " hi Include
 " hi Define
 " hi Macro
