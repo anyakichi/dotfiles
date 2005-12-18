@@ -25,7 +25,7 @@ hi LineNr	ctermfg=DarkRed
 " hi ModeMsg
 " hi MoreMsg
 " hi NonText
-" hi Normal
+hi Normal	cterm=bold	ctermfg=7
 " hi Question
 " hi Search
 " hi SpecialKey
@@ -38,10 +38,10 @@ hi LineNr	ctermfg=DarkRed
 " hi WildMenu
 
 
-hi Comment	ctermfg=White
+hi Comment	ctermfg=DarkCyan
 
 hi Constant	ctermfg=DarkYellow
-hi String	ctermfg=White
+hi String	ctermfg=Gray
 " hi Character
 " hi Number
 " hi Boolean
@@ -50,7 +50,7 @@ hi String	ctermfg=White
 hi Identifier	ctermfg=LightGray
 " hi Function
 
-hi Statement	ctermfg=Green
+hi Statement	ctermfg=DarkGreen
 " hi Conditional
 " hi Repeat
 " hi Label
@@ -58,18 +58,18 @@ hi Statement	ctermfg=Green
 " hi Keyword
 " hi Exception
 
-hi PreProc	ctermfg=Yellow
+hi PreProc	ctermfg=DarkYellow
 " hi Include
 " hi Define
 " hi Macro
 " hi PreCondit
 
-hi Type		ctermfg=Green
+hi Type		ctermfg=DarkGreen
 " hi StorageClass
 " hi Structure
 " hi Typedef
 
-hi Special	ctermfg=Yellow
+hi Special	ctermfg=DarkYellow
 " hi SpecialChar
 " hi Tag
 " hi Delimiter
