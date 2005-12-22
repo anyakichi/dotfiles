@@ -14,7 +14,7 @@ set ispell=/usr/pkg/bin/ispell
 
 set include
 
-set charset=euc-jp
+set charset=utf-8
 set send_charset="us-ascii:iso-2022-jp:utf-8"
 
 set thorough_search=yes
@@ -88,11 +88,11 @@ macro	browser	q	<exit><quit>
 #macro	pager	c	<change-folder>?\t
 
 reply-hook '~h Content-Type:.*ISO-2022-JP' \
-	   'my_hdr From: ∞≈Á ¬Á Â <inajima@sopht.jp>'
+	   'my_hdr From: Á®≤Â≥∂ Â§ßËºî <inajima@sopht.jp>'
 reply-hook '~C ^anyakichi@sopht\.jp$' \
 	   'my_hdr From: Anyakichi <anyakichi@sopht.jp>'
 reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
-	   'my_hdr From: §¢§À§„§≠§¡ <anyakichi@sopht.jp>'
+	   'my_hdr From: „ÅÇ„Å´„ÇÉ„Åç„Å° <anyakichi@sopht.jp>'
 
 #color normal white default
 color hdrdefault brightwhite default

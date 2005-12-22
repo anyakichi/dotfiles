@@ -2,7 +2,7 @@
 
 set backspace=indent,eol,start
 
-set encoding=euc-jp
+set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 set fileformats+=mac
@@ -134,4 +134,4 @@ function! Retab(before)
 endfunction
 
 autocmd FileType docbk,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail				setlocal fenc=euc-jp tw=72
+autocmd FileType mail				setlocal tw=72
