@@ -2,10 +2,8 @@
 
 set backspace=indent,eol,start
 
-set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
-set fileformats+=mac
 
 set tabstop=8
 set shiftwidth=4
