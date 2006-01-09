@@ -107,11 +107,17 @@ README*		= svn:keywords=Id
 Makefile*	= svn:keywords=Id
 
 *.c		= svn:keywords=Id
+*.cgi		= svn:keywords=Id
 *.cpp		= svn:keywords=Id
-*.m		= svn:keywords=Id
 *.h		= svn:keywords=Id
+*.m		= svn:keywords=Id
+*.php		= svn:keywords=Id
 *.pl		= svn:keywords=Id
 *.pm		= svn:keywords=Id
-*.php		= svn:keywords=Id
+*.rb		= svn:keywords=Id
+*.sh		= svn:keywords=Id
 
-*.html		= svn:keywords=Date
+*.html		= svn:keywords=Id Date
+*.rhtml		= svn:keywords=Id Date
+*.tex		= svn:keywords=Id Date
+*.xml		= svn:keywords=Id Date
