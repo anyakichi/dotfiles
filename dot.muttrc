@@ -55,13 +55,14 @@ mailboxes =sopht
 mailboxes =shopping
 mailboxes =university
 
-alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp
+alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp \
+	   z3t0610@students.chiba-u.ac.jp
 
 ignore *
 unignore from: date subject to cc
 
-lists (netbsd-bugs|current-users|source)@netbsd\.org
-subscribe (netbsd-bugs|current-users|source)@netbsd\.org
+lists .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
+subscribe .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
 
 auto_view text/html
 
@@ -93,6 +94,8 @@ macro	browser	q	<exit><quit>
 
 reply-hook '~h Content-Type:.*ISO-2022-JP' \
 	   'my_hdr From: 稲島 大輔 <inajima@sopht.jp>'
+reply-hook '~C ^z3t0610@students\.chiba-u\.ac\.jp$' \
+	   'my_hdr From: 稲島 大輔 <z3t0610@students.chiba-u.ac.jp>'
 reply-hook '~C ^anyakichi@sopht\.jp$' \
 	   'my_hdr From: Anyakichi <anyakichi@sopht.jp>'
 reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
