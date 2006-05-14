@@ -14,7 +14,6 @@ set ispell=/usr/pkg/bin/ispell
 
 set include
 
-set charset=utf-8
 set send_charset="us-ascii:iso-2022-jp:utf-8"
 
 set thorough_search=yes
