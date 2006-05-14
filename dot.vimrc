@@ -53,6 +53,12 @@ let spell_ispell_html_args  = "-H"
 let spell_ispell_xhtml_args = "-H"
 let spell_ispell_sgml_args  = "-H"
 
+" howm
+let g:howm_dir = '~/howm'
+let g:howm_findprg = "find"
+let g:howm_grepprg = "grep"
+let g:howm_instantpreview = 1
+
 
 " Mappings
 noremap Q gq
