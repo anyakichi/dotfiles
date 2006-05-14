@@ -40,12 +40,17 @@ set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
 mailboxes > < =Draft =Junk
+mailboxes =ad
 mailboxes =anyalog
 mailboxes =cleanarchiver
+mailboxes =finance
 mailboxes =fork
 mailboxes =friends
+mailboxes =jobs
 mailboxes =marines
 mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/source
+mailboxes =nifty
+mailboxes =software
 mailboxes =sopht
 mailboxes =shopping
 mailboxes =university
