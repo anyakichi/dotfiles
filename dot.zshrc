@@ -3,7 +3,7 @@
 if [ -d ~/Mail ]; then
     typeset -a mailpath
     for p in `find ~/Mail -type d \
-	    \! \( -name Outbox -or -name Junk -or \
+	    \! \( -name '.*' -or -name Outbox -or -name Junk -or \
 		  -name cur -or -name new -or -name tmp \)`; do
 	mailpath+=("${p}?You have new mail in ${p:t}.")
     done
