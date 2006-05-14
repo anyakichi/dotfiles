@@ -131,5 +131,5 @@ function! Retab(before)
     unlet s:tabstop
 endfunction
 
-autocmd FileType docbk,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail				setlocal tw=72
+autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
+autocmd FileType mail					setlocal tw=72
