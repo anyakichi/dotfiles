@@ -40,9 +40,11 @@ ${RCDIR}/.profile: dot.profile
 
 ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
+	find rc -name CVS | xargs rm -rf
 
 ${RCDIR}/.vim: dot.vim
 	cp -r $? $@
+	find rc -name CVS | xargs rm -rf
 
 ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
