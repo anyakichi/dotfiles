@@ -134,8 +134,8 @@ endif
 " constant {{{
 let s:prefix_howm               = "howm "
 let s:buftitle_ftresult         = "Search result"
-let s:buftitle_preview          = "Preview"
-let s:buftitle_summary          = "Summary"
+let s:buftitle_preview          = "View"
+let s:buftitle_summary          = "View"
 let s:buftitle_webimport        = "Web import"
 let s:prompt_search_egrep       = "Full text search(grep): "
 let s:prompt_search_fgrep       = "Full text search(fgrep): "
@@ -651,7 +651,7 @@ function! s:SafeClose()
   if &modified != 1
     silent! enew
     if s:GetWinNum() > 1
-      close
+			bdelete
     endif
     let retval = 1
   endif
@@ -1015,7 +1015,7 @@ function! s:ShowSummary()
   call s:ParsePreviewList(previewList)
   call s:FormatPreviewList()
   call cursor(1, 1)
-  silent! exe bufwinnr(buf).'wincmd w'
+  "silent! exe bufwinnr(buf).'wincmd w'
 endfunction
 
 " TODO:OpenPreviewWindow() にする．

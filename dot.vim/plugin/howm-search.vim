@@ -21,7 +21,7 @@ function! HowmExecuteSearchPrg(cmd, prg, searchPath, searchWord, from_encoding, 
   let cmd = substitute(cmd, '#prg#', escape(a:prg, '\\'), 'g')
 
   " 検索パス設定
-  let cmd = substitute(cmd, '#searchPath#', escape(a:searchPath, '\\'), 'g')
+  let cmd = substitute(cmd, '#searchPath#', escape(substitute(a:searchPath, '/$', '', ''), '\\'), 'g')
 
   " 検索語設定
   let searchWord = a:searchWord
