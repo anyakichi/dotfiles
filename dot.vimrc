@@ -42,6 +42,8 @@ let maplocalleader = ";"
 filetype plugin indent on
 
 
+source $VIMRUNTIME/macros/matchit.vim
+
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
