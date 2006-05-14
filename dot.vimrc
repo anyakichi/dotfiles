@@ -42,18 +42,10 @@ let maplocalleader = ";"
 filetype plugin indent on
 
 
-" Settings for taglist.vim
+" taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
-" Settings for vimspell.vim
-let spell_language_list = "english"
-let spell_auto_type = ""
-let spell_ispell_tex_args   = "-t"
-let spell_ispell_html_args  = "-H"
-let spell_ispell_xhtml_args = "-H"
-let spell_ispell_sgml_args  = "-H"
-
-" howm
+" howm-mode.vim
 let g:howm_dir = '~/howm'
 let g:howm_findprg = "find"
 let g:howm_grepprg = "grep"
