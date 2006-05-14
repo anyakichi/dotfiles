@@ -21,8 +21,9 @@ typeset -U path cdpath fpath manpath hosts mailpath
 
 # Set up aliases
 alias aclog='less /var/log/httpd/access_log'
-alias mutt='mutt -y'
+alias mz='mutt -Z'
 alias vi=vim
+alias wa='webalizer -o ~/Web/webalizer -D ~/Log/dns_cache.db'
 
 alias mv='nocorrect mv'		# no spelling correction on mv
 alias cp='nocorrect cp'		# no spelling correction on cp
