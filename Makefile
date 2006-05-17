@@ -6,6 +6,7 @@ FILES=	\
 	${RCDIR}/.mailcap	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
+	${RCDIR}/.screenrc	\
 	${RCDIR}/.subversion	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
@@ -36,6 +37,9 @@ ${RCDIR}/.muttrc: dot.muttrc
 	cp $? $@
 
 ${RCDIR}/.profile: dot.profile
+	cp $? $@
+
+${RCDIR}/.screenrc: dot.screenrc
 	cp $? $@
 
 ${RCDIR}/.subversion: dot.subversion
