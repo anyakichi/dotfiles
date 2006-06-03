@@ -77,6 +77,8 @@ inoremap <C-L> <Esc><C-L>a
 nmap ,v :new $HOME/.vimrc<CR>
 nmap ,s :source $HOME/.vimrc<CR>
 
+nmap ,t :!(cd %:p:h;exctags *)&<CR>
+
 map <silent> ,# :s/^/#/<CR>
 map <silent> ,/ :s#^#//#<CR>
 map <silent> ,> :s/^/>/<CR>
