@@ -33,7 +33,16 @@ set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
 
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
-if has('path_extra')
+if has("cscope")
+  set cscopetag
+  set nocscopeverbose
+  if filereadable("cscope.out")
+    cs add cscope.out
+  endif
+  set cscopeverbose
+endif
+
+if has("path_extra")
   set tags=tags;/
 endif
 
