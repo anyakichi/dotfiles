@@ -26,6 +26,8 @@ set smartcase
 set formatoptions=croqlmM
 set textwidth=78
 
+set ambiwidth=double
+
 set nobackup
 
 set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
