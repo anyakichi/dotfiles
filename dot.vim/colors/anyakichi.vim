@@ -25,7 +25,7 @@ hi LineNr	ctermfg=DarkRed
 " hi ModeMsg
 " hi MoreMsg
 " hi NonText
-hi Normal	cterm=bold	ctermfg=7
+" hi Normal	cterm=bold	ctermfg=7
 " hi Question
 " hi Search
 " hi SpecialKey
