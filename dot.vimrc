@@ -81,8 +81,8 @@ map <C-K> <C-W>k<C-W>_
 
 nmap <silent> <C-N> :set hlsearch!<CR>
 
-inoremap <C-B> <Esc>zza
-inoremap <C-F> <Esc>zta
+inoremap <C-B> <Left>
+inoremap <C-F> <Right>
 inoremap <C-L> <Esc><C-L>a
 
 nmap ,v :new $HOME/.vimrc<CR>
