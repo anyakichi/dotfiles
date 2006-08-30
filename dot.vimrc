@@ -48,15 +48,19 @@ if has("path_extra")
   set tags=tags;/
 endif
 
-" Syntax coloring
-syntax on
-colorscheme anyakichi
-
 let maplocalleader = ";"
 
 filetype plugin indent on
 
 
+" Syntax coloring
+syntax on
+colorscheme anyakichi
+
+
+" Plugins
+
+" matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
 " taglist.vim
