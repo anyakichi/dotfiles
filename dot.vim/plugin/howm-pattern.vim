@@ -1,7 +1,7 @@
 "
 " howm-pattern.vim - howm-mode.vim 用の文字列パターン処理ライブラリ
 "
-" Last Change: 29-May-2005.
+" Last Change: 04-Jun-2006.
 " Written By: Kouichi NANASHIMA <claymoremine@anet.ne.jp>
 
 scriptencoding euc-jp

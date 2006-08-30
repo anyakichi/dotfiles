@@ -3,7 +3,7 @@
 " - howm(Hitoride Otegaru Wiki Modoki)
 "   http://howm.sourceforge.jp/index-j.html
 "
-" Last Change: 02-Jul-2005.
+" Last Change: 04-Jun-2006.
 " Written By: Kouichi NANASHIMA <claymoremine@anet.ne.jp>
 
 scriptencoding euc-jp
