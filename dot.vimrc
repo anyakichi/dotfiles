@@ -94,22 +94,6 @@ nmap ,s :source $HOME/.vimrc<CR>
 
 nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
-map <silent> ,# :s/^/#/<CR>
-map <silent> ,/ :s#^#//#<CR>
-map <silent> ,> :s/^/>/<CR>
-map <silent> ," :s/^/"/<CR>
-map <silent> ,% :s/^/%/<CR>
-map <silent> ,! :s/^/!/<CR>
-map <silent> ,; :s/^/;/<CR>
-map <silent> ,- :s/^/--/<CR>
-map <silent> ,c :s=\v^//\|^--\|^[#"%!;>]==<CR>
-"map <silent> ,c :s=\v^//\s?\|^--\s?\|^[#"%!;>]\s?==<CR>
-
-map <silent> ,* :s/^\(.*\)$/\/\* \1 \*\//<CR>
-map <silent> ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR>
-map <silent> ,< :s/^\(.*\)$/<!-- \1 -->/<CR>
-map <silent> ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR>
-
 ab #C	Copyright (c) 2005 Inajima Daisuke All rights reserved.
 ab #I	$Id$
 ab #L	
