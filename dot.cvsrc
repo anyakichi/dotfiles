@@ -1,6 +1,8 @@
 #	$Id$
 
-update	-dP
-rdiff	-u
-diff	-u
 cvs	-q
+
+checkout -P
+diff	-u
+rdiff	-u
+update	-dP
