@@ -29,12 +29,18 @@ set nomarkers
 set reverse_name
 set noreverse_realname
 
+set ignore_linear_white_space=yes
+
 set editor="vim '+/^$'"
 
+# Settings for PGP
 set nocrypt_autosign
 set pgp_sign_as=DCA4F054
 set pgp_timeout=0
 source /usr/pkg/share/examples/mutt/gpg.rc
+
+# Japanese Extention
+set cjk_width
 
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
