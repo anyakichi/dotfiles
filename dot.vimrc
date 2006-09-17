@@ -60,17 +60,20 @@ colorscheme anyakichi
 
 " Plugins
 
-" matchit.vim
-source $VIMRUNTIME/macros/matchit.vim
-
-" taglist.vim
-let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
+" EnhancedCommentify
+let g:EnhCommentifyBindInInsert = "No"
 
 " howm-mode.vim
 let g:howm_dir = '~/howm'
 let g:howm_findprg = "find"
 let g:howm_grepprg = "grep"
 let g:howm_instantpreview = 1
+
+" matchit.vim
+source $VIMRUNTIME/macros/matchit.vim
+
+" taglist.vim
+let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
 
 " Mappings
