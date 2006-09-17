@@ -1,4 +1,6 @@
-" Vim color file
+"	$Id$
+
+" anyakichi color scheme
 
 set bg=dark
 hi clear
@@ -10,6 +12,8 @@ let colors_name = "anyakichi"
 
 " hi Cursor
 " hi CursorIM
+" hi CursorColumn
+" hi CursorLine
 " hi Directory
 " hi DiffAdd
 " hi DiffChange
@@ -22,15 +26,27 @@ let colors_name = "anyakichi"
 " hi SignColumn
 " hi IncSearch
 hi LineNr	ctermfg=DarkRed
+" hi MatchParen
 " hi ModeMsg
 " hi MoreMsg
 " hi NonText
 " hi Normal	cterm=bold	ctermfg=7
+hi Pmenu	ctermfg=Black ctermbg=Gray
+hi PmenuSel	ctermfg=Black ctermbg=DarkYellow
+" hi PmenuSbar
+" hi PmenuThumb
 " hi Question
 " hi Search
 " hi SpecialKey
+" hi SpellBad
+" hi SpellCap
+" hi SpellLocal
+" hi SpellRare
 " hi StatusLine
 " hi StatusLineNC
+" hi TabLine
+" hi TabLineFill
+" hi TabLineSel
 " hi Title
 " hi Visual
 " hi VisualNOS
