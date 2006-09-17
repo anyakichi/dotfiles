@@ -33,8 +33,8 @@ hi LineNr	ctermfg=DarkRed
 " hi Normal	cterm=bold	ctermfg=7
 hi Pmenu	ctermfg=Black ctermbg=Gray
 hi PmenuSel	ctermfg=Black ctermbg=DarkYellow
-" hi PmenuSbar
-" hi PmenuThumb
+hi PmenuSbar	ctermbg=Black
+hi PmenuThumb	ctermfg=DarkCyan
 " hi Question
 " hi Search
 " hi SpecialKey
