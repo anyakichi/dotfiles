@@ -137,4 +137,4 @@ function! Retab(before)
 endfunction
 
 autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail					setlocal spell tw=72
+autocmd FileType mail					setlocal tw=72
