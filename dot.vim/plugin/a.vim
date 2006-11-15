@@ -12,13 +12,12 @@
 " Directory & regex enhancements added by Bindu Wavell who is well known on
 " vim.sf.net
 
-" TODO: a) :AN command "next alternate"
-"       b) Priorities for search paths
-"       c) <leader>A on a #include line should go to that header
-
 " Do not load a.vim if is has already been loaded.
 if exists("loaded_alternateFile")
     finish
+endif
+if (v:progname == "ex")
+   finish
 endif
 let loaded_alternateFile = 1
 
@@ -51,6 +50,7 @@ function! <SID>AddAlternateExtensionMapping(extension, alternates)
    " This code handles extensions which contains a dot. exists() fails with
    " such names.
    let v:errmsg = ""
+   " FIXME this line causes ex to return 1 instead of 0 for some reason??
    silent! echo g:alternateExtensions_{a:extension}
    if (v:errmsg != "")
       let g:alternateExtensions_{a:extension} = a:alternates
@@ -61,6 +61,7 @@ function! <SID>AddAlternateExtensionMapping(extension, alternates)
      let s:maxDotsInExtension = dotsNumber
    endif
 endfunction
+
 
 " Add all the default extensions
 " Mappings for C, C++ and Objective-C
@@ -239,6 +240,47 @@ function! <SID>FindFileInSearchPath(fileName, pathList, relPathBase)
    return filepath
 endfunction
 
+" Function : FindFileInSearchPathEx (PRIVATE)
+" Purpose  : Searches for a file in the search path list
+" Args     : filename -- name of the file to search for
+"            pathList -- the path list to search
+"            relPathBase -- the path which relative paths are expanded from
+"            count -- find the count'th occurence of the file on the path
+" Returns  : An expanded filename if found, the empty string otherwise
+" Author   : Michael Sharpe (feline@irendi.com)
+" History  : Based on <SID>FindFileInSearchPath() but with extensions
+function! <SID>FindFileInSearchPathEx(fileName, pathList, relPathBase, count)
+   let filepath = ""
+   let m = 1
+   let spath = ""
+   let pathListLen = strlen(a:pathList)
+   if (pathListLen > 0)
+      while (1)
+         let pathSpec = <SID>GetNthItemFromList(a:pathList, m) 
+         if (pathSpec != "")
+            let path = <SID>ExpandAlternatePath(pathSpec, a:relPathBase)
+            if (spath != "")
+               let spath = spath . ','
+            endif
+            let spath = spath . path
+         else
+            break
+         endif
+         let m = m + 1
+      endwhile
+   endif
+
+   if (&path != "")
+      if (spath != "")
+         let spath = spath . ','
+      endif
+      let spath = spath . &path
+   endif
+
+   let filepath = findfile(a:fileName, spath, a:count)
+   return filepath
+endfunction
+
 " Function : EnumerateFilesByExtension (PRIVATE)
 " Purpose  : enumerates all files by a particular list of alternate extensions.
 " Args     : path -- path of a file (not including the file)
@@ -370,7 +412,7 @@ function! AlternateFile(splitWindow, ...)
 
   if (a:0 != 0)
      let newFullname = currentPath . "/" .  baseName . "." . a:1
-     call <SID>FindOrCreateBuffer(newFullname, a:splitWindow)
+     call <SID>FindOrCreateBuffer(newFullname, a:splitWindow, 0)
   else
      let allfiles = ""
      if (extension != "")
@@ -409,7 +451,8 @@ function! AlternateFile(splitWindow, ...)
         if (bestScore == 0 && g:alternateNoDefaultAlternate == 1)
            echo "No existing alternate available"
         else
-           call <SID>FindOrCreateBuffer(bestFile, a:splitWindow)
+           call <SID>FindOrCreateBuffer(bestFile, a:splitWindow, 1)
+           let b:AlternateAllFiles = allfiles
         endif
      else
         echo "No alternate file/buffer available"
@@ -417,12 +460,153 @@ function! AlternateFile(splitWindow, ...)
    endif
 endfunction
 
+" Function : AlternateOpenFileUnderCursor (PUBLIC)
+" Purpose  : Opens file under the cursor
+" Args     : splitWindow -- indicates how to open the file
+" Returns  : Nothing
+" Author   : Michael Sharpe (feline@irendi.com) www.irendi.com
+function! AlternateOpenFileUnderCursor(splitWindow,...)
+   let cursorFile = (a:0 > 0) ? a:1 : expand("<cfile>") 
+   let currentPath = expand("%:p:h")
+   let openCount = 1
+
+   let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, openCount)
+   if (fileName != "")
+      call <SID>FindOrCreateBuffer(fileName, a:splitWindow, 1)
+      let b:openCount = openCount
+      let b:cursorFile = cursorFile
+      let b:currentPath = currentPath
+   else
+      echo "Can't find file"
+   endif
+endfunction
+
+" Function : AlternateOpenNextFile (PUBLIC)
+" Purpose  : Opens the next file corresponding to the search which found the 
+"            current file
+" Args     : bang -- indicates what to do if the current file has not been 
+"                    saved
+" Returns  : nothing
+" Author   : Michael Sharpe (feline@irendi.com) www.irendi.com
+function! AlternateOpenNextFile(bang)
+   let cursorFile = ""
+   if (exists("b:cursorFile"))
+      let cursorFile = b:cursorFile
+   endif
+
+   let currentPath = ""
+   if (exists("b:currentPath"))
+      let currentPath = b:currentPath
+   endif
+
+   let openCount = 0
+   if (exists("b:openCount"))
+      let openCount = b:openCount + 1
+   endif
+
+   if (cursorFile != ""  && currentPath != ""  && openCount != 0)
+      let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, openCount)
+      if (fileName != "")
+         call <SID>FindOrCreateBuffer(fileName, "n".a:bang, 0)
+         let b:openCount = openCount
+         let b:cursorFile = cursorFile
+         let b:currentPath = currentPath
+      else 
+         let fileName = <SID>FindFileInSearchPathEx(cursorFile, g:alternateSearchPath, currentPath, 1)
+         if (fileName != "")
+            call <SID>FindOrCreateBuffer(fileName, "n".a:bang, 0)
+            let b:openCount = 1
+            let b:cursorFile = cursorFile
+            let b:currentPath = currentPath
+         else
+            echo "Can't find next file"
+         endif
+      endif
+   endif
+endfunction
+
+comm! -nargs=? -bang IH call AlternateOpenFileUnderCursor("n<bang>", <f-args>)
+comm! -nargs=? -bang IHS call AlternateOpenFileUnderCursor("h<bang>", <f-args>)
+comm! -nargs=? -bang IHV call AlternateOpenFileUnderCursor("v<bang>", <f-args>)
+comm! -nargs=? -bang IHT call AlternateOpenFileUnderCursor("t<bang>", <f-args>)
+comm! -nargs=? -bang IHN call AlternateOpenNextFile("<bang>")
+imap <Leader>ih <ESC>:IHS<CR>
+nmap <Leader>ih :IHS<CR>
+imap <Leader>is <ESC>:IHS<CR>:A<CR>
+nmap <Leader>is :IHS<CR>:A<CR>
+imap <Leader>ihn <ESC>:IHN<CR>
+nmap <Leader>ihn :IHN<CR>
+
+"function! <SID>PrintList(theList) 
+"   let n = 1
+"   let oneFile = <SID>GetNthItemFromList(a:theList, n)
+"   while (oneFile != "")
+"      let n = n + 1
+"      let oneFile = <SID>GetNthItemFromList(a:theList, n)
+"   endwhile
+"endfunction
+
+" Function : NextAlternate (PUBLIC)
+" Purpose  : Used to cycle through any other alternate file which existed on
+"            the search path.
+" Args     : bang (IN) - used to implement the AN vs AN! functionality
+" Returns  : nothing
+" Author   : Michael Sharpe <feline@irendi.com>
+function! NextAlternate(bang)
+   if (exists('b:AlternateAllFiles'))
+      let currentFile = expand("%")
+      let n = 1
+      let onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
+      while (onefile != "" && !<SID>EqualFilePaths(fnamemodify(onefile,":p"), fnamemodify(currentFile,":p")))
+         let n = n + 1
+         let onefile = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
+      endwhile
+
+      if (onefile != "")
+         let stop = n
+         let n = n + 1
+         let foundAlternate = 0
+         let nextAlternate = ""
+         while (n != stop)
+            let nextAlternate = <SID>GetNthItemFromList(b:AlternateAllFiles, n)
+            if (nextAlternate == "")
+               let n = 1
+               continue
+            endif
+            let n = n + 1
+            if (<SID>EqualFilePaths(fnamemodify(nextAlternate, ":p"), fnamemodify(currentFile, ":p")))
+                continue
+            endif
+            if (filereadable(nextAlternate))
+                " on cygwin filereadable("foo.H") returns true if "foo.h" exists
+               if (has("unix") && $WINDIR != "" && fnamemodify(nextAlternate, ":p") ==? fnamemodify(currentFile, ":p")) 
+                  continue
+               endif
+               let foundAlternate = 1
+               break
+            endif
+         endwhile
+         if (foundAlternate == 1)
+            let s:AlternateAllFiles = b:AlternateAllFiles
+            "silent! execute ":e".a:bang." " . nextAlternate
+            call <SID>FindOrCreateBuffer(nextAlternate, "n".a:bang, 0)
+            let b:AlternateAllFiles = s:AlternateAllFiles
+         else 
+            echo "Only this alternate file exists"
+         endif
+      else 
+         echo "Could not find current file in alternates list"
+      endif
+   else 
+      echo "No other alternate files exist"
+   endif
+endfunction
+
 comm! -nargs=? -bang A call AlternateFile("n<bang>", <f-args>)
 comm! -nargs=? -bang AS call AlternateFile("h<bang>", <f-args>)
 comm! -nargs=? -bang AV call AlternateFile("v<bang>", <f-args>)
-if v:version >= 700
 comm! -nargs=? -bang AT call AlternateFile("t<bang>", <f-args>)
-endif
+comm! -nargs=? -bang AN call NextAlternate("<bang>")
 
 " Function : BufferOrFileExists (PRIVATE)
 " Purpose  : determines if a buffer or a readable file exists
@@ -474,6 +658,8 @@ endfunction
 " Args     : filename (IN) -- the name of the file
 "            doSplit (IN) -- indicates whether the window should be split
 "                            ("v", "h", "n", "v!", "h!", "n!", "t", "t!") 
+"            findSimilar (IN) -- indicate weather existing buffers should be
+"                                prefered
 " Returns  : nothing
 " Author   : Michael Sharpe <feline@irendi.com>
 " History  : + bufname() was not working very well with the possibly strange
@@ -483,37 +669,39 @@ endfunction
 "            Allow ! to be applied to buffer/split/editing commands for more
 "            vim/vi like consistency
 "            + implemented fix from Matt Perry
-function! <SID>FindOrCreateBuffer(fileName, doSplit)
+function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar)
   " Check to see if the buffer is already open before re-opening it.
   let FILENAME = a:fileName
   let bufNr = -1
   let lastBuffer = bufnr("$")
   let i = 1
-  while i <= lastBuffer
-    if <SID>EqualFilePaths(expand("#".i.":p"), a:fileName)
-      let bufNr = i
-      break
-    endif
-    let i = i + 1
-  endwhile
+  if (a:findSimilar) 
+     while i <= lastBuffer
+       if <SID>EqualFilePaths(expand("#".i.":p"), a:fileName)
+         let bufNr = i
+         break
+       endif
+       let i = i + 1
+     endwhile
 
-  if (bufNr == -1)
-     let bufName = bufname(a:fileName)
-     let bufFilename = fnamemodify(a:fileName,":t")
+     if (bufNr == -1)
+        let bufName = bufname(a:fileName)
+        let bufFilename = fnamemodify(a:fileName,":t")
 
-     if (bufName == "")
-        let bufName = bufname(bufFilename)
-     endif
-
-     if (bufName != "")
-        let tail = fnamemodify(bufName, ":t")
-        if (tail != bufFilename)
-           let bufName = ""
+        if (bufName == "")
+           let bufName = bufname(bufFilename)
         endif
-     endif
-     if (bufName != "")
-        let bufNr = bufnr(bufName)
-        let FILENAME = bufName
+
+        if (bufName != "")
+           let tail = fnamemodify(bufName, ":t")
+           if (tail != bufFilename)
+              let bufName = ""
+           endif
+        endif
+        if (bufName != "")
+           let bufNr = bufnr(bufName)
+           let FILENAME = bufName
+        endif
      endif
   endif
 
@@ -605,7 +793,7 @@ endfunction
 " Function : EqualFilePaths (PRIVATE)
 " Purpose  : Compares two paths. Do simple string comparison anywhere but on
 "            Windows. On Windows take into account that file paths could differ
-"            in usage of separators and the fact that case does not metter.
+"            in usage of separators and the fact that case does not matter.
 "            "c:\WINDOWS" is the same path as "c:/windows". has("win32unix") Vim
 "            version does not count as one having Windows path rules.
 " Args     : path1 (IN) -- first path
