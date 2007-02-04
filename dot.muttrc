@@ -47,7 +47,7 @@ set cjk_width
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
-mailboxes > < =Draft =Junk
+mailboxes > < =Doubt =Draft =Junk =Virus
 mailboxes =ad
 mailboxes =anyalog
 mailboxes =cleanarchiver
@@ -58,9 +58,10 @@ mailboxes =jobs
 mailboxes =marines
 mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/source
 mailboxes =nifty
+mailboxes =shopping
 mailboxes =software
 mailboxes =sopht
-mailboxes =shopping
+mailboxes =support
 mailboxes =university
 
 alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp \
