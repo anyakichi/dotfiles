@@ -9,7 +9,7 @@ if [ -d ~/Mail ]; then
     done
 fi
 
-cdpath=(~ ~/src ~/Source)
+cdpath=(~ ~/src ~/Documents)
 fpath=($fpath ~/.zfunc)
 
 hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
