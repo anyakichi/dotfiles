@@ -97,7 +97,7 @@ nmap ,s :source $HOME/.vimrc<CR>
 
 nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
-ab #C	Copyright (c) 2005 Inajima Daisuke All rights reserved.
+ab #C	Copyright (c) YEAR Inajima Daisuke All rights reserved.
 ab #I	$Id$
 ab #L	
 \Redistribution and use in source and binary forms, with or without<CR>
