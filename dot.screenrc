@@ -6,3 +6,5 @@ encoding UTF-8
 autodetach on
 defscrollback 2000
 startup_message off
+
+cjkwidth
