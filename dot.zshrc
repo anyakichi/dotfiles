@@ -32,6 +32,10 @@ alias lsd='ls -ld *(-/DN)'	# List only directories and symbolic
 				# links that point to directories
 alias lsa='ls -ld .*'		# List only file beginning with "."
 
+if [ "x$TERM" = xscreen ]; then
+	alias ssh=ssh-screen
+fi
+
 case $OSTYPE in
 	darwin*)
 		alias gmake=/usr/bin/make
@@ -56,6 +60,9 @@ itunes() {
 	mount_afp afp://landisk/Music /Volumes/Music;
     fi
     open -a iTunes
+}
+ssh-screen() {
+	screen -t ${(@)argv[$#]/.*/} ssh "$@"
 }
 
 # Autoload all shell functions from all directories in $fpath (following
