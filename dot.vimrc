@@ -35,6 +35,8 @@ set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
 
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
+set pastetoggle=<C-_>
+
 if has("cscope")
   set cscopetag
   set nocscopeverbose
