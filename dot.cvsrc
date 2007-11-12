@@ -3,6 +3,6 @@
 cvs	-q
 
 checkout -P
-diff	-u
+diff	-uN
 rdiff	-u
 update	-dP
