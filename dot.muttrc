@@ -109,8 +109,6 @@ macro	browser	q	<exit><quit>
 #macro	pager	c	<change-folder>?\t
 macro	index	<backspace> "|sa-learn --ham\n"	'learn as ham'
 macro	pager	<backspace> "|sa-learn --ham\n"	'learn as ham'
-macro	index	S	"|sa-learn --spam\n"	'learn as spam'
-macro	pager	S	"|sa-learn --spam\n"	'learn as spam'
 
 send-hook '~t chiba-u'	\
 	  'my_hdr From: 稲島 大輔 <z3t0610@students.chiba-u.ac.jp>'
