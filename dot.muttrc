@@ -57,13 +57,15 @@ mailboxes =cleanarchiver
 mailboxes =finance
 mailboxes =fork
 mailboxes =friends
-mailboxes =jobs
 mailboxes =marines
-mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/source
+mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/pkgsrc-bugs
+mailboxes =netbsd/port-macppc =netbsd/port-powerpc =netbsd/source
 mailboxes =nifty
+mailboxes =recruit
 mailboxes =shopping
 mailboxes =software
 mailboxes =sopht
+mailboxes =study
 mailboxes =support
 mailboxes =university
 
