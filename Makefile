@@ -44,11 +44,11 @@ ${RCDIR}/.screenrc: dot.screenrc
 
 ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
-	find rc -name CVS | xargs rm -rf
+	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.vim: dot.vim
 	cp -r $? $@
-	find rc -name CVS | xargs rm -rf
+	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
