@@ -33,7 +33,10 @@ set ignore_linear_white_space=yes
 
 set editor="vim '+/^$'"
 
+set read_inc=100
+
 set header_cache="~/Log/mutt.cache"
+set header_cache_pagesize=32768
 
 # Settings for PGP
 set nocrypt_autosign
