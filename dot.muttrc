@@ -47,7 +47,7 @@ set cjk_width
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
-mailboxes > < =Doubt =Drafts =Junk =Virus
+mailboxes > < =Doubt =Drafts
 mailboxes =ad
 mailboxes =anyalog
 mailboxes =cleanarchiver
