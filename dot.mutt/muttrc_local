@@ -1,0 +1,30 @@
+#	$id$
+
+mailboxes =ad
+mailboxes =anyalog
+mailboxes =cleanarchiver
+mailboxes =finance
+mailboxes =fork
+mailboxes =friends
+mailboxes =marines
+mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/pkgsrc-bugs
+mailboxes =netbsd/port-macppc =netbsd/port-powerpc =netbsd/source
+mailboxes =nifty
+mailboxes =recruit
+mailboxes =shopping
+mailboxes =software
+mailboxes =sopht
+mailboxes =study
+mailboxes =support
+mailboxes =university
+
+alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp \
+	   z3t0610@students.chiba-u.ac.jp
+
+lists .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
+subscribe .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
+
+send-hook '~t chiba-u'	\
+	  'my_hdr From: 稲島 大輔 <z3t0610@students.chiba-u.ac.jp>'
+reply-hook '~C ^anyakichi@sopht\.jp$' \
+	   'my_hdr From: Anyakichi <anyakichi@sopht.jp>'

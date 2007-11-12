@@ -51,32 +51,9 @@ set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
 mailboxes > < =Doubt =Drafts
-mailboxes =ad
-mailboxes =anyalog
-mailboxes =cleanarchiver
-mailboxes =finance
-mailboxes =fork
-mailboxes =friends
-mailboxes =marines
-mailboxes =netbsd =netbsd/netbsd-bugs =netbsd/current-users =netbsd/pkgsrc-bugs
-mailboxes =netbsd/port-macppc =netbsd/port-powerpc =netbsd/source
-mailboxes =nifty
-mailboxes =recruit
-mailboxes =shopping
-mailboxes =software
-mailboxes =sopht
-mailboxes =study
-mailboxes =support
-mailboxes =university
-
-alternates anyakichi@sopht.jp d-inajima@nifty.com inajima@fork.co.jp \
-	   z3t0610@students.chiba-u.ac.jp
 
 ignore *
 unignore from: date subject to cc
-
-lists .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
-subscribe .*@ml\.chiba-u\.jp (netbsd-bugs|current-users|source)@netbsd\.org
 
 auto_view text/html
 
@@ -113,17 +90,6 @@ macro	browser	q	<exit><quit>
 macro	index	<backspace> "|sa-learn --ham\n"	'learn as ham'
 macro	pager	<backspace> "|sa-learn --ham\n"	'learn as ham'
 
-send-hook '~t chiba-u'	\
-	  'my_hdr From: 稲島 大輔 <z3t0610@students.chiba-u.ac.jp>'
-reply-hook '~C ^anyakichi@sopht\.jp$' \
-	   'my_hdr From: Anyakichi <anyakichi@sopht.jp>'
-#send2-hook '~h Content-Type:.*ISO-2022-JP' \
-#	   'my_hdr From: 稲島 大輔 <inajima@sopht.jp>'
-# reply-hook '~h Content-Type:.*ISO-2022-JP' \
-#            'my_hdr From: 稲島 大輔 <inajima@sopht.jp>'
-#reply-hook '~C ^anyakichi@sopht\.jp$ ~h ISO-2022-JP' \
-#	   'my_hdr From: あにゃきち <anyakichi@sopht.jp>'
-
 #color normal white default
 color hdrdefault brightwhite default
 color header yellow default ^Subject
@@ -145,3 +111,5 @@ color body cyan default "(ftp|https?)://[^ ]+"
 color body cyan default [-a-z_0-9.]+@[-a-z_0-9.]+
 
 mono header bold ^Subject
+
+source ~/.mutt/muttrc_local
