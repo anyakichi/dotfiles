@@ -1,4 +1,0 @@
-#	$Id$
-
-hardstatus alwayslastline "%{= wk}Mail(%?%`%:0%?) | %-w%{=b wk}%n %t%{-}%+w"
-backtick 0 0 0 ${HOME}/bin/newmail.rb

@@ -7,7 +7,6 @@ FILES=	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
-	${RCDIR}/.screenrc_local \
 	${RCDIR}/.subversion	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
@@ -45,9 +44,6 @@ ${RCDIR}/.profile: dot.profile
 	cp $? $@
 
 ${RCDIR}/.screenrc: dot.screenrc
-	cp $? $@
-
-${RCDIR}/.screenrc_local: dot.screenrc_local
 	cp $? $@
 
 ${RCDIR}/.subversion: dot.subversion
