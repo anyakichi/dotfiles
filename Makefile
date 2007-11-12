@@ -47,6 +47,9 @@ ${RCDIR}/.profile: dot.profile
 ${RCDIR}/.screenrc: dot.screenrc
 	cp $? $@
 
+${RCDIR}/.screenrc_local: dot.screenrc_local
+	cp $? $@
+
 ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
 	find rc -name .svn | xargs rm -rf
