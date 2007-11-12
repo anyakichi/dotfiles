@@ -17,6 +17,7 @@ set winminheight=0
 set showcmd
 set laststatus=2
 set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}%m%r%=%-14.(%l,%c%V%)\ %P
+set cursorline
 
 set nohlsearch
 set ignorecase

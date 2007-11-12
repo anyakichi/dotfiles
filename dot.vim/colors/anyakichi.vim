@@ -13,7 +13,7 @@ let colors_name = "anyakichi"
 " hi Cursor
 " hi CursorIM
 " hi CursorColumn
-" hi CursorLine
+hi CursorLine	cterm=none ctermbg=DarkGray
 " hi Directory
 " hi DiffAdd
 " hi DiffChange
