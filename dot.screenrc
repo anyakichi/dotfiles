@@ -9,6 +9,6 @@ startup_message off
 
 cjkwidth
 
-screen -t local 0
-
 source $HOME/.screenrc_local
+
+screen -t local 0
