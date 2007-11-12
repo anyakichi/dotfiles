@@ -137,7 +137,7 @@ endfunction
 " Auto commands
 autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
 autocmd FileType mail					setlocal tw=72
-autocmd FileType scheme setlocal sw=2|let g:is_gauche=1
+autocmd FileType scheme setlocal sw=2
 
 
 " Syntax coloring
