@@ -33,6 +33,10 @@ ${RCDIR}/.cvsrc: dot.cvsrc
 ${RCDIR}/.mailcap: dot.mailcap
 	cp $? $@
 
+${RCDIR}/.mutt: dot.mutt
+	cp -r $? $@
+	find rc -name .svn | xargs rm -rf
+
 ${RCDIR}/.muttrc: dot.muttrc
 	cp $? $@
 
