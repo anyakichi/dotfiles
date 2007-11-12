@@ -7,6 +7,7 @@ FILES=	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
+	${RCDIR}/.screenrc_local \
 	${RCDIR}/.subversion	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
