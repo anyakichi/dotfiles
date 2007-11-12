@@ -89,6 +89,7 @@ bind index b previous-page
 bind index \cb bounce-message
 bind index \cf forward-message
 bind index N search-opposite
+bind index \c] next-unread-mailbox
 
 bind pager g top
 bind pager G bottom
