@@ -3,8 +3,7 @@
 cdpath=(~ ~/src ~/Documents)
 fpath=($fpath ~/.zfunc)
 
-hosts=(`hostname` sopht.jp ftp.netbsd.org ftp25.nifty.com \
-	www.jupiter.tj.chiba-u.jp www.icsd2.tj.chiba-u.jp)
+hosts=(`hostname` sopht.jp ftp.netbsd.org)
 
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath hosts mailpath
