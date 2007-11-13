@@ -58,9 +58,6 @@ filetype plugin indent on
 
 " Plugins
 
-" EnhancedCommentify
-let g:EnhCommentifyBindInInsert = "No"
-
 " NERD_commenter
 let g:NERDSpaceDelims = 1
 
