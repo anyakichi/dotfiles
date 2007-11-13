@@ -169,3 +169,5 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.o' '*?.c~' \
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
+
+[ -r ~/.zshrc_local ] && source ~/.zshrc_local
