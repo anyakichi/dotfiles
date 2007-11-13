@@ -61,6 +61,9 @@ filetype plugin indent on
 " EnhancedCommentify
 let g:EnhCommentifyBindInInsert = "No"
 
+" NERD_commenter
+let g:NERDSpaceDelims = 1
+
 " howm-mode.vim
 let g:howm_dir = '~/howm'
 let g:howm_findprg = "find"
