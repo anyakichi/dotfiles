@@ -62,6 +62,7 @@ bind generic N search-opposite
 
 bind index g first-entry
 bind index G last-entry
+bind index <Esc>g group-reply
 bind index f next-page
 bind index b previous-page
 bind index \cb bounce-message
@@ -71,6 +72,7 @@ bind index \c] next-unread-mailbox
 
 bind pager g top
 bind pager G bottom
+bind pager <Esc>g group-reply
 bind pager j next-line
 bind pager k previous-line
 bind pager l next-undeleted
@@ -86,8 +88,12 @@ macro	index	i	<change-folder>?\t
 macro	browser	q	<exit><quit>
 #macro	index	c	<change-folder>?\t
 #macro	pager	c	<change-folder>?\t
+macro	index	\cv	|urlview\n
+macro	pager	\cv	|urlview\n
 macro	index	<backspace> "|sa-learn --ham\n"	'learn as ham'
 macro	pager	<backspace> "|sa-learn --ham\n"	'learn as ham'
+macro	index	.	"|fetchmail\n"		'get new mail'
+macro	pager	.	"|fetchmail\n"		'get new mail'
 
 #color normal white default
 color hdrdefault brightwhite default
