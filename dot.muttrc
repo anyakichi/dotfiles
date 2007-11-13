@@ -40,7 +40,6 @@ set header_cache_pagesize=32768
 
 # Settings for PGP
 set nocrypt_autosign
-set pgp_sign_as=DCA4F054
 set pgp_timeout=0
 source /usr/pkg/share/examples/mutt/gpg.rc
 
