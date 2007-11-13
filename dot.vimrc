@@ -73,6 +73,9 @@ source $VIMRUNTIME/macros/matchit.vim
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
+" utl.vim
+let g:utl_rc_app_browser = "silent !firefox '%u' &"
+
 
 " Mappings
 noremap Q gq
