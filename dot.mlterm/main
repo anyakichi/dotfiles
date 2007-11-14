@@ -1,0 +1,15 @@
+#	$Id$
+
+scrollbar_mode = none
+fontsize = 14
+use_transbg = false
+wall_picture = 
+receive_string_via_ucs = true
+fg_color = #f0f0f0
+brightness = 20
+contrast = 20
+gamma = 90
+fade_ratio = 80
+bg_color = #2a2a2a
+line_space = 1
+col_size_of_width_a = 2
