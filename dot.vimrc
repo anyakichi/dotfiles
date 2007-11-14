@@ -153,4 +153,4 @@ autocmd FileType scheme setlocal sw=2
 
 " Syntax coloring
 syntax on
-colorscheme anyakichi
+colorscheme nya
