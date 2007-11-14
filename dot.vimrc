@@ -78,6 +78,7 @@ let g:utl_rc_app_browser = "silent !firefox '%u' &"
 
 
 " Mappings
+
 noremap Q gq
 nnoremap Y y$
 
@@ -88,6 +89,10 @@ map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 
 nmap <silent> <C-N> :set hlsearch!<CR>
+
+cnoremap <C-A> <Home>
+cnoremap <C-B> <Left>
+cnoremap <C-F> <Right>
 
 inoremap <C-B> <Left>
 inoremap <C-F> <Right>
