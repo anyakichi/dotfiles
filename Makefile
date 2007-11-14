@@ -4,6 +4,7 @@ RCDIR=	rc
 FILES=	\
 	${RCDIR}/.cvsrc		\
 	${RCDIR}/.mailcap	\
+	${RCDIR}/.mutt		\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
