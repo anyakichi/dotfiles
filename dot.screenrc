@@ -7,6 +7,8 @@ autodetach on
 defscrollback 2000
 startup_message off
 
+hardstatus alwayslastline "%-w%{=b wk}%n %t%{-}%+w"
+
 cjkwidth
 
 source $HOME/.screenrc_local
