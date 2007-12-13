@@ -116,8 +116,10 @@ Makefile*	= svn:keywords=Id
 *.pm		= svn:keywords=Id
 *.rb		= svn:keywords=Id
 *.sh		= svn:keywords=Id
+*.vim		= svn:keywords=Id
 
 *.html		= svn:keywords=Id Date
 *.rhtml		= svn:keywords=Id Date
 *.tex		= svn:keywords=Id Date
+*.txt		= svn:keywords=Id Date
 *.xml		= svn:keywords=Id Date
