@@ -1,14 +1,14 @@
-" vim:set ts=8 sts=2 sw=2 tw=0:
+" vim:set ts=8 sts=2 sw=2 tw=0 et:
 "
-" format.vim -	Format multibyte text, for the languages, which can split
-"		line anywhere, unless prohibited. (for Vim 6.3)
+" format.vim -  Format multibyte text, for the languages, which can split
+"               line anywhere, unless prohibited. (for Vim 7.0)
 "
-" Version:	  1.7 alpha-2
-" Last Change:	  06-Oct-2004.
-" Maintainer:	  MURAOKA Taro <koron@tka.att.ne.jp>
-" Practised By:	  Takuhiro Nishioka <takuhiro@super.win.ne.jp>
-" Base Idea:	  MURAOKA Taro <koron@tka.att.ne.jp>
-" Copyright:	  Public Domain
+" Version:        1.7rc2
+" Last Change:    03-Mar-2007.
+" Maintainer:     MURAOKA Taro <koron@tka.att.ne.jp>
+" Practised By:   Takuhiro Nishioka <takuhiro@super.win.ne.jp>
+" Base Idea:      MURAOKA Taro <koron@tka.att.ne.jp>
+" Copyright:      Public Domain
 
 scriptencoding cp932
 
@@ -28,18 +28,7 @@ if exists('plugin_format_disable')
 endif
 
 "---------------------------------------------------------------------------
-"				    Options
-"
-" "format_command"
-"
-" Specifies the format command that format lines to the width the
-" 'textwidth' option specifies. The "Q" command formerly did this, so if you
-" still want to use "Q", set this to "Q"
-"
-"let format_command = "Q"
-if !exists('format_command')
-  let format_command = "gq"
-endif
+"                                   Options
 
 "
 " "format_follow_taboo_rule"
@@ -71,7 +60,7 @@ if !exists("g:format_indent_sensitive")
 endif
 
 "---------------------------------------------------------------------------
-"				  Sub Options
+"                                 Sub Options
 "
 " "g:format_no_begin"
 "
@@ -108,66 +97,7 @@ if &encoding =~ '\v\c(cp932|euc-jp|utf-8)'
   unlet! no_e
 endif
 
-"
-" "s:format_motion_list"
-"
-" Specifiles the motion command that could follow "format_command". These
-" are pairs of two letters. Note that not all motion commands can be
-" specified here. Use visual mode for other motions.
-"
-let m_list = "apawaWasa]a[a)a(aba>a}a{aB"
-let m_list = m_list . "ipiwiWisi]i[i)i(ibi>i}i{iB"
-let m_list = m_list . "gqq "
-let m_list = m_list . "h j k l 0 ^ $ ; , - + w W e E b B "
-let m_list = m_list . "( ) { } n N % H M L G / ? "
-let m_list = m_list . "gjgkggg0g^gmgegEg$]][[][[[[]''``"
-let m_list = m_list . "'[`[']`]'<`<'>`>'\"`\""
-let m_list = m_list . "[([{])]}]m]M[m[M[#]#[*[/"
-let m_list = m_list . "'a'b'c'd'e'f'g'h'i'j'k'l'm'n'o'p'q'r's't'u'v'w'x'y'z"
-let m_list = m_list . "`a`b`c`d`e`f`g`h`i`j`k`l`m`n`o`p`q`r`s`t`u`v`w`x`y`z"
-let m_list = m_list . "2j3j4j5j6j7j8j9j"
-let m_list = m_list . "2k3k4k5k6k7k8k9k"
-let m_list = m_list . "2H3H4H5H6H7H8H9H"
-let m_list = m_list . "2L3L4L5L6L7L8L9L"
-let s:format_motion_list = m_list
-unlet! m_list
-
 "---------------------------------------------------------------------------
-"
-" DoMappings()
-"   Do mappings.
-"
-function! DoMappings()
-  " Normal mode mappings.
-  let length = strlen(s:format_motion_list)
-  let i = 0
-  while i <= length - 2
-    let motion = strpart(s:format_motion_list, i, 2)
-    let motion = substitute(motion, " $", "", "")
-    execute "nmap <silent> " . g:format_command . motion . " :call " . "<SID>FormatWorkhorse(\"" . motion . "\")<CR>"
-    let i = i + 2
-  endwhile
-
-  " Visual mode mapping.
-  execute "vmap <silent> ".g:format_command." <ESC>:call"." <SID>Format(line(\"'<\"), line(\"'>\"))<CR>"
-endfunction
-
-"
-" FormatWorkhorse(motion)
-"   Select the area that moves over, then pass the start and end line number
-"   of the area to Format()
-"
-function! s:FormatWorkhorse(motion)
-  if a:motion == "gq" || a:motion == "q"
-    execute "normal! V\<ESC>"
-  elseif a:motion == "/" || a:motion == "?"
-    execute "let pattern = input(\"" . a:motion . "\")"
-    execute "normal! v" . a:motion . pattern . "\<CR>\<ESC>"
-  else
-    execute "normal! v" . a:motion . "\<ESC>"
-  endif
-  call s:Format(line("'<"), line("'>"))
-endfunction
 
 "
 " Format(start_lnum, end_lnum)
@@ -222,9 +152,9 @@ function! s:Format(start_lnum, end_lnum)
     " Advance to next paragraph.
     if advance
       if op_top
-	let op_top = 0
+        let op_top = 0
       else
-	normal! j
+        normal! j
       endif
       let leader = next_leader
       let is_not_par = next_is_not_par
@@ -252,28 +182,28 @@ function! s:Format(start_lnum, end_lnum)
       " For the first line of a paragraph, check indent of second line.
       " Don't do this for comments and empty lines.
       if first_par_line && do_second_indent && prev_is_end_par && leader =~ "^\\s*$" && next_leader =~ "^\\s*$" && getline(line(".") + 1) !~ "^$"
-	let second_indent = next_leader
+        let second_indent = next_leader
       endif
 
       " When the comment leader changes, it's the end of the paragraph
       if !s:SameLeader(leader, next_leader)
-	let is_end_par = 1
+        let is_end_par = 1
       endif
 
       " If we have got to the end of a paragraph, format it.
       if is_end_par
-	" do the formatting
-	call s:FormatLine(second_indent)
-	let second_indent = "default"
-	let first_par_line = 1
+        " do the formatting
+        call s:FormatLine(second_indent)
+        let second_indent = "default"
+        let first_par_line = 1
       endif
 
       " When still in same paragraph, join the lines together.
       if !is_end_par
-	let advance = 0
-	" join current line and next line without the comment leader
-	call s:DoJoin(next_leader)
-	let first_par_line = 0
+        let advance = 0
+        " join current line and next line without the comment leader
+        call s:DoJoin(next_leader)
+        let first_par_line = 0
       endif
 
     endif
@@ -340,16 +270,16 @@ function! s:FormatLine(second_indent)
     if ch =~ "[!-~]\\{1}" && s:GetCharNextCursor() =~ "[!-~]\\{1}"
       call s:MoveToWordBegin()
       if virtcol(".") - 1 > leader_width
-	" move to previous word end
-	normal! ge
+        " move to previous word end
+        normal! ge
       endif
     endif
 
     " Skip white spaces
     if ch =~ "\\s"
       while ch =~ "\\s" && virtcol(".") - 1 > leader_width
-	normal! h
-	let ch = s:GetCharUnderCursor()
+        normal! h
+        let ch = s:GetCharUnderCursor()
       endwhile
       let force_fold = 1
     endif
@@ -358,7 +288,7 @@ function! s:FormatLine(second_indent)
       call s:MoveToFirstWordEnd(leader_width)
       let force_fold = 1
       if s:GetWidth() == virtcol(".")
-	let finish_format = 1
+        let finish_format = 1
       endif
     endif
 
@@ -366,52 +296,52 @@ function! s:FormatLine(second_indent)
     if !finish_format && !force_fold && g:format_follow_taboo_rule
       let next_ch = s:GetCharNextCursor()
       if s:IsTaboo(next_ch, no_begin)
-	normal! l
-	while s:IsTaboo(next_ch, no_begin)
-	  " if cursor is at the line end, break.
-	  if s:GetWidth() == virtcol(".")
-	    let finish_format = 1
-	    break
-	  endif
-	  normal! l
-	  let next_ch = s:GetCharUnderCursor()
-	endwhile
-	if !finish_format
-	  normal! h
-	endif
+        normal! l
+        while s:IsTaboo(next_ch, no_begin)
+          " if cursor is at the line end, break.
+          if s:GetWidth() == virtcol(".")
+            let finish_format = 1
+            break
+          endif
+          normal! l
+          let next_ch = s:GetCharUnderCursor()
+        endwhile
+        if !finish_format
+          normal! h
+        endif
       endif
 
       let ch = s:GetCharUnderCursor()
       if virtcol(".") > max_width
-	let finish_format = 0
-	while s:IsTaboo(ch, no_begin) && virtcol(".") - 1 > leader_width
-	  normal! h
-	  let ch = s:GetCharUnderCursor()
-	endwhile
-	if ch =~ "[!-~]\\{1}"
-	  call s:MoveToWordBegin()
-	  if virtcol(".") - 1 > leader_width
-	    normal! ge
-	  else
-	    call s:MoveToFirstWordEnd(leader_width)
-	    let force_fold = 1
-	  endif
-	else
-	  let do_insert = 1
-	endif
+        let finish_format = 0
+        while s:IsTaboo(ch, no_begin) && virtcol(".") - 1 > leader_width
+          normal! h
+          let ch = s:GetCharUnderCursor()
+        endwhile
+        if ch =~ "[!-~]\\{1}"
+          call s:MoveToWordBegin()
+          if virtcol(".") - 1 > leader_width
+            normal! ge
+          else
+            call s:MoveToFirstWordEnd(leader_width)
+            let force_fold = 1
+          endif
+        else
+          let do_insert = 1
+        endif
       endif
 
       let ch = s:GetCharUnderCursor()
       if s:IsTaboo(ch, no_end) && !force_fold
-	let do_insert = 0
-	let @b = no_end
-	while s:IsTaboo(ch, no_end) && virtcol(".") -1 > leader_width
-	  normal! h
-	  let ch = s:GetCharUnderCursor()
-	endwhile
-	if virtcol(".") -1 <= leader_width
-	  call s:MoveToFirstWordEnd(leader_width)
-	endif
+        let do_insert = 0
+        let @b = no_end
+        while s:IsTaboo(ch, no_end) && virtcol(".") -1 > leader_width
+          normal! h
+          let ch = s:GetCharUnderCursor()
+        endwhile
+        if virtcol(".") -1 <= leader_width
+          call s:MoveToFirstWordEnd(leader_width)
+        endif
       endif
     endif
 
@@ -429,7 +359,7 @@ function! s:FormatLine(second_indent)
       call setline(line("."), second_indent . substitute(getline("."), "^\\s*", "", ""))
       let do_second_indent = 0
       if strlen(second_indent) > 0
-	normal! h
+        normal! h
       endif
     endif
 
@@ -542,7 +472,6 @@ function! s:SameLeader(leader1, leader2)
   endif
 endfunction
 
-
 "
 " SetCursor(lnum, width)
 "   Set cursor to the line number, then move the cursor to within the width
@@ -580,7 +509,6 @@ function! s:DoRangeJoin(next_leader) range
   else
     let repeat = 1
   endif
-
   while repeat
     call s:DoJoin(a:next_leader)
     let repeat = repeat - 1
@@ -595,14 +523,12 @@ function! s:DoJoin(next_leader)
   if line(".") == line("$")
     return
   endif
-
   let showcmd_save = &showcmd
   set noshowcmd
   let wrap_save = &wrap
   set nowrap
   let lazyredraw_save = &lazyredraw
   set lazyredraw
-
 
   normal! $
   let end_char = s:GetCharUnderCursor()
@@ -668,7 +594,12 @@ endfunction
 
 " Get a character at column next cursor.
 function! s:GetCharNextCursor()
-  return matchstr(getline("."), ".\\@<=.", col(".") - 1)
+  return matchstr(getline("."), '.\@<=.', col(".") - 1)
+endfunction
+
+function! s:GetCharPrevCursor()
+  let pat = '.\%' . col('.') . 'c'
+  return matchstr(getline('.'), pat)
 endfunction
 
 "
@@ -741,4 +672,66 @@ function! s:GetOption(name)
   return var
 endfunction
 
-call DoMappings()
+function! s:Feedkeys(string, mode, count)
+  let i = 0
+  while i < a:count
+    let i += 1
+    call feedkeys(a:string, a:mode)
+  endwhile
+endfunction
+
+function! s:GetLinebreakOffset(curr_line, curr_col)
+  " 禁則ルールに基づいて、カーソル位置の調整を行う
+  " ぶら下がりは考慮しない
+  let back_count = 0
+  let no_begin = s:GetOption('format_no_begin')
+  let no_end = s:GetOption('format_no_end')
+  let curr_char = matchstr(a:curr_line, '\%'.a:curr_col.'c.')
+  let back_col = 0
+  while 1
+    let prev_char = matchstr(a:curr_line, '.\%'.(a:curr_col - back_col).'c')
+    if curr_char == ''
+      let back_count = 0
+      break
+    elseif s:IsTaboo(curr_char, no_begin) || s:IsTaboo(prev_char, no_end)
+      let back_count += 1
+      let curr_char = prev_char
+      let back_col += strlen(curr_char)
+    else
+      break
+    endif
+  endwhile
+  return back_count
+endfunction
+
+function! Format_Japanese()
+  if mode() == 'n'
+    call s:Format(v:lnum, v:lnum + v:count - 1)
+    return 0
+  elseif s:HasFormatOptions('a')
+    " Too difficult to implement.
+    return 1
+  else
+    let curcol = col('.')
+    " v:charを入力した後で&textwidthを超える場合に改行位置の補正を行う
+    let new_line = getline('.') . v:char
+    if curcol + strlen(v:char) > &textwidth
+      let back_count = s:GetLinebreakOffset(new_line, curcol)
+      " カーソル移動と改行の挿入を行う
+      if back_count > 0
+        " 本関数終了後に入力されるv:char分も考慮に入れる
+        let l:count = back_count + 1
+        call s:Feedkeys("\<LEFT>", 'n', l:count)
+        call feedkeys("\<CR>", 'n')
+        call s:Feedkeys("\<RIGHT>", 'n', l:count)
+        return 0
+      else
+        return 1
+      endif
+    else
+      return 1
+    endif
+  endif
+endfunction
+
+set formatexpr=Format_Japanese()
