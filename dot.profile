@@ -7,8 +7,9 @@ export PATH
 
 umask 022
 ulimit -c 0
-ulimit -s 8192
 ulimit -d 262144
+ulimit -n 512
+ulimit -s 8192
 
 export BLOCKSIZE=1k
 export COLORFGBG="default;default"
