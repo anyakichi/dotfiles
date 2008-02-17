@@ -85,7 +85,9 @@ alias -g W='|wc'
 PROMPT='%m%# '    # default prompt
 RPROMPT=' %~'     # prompt for right side of screen
 
-HISTSIZE=200
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
 DIRSTACKSIZE=20
 
 # Watch for my friends
