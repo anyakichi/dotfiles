@@ -86,8 +86,8 @@ PROMPT='%m%# '    # default prompt
 RPROMPT=' %~'     # prompt for right side of screen
 
 HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 DIRSTACKSIZE=20
 
 # Watch for my friends
@@ -102,7 +102,7 @@ setopt   correctall autocd recexact longlistjobs
 setopt   autoresume histignoredups pushdsilent noclobber
 setopt   autopushd pushdminus extendedglob rcquotes
 setopt   pushd_ignore_dups
-setopt   hist_ignore_alldups
+setopt   hist_ignore_alldups share_history
 unsetopt bgnice autoparamslash mailwarning
 
 # Autoload zsh modules when they are referenced
