@@ -2,8 +2,8 @@
 " FileType:     XML
 " Author:       Devin Weaver <vim (at) tritarget.com> 
 " Maintainer:   Devin Weaver <vim (at) tritarget.com>
-" Last Change:  $Date: 2005/05/14 22:13:22 $
-" Version:      $Revision: 1.29 $
+" Last Change:  $Date: 2008-02-08 23:41:48 -0500 (Fri, 08 Feb 2008) $
+" Version:      $Revision: 65 $
 " Location:     http://www.vim.org/scripts/script.php?script_id=301
 " Licence:      This program is free software; you can redistribute it
 "               and/or modify it under the terms of the GNU General Public
@@ -15,6 +15,10 @@
 "               Luc Hermitte <hermitte (at) free.fr> for testing the self
 "                 install documentation code and providing good bug fixes.
 "               Guo-Peng Wen for the self install documentation code.
+"               Shawn Boles <ickybots (at) gmail.com> for fixing the
+"                 <Leader>x cancelation bug. 
+"               Martijn van der Kwast <mvdkwast@gmx.net> for patching
+"                 problems with multi-languages (XML and PHP).
 
 " This script provides some convenience when editing XML (and some SGML)
 " formated documents.
@@ -44,6 +48,9 @@ if exists("b:did_ftplugin")
   finish
 endif
 let b:did_ftplugin = 1
+" sboles, init these variables so vim doesn't complain on wrap cancel
+let b:last_wrap_tag_used = ""
+let b:last_wrap_atts_used = ""
 
 " WrapTag -> Places an XML tag around a visual selection.            {{{1
 " Brad Phelan: Wrap the argument in an XML tag
@@ -175,11 +182,7 @@ function s:ParseTag( )
 
     if <SID>IsParsableTag (ltag)
         " find the break between tag name and atributes (or closing of tag)
-        " Too bad I can't just grab the position index of a pattern in a string.
-        let index = 1
-        while index < strlen (ltag) && strpart (ltag, index, 1) =~ '[[:alnum:]_:\-]'
-            let index = index + 1
-        endwhile
+	let index = matchend (ltag, '[[:alnum:]_:\-]\+')
 
         let tag_name = strpart (ltag, 1, index - 1)
         if strpart (ltag, index) =~ '[^/>[:blank:]]'
@@ -466,6 +469,30 @@ function s:VisualTag( )
 endfunction
 endif
  
+" InsertGt -> close tags only if the cursor is in a HTML or XML context {{{1
+" Else continue editing
+if !exists("*s:InsertGt")
+function s:InsertGt( )
+  " When the current char is text within a tag it will not proccess as a
+  " syntax'ed element and return nothing below. Since the multi line wrap
+  " feture relies on using the '>' char as text within a tag we must use the
+  " char prior to establish if it is valid html/xml
+  if (getline('.')[col('.') - 1] == '>')
+    let char_syn=synIDattr(synID(line("."), col(".") - 1, 1), "name")
+  endif
+  if 0 == match(char_syn, 'html') || 0 == match(char_syn, 'xml')
+    call <SID>ParseTag()
+  else
+    if col(".") == col("$") - 1
+      startinsert!
+    else 
+      execute "normal! l"
+      startinsert
+    endif
+  endif
+endfunction
+endif
+
 " Section: Doc installation {{{1
 " Function: s:XmlInstallDocumentation(full_name, revision)              {{{2
 "   Install help documentation.
@@ -590,7 +617,7 @@ endfunction
 " }}}2
 
 let s:revision=
-      \ substitute("$Revision: 1.29 $",'\$\S*: \([.0-9]\+\) \$','\1','')
+      \ substitute("$Revision: 65 $",'\$\S*: \([.0-9]\+\) \$','\1','')
 silent! let s:install_status =
     \ s:XmlInstallDocumentation(expand('<sfile>:p'), s:revision)
 if (s:install_status == 1)
@@ -602,6 +629,7 @@ endif
 " Mappings and Settings.                                             {{{1
 " This makes the '%' jump between the start and end of a single tag.
 setlocal matchpairs+=<:>
+setlocal commentstring=<!--%s-->
 
 " Have this as an escape incase you want a literal '>' not to run the
 " ParseTag function.
@@ -622,7 +650,8 @@ nnoremap <buffer> <LocalLeader>d :call <SID>DeleteTag()<Cr>
 
 " Parse the tag after pressing the close '>'.
 if !exists("g:xml_tag_completion_map")
-    inoremap <buffer> > ><Esc>:call <SID>ParseTag()<Cr>
+    " inoremap <buffer> > ><Esc>:call <SID>ParseTag()<Cr>
+    inoremap <buffer> > ><Esc>:call <SID>InsertGt()<Cr>
 else
     execute "inoremap <buffer> " . g:xml_tag_completion_map . " ><Esc>:call <SID>ParseTag()<Cr>"
 endif
