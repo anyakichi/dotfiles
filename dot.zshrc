@@ -125,6 +125,9 @@ bindkey -e                 # emacs key bindings
 bindkey ' ' magic-space    # also do history expansion on space
 bindkey '^I' complete-word # complete on tab, leave expansion to _expand
 
+# Load local configuration
+[ -r ~/.zshrc_local ] && source ~/.zshrc_local
+
 # Setup new style completion system. To see examples of the old style (compctl
 # based) programmable completion, check Misc/compctl-examples in the zsh
 # distribution.
@@ -170,5 +173,3 @@ zstyle ':completion:*:*:(^rm):*:*files' ignored-patterns '*?.o' '*?.c~' \
 zstyle ':completion:*:functions' ignored-patterns '_*'
 
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
-
-[ -r ~/.zshrc_local ] && source ~/.zshrc_local
