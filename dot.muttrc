@@ -39,9 +39,14 @@ set header_cache="~/.mutt/hcache"
 set header_cache_pagesize=32768
 
 # Settings for PGP
+source /usr/pkg/share/examples/mutt/gpg.rc
 set nocrypt_autosign
 set pgp_timeout=0
-source /usr/pkg/share/examples/mutt/gpg.rc
+
+# Settings for S/MIME
+source /usr/pkg/share/examples/mutt/smime.rc
+set nosmime_is_default
+set smime_ca_location=/usr/pkg/share/examples/mutt/ca-bundle.crt
 
 # Japanese Extention
 set cjk_width
