@@ -15,6 +15,8 @@ set ispell=/usr/pkg/bin/ispell
 set include
 
 set send_charset="us-ascii:iso-2022-jp:utf-8"
+set assumed_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
+set attach_charset="iso-2022-jp:euc-jp:shift_jis:utf-8"
 
 set thorough_search=yes
 set rfc2047_parameters=yes
