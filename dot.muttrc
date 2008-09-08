@@ -60,7 +60,7 @@ set cjk_width
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
-mailboxes > < =Doubt =Drafts
+mailboxes > < =Doubt =Drafts =Gray
 
 ignore *
 unignore from: date subject to cc
