@@ -1,7 +1,7 @@
 #	$Id$
 
 cdpath=(~ ~/src ~/Documents)
-fpath=($fpath ~/.zfunc)
+fpath=(~/.zfunc $fpath)
 
 hosts=(`hostname` sopht.jp ftp.netbsd.org)
 
