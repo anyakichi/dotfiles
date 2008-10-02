@@ -53,16 +53,7 @@ esac
 # Shell functions
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
-itunes() {
-    if [ ! -e /Volumes/Music ]; then
-	mkdir /Volumes/Music;
-	mount_afp afp://landisk/Music /Volumes/Music;
-    fi
-    open -a iTunes
-}
-ssh-screen() {
-	screen -t ${(@)argv[$#]/.*/} ssh "$@"
-}
+ssh-screen() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
 
 # Autoload all shell functions from all directories in $fpath (following
 # symlinks) that have the executable bit on (the executable bit is not
