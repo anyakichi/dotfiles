@@ -106,7 +106,7 @@ nmap ,s :source $HOME/.vimrc<CR>
 
 nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
-ab #C	Copyright (c) YEAR Inajima Daisuke All rights reserved.
+ab #C	Copyright (c) YEAR INAJIMA Daisuke All rights reserved.
 ab #I	$Id$
 ab #L	
 \Redistribution and use in source and binary forms, with or without<CR>
@@ -119,16 +119,11 @@ ab #L
 \   notice, this list of conditions and the following disclaimer in the<CR>
 \<BS><BS><BS>
 \   documentation and/or other materials provided with the distribution.<CR>
-\<BS><BS><BS>
-\3. The name of the copyright holder may not be used to endorse or<CR>
-\   promote products derived from this software without specific prior<CR>
-\<BS><BS><BS>
-\   written permission.<CR>
 \<BS><BS><BS><CR>
-\THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER ``AS IS'' AND ANY EXPRESS<CR>
-\OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<CR>
+\THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS ``AS IS'' AND ANY<CR>
+\EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED<CR>
 \WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE<CR>
-\DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY<CR>
+\DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY<CR>
 \DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES<CR>
 \(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR<CR>
 \SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER<CR>
