@@ -11,6 +11,9 @@
 
 " Directory & regex enhancements added by Bindu Wavell who is well known on
 " vim.sf.net
+"
+" Patch for spaces in files/directories from Nathan Stien (also reported by
+" Soeren Sonnenburg)
 
 " Do not load a.vim if is has already been loaded.
 if exists("loaded_alternateFile")
@@ -20,6 +23,8 @@ if (v:progname == "ex")
    finish
 endif
 let loaded_alternateFile = 1
+
+let alternateExtensionsDict = {}
 
 " setup the default set of alternate extensions. The user can override in thier
 " .vimrc if the defaults are not suitable. To override in a .vimrc simply set a
@@ -31,7 +36,7 @@ let loaded_alternateFile = 1
 
 " This variable will be increased when an extension with greater number of dots
 " is added by the AddAlternateExtensionMapping call.
-let s:maxDotsInExtension = 0
+let s:maxDotsInExtension = 1
 
 " Function : AddAlternateExtensionMapping (PRIVATE)
 " Purpose  : simple helper function to add the default alternate extension
@@ -49,13 +54,14 @@ function! <SID>AddAlternateExtensionMapping(extension, alternates)
 
    " This code handles extensions which contains a dot. exists() fails with
    " such names.
-   let v:errmsg = ""
+   "let v:errmsg = ""
    " FIXME this line causes ex to return 1 instead of 0 for some reason??
-   silent! echo g:alternateExtensions_{a:extension}
-   if (v:errmsg != "")
-      let g:alternateExtensions_{a:extension} = a:alternates
-   endif
+   "silent! echo g:alternateExtensions_{a:extension}
+   "if (v:errmsg != "")
+      "let g:alternateExtensions_{a:extension} = a:alternates
+   "endif
 
+   let g:alternateExtensionsDict[a:extension] = a:alternates
    let dotsNumber = strlen(substitute(a:extension, "[^.]", "", "g"))
    if s:maxDotsInExtension < dotsNumber
      let s:maxDotsInExtension = dotsNumber
@@ -64,15 +70,13 @@ endfunction
 
 
 " Add all the default extensions
-" Mappings for C, C++ and Objective-C
-call <SID>AddAlternateExtensionMapping('h',"c,m,cpp,cxx,cc,CC")
-call <SID>AddAlternateExtensionMapping('H',"C,M,CPP,CXX,CC")
+" Mappings for C and C++
+call <SID>AddAlternateExtensionMapping('h',"c,cpp,cxx,cc,CC")
+call <SID>AddAlternateExtensionMapping('H',"C,CPP,CXX,CC")
 call <SID>AddAlternateExtensionMapping('hpp',"cpp,c")
 call <SID>AddAlternateExtensionMapping('HPP',"CPP,C")
 call <SID>AddAlternateExtensionMapping('c',"h")
 call <SID>AddAlternateExtensionMapping('C',"H")
-call <SID>AddAlternateExtensionMapping('m',"h")
-call <SID>AddAlternateExtensionMapping('M',"H")
 call <SID>AddAlternateExtensionMapping('cpp',"h,hpp")
 call <SID>AddAlternateExtensionMapping('CPP',"H,HPP")
 call <SID>AddAlternateExtensionMapping('cc',"h")
@@ -95,9 +99,10 @@ call <SID>AddAlternateExtensionMapping('ypp',"lpp,l,lex")
 " Mappings for OCaml
 call <SID>AddAlternateExtensionMapping('ml',"mli")
 call <SID>AddAlternateExtensionMapping('mli',"ml")
-
-"let g:alternateExtensions_{'aspx.cs'} = "aspx"
-"let g:alternateExtensions_{'aspx'} = "aspx.cs"
+" ASP stuff
+call <SID>AddAlternateExtensionMapping('aspx.cs', 'aspx')
+call <SID>AddAlternateExtensionMapping('aspx.vb', 'aspx')
+call <SID>AddAlternateExtensionMapping('aspx', 'aspx.cs,aspx.vb')
 
 " Setup default search path, unless the user has specified
 " a path in their [._]vimrc. 
@@ -112,6 +117,16 @@ if (!exists('g:alternateNoDefaultAlternate'))
    " by default a.vim will alternate to a file which does not exist
    let g:alternateNoDefaultAlternate = 0
 endif
+
+" If this variable is true then a.vim will convert the alternate filename to a
+" filename relative to the current working directory.
+" Feature by Nathan Huizinga
+if (!exists('g:alternateRelativeFiles'))                                        
+   " by default a.vim will not convert the filename to one relative to the
+   " current working directory
+   let g:alternateRelativeFiles = 0
+endif
+
 
 " Function : GetNthItemFromList (PRIVATE)
 " Purpose  : Support reading items from a comma seperated list
@@ -291,7 +306,16 @@ endfunction
 function! EnumerateFilesByExtension(path, baseName, extension)
    let enumeration = ""
    let extSpec = ""
-   silent! let extSpec = g:alternateExtensions_{a:extension}
+   let v:errmsg = ""
+   silent! echo g:alternateExtensions_{a:extension}
+   if (v:errmsg == "")
+      let extSpec = g:alternateExtensions_{a:extension}
+   endif
+   if (extSpec == "")
+      if (has_key(g:alternateExtensionsDict, a:extension))
+         let extSpec = g:alternateExtensionsDict[a:extension]
+      endif
+   endif
    if (extSpec != "") 
       let n = 1
       let done = 0
@@ -382,6 +406,9 @@ function! DetermineExtension(path)
   while i <= s:maxDotsInExtension
     let mods = mods . ":e"
     let extension = fnamemodify(a:path, mods)
+    if (has_key(g:alternateExtensionsDict, extension))
+       return extension
+    endif
     let v:errmsg = ""
     silent! echo g:alternateExtensions_{extension}
     if (v:errmsg == "")
@@ -671,7 +698,7 @@ endfunction
 "            + implemented fix from Matt Perry
 function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar)
   " Check to see if the buffer is already open before re-opening it.
-  let FILENAME = a:fileName
+  let FILENAME = escape(a:fileName, ' ')
   let bufNr = -1
   let lastBuffer = bufnr("$")
   let i = 1
@@ -703,6 +730,10 @@ function! <SID>FindOrCreateBuffer(fileName, doSplit, findSimilar)
            let FILENAME = bufName
         endif
      endif
+  endif
+
+  if (g:alternateRelativeFiles == 1)                                            
+        let FILENAME = fnamemodify(FILENAME, ":p:.")
   endif
 
   let splitType = a:doSplit[0]
