@@ -64,6 +64,12 @@ filetype plugin indent on
 let g:NERDSpaceDelims = 1
 let g:NERDShutUp = 1
 
+" a.vim
+let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
+let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
+let g:alternateExtensions_M = "H"
+let g:alternateExtensions_m = "h"
+
 " howm-mode.vim
 let g:howm_dir = '~/howm'
 let g:howm_findprg = "find"
