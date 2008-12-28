@@ -10,6 +10,7 @@ FILES=	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
 	${RCDIR}/.subversion	\
+	${RCDIR}/.termcap	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zlogin	\
@@ -55,6 +56,9 @@ ${RCDIR}/.screenrc: dot.screenrc
 ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
 	find rc -name .svn | xargs rm -rf
+
+${RCDIR}/.termcap: dot.termcap
+	cp $? $@
 
 ${RCDIR}/.vim: dot.vim
 	cp -r $? $@
