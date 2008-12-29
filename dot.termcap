@@ -13,7 +13,7 @@ screen-256color-bce|screen-bce 256 color:\
 
 xterm-256color|xterm 256 color:\
 	:Co#256:pa#32767:\
-	:AB=\E[48;5;%dm:AF=\E[38;5;%dm:tc=xterm-new:
+	:AB=\E[48;5;%dm:AF=\E[38;5;%dm:tc=xterm:
 
 mlterm|multi lingual terminal emulator:\
 	:am:km:mi:ms:xn:\
