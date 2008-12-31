@@ -31,7 +31,7 @@ alias lsd='ls -ld *(-/DN)'	# List only directories and symbolic
 				# links that point to directories
 alias lsa='ls -ld .*'		# List only file beginning with "."
 
-if [ "x$TERM" = xscreen ]; then
+if [ "x${TERM%%-*}" = xscreen ]; then
 	alias ssh=ssh-screen
 fi
 
