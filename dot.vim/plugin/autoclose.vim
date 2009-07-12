@@ -218,6 +218,7 @@ for key in keys(s:charsToClose)
     endif
 endfor
 exec "inoremap <silent> <BS> <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>Backspace()<CR><C-R>=<SID>RestoreVE()<CR>"
+exec "inoremap <silent> <C-H> <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>Backspace()<CR><C-R>=<SID>RestoreVE()<CR>"
 
 " Define convenient commands
 command! AutoCloseOn :let s:running = 1
