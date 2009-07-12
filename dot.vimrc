@@ -70,6 +70,11 @@ let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
 let g:alternateExtensions_M = "H"
 let g:alternateExtensions_m = "h"
 
+" autofmt.vim
+set runtimepath^=~/.vim/autofmt
+set formatexpr=autofmt#japanese#formatexpr()
+let g:autofmt_allow_over_tw = 2
+
 " howm-mode.vim
 let g:howm_dir = '~/howm'
 let g:howm_findprg = "find"
