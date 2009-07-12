@@ -68,6 +68,29 @@ function! s:IsForbidden(char)
     return l:result && l:region == 'Comment'
 endfunction
 
+function! s:ExpandPair(char)
+    let l:prev = s:GetPrevChar()
+
+    if l:prev == a:char && s:IsEmptyPair()
+	let l:result = "\<CR>\<Esc>O"
+    else
+	let l:result = s:InsertPair(a:char)
+    endif
+    return l:result
+endfunction
+
+function! s:ShrinkPair(char)
+    let l:prev = s:GetPrevChar()
+    let l:line = line('.')
+
+    if l:prev == a:char && getline(l:line) == getline(l:line + 1)
+	let l:result = "\<Esc>ddA"
+    else
+	let l:result = s:ClosePair(a:char)
+    endif
+    return l:result
+endfunction
+
 function! s:InsertPair(char)
     let l:next = s:GetNextChar()
     let l:result = a:char
@@ -148,6 +171,14 @@ else
     let s:charsToClose = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'"}
 endif
 
+" let user define which character he/she wants to expand
+if exists("g:AutoExpandChars") && type(g:AutoExpandChars) == type([])
+    let s:charsToExpand = g:AutoExpandChars
+    unlet g:AutoExpandChars
+else
+    let s:charsToExpand = ['{']
+endif
+
 " let user define in which regions the autocomplete feature should not occur
 if exists("g:AutoCloseProtectedRegions") && type(g:AutoCloseProtectedRegions) == type([])
     let s:protectedRegions = g:AutoCloseProtectedRegions
@@ -177,8 +208,13 @@ for key in keys(s:charsToClose)
     if key == s:charsToClose[key]
         exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>CheckPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
     else
-        exec "inoremap <silent> " . s:charsToClose[key] . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ClosePair(" . close_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-        exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>InsertPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
+	if index(s:charsToExpand, key) >= 0
+	    exec "inoremap <silent> " . s:charsToClose[key] . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ShrinkPair(" . close_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
+	    exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ExpandPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
+	else
+	    exec "inoremap <silent> " . s:charsToClose[key] . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ClosePair(" . close_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
+	    exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>InsertPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
+	endif
     endif
 endfor
 exec "inoremap <silent> <BS> <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>Backspace()<CR><C-R>=<SID>RestoreVE()<CR>"
