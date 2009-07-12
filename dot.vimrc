@@ -71,7 +71,7 @@ let g:alternateExtensions_M = "H"
 let g:alternateExtensions_m = "h"
 
 " autofmt.vim
-set runtimepath^=~/.vim/autofmt
+set runtimepath^=~/.vim/dist/autofmt
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
