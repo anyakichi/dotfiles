@@ -24,7 +24,7 @@ set ignorecase
 set incsearch
 set smartcase
 
-set formatoptions=croqlmM
+set formatoptions=tcroqlmM
 set textwidth=78
 
 set ambiwidth=double
