@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.muttrc:
+# 	Mutt configuration
+#
 
 set mbox_type=Maildir
 set folder=~/Mail

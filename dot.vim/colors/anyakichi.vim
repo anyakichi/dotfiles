@@ -1,6 +1,7 @@
-"	$Id$
-
-" anyakichi color scheme
+"
+" anyakichi.vim:
+" 	Anyakichi color scheme
+"
 
 set bg=dark
 hi clear

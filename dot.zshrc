@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.zshrc:
+# 	Zsh configuration
+#
 
 cdpath=(~ ~/src ~/Documents)
 fpath=(~/.zfunc $fpath)

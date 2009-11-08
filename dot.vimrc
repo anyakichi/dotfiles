@@ -1,4 +1,7 @@
-"	$Id$
+"
+" dot.vimrc:
+" 	Vim configuration
+"
 
 set backspace=indent,eol,start
 
@@ -118,7 +121,6 @@ nmap ,s :source $HOME/.vimrc<CR>
 nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
 ab #C	Copyright (c) YEAR INAJIMA Daisuke All rights reserved.
-ab #I	$Id$
 ab #L	
 \Redistribution and use in source and binary forms, with or without<CR>
 \modification, are permitted provided that the following conditions<CR>

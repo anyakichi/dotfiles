@@ -1,4 +1,7 @@
-#	$Id$
+#
+# main:
+# 	Main settings for mlterm
+#
 
 scrollbar_mode = none
 fontsize = 14

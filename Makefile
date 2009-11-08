@@ -1,4 +1,7 @@
-#	$Id$
+#
+# Makefile:
+# 	Make rc tree
+#
 
 RCDIR=	rc
 FILES=	\

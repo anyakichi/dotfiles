@@ -1,4 +1,7 @@
-#	$Id$
+#
+# config:
+# 	Subversion configuration
+#
 
 ### This file configures various client-side behaviors.
 ###

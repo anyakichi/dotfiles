@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.cvsrc:
+# 	CVS configuraion
+#
 
 cvs	-q
 

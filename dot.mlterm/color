@@ -1,4 +1,7 @@
-#	$Id$
+#
+# color:
+# 	Color definitions for mlterm
+#
 
 black=#484848
 #red=#ff6666

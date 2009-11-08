@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.termcap:
+# 	Additional termcap database
+#
 
 SB|screen-bce|VT 100/ANSI X3.64 virtual terminal with bce:\
 	:ut:tc=screen:

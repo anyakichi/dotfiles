@@ -1,4 +1,7 @@
-"	$Id$
+"
+" filetype.vim:
+" 	Vim script for filetype detection
+"
 
 au BufNewFile,BufRead ?\+.en,?\+.ja
 	\ exe "doau filetypedetect BufRead " . expand("<afile>:r")

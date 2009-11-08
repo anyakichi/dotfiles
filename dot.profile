@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.profile:
+# 	Sh configuration
+#
 
 PATH=$HOME/bin:/bin:/sbin:/usr/bin:/usr/sbin:/usr/X11R6/bin:/usr/pkg/bin
 PATH=${PATH}:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin

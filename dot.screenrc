@@ -1,4 +1,7 @@
-#	$Id$
+#
+# dot.screenrc:
+# 	Screen configuration
+#
 
 escape ^Z^Z
 encoding UTF-8

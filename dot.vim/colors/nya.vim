@@ -1,6 +1,7 @@
-"	$Id$
-
-" anyakichi color scheme
+"
+" nya.vim:
+" 	Nya color scheme
+"
 
 set bg=dark
 hi clear
