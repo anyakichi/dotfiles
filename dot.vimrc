@@ -56,7 +56,8 @@ if has("path_extra")
   set tags=./tags;/,~/.vim/systags
 endif
 
-let maplocalleader = ";"
+let g:filetype_m = 'objc'
+let g:maplocalleader = ";"
 
 filetype plugin indent on
 
