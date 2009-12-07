@@ -74,6 +74,7 @@ alias -g I='|iconv'
 alias -g S='|sort'
 alias -g T='|tail'
 alias -g W='|wc'
+alias -g X='|xargs'
 
 # Set prompts
 PROMPT='%m%# '    # default prompt
