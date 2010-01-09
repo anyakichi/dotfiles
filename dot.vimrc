@@ -94,6 +94,9 @@ let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 " utl.vim
 let g:utl_rc_app_browser = "silent !firefox '%u' &"
 
+" vcscommand
+set runtimepath^=~/.vim/dist/vcscommand
+
 
 " Mappings
 
