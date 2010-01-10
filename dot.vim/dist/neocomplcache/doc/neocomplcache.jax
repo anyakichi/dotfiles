@@ -1,6 +1,6 @@
 *neocomplcache.txt*	究極の自動補完環境
 
-Version: 4.06
+Version: 4.02
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -306,7 +306,7 @@ g:NeoComplCache_KeywordPatterns				*g:NeoComplCache_KeywordPatterns*
 		
 		初期値は複雑なので、autoload/neocomplcache.vimを参照せよ。
 
-g:NeoComplCache_NextKeywordPatterns			*g:NeoComplCache_NextKeywordPatterns*
+g:NeoComplCache_NextKeywordPatterns			*g:NeoComplCache_TagsFilterPatterns*
 		カーソルより後のキーワードパターンを認識するための正規表現を記録する。
 		|g:NeoComplCache_KeywordPatterns|と形式は同じである。
 		
@@ -461,12 +461,6 @@ neocomplcache#undo_completion				*neocomplcache#undo_completion*
 >
 		inoremap <expr><C-g>     neocomplcache#undo_completion()
 <
-neocomplcache#complete_common_string()			*neocomplcache#complete_common_string()*
-		inoremap <expr>上で使用する。補完候補の共通文字列を補完する。
-		共通文字列が長い場合に便利である。
->
-		inoremap <expr><C-l>     neocomplcache#complete_common_string()
-<
 ==============================================================================
 EXAMPLES					*neocomplcache-examples*
 >
@@ -499,7 +493,6 @@ EXAMPLES					*neocomplcache-examples*
 	smap <C-l>     <Plug>(neocomplcache_snippets_expand)
 	inoremap <expr><C-h> pumvisible() ? "\<C-y>\<C-h>" : "\<C-h>"
 	inoremap <expr><C-g>     neocomplcache#undo_completion()
-	inoremap <expr><C-l>     neocomplcache#complete_common_string()
 <
 ==============================================================================
 PLUGINS					*neocomplcache-plugins*

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: filename_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Dec 2009
+" Last Modified: 11 Dec 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,16 +23,11 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.08, for Vim 7.0
+" Version: 1.07, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
-"   1.08:
-"    - Improved skip directory.
-"
 "   1.07:
 "    - Fixed in TeX behaviour.
-"    - Fixed manual filename completion bug.
-"    - Improved trunk filename.
 "
 "   1.06:
 "    - Don't expand environment variable.
@@ -89,7 +84,7 @@ function! neocomplcache#complfunc#filename_complete#get_keyword_pos(cur_text)"{{
 
     let l:cur_keyword_pos = match(a:cur_text, l:pattern)
     let l:cur_keyword_str = a:cur_text[l:cur_keyword_pos :]
-    if neocomplcache#is_auto_complete() && len(l:cur_keyword_str) < g:NeoComplCache_KeywordCompletionStartLength
+    if len(l:cur_keyword_str) < g:NeoComplCache_KeywordCompletionStartLength
         return -1
     endif
     
@@ -104,11 +99,16 @@ function! neocomplcache#complfunc#filename_complete#get_keyword_pos(cur_text)"{{
     
     " Skip directory.
     if neocomplcache#is_auto_complete()
-        let l:dir = fnamemodify(l:cur_keyword_str, ':p:h')
-        if l:dir != '' && has_key(s:skip_dir, l:dir)
+        let l:dir = matchstr(l:cur_keyword_str, '^/\|^\a\+:')
+        if l:dir == ''
+            let l:dir = getcwd()
+        endif
+        
+        if has_key(s:skip_dir, getcwd())
             return -1
         endif
     endif
+
 
     return l:cur_keyword_pos
 endfunction"}}}
@@ -151,10 +151,11 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
     endif
 
     if neocomplcache#check_skip_time()
-        let l:dir = fnamemodify(l:cur_keyword_str, ':p:h')
-        if l:dir != ''
-            let s:skip_dir[l:dir] = 1
+        let l:dir = matchstr(l:cur_keyword_str, '^/\|^\a\+:')
+        if l:dir == ''
+            let l:dir = getcwd()
         endif
+        let s:skip_dir[l:dir] = 1
         
         return []
     endif
@@ -186,7 +187,6 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
             if l:dir == ''
                 let l:dir = getcwd()
             endif
-            let l:dir = fnamemodify(l:dir, ':p:h')
             let s:skip_dir[l:dir] = 1
             
             return []
@@ -194,9 +194,7 @@ function! neocomplcache#complfunc#filename_complete#get_complete_words(cur_keywo
         
         let l:abbr = keyword.word
         if len(l:abbr) > g:NeoComplCache_MaxKeywordWidth
-            let l:over_len = len(l:abbr) - g:NeoComplCache_MaxKeywordWidth
-            let l:prefix_len = (l:over_len > 10) ?  10 : l:over_len
-            let l:abbr = printf('%s~%s', l:abbr[: l:prefix_len - 1], l:abbr[l:over_len+l:prefix_len :])
+            let l:abbr = printf('%s~%s', l:abbr[:9], l:abbr[len(l:abbr)-g:NeoComplCache_MaxKeywordWidth-10:])
         endif
 
         if isdirectory(keyword.word)

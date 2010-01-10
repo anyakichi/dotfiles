@@ -1,7 +1,8 @@
 "=============================================================================
 " FILE: include_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Dec 2009
+" Last Modified: 14 Dec 2009
+" Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -22,13 +23,9 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.11, for Vim 7.0
+" Version: 1.10, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
-"   1.11:
-"    - Use neocomplcache#system().
-"    - Skip listed files.
-"
 "   1.10:
 "    - Use g:NeoComplCache_TagsFilterPatterns.
 "    - Supported nested include file in C/C++ filetype.
@@ -140,8 +137,7 @@ function! neocomplcache#plugin#include_complete#get_keyword_list(cur_keyword_str
         let l:ft = 'nothing'
     endif
     
-    if has_key(g:NeoComplCache_MemberPrefixPatterns, l:ft) 
-                \&& a:cur_keyword_str =~ g:NeoComplCache_MemberPrefixPatterns[l:ft]
+    if has_key(g:NeoComplCache_MemberPrefixPatterns, l:ft) && a:cur_keyword_str =~ g:NeoComplCache_MemberPrefixPatterns[l:ft]
         let l:use_member_filter = 1
         
         let l:prefix = matchstr(a:cur_keyword_str, g:NeoComplCache_MemberPrefixPatterns[l:ft])
@@ -167,19 +163,16 @@ function! neocomplcache#plugin#include_complete#get_keyword_list(cur_keyword_str
     endif
     
     let l:keyword_list = []
-    if len(l:cur_keyword_str) < s:completion_length ||
-                \neocomplcache#check_match_filter(l:cur_keyword_str, s:completion_length)
+    let l:key = tolower(l:cur_keyword_str[: s:completion_length-1])
+    if len(l:cur_keyword_str) < s:completion_length || neocomplcache#check_match_filter(l:key)
         for l:include in s:include_info[bufnr('%')].include_files
-            if !buflisted(l:include)
-                let l:keyword_list += neocomplcache#unpack_dictionary(s:include_cache[l:include])
-            endif
+            let l:keyword_list += neocomplcache#unpack_dictionary(s:include_cache[l:include])
         endfor
         
         let l:keyword_list = neocomplcache#member_filter(l:keyword_list, a:cur_keyword_str)
     else
-        let l:key = tolower(l:cur_keyword_str[: s:completion_length-1])
         for l:include in s:include_info[bufnr('%')].include_files
-            if !buflisted(l:include) && has_key(s:include_cache[l:include], l:key)
+            if has_key(s:include_cache[l:include], l:key)
                 let l:keyword_list += s:include_cache[l:include][l:key]
             endif
         endfor
@@ -248,7 +241,7 @@ function! s:get_buffer_include_files(bufnumber)"{{{
                 \&& executable('python')
         " Initialize python path pattern.
         call neocomplcache#set_variable_pattern('g:NeoComplCache_IncludePath', 'python',
-                    \neocomplcache#system('python -', 'import sys;sys.stdout.write(",".join(sys.path))'))
+                    \system('python -', 'import sys;sys.stdout.write(",".join(sys.path))'))
     endif
     
     let l:pattern = has_key(g:NeoComplCache_IncludePattern, l:filetype) ? 
@@ -315,7 +308,7 @@ function! s:load_from_tags(filename, filetype)"{{{
     let l:command = has('win32') || has('win64') ? 
                 \printf('ctags -f - %s %s', l:args, fnamemodify(a:filename, ':p:.')) : 
                 \printf('ctags -f /dev/stdout %s %s', l:args, fnamemodify(a:filename, ':p:.'))
-    let l:lines = split(neocomplcache#system(l:command), '\n')
+    let l:lines = split(system(l:command), '\n')
     
     if !empty(l:lines)
         " Save ctags file.

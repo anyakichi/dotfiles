@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: omni_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Dec 2009
+" Last Modified: 11 Dec 2009
 " Usage: Just source this file.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,13 +23,11 @@
 "     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 "     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 " }}}
-" Version: 1.11, for Vim 7.0
+" Version: 1.10, for Vim 7.0
 "-----------------------------------------------------------------------------
 " ChangeLog: "{{{
-"   1.11:
+"   1.10:
 "    - Supported mark down filetype.
-"    - Deleted C/C++ omni completion support.
-"    - Don't fnamemodify.
 "
 "   1.09:
 "    - Fixed manual completion error.
@@ -213,6 +211,20 @@ function! neocomplcache#complfunc#omni_complete#get_complete_words(cur_keyword_p
         let l:cur_keyword_str = a:cur_keyword_str
     endif
     
+    if &filetype == 'c' || &filetype == 'cpp'
+        let l:filename = fnamemodify(bufname('%'), ':p')
+        let l:tags_save = &tags
+        
+        let l:tags = []
+        for l:include_file in neocomplcache#plugin#include_complete#get_include_files(bufnr('%'))
+            if neocomplcache#cache#filereadable('include_tags', l:include_file)
+                call add(l:tags, neocomplcache#cache#getfilename('include_tags', l:include_file))
+            endif
+        endfor
+        
+        let &tags = &tags . ',' . escape(join(l:tags, ','), ' ')
+    endif
+    
     try
         if &filetype == 'ruby' && l:is_wildcard
             let l:line = getline('.')
@@ -230,6 +242,10 @@ function! neocomplcache#complfunc#omni_complete#get_complete_words(cur_keyword_p
     endtry
     call setpos('.', l:pos)
 
+    if &filetype == 'c' || &filetype == 'cpp'
+        let &tags = l:tags_save
+    endif
+    
     if empty(l:list)
         return []
     endif
@@ -286,7 +302,7 @@ function! s:get_omni_list(list)"{{{
 
     for l:omni in filter(a:list, 'type(v:val) != '.type(''))
         let l:dict = {
-                    \'word' : l:omni.word, 'menu' : '[O]', 'icase' : 1
+                    \'word' : l:omni.word, 'menu' : '[O] ', 'icase' : 1
                     \}
 
         let l:abbr = has_key(l:omni, 'abbr')? l:omni.abbr : l:omni.word
@@ -300,7 +316,7 @@ function! s:get_omni_list(list)"{{{
         endif
 
         if has_key(l:omni, 'menu')
-            let l:dict.menu .= ' ' . l:omni.menu
+            let l:dict.menu .= printf(' %.' . g:NeoComplCache_MaxFilenameWidth . 's', fnamemodify(l:omni.menu, ':t'))
         endif
 
         call add(l:omni_list, l:dict)
