@@ -128,6 +128,24 @@ nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
 ab #C	Copyright (c) YEAR INAJIMA Daisuke All rights reserved.
 ab #L	
+\Permission is hereby granted, free of charge, to any person obtaining a<CR>
+\copy of this software and associated documentation files (the "Software"),<CR>
+\to deal in the Software without restriction, including without limitation<CR>
+\the rights to use, copy, modify, merge, publish, distribute, sublicense,<CR>
+\and/or sell copies of the Software, and to permit persons to whom the<CR>
+\Software is furnished to do so, subject to the following conditions: <CR>
+\<CR>
+\The above copyright notice and this permission notice shall be included in<CR>
+\all copies or substantial portions of the Software.<CR>
+\<CR>
+\THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR<CR>
+\IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,<CR>
+\FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE<CR>
+\AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER<CR>
+\LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING<CR>
+\FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER<CR>
+\DEALINGS IN THE SOFTWARE.
+ab #B	
 \Redistribution and use in source and binary forms, with or without<CR>
 \modification, are permitted provided that the following conditions<CR>
 \are met:<CR>
