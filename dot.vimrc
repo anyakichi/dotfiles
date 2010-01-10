@@ -88,6 +88,14 @@ let g:howm_instantpreview = 1
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
+" neocomplcache
+set runtimepath^=~/.vim/dist/neocomplcache
+let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_MaxList = 10
+let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_KeywordCompletionStartLength = 4
+let g:NeoComplCache_ManualCompletionStartLength = 4
+
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
