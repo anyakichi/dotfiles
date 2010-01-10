@@ -53,7 +53,7 @@ if has("cscope")
 endif
 
 if has("path_extra")
-  set tags=./tags;/,~/.vim/systags
+  set tags=./tags;/
 endif
 
 let g:filetype_m = 'objc'
