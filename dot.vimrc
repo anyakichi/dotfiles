@@ -79,12 +79,6 @@ set runtimepath^=~/.vim/dist/autofmt
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
-" howm-mode.vim
-let g:howm_dir = '~/howm'
-let g:howm_findprg = "find"
-let g:howm_grepprg = "grep"
-let g:howm_instantpreview = 1
-
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
