@@ -25,7 +25,6 @@ export PERL_BADLANG=0
 export SGML_CATALOG_FILES=/usr/pkg/etc/sgml/catalog
 export XML_CATALOG_FILES=/usr/pkg/etc/xml/catalog
 
-LOG=/var/log/httpd/access_log
 WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 [ -r ~/.profile_local ] && source ~/.profile_local
