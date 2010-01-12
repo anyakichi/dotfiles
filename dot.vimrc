@@ -87,8 +87,6 @@ set runtimepath^=~/.vim/dist/neocomplcache
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_MaxList = 10
 let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_KeywordCompletionStartLength = 4
-let g:NeoComplCache_ManualCompletionStartLength = 4
 
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
@@ -120,6 +118,7 @@ cnoremap <C-F> <Right>
 inoremap <C-B> <Left>
 inoremap <C-F> <Right>
 inoremap <C-L> <Esc><C-L>a
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<CR>" : "\<CR>"
 
 nmap ,v :new $HOME/.vimrc<CR>
 nmap ,s :source $HOME/.vimrc<CR>
