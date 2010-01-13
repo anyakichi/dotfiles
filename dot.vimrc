@@ -95,6 +95,9 @@ let g:NeoComplCache_SmartCase = 1
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
+" twitvim
+set runtimepath^=~/.vim/dist/twitvim
+
 " utl.vim
 let g:utl_rc_app_browser = "silent !firefox '%u' &"
 
