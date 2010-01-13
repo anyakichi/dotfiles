@@ -1,0 +1,14 @@
+#
+# dot.hgrc:
+# 	Mercurial configuration
+#
+
+[extensions]
+pager =
+
+[pager]
+pager = LESS='FX' less
+quiet = True
+
+[ui]
+username = INAJIMA Daisuke <inajima@sopht.jp>

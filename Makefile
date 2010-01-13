@@ -6,6 +6,7 @@
 RCDIR=	rc
 FILES=	\
 	${RCDIR}/.cvsrc		\
+	${RCDIR}/.hgrc		\
 	${RCDIR}/.mailcap	\
 	${RCDIR}/.mlterm	\
 	${RCDIR}/.muttrc	\
@@ -33,6 +34,9 @@ ${RCDIR}:
 	mkdir -p ${RCDIR}
 
 ${RCDIR}/.cvsrc: dot.cvsrc
+	cp $? $@
+
+${RCDIR}/.hgrc: dot.hgrc
 	cp $? $@
 
 ${RCDIR}/.mailcap: dot.mailcap
