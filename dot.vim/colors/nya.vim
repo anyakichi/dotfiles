@@ -58,8 +58,8 @@ hi PmenuThumb	ctermfg=DarkCyan
 hi Comment	ctermfg=DarkYellow
 
 hi Constant	ctermfg=DarkGreen cterm=none
-" hi String	ctermfg=Gray
-" hi Character
+hi String	ctermfg=DarkGreen cterm=none
+hi Character	ctermfg=DarkGreen cterm=none
 " hi Number
 " hi Boolean
 " hi Float

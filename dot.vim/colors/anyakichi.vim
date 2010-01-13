@@ -59,7 +59,7 @@ hi Comment	ctermfg=DarkCyan
 
 hi Constant	ctermfg=DarkYellow
 hi String	ctermfg=Gray
-" hi Character
+hi Character	ctermfg=DarkYellow
 " hi Number
 " hi Boolean
 " hi Float
