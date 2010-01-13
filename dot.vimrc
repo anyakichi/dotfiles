@@ -69,6 +69,7 @@ filetype plugin indent on
 " Plugins
 
 " NERD_commenter
+set runtimepath^=~/.vim/dist/NERD_commenter
 let g:NERDSpaceDelims = 1
 let g:NERDShutUp = 1
 
