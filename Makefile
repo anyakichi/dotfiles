@@ -44,11 +44,9 @@ ${RCDIR}/.mailcap: dot.mailcap
 
 ${RCDIR}/.mlterm: dot.mlterm
 	cp -r $? $@
-	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.mutt: dot.mutt
 	cp -r $? $@
-	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.muttrc: dot.muttrc
 	cp $? $@
@@ -61,14 +59,12 @@ ${RCDIR}/.screenrc: dot.screenrc
 
 ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
-	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.termcap: dot.termcap
 	cp $? $@
 
 ${RCDIR}/.vim: dot.vim
 	cp -r $? $@
-	find rc -name .svn | xargs rm -rf
 
 ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
