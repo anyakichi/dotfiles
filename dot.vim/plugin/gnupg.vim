@@ -133,6 +133,8 @@ augroup GnuPG
   " force the user to edit the recipient list if he opens a new file and public
   " keys are preferred
   autocmd BufNewFile                             *.\(gpg\|asc\|pgp\) if (exists("g:GPGPreferSymmetric") && g:GPGPreferSymmetric == 0) | call s:GPGEditRecipients() | endif
+  " switch to binary mode to avoid converting file encoding and format
+  autocmd BufReadPre,FileReadPre      *.\(gpg\|asc\|pgp\) setl binary
   " do the decryption
   autocmd BufReadPost,FileReadPost               *.\(gpg\|asc\|pgp\) call s:GPGDecrypt()
 
@@ -162,10 +164,10 @@ highlight default link GPGHighlightUnknownRecipient ErrorMsg
 function s:GPGInit()
   " first make sure nothing is written to ~/.viminfo while editing
   " an encrypted file.
-  set viminfo=
+  setlocal viminfo=
 
   " we don't want a swap file, as it writes unencrypted data to disk
-  set noswapfile
+  setlocal noswapfile
 
   " check what gpg command to use
   if (!exists("g:GPGExecutable"))
@@ -274,7 +276,7 @@ endfunction
 "
 function s:GPGDecrypt()
   " switch to binary mode to read the encrypted file
-  set bin
+  setlocal binary
 
   " get the filename of the current buffer
   let filename = escape(expand("%:p"), '\"')
@@ -344,7 +346,7 @@ function s:GPGDecrypt()
     echohl GPGWarning
     echom "File is not encrypted, all GPG functions disabled!"
     echohl None
-    set nobin
+    setlocal nobinary
     return
   endif
 
@@ -368,12 +370,12 @@ function s:GPGDecrypt()
     let blackhole = input("Message could not be decrypted! (Press ENTER)")
     echohl None
     bwipeout
-    set nobin
+    setlocal nobin
     return
   endif
 
   " turn off binary mode
-  set nobin
+  setlocal nobinary
 
   " call the autocommand for the file minus .gpg$
   execute ":doautocmd BufReadPost " . escape(expand("%:r"), ' *?\"'."'")
@@ -403,7 +405,7 @@ function s:GPGEncrypt()
   endif
 
   " switch buffer to binary mode
-  set bin
+  setlocal binary
 
   " guard for unencrypted files
   if (exists("b:GPGEncrypted") && b:GPGEncrypted == 0)
@@ -500,7 +502,7 @@ function s:GPGEncryptPost()
   silent u
 
   " switch back from binary mode
-  set nobin
+  setlocal nobinary
 
   " restore encoding
   if (s:GPGEncoding != "")
@@ -735,7 +737,7 @@ function s:GPGFinishRecipientsBuffer()
   endif
 
   " reset modified flag
-  set nomodified
+  setlocal nomodified
 endfunction
 
 " Function: s:GPGViewOptions() {{{2
@@ -892,7 +894,7 @@ function s:GPGFinishOptionsBuffer()
   call setbufvar(b:GPGCorrespondingTo, "&mod", 1)
 
   " reset modified flag
-  set nomodified
+  setlocal nomodified
 endfunction
 
 " Function: s:GPGCheckRecipients(tocheck) {{{2
