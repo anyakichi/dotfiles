@@ -169,10 +169,9 @@ ab #P
 
 command! -nargs=1 Retab call Retab(<f-args>)
 function! Retab(before)
-    let s:tabstop = &tabstop
+    let l:tabstop = &tabstop
     let &tabstop = a:before
-    execute "retab " s:tabstop
-    unlet s:tabstop
+    execute "retab " l:tabstop
 endfunction
 
 " Auto commands
