@@ -41,7 +41,6 @@ set editor="vim '+/^$'"
 set read_inc=100
 
 set header_cache="~/.mutt/hcache"
-set header_cache_pagesize=32768
 
 # Cryptographic
 set crypt_autosign=no
