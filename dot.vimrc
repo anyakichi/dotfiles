@@ -89,6 +89,7 @@ source $VIMRUNTIME/macros/matchit.vim
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_MaxList = 10
 let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_CtagsProgram = "/usr/pkg/bin/exctags"
 
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
