@@ -69,7 +69,6 @@ filetype plugin indent on
 " Plugins
 
 " NERD_commenter
-set runtimepath^=~/.vim/dist/NERD_commenter
 let g:NERDSpaceDelims = 1
 let g:NERDShutUp = 1
 
@@ -80,7 +79,6 @@ let g:alternateExtensions_M = "H"
 let g:alternateExtensions_m = "h"
 
 " autofmt.vim
-set runtimepath^=~/.vim/dist/autofmt
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
@@ -88,22 +86,12 @@ let g:autofmt_allow_over_tw = 2
 source $VIMRUNTIME/macros/matchit.vim
 
 " neocomplcache
-set runtimepath^=~/.vim/dist/neocomplcache
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_MaxList = 10
 let g:NeoComplCache_SmartCase = 1
 
 " taglist.vim
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
-
-" twitvim
-set runtimepath^=~/.vim/dist/twitvim
-
-" utl.vim
-let g:utl_rc_app_browser = "silent !firefox '%u' &"
-
-" vcscommand
-set runtimepath^=~/.vim/dist/vcscommand
 
 
 " Mappings
