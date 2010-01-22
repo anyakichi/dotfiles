@@ -75,7 +75,7 @@ function s:Cycle_macros_menus()
     let s:menus_loaded = 1
     set csto=0
     set cst
-    silent! map <unique> <C-\>s :cs find c <C-R>=expand("<cword>")<CR><CR>
+    silent! map <unique> <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
     silent! map <unique> <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
     silent! map <unique> <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
     silent! map <unique> <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
