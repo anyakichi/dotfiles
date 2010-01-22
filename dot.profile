@@ -17,6 +17,7 @@ export BLOCKSIZE=1k
 export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export EDITOR=vim
+export GPG_TTY=`tty`
 export JAVA_HOME=/usr/pkg/java/sun-1.5
 export LANG=en_US.UTF-8
 export LESS=-cM
