@@ -11,47 +11,58 @@ hosts=(`hostname` sopht.jp ftp.netbsd.org)
 # automatically remove duplicates from these arrays
 typeset -U path cdpath fpath manpath hosts mailpath
 
-# Set up aliases
-alias aclog='less /var/log/httpd/access_log'
+#
+# Aliases
+#
 alias mz='mutt -Z'
 alias vi=vim
-alias wa='webalizer -o ~/Web/webalizer -D ~/Log/dns_cache.db'
+alias grep=egrep
 
-alias mv='nocorrect mv'		# no spelling correction on mv
-alias cp='nocorrect cp'		# no spelling correction on cp
-alias mkdir='nocorrect mkdir'	# no spelling correction on mkdir
+alias cp='nocorrect cp'
 alias make='nocorrect make'
+alias mkdir='nocorrect mkdir'
+alias mv='nocorrect mv'
+alias rm='nocorrect rm'
+
 alias j=jobs
 alias pu=pushd
 alias po=popd
 alias d='dirs -v'
 alias h=history
-alias grep=egrep
+
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
-alias lsd='ls -ld *(-/DN)'	# List only directories and symbolic
-				# links that point to directories
-alias lsa='ls -ld .*'		# List only file beginning with "."
+alias lsd='ls -ld *(-/DN)'
+alias lsa='ls -ld .*'
 
+# Aliases for screen
 if [ ! -z "${STY}" ]; then
 	alias ssh=ssh-screen
 fi
 
+# OS specific aliases
 case $OSTYPE in
 	darwin*)
-		alias gmake=/usr/bin/make
-		alias keychain='open -a "Keychain Access"'
-		alias make=/usr/pkg/bin/bmake
-		alias make=/usr/bin/bsdmake
-		[ -x /usr/pkg/bin/bmake ] && alias make=/usr/pkg/bin/bmake
-		alias mi='open -a mi'
+		alias ka='open -a "Keychain Access"'
 		[ -x /usr/pkg/bin/vim ] && alias vim=/usr/pkg/bin/vim
 		;;
 	netbsd*)
 		;;
 	solaris*)
 esac
+
+# Global aliases
+alias -g G='|grep'
+alias -g L='|less'
+alias -g M='|more'
+alias -g H='|head'
+alias -g I='|iconv'
+alias -g S='|sort'
+alias -g T='|tail'
+alias -g W='|wc'
+alias -g X='|xargs'
+
 
 # Shell functions
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
@@ -64,41 +75,39 @@ ssh-screen() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
 # particular shell function). $fpath should not be empty for this to work.
 for func in $^fpath/*(N-.x:t); autoload $func
 
-# Global aliases -- These do not have to be
-# at the beginning of the command line.
-alias -g G='|grep'
-alias -g L='|less'
-alias -g M='|more'
-alias -g H='|head'
-alias -g I='|iconv'
-alias -g S='|sort'
-alias -g T='|tail'
-alias -g W='|wc'
-alias -g X='|xargs'
 
-# Set prompts
+#
+# Parameters
+#
+
 PROMPT='%m%# '    # default prompt
 RPROMPT=' %~'     # prompt for right side of screen
 
-HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
 DIRSTACKSIZE=20
 
-# Watch for my friends
-#watch=( $(<~/.friends) )       # watch for people in .friends file
-watch=(notme)                   # watch for everybody but me
-LOGCHECK=300                    # check every 5 min for login/logout activity
-WATCHFMT='%n %a %l from %m at %t.'
+HISTFILE=~/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
 
-# Set/unset  shell options
-setopt   notify globdots correct pushdtohome cdablevars autolist
-setopt   correctall autocd recexact longlistjobs
-setopt   autoresume histignoredups pushdsilent noclobber
-setopt   autopushd pushdminus extendedglob rcquotes
-setopt   pushd_ignore_dups
-setopt   hist_ignore_alldups share_history
-unsetopt bgnice autoparamslash mailwarning
+
+#
+# Options
+#
+
+# Changing Directories
+setopt auto_cd auto_pushd cdable_vars
+setopt pushd_ignore_dups pushd_minus pushd_silent pushd_to_home
+
+# Expansion and Grobbing
+setopt extended_glob
+
+# History
+setopt inc_append_history hist_ignore_alldups hist_ignore_dups
+setopt hist_reduce_blanks
+
+# Zle
+setopt no_beep
+
 
 # Autoload zsh modules when they are referenced
 zmodload -a zsh/stat stat
