@@ -65,15 +65,14 @@ ${RCDIR}/.termcap: dot.termcap
 
 ${RCDIR}/.vim: dot.vim
 	mkdir -p $@
-	find "$?" -maxdepth 1 -mindepth 1 \( -name dist -prune -o -print \) \
-	    | xargs -J % cp -rp % $@
-	find "$?/dist" -maxdepth 2 -mindepth 2 \
+	find "$?" -maxdepth 1 -mindepth 1 \! -name dist -exec cp -rp {} $@ \;
+	find "$?/dist" -maxdepth 2 -mindepth 2 \( \
 	    -name filetype.vim -o -name scripts.vim -o -name autoload -o \
 	    -name colors -o -name compiler -o -name doc -o -name ftplugin -o \
 	    -name indent -o -name indent -o -name keymap -o -name lang -o \
 	    -name menu.vim -o -name plugin -o -name print -o -name spell -o \
-	    -name syntax -o -name tutor \
-	    | xargs -J % cp -rp % $@
+	    -name syntax -o -name tutor \) \
+	    -exec cp -rp {} $@ \;
 	vim -e -s -u "NONE" -c ':helptags rc/.vim/doc' -c ':q'
 
 ${RCDIR}/.vimrc: dot.vimrc
