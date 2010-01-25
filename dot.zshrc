@@ -50,7 +50,7 @@ alias lsa='ls -ld .*'
 
 # Aliases for screen
 if [ ! -z "${STY}" ]; then
-	ssh() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
+	alias ssh=ssh-screen
 fi
 
 # Global aliases
@@ -106,9 +106,13 @@ setopt no_beep
 # Functions
 #
 autoload -U compinit vcs_info zmv
+compinit
 
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
+ssh-screen() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
+
+compdef ssh-screen _ssh
 
 
 #
@@ -139,7 +143,6 @@ bindkey -M menuselect \
 #
 # Completion
 #
-compinit
 
 # Completers to use
 zstyle ':completion:*::::' completer _expand _complete _match _prefix _ignored \
