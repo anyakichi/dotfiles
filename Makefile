@@ -16,6 +16,7 @@ FILES=	\
 	${RCDIR}/.termcap	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
+	${RCDIR}/.zfunc		\
 	${RCDIR}/.zlogin	\
 	${RCDIR}/.zshenv	\
 	${RCDIR}/.zshrc
@@ -77,6 +78,9 @@ ${RCDIR}/.vim: dot.vim
 
 ${RCDIR}/.vimrc: dot.vimrc
 	cp $? $@
+
+${RCDIR}/.zfunc: dot.zfunc
+	cp -r $? $@
 
 ${RCDIR}/.zlogin: dot.zlogin
 	cp $? $@
