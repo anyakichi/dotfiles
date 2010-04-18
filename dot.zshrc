@@ -53,6 +53,10 @@ if [ ! -z "${STY}" ]; then
 	alias ssh=ssh-screen
 fi
 
+if [ ! -z "${TMUX}" ]; then
+	alias ssh=ssh-tmux
+fi
+
 # Global aliases
 alias -g G='|grep'
 alias -g L='|less'
@@ -111,8 +115,9 @@ compinit
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 ssh-screen() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
+ssh-tmux() { tmux new-window -n ${(@)argv[$#]/.*/} "ssh $*" }
 
-compdef ssh-screen _ssh
+compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
 
 #
