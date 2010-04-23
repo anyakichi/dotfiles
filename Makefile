@@ -14,6 +14,7 @@ FILES=	\
 	${RCDIR}/.screenrc	\
 	${RCDIR}/.subversion	\
 	${RCDIR}/.termcap	\
+	${RCDIR}/.tmux.conf	\
 	${RCDIR}/.vim		\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zfunc		\
@@ -62,6 +63,9 @@ ${RCDIR}/.subversion: dot.subversion
 	cp -r $? $@
 
 ${RCDIR}/.termcap: dot.termcap
+	cp $? $@
+
+${RCDIR}/.tmux.conf: dot.tmux.conf
 	cp $? $@
 
 ${RCDIR}/.vim: dot.vim
