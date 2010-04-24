@@ -1,4 +1,3 @@
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " AutoClose.vim - Automatically close pair of characters: ( with ), [ with ], { with }, etc.
 " Version: 1.1
 " Author: Thiago Alves <thiago.salves@gmail.com>
@@ -6,221 +5,214 @@
 " URL: http://thiagoalves.org
 " Licence: This script is released under the Vim License.
 " Last modified: 08/25/2008 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-let s:debug = 1
-
-" check if script is already loaded
-if s:debug == 0 && exists("g:loaded_AutoClose")
-    finish "stop loading the script"
+if (exists("g:loaded_autoclose"))
+    finish
 endif
-let g:loaded_AutoClose = 1
+let g:loaded_autoclose = 1
 
-let s:global_cpo = &cpo " store compatible-mode in local variable
-set cpo&vim             " go into nocompatible-mode
+let s:cpo_save = &cpo
+set cpo&vim
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Functions
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! s:GetNextChar()
-    if col('$') == col('.')
-        return "\0"
+function s:getlc(offset)
+    let l:i = col('.') - 1 + a:offset
+
+    if l:i < 0
+	return ''
     endif
-    return strpart(getline('.'), col('.')-1, 1)
+    return getline('.')[l:i]
 endfunction
 
-function! s:GetPrevChar()
-    if col('.') == 1
-        return "\0"
-    endif
-    return strpart(getline('.'), col('.')-2, 1)
-endfunction
-
-function! s:IsEmptyPair()
-    let l:prev = s:GetPrevChar()
-    let l:next = s:GetNextChar()
-    if l:prev == "\0" || l:next == "\0"
-        return 0
-    endif
-    return get(s:charsToClose, l:prev, "\0") == l:next
-endfunction
-
-function! s:GetCurrentSyntaxRegion()
+function s:getSynName()
     return synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
 endfunction
 
 function! s:GetCurrentSyntaxRegionIf(char)
-    let l:origin_line = getline('.')
-    let l:changed_line = strpart(l:origin_line, 0, col('.')-1) . a:char . strpart(l:origin_line, col('.')-1)
-    call setline('.', l:changed_line)
-    let l:region = synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
-    call setline('.', l:origin_line)
+    let l:line = getline('.')
+    let l:line_tmp = l:line[:col('.')-2] . a:char . l:line[col('.')-1:]
+    call setline('.', l:line_tmp)
+    let l:region = s:getSynName()
+    call setline('.', l:line)
     return l:region
 endfunction
 
+function! s:IsEmptyPair()
+    let l:prev = s:getlc(-1)
+    let l:next = s:getlc(0)
+
+    return !empty(l:prev) && !empty(l:next) &&
+	    \get(g:AutoClosePairs, l:prev, "") == l:next
+endfunction
+
 function! s:IsForbidden(char)
-    let l:result = index(s:protectedRegions, s:GetCurrentSyntaxRegion()) >= 0
-    if l:result
-        return l:result
+    if has_key(g:AutoCloseForbidden, "ALL") &&
+		\call(g:AutoCloseForbidden["ALL"], [a:char])
+	return 1
     endif
-    let l:region = s:GetCurrentSyntaxRegionIf(a:char)
-    let l:result = index(s:protectedRegions, l:region) >= 0
-    return l:result && l:region == 'Comment'
+    if has_key(g:AutoCloseForbidden, a:char) &&
+		\call(g:AutoCloseForbidden[a:char], [a:char])
+	return 1
+    endif
+    return 0
 endfunction
 
-function! s:ExpandPair(char)
-    let l:prev = s:GetPrevChar()
-
-    if l:prev == a:char && s:IsEmptyPair()
-	let l:result = "\<CR>\<Esc>O"
-    else
-	let l:result = s:InsertPair(a:char)
+function! s:AutoClose(char)
+    if a:char == "'" || a:char == '"'
+	let l:regions = ["Character", "SpecialChar", "String"]
+	if index(l:regions, s:getSynName()) >= 0
+	    return s:ClosePair(a:char)
+	endif
+	return s:InsertPair(a:char)
     endif
-    return l:result
-endfunction
 
-function! s:ShrinkPair(char)
-    let l:prev = s:GetPrevChar()
-    let l:line = line('.')
-
-    if l:prev == a:char && getline(l:line) == getline(l:line + 1)
-	let l:result = "\<Esc>ddA"
-    else
-	let l:result = s:ClosePair(a:char)
+    if index(g:AutoExpandChars, a:char) >= 0
+	return s:ExpandPair(a:char)
+    elseif has_key(g:AutoClosePairs, a:char)
+	return s:InsertPair(a:char)
     endif
-    return l:result
+
+    for key in keys(g:AutoClosePairs)
+	if g:AutoClosePairs[key] == a:char
+	    if index(g:AutoExpandChars, key) >= 0
+		return s:ShrinkPair(a:char)
+	    endif
+	    return s:ClosePair(a:char)
+	endif
+    endfor
+
+    return a:char
 endfunction
 
 function! s:InsertPair(char)
-    let l:next = s:GetNextChar()
-    let l:result = a:char
-    if s:running && !s:IsForbidden(a:char) && (l:next == "\0" || l:next !~ '\w')
-        let l:result .= s:charsToClose[a:char] . "\<Left>"
+    if s:IsForbidden(a:char)
+	return a:char
     endif
-    return l:result
+    return a:char . g:AutoClosePairs[a:char] . "\<Left>"
 endfunction
 
 function! s:ClosePair(char)
-    if s:running && s:GetNextChar() == a:char
-        let l:result = "\<Right>"
-    else
-        let l:result = a:char
+    if s:getlc(0) == a:char
+	return "\<Right>" 
     endif
-    return l:result
+    return a:char
 endfunction
 
-function! s:CheckPair(char)
-    let l:lastpos = 0
-    let l:occur = stridx(getline('.'), a:char, l:lastpos) == 0 ? 1 : 0
-
-    while l:lastpos > -1
-        let l:lastpos = stridx(getline('.'), a:char, l:lastpos+1)
-        if l:lastpos > col('.')-2
-            break
-        endif
-        if l:lastpos >= 0
-            let l:occur += 1
-        endif
-    endwhile
-
-    if l:occur == 0 || l:occur%2 == 0
-        " Opening char
-        return s:InsertPair(a:char)
-    else
-        " Closing char
-        return s:ClosePair(a:char)
+function! s:ExpandPair(char)
+    if s:getlc(-1) == a:char && s:IsEmptyPair()
+	return "\<CR>\<Esc>O"
     endif
+    return s:InsertPair(a:char)
 endfunction
 
-function! s:Backspace()
-    if s:running && s:IsEmptyPair()
+function! s:ShrinkPair(char)
+    let l:line = line('.')
+
+    if s:getlc(-1) == a:char && getline(l:line) == getline(l:line + 1)
+	return "\<Esc>ddA"
+    endif
+    return s:ClosePair(a:char)
+endfunction
+
+function! s:DeletePair()
+    if s:IsEmptyPair()
         return "\<BS>\<Del>"
     endif    
     return "\<BS>"
 endfunction
 
-function! s:ToggleAutoClose()
-    let s:running = !s:running
-    if s:running
-        echo "AutoClose ON"
-    else
-        echo "AutoClose OFF"
+function! s:forbiddenAll(char)
+    let l:prev = s:getlc(-1)
+    let l:next = s:getlc(0)
+
+    return l:prev ==# '\' || (l:next != "" && l:next =~ '\w') ||
+	    \s:GetCurrentSyntaxRegionIf(a:char) ==# "Character"
+endfunction
+
+function! s:forbiddenQuote(char)
+    return &lisp || s:getlc(-1) =~ '\w'
+endfunction
+
+function! s:forbiddenDoubleQuote(char)
+    if &filetype ==# "vim"
+	let l:region = s:GetCurrentSyntaxRegionIf(a:char)
+	return l:region ==# "Comment"
     endif
 endfunction
 
-function! s:SetVEAll()
-    let s:save_ve = &ve
-    set ve=all
-    return ""
+function! s:AutoCloseEnable(yesno)
+    if a:yesno
+	for key in keys(g:AutoClosePairs)
+	    let val = g:AutoClosePairs[key]
+
+	    if key == val
+		let kv = (key == '"' ? '\"' : key)
+		exec 'inoremap <silent> ' . key .
+		    \' <C-R>=<SID>AutoClose("' . kv . '")<CR>'
+	    else
+		exec 'inoremap <silent> ' . key .
+		    \' <C-R>=<SID>AutoClose("' . key . '")<CR>'
+		exec 'inoremap <silent> ' . val .
+		    \' <C-R>=<SID>AutoClose("' . val . '")<CR>'
+	    endif
+	endfor
+	inoremap <expr> <BS>  <SID>DeletePair()
+	inoremap <expr> <C-H> <SID>DeletePair()
+
+	let s:running = 1
+    else
+	for key in keys(g:AutoClosePairs)
+	    let val = g:AutoClosePairs[key]
+
+	    if key == val
+		exec 'iunmap ' . key
+	    else
+		exec 'iunmap ' . key
+		exec 'iunmap ' . val
+	    endif
+	endfor
+	iunmap <BS>
+	iunmap <C-H>
+
+	let s:running = 0
+    endif
 endfunction
 
-function! s:RestoreVE()
-    exec "set ve=" . s:save_ve
-    unlet s:save_ve
-    return ""
+function! s:ToggleAutoClose()
+    if s:running
+        echo "AutoClose OFF"
+	s:AutoCloseEnable(0)
+    else
+        echo "AutoClose ON"
+	s:AutoCloseEnable(1)
+    endif
 endfunction
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
 " Configuration
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" let user define which character he/she wants to autocomplete
-if exists("g:AutoClosePairs") && type(g:AutoClosePairs) == type({})
-    let s:charsToClose = g:AutoClosePairs
-    unlet g:AutoClosePairs
-else
-    let s:charsToClose = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'"}
+"
+if !exists("g:AutoClosePairs") || type(g:AutoClosePairs) != type({})
+    let g:AutoClosePairs = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'"}
 endif
 
-" let user define which character he/she wants to expand
-if exists("g:AutoExpandChars") && type(g:AutoExpandChars) == type([])
-    let s:charsToExpand = g:AutoExpandChars
-    unlet g:AutoExpandChars
-else
-    let s:charsToExpand = ['{']
+if !exists("g:AutoExpandChars") || type(g:AutoExpandChars) != type([])
+    let g:AutoExpandChars = ['{']
 endif
 
-" let user define in which regions the autocomplete feature should not occur
-if exists("g:AutoCloseProtectedRegions") && type(g:AutoCloseProtectedRegions) == type([])
-    let s:protectedRegions = g:AutoCloseProtectedRegions
-    unlet g:AutoCloseProtectedRegions
-else
-    let s:protectedRegions = ["Comment", "String", "Character"]
+if !exists("g:AutoCloseForbidden") || type(g:AutoCloseForbidden) != type({})
+    let g:AutoCloseForbidden = { "ALL": function("s:forbiddenAll"),
+				\"'":   function("s:forbiddenQuote"),
+				\"\"":  function("s:forbiddenDoubleQuote") }
 endif
 
-" let user define if he/she wants the plugin turned on when vim start. Defaul is YES
 if exists("g:AutoCloseOn") && type(g:AutoCloseOn) == type(0)
-    let s:running = g:AutoCloseOn
+    call s:AutoCloseEnable(g:AutoCloseOn)
     unlet g:AutoCloseOn
 else
-    let s:running = 1
+    call s:AutoCloseEnable(1)
 endif
 
-" create appropriate maps to defined open/close characters
-for key in keys(s:charsToClose)
-    if key == '"'
-        let open_func_arg = '"\""'
-        let close_func_arg = '"\""'
-    else
-        let open_func_arg = '"' . key . '"'
-        let close_func_arg = '"' . s:charsToClose[key] . '"'
-    endif 
-     
-    if key == s:charsToClose[key]
-        exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>CheckPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-    else
-	if index(s:charsToExpand, key) >= 0
-	    exec "inoremap <silent> " . s:charsToClose[key] . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ShrinkPair(" . close_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-	    exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ExpandPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-	else
-	    exec "inoremap <silent> " . s:charsToClose[key] . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>ClosePair(" . close_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-	    exec "inoremap <silent> " . key . " <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>InsertPair(" . open_func_arg . ")<CR><C-R>=<SID>RestoreVE()<CR>"
-	endif
-    endif
-endfor
-exec "inoremap <silent> <BS> <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>Backspace()<CR><C-R>=<SID>RestoreVE()<CR>"
-exec "inoremap <silent> <C-H> <C-R>=<SID>SetVEAll()<CR><C-R>=<SID>Backspace()<CR><C-R>=<SID>RestoreVE()<CR>"
-
-" Define convenient commands
-command! AutoCloseOn :let s:running = 1
-command! AutoCloseOff :let s:running = 0
+command! AutoCloseOn :call s:AutoCloseEnable(1)
+command! AutoCloseOff :call s:AutoCloseEnable(0)
 command! AutoCloseToggle :call s:ToggleAutoClose()
+
+let &cpo = s:cpo_save
