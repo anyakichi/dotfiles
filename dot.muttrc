@@ -76,31 +76,27 @@ bind generic l next-page
 bind generic h previous-page
 bind generic N search-opposite
 
+bind index,pager f next-page
+bind index,pager b previous-page
+bind index,pager H display-toggle-weed
+bind index,pager ! flag-message
+bind index,pager B bounce-message
+bind index,pager F forward-message
+bind index,pager \c] next-unread-mailbox
+bind index,pager R group-reply
+bind index,pager N search-opposite
+bind index,pager q quit
+
 bind index g first-entry
 bind index G last-entry
-bind index f next-page
-bind index b previous-page
-bind index N search-opposite
-bind index R group-reply
-bind index \cb bounce-message
-bind index \cf forward-message
-bind index \c] next-unread-mailbox
 
 bind pager g top
 bind pager G bottom
-bind pager f next-page
-bind pager b previous-page
 bind pager j next-line
 bind pager k previous-line
 bind pager l next-undeleted
 bind pager h previous-undeleted
-bind pager N search-opposite
 bind pager \cn search-toggle
-bind pager R group-reply
-bind pager \cb bounce-message
-bind pager \cf forward-message
-bind pager H display-toggle-weed
-bind pager q quit
 
 macro	index	i	<change-folder>?\t
 macro	browser	q	<exit><quit>
@@ -108,8 +104,6 @@ macro	browser	q	<exit><quit>
 #macro	pager	c	<change-folder>?\t
 macro	index	\cv	|urlview\n
 macro	pager	\cv	|urlview\n
-macro	index	<backspace> "|sa-learn --ham\n"	'learn as ham'
-macro	pager	<backspace> "|sa-learn --ham\n"	'learn as ham'
 macro	index	.	"|fetchmail\n"		'get new mail'
 macro	pager	.	"|fetchmail\n"		'get new mail'
 
