@@ -1,0 +1,15 @@
+#
+# sidebar.rc:
+# 	Mutt configuration for sidebar
+#
+
+set sidebar_width=30
+set sidebar_visible=no
+set sidebar_delim='|'
+set sidebar_sort
+
+macro browser,index,pager \cb '<enter-command>toggle sidebar_visible<enter><refresh>'
+
+bind index,pager \en sidebar-next
+bind index,pager \ep sidebar-prev
+bind index,pager \eo sidebar-open
