@@ -21,11 +21,13 @@ export GPG_TTY=`tty`
 export JAVA_HOME=/usr/pkg/java/sun-1.5
 export LANG=en_US.UTF-8
 export LESS=-cM
+export MAIL=${HOME}/Mail
 export PAGER=less
 export PERL_BADLANG=0
 export SGML_CATALOG_FILES=/usr/pkg/etc/sgml/catalog
 export XML_CATALOG_FILES=/usr/pkg/etc/xml/catalog
 
+MAILCHECK=0
 WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 [ -r ~/.profile_local ] && source ~/.profile_local
