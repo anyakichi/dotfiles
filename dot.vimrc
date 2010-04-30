@@ -3,6 +3,9 @@
 " 	Vim configuration
 "
 
+"
+" Options
+"
 set backspace=indent,eol,start
 
 set fileencoding=utf-8
@@ -57,7 +60,9 @@ let g:maplocalleader = ";"
 filetype plugin indent on
 
 
+"
 " Plugins
+"
 
 " CSApprox
 let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
@@ -90,8 +95,24 @@ let g:NeoComplCache_CtagsProgram = "/usr/pkg/bin/exctags"
 let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 
 
-" Mappings
+"
+" Auto commands
+"
+autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
+autocmd FileType mail					setlocal tw=72
+autocmd FileType scheme setlocal sw=2
 
+
+"
+" Syntax coloring
+"
+syntax on
+colorscheme nya
+
+
+"
+" Mappings
+"
 noremap Q gq
 nnoremap Y y$
 
@@ -162,13 +183,3 @@ ab #B
 ab #P	
 \This library is free software; you can redistribute it and/or modify<CR>
 \it under the same terms as Perl itself. 
-
-" Auto commands
-autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail					setlocal tw=72
-autocmd FileType scheme setlocal sw=2
-
-
-" Syntax coloring
-syntax on
-colorscheme nya
