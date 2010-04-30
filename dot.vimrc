@@ -107,9 +107,12 @@ autocmd FileType scheme setlocal sw=2
 " Syntax coloring
 "
 syntax on
-colorscheme nya
-
-
+if has("gui")
+    let moria_style = 'dark'
+    colorscheme moria
+else
+    colorscheme nya
+endif
 "
 " Mappings
 "
