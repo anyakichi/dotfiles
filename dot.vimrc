@@ -163,13 +163,6 @@ ab #P
 \This library is free software; you can redistribute it and/or modify<CR>
 \it under the same terms as Perl itself. 
 
-command! -nargs=1 Retab call Retab(<f-args>)
-function! Retab(before)
-    let l:tabstop = &tabstop
-    let &tabstop = a:before
-    execute "retab " l:tabstop
-endfunction
-
 " Auto commands
 autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
 autocmd FileType mail					setlocal tw=72
