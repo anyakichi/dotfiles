@@ -47,15 +47,6 @@ set completeopt=menuone
 
 set pastetoggle=<C-_>
 
-if has("cscope")
-  set cscopetag
-  set nocscopeverbose
-  if filereadable("cscope.out")
-    cs add cscope.out
-  endif
-  set cscopeverbose
-endif
-
 if has("path_extra")
   set tags=./tags;/
 endif
