@@ -113,6 +113,8 @@ if has("gui")
 else
     colorscheme nya
 endif
+
+
 "
 " Mappings
 "
