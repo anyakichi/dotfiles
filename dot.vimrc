@@ -68,6 +68,10 @@ filetype plugin indent on
 
 " Plugins
 
+" CSApprox
+let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
+let g:CSApprox_verbose_level = 0
+
 " NERD_commenter
 let g:NERDSpaceDelims = 1
 let g:NERDShutUp = 1
