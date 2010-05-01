@@ -50,8 +50,12 @@ set completeopt=menuone
 
 set pastetoggle=<C-_>
 
+if has("mouse")
+    set mouse=a
+endif
+
 if has("path_extra")
-  set tags=./tags;/
+    set tags=./tags;/
 endif
 
 let g:filetype_m = 'objc'
