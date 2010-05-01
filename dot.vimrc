@@ -32,6 +32,7 @@ set smartcase
 
 set formatoptions=tcroqlmM
 set textwidth=78
+set virtualedit=block
 
 set nobackup
 set hidden
