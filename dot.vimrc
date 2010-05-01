@@ -18,8 +18,6 @@ set autoindent
 set smartindent
 set shiftround
 
-set winminheight=0
-
 set showcmd
 set laststatus=2
 set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}%m%r%=%-14.(%l,%c%V%)\ %P
@@ -32,7 +30,9 @@ set smartcase
 
 set formatoptions=tcroqlmM
 set textwidth=78
+
 set virtualedit=block
+set winminheight=0
 
 set nobackup
 set hidden
@@ -49,6 +49,7 @@ set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
 set completeopt=menuone
 
+set clipboard=unnamed,autoselect
 set pastetoggle=<C-_>
 
 if has("mouse")
