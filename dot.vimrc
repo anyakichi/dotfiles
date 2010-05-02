@@ -158,35 +158,35 @@ noremap gk k
 
 nnoremap / /\v
 nnoremap ? ?\v
-nnoremap <silent> <C-H> :<C-U>set hlsearch!<CR>
+nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
 
-nnoremap <C-N> gt
-nnoremap <C-P> gT
-nnoremap tt :<C-U>tabnew 
-nnoremap <silent> tT :<C-U>tabnew<CR>
-nnoremap th :<C-U>tab help 
-nnoremap <silent> td :<C-U>tabclose<CR>
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+nnoremap tt :<C-u>tabnew 
+nnoremap <silent> tT :<C-u>tabnew<CR>
+nnoremap th :<C-u>tab help 
+nnoremap <silent> td :<C-u>tabclose<CR>
 
-nnoremap ts :<C-U>split 
-nnoremap tS <C-W>n
-nnoremap tv :<C-U>vsplit 
-nnoremap tV <C-W>v
-nnoremap tc <C-W>c
-nnoremap <M-H> <C-W>h
-nnoremap <M-J> <C-W>j
-nnoremap <M-K> <C-W>k
-nnoremap <M-L> <C-W>l
+nnoremap ts :<C-u>split 
+nnoremap tS <C-w>n
+nnoremap tv :<C-u>vsplit 
+nnoremap tV <C-w>v
+nnoremap tc <C-w>c
+nnoremap <M-h> <C-w>h
+nnoremap <M-j> <C-w>j
+nnoremap <M-k> <C-w>k
+nnoremap <M-l> <C-w>l
 
-map <C-J> <C-W>j<C-W>_
-map <C-K> <C-W>k<C-W>_
+map <C-j> <C-w>j<C-w>_
+map <C-k> <C-w>k<C-w>_
 
-cnoremap <C-A> <Home>
-cnoremap <C-B> <Left>
-cnoremap <C-F> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
 
-inoremap <C-B> <Left>
-inoremap <C-F> <Right>
-inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<CR>" : "\<CR>"
+inoremap <C-b> <Left>
+inoremap <C-f> <Right>
+inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 
 nmap ,v :new $HOME/.vimrc<CR>
 nmap ,s :source $HOME/.vimrc<CR>
