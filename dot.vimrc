@@ -151,7 +151,11 @@ nnoremap Y y$
 
 noremap j gj
 noremap k gk
+noremap gj j
+noremap gk k
 
+nnoremap / /\v
+nnoremap ? ?\v
 nnoremap <silent> <C-H> :set hlsearch!<CR>
 
 nnoremap <C-N> gt
