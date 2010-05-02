@@ -20,7 +20,10 @@ set shiftround
 
 set showcmd
 set laststatus=2
-set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}%m%r%=%-14.(%l,%c%V%)\ %P
+set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}
+	      \%{&ff!='unix'?'['.&ff.']':''}%{&bin?'[bin]':''}%m%r
+	      \%=%-14.(%l,%c%V%)\ %P
+set laststatus=2
 set cursorline
 
 set nohlsearch
