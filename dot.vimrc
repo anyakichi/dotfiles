@@ -34,17 +34,22 @@ set incsearch
 set smartcase
 
 set formatoptions=tcroqlmM
-set splitbelow
-set splitright
 set textwidth=78
 
 set background=dark
 set display=lastline
 set virtualedit=block
+
+set splitbelow
+set splitright
 set winminheight=0
 
 set nobackup
 set hidden
+
+set timeout
+set timeoutlen=3000
+set ttimeoutlen=50
 
 set history=1000
 set wildmode=longest,full
