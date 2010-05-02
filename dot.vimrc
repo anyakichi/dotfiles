@@ -74,7 +74,6 @@ filetype plugin indent on
 "
 
 " CSApprox
-let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
 let g:CSApprox_verbose_level = 0
 
 " NERD_commenter
@@ -117,6 +116,8 @@ autocmd FileType scheme setlocal sw=2
 "
 syntax on
 if has("gui")
+    let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
+
     let moria_style = 'dark'
     colorscheme moria
 else
