@@ -34,6 +34,8 @@ set smartcase
 set formatoptions=tcroqlmM
 set textwidth=78
 
+set background=dark
+set display=lastline
 set virtualedit=block
 set winminheight=0
 
@@ -125,7 +127,6 @@ if has("gui")
 	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
 	\'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
 
-    let g:moria_style = 'dark'
     colorscheme moria
 else
     colorscheme nya
