@@ -106,6 +106,7 @@ let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
 "
 " Auto commands
 "
+autocmd FileType python					setlocal fo-=t
 autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
 autocmd FileType mail					setlocal tw=72
 autocmd FileType scheme setlocal sw=2
