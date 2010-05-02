@@ -11,6 +11,8 @@ set backspace=indent,eol,start
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 
+set ambiwidth=double
+
 set tabstop=8
 set shiftwidth=4
 set noexpandtab
@@ -32,6 +34,8 @@ set incsearch
 set smartcase
 
 set formatoptions=tcroqlmM
+set splitbelow
+set splitright
 set textwidth=78
 
 set background=dark
@@ -42,10 +46,9 @@ set winminheight=0
 set nobackup
 set hidden
 
+set history=1000
 set wildmode=longest,full
 set wildmenu
-
-set ambiwidth=double
 
 set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
 		\i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
@@ -54,7 +57,7 @@ set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
 set completeopt=menuone
 
-set clipboard=unnamed,autoselect
+set clipboard& clipboard+=unnamed
 set pastetoggle=<C-_>
 
 if has("mouse")
