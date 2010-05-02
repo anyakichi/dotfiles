@@ -19,12 +19,12 @@ set smartindent
 set shiftround
 
 set showcmd
+set cursorline
 set laststatus=2
 set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}
 	      \%{&ff!='unix'?'['.&ff.']':''}%{&bin?'[bin]':''}%m%r
 	      \%=%-14.(%l,%c%V%)\ %P
-set laststatus=2
-set cursorline
+set tabline=%!MakeTabLine()
 
 set nohlsearch
 set ignorecase
@@ -117,8 +117,14 @@ autocmd FileType scheme setlocal sw=2
 syntax on
 if has("gui")
     let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
+    let g:CSApprox_hook_post = [
+	\'exe "hi TabLine cterm=none ctermfg=fg ctermbg=" .
+	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
+	\'exe "hi TabLineFill cterm=none ctermfg=fg ctermbg=" .
+	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
+	\'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
 
-    let moria_style = 'dark'
+    let g:moria_style = 'dark'
     colorscheme moria
 else
     colorscheme nya
@@ -126,18 +132,36 @@ endif
 
 
 "
+" Commands
+"
+command! -nargs=1 -bang -bar -complete=help H tab help<bang> <args>
+command! -nargs=1 -bar -complete=file T tabnew <args>
+command! -nargs=1 -bar -complete=file V vnew <args>
+command! -nargs=1 -bar -complete=file W new <args>
+
+
+"
 " Mappings
 "
+nnoremap t; t
+nnoremap t <Nop>
+
 noremap Q gq
 nnoremap Y y$
 
 noremap j gj
 noremap k gk
 
+nnoremap <silent> <C-H> :set hlsearch!<CR>
+
+nnoremap <C-N> gt
+nnoremap <C-P> gT
+nnoremap tt :tabnew 
+nnoremap th :tab help 
+nnoremap <silent> td :tabc<CR>
+
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
-
-nmap <silent> <C-N> :set hlsearch!<CR>
 
 cnoremap <C-A> <Home>
 cnoremap <C-B> <Left>
@@ -198,3 +222,66 @@ ab #B
 ab #P	
 \This library is free software; you can redistribute it and/or modify<CR>
 \it under the same terms as Perl itself. 
+
+function! GetBufname(bufnr, tail)
+    let bufname = bufname(a:bufnr)
+    if bufname == ''
+	let buftype = getbufvar(a:bufnr, '&buftype')
+	if buftype == ''
+	    return '[No Name]'
+	elseif buftype ==# 'quickfix'
+	    return '[Quickfix List]'
+	elseif buftype ==# 'nofile' || buftype ==# 'acwrite'
+	    return '[Scratch]'
+	endif
+    endif
+    if a:tail
+	return fnamemodify(bufname, ':t')
+    endif
+    let fullpath = fnamemodify(bufname, ':p')
+    if exists('b:lcd') && b:lcd != ''
+	let bufname = matchstr(fullpath, '^\V\(' . escape(b:lcd, '\')
+		    \ . '\v)?[/\\]?\zs.*')
+    endif
+    return bufname
+endfunction
+
+function! MakeTabLine()
+    let s = ''
+
+    for n in range(1, tabpagenr('$'))
+	if n == tabpagenr()
+	    let s .= '%#TabLineSel#'
+	else
+	    let s .= '%#TabLine#'
+	endif
+
+	let s .= '%' . n . 'T'
+
+	let s .= ' %{MakeTabLabel(' . n . ')} '
+
+	let s .= '%#TabLineFill#%T'
+	let s .= '|'
+    endfor
+
+    let s .= '%#TabLineFill#%T'
+    let s .= '%=%#TabLine#'
+    let s .= '%{substitute(getcwd(), $HOME, "~", "")}'
+    return s
+endfunction
+
+function! MakeTabLabel(n)
+    let bufnrs = tabpagebuflist(a:n)
+    let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
+
+    let no = len(bufnrs)
+    if no == 1
+	let no = ''
+    endif
+    let mod = len(filter(bufnrs, 'getbufvar(v:val, "&modified")')) ? '+' : ''
+    let sp = (no . mod) == '' ? '' : ' '
+    let title = GetBufname(curbufnr, 1)
+
+    let s = no . mod . sp . title
+    return s
+endfunction
