@@ -184,7 +184,6 @@ cnoremap <C-F> <Right>
 
 inoremap <C-B> <Left>
 inoremap <C-F> <Right>
-inoremap <C-L> <Esc><C-L>a
 inoremap <expr> <CR> pumvisible() ? "\<C-Y>\<CR>" : "\<CR>"
 
 nmap ,v :new $HOME/.vimrc<CR>
