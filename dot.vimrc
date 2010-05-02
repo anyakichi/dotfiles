@@ -134,7 +134,7 @@ endif
 "
 " Commands
 "
-command! -nargs=1 -bang -bar -complete=help H tab help<bang> <args>
+command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
 command! -nargs=1 -bar -complete=file T tabnew <args>
 command! -nargs=1 -bar -complete=file V vnew <args>
 command! -nargs=1 -bar -complete=file W new <args>
@@ -156,13 +156,24 @@ noremap gk k
 
 nnoremap / /\v
 nnoremap ? ?\v
-nnoremap <silent> <C-H> :set hlsearch!<CR>
+nnoremap <silent> <C-H> :<C-U>set hlsearch!<CR>
 
 nnoremap <C-N> gt
 nnoremap <C-P> gT
-nnoremap tt :tabnew 
-nnoremap th :tab help 
-nnoremap <silent> td :tabc<CR>
+nnoremap tt :<C-U>tabnew 
+nnoremap <silent> tT :<C-U>tabnew<CR>
+nnoremap th :<C-U>tab help 
+nnoremap <silent> td :<C-U>tabclose<CR>
+
+nnoremap ts :<C-U>split 
+nnoremap tS <C-W>n
+nnoremap tv :<C-U>vsplit 
+nnoremap tV <C-W>v
+nnoremap tc <C-W>c
+nnoremap <M-H> <C-W>h
+nnoremap <M-J> <C-W>j
+nnoremap <M-K> <C-W>k
+nnoremap <M-L> <C-W>l
 
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
