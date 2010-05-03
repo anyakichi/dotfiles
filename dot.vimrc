@@ -74,7 +74,7 @@ if has("path_extra")
 endif
 
 let g:filetype_m = 'objc'
-let g:maplocalleader = ";"
+let g:maplocalleader = "\<Space>"
 
 filetype plugin indent on
 
