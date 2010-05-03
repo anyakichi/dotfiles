@@ -150,9 +150,11 @@ nnoremap <silent> tl :<C-u>buffers<CR>
 nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap tt :<C-u>tabnew 
+nnoremap <silent> t<CR> :<C-u>tabnew<CR>
 nnoremap <silent> tT :<C-u>tabnew<CR>
 nnoremap th :<C-u>tab help 
 nnoremap <silent> td :<C-u>tabclose<CR>
+nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
 nnoremap tgf <C-w>gf
 nnoremap tgF <C-w>gF
 
@@ -341,6 +343,20 @@ function! MakeTabLabel(n)
 
     let s = no . mod . sp . title
     return s
+endfunction
+
+function! MoveToNewTab()
+    if winnr('$') > 1
+	tabnew %
+	tabprevious
+	close
+	tabnext
+    elseif bufnr('$') > 1
+	tabnew %
+	tabprevious
+	bprevious
+	tabnext
+    endif
 endfunction
 
 
