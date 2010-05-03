@@ -76,6 +76,8 @@ endif
 let g:filetype_m = 'objc'
 let g:maplocalleader = "\<Space>"
 
+let ctagsprg = '/usr/pkg/bin/exctags'
+
 filetype plugin indent on
 
 
@@ -160,8 +162,10 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-map <C-j> <C-w>j<C-w>_
-map <C-k> <C-w>k<C-w>_
+nnoremap <silent> <Space>v :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> t<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
+nnoremap <silent> <Space>s :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> <Space>t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
@@ -171,11 +175,6 @@ inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
-
-nmap ,v :new $HOME/.vimrc<CR>
-nmap ,s :source $HOME/.vimrc<CR>
-
-nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
 
 "
@@ -246,7 +245,6 @@ let g:CSApprox_verbose_level = 0
 
 " NERD_commenter
 let g:NERDSpaceDelims = 1
-let g:NERDShutUp = 1
 
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
@@ -265,10 +263,10 @@ source $VIMRUNTIME/macros/matchit.vim
 let g:NeoComplCache_EnableAtStartup = 1
 let g:NeoComplCache_MaxList = 10
 let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_CtagsProgram = "/usr/pkg/bin/exctags"
+let g:NeoComplCache_CtagsProgram = ctagsprg
 
 " taglist.vim
-let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
+let g:Tlist_Ctags_Cmd = ctagsprg
 
 
 "
@@ -336,3 +334,11 @@ function! MakeTabLabel(n)
     let s = no . mod . sp . title
     return s
 endfunction
+
+
+"
+" Local settings
+"
+if filereadable($HOME . '/.vim/local.vim')
+    source $HOME/.vim/local.vim
+endif
