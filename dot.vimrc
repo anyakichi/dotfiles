@@ -198,10 +198,10 @@ nnoremap tv :<C-u>vsplit
 nnoremap tV <C-w>v
 nnoremap tO <C-w>o
 nnoremap tc <C-w>c
-nnoremap <M-h> <C-w>h
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-l> <C-w>l
+nnoremap <Esc>h <C-w>h
+nnoremap <Esc>j <C-w>j
+nnoremap <Esc>k <C-w>k
+nnoremap <Esc>l <C-w>l
 
 map <C-j> <C-w>j<C-w>_
 map <C-k> <C-w>k<C-w>_
