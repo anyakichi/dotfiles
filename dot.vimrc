@@ -74,7 +74,7 @@ if has("path_extra")
 endif
 
 let g:filetype_m = 'objc'
-let g:maplocalleader = "\<Space>"
+let g:maplocalleader = "[Space]"
 
 let ctagsprg = '/usr/pkg/bin/exctags'
 
@@ -112,6 +112,11 @@ command! -nargs=1 -bar -complete=file W new <args>
 "
 " Mappings
 "
+nmap <Space> [Space]
+xmap <Space> [Space]
+nnoremap [Space] <Nop>
+xnoremap [Space] <Nop>
+
 noremap Q gq
 nnoremap Y y$
 nnoremap ZQ <Nop>
@@ -162,10 +167,10 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-nnoremap <silent> <Space>v :<C-u>edit $HOME/.vimrc<CR>
-nnoremap <silent> t<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
-nnoremap <silent> <Space>s :<C-u>source $HOME/.vimrc<CR>
-nnoremap <silent> <Space>t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
+nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> t[Space]v :<C-u>tabnew $HOME/.vimrc<CR>
+nnoremap <silent> [Space]s :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
