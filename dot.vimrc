@@ -153,11 +153,10 @@ command! -nargs=1 -bar -complete=file W new <args>
 "
 " Mappings
 "
-nnoremap t; t
-nnoremap t <Nop>
-
 noremap Q gq
 nnoremap Y y$
+nnoremap ZQ <Nop>
+nnoremap ZZ <Nop>
 
 noremap j gj
 noremap k gk
@@ -166,7 +165,23 @@ noremap gk k
 
 nnoremap / /\v
 nnoremap ? ?\v
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
+
+nnoremap t; t
+nnoremap t <Nop>
+
+nnoremap to :<C-u>edit 
+nnoremap <silent> t] :buffer<CR>
+nnoremap <silent> tn :bnext<CR>
+nnoremap <silent> tp :bprevious<CR>
+nnoremap <silent> tD :<C-u>bdelete<CR>
+nnoremap <silent> tl :<C-u>buffers<CR>
 
 nnoremap <C-n> gt
 nnoremap <C-p> gT
@@ -174,11 +189,14 @@ nnoremap tt :<C-u>tabnew
 nnoremap <silent> tT :<C-u>tabnew<CR>
 nnoremap th :<C-u>tab help 
 nnoremap <silent> td :<C-u>tabclose<CR>
+nnoremap tgf <C-w>gf
+nnoremap tgF <C-w>gF
 
 nnoremap ts :<C-u>split 
 nnoremap tS <C-w>n
 nnoremap tv :<C-u>vsplit 
 nnoremap tV <C-w>v
+nnoremap tO <C-w>o
 nnoremap tc <C-w>c
 nnoremap <M-h> <C-w>h
 nnoremap <M-j> <C-w>j
