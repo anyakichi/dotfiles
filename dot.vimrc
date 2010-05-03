@@ -80,49 +80,6 @@ filetype plugin indent on
 
 
 "
-" Plugins
-"
-
-" CSApprox
-let g:CSApprox_verbose_level = 0
-
-" NERD_commenter
-let g:NERDSpaceDelims = 1
-let g:NERDShutUp = 1
-
-" a.vim
-let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
-let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
-let g:alternateExtensions_M = "H"
-let g:alternateExtensions_m = "h"
-
-" autofmt.vim
-set formatexpr=autofmt#japanese#formatexpr()
-let g:autofmt_allow_over_tw = 2
-
-" matchit.vim
-source $VIMRUNTIME/macros/matchit.vim
-
-" neocomplcache
-let g:NeoComplCache_EnableAtStartup = 1
-let g:NeoComplCache_MaxList = 10
-let g:NeoComplCache_SmartCase = 1
-let g:NeoComplCache_CtagsProgram = "/usr/pkg/bin/exctags"
-
-" taglist.vim
-let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
-
-
-"
-" Auto commands
-"
-autocmd FileType python					setlocal fo-=t
-autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail					setlocal tw=72
-autocmd FileType scheme setlocal sw=2
-
-
-"
 " Syntax coloring
 "
 syntax on
@@ -220,6 +177,10 @@ nmap ,s :source $HOME/.vimrc<CR>
 
 nmap ,t :!(cd %:p:h;exctags *)&<CR>
 
+
+"
+" Abbreviations
+"
 ab #C	Copyright (c) YEAR INAJIMA Daisuke All rights reserved.
 ab #L	
 \Permission is hereby granted, free of charge, to any person obtaining a<CR>
@@ -266,6 +227,53 @@ ab #P
 \This library is free software; you can redistribute it and/or modify<CR>
 \it under the same terms as Perl itself. 
 
+
+"
+" Auto commands
+"
+autocmd FileType python					setlocal fo-=t
+autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
+autocmd FileType mail					setlocal tw=72
+autocmd FileType scheme setlocal sw=2
+
+
+"
+" Plugins
+"
+
+" CSApprox
+let g:CSApprox_verbose_level = 0
+
+" NERD_commenter
+let g:NERDSpaceDelims = 1
+let g:NERDShutUp = 1
+
+" a.vim
+let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
+let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
+let g:alternateExtensions_M = "H"
+let g:alternateExtensions_m = "h"
+
+" autofmt.vim
+set formatexpr=autofmt#japanese#formatexpr()
+let g:autofmt_allow_over_tw = 2
+
+" matchit.vim
+source $VIMRUNTIME/macros/matchit.vim
+
+" neocomplcache
+let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_MaxList = 10
+let g:NeoComplCache_SmartCase = 1
+let g:NeoComplCache_CtagsProgram = "/usr/pkg/bin/exctags"
+
+" taglist.vim
+let Tlist_Ctags_Cmd = "/usr/pkg/bin/exctags"
+
+
+"
+" Functions
+"
 function! GetBufname(bufnr, tail)
     let bufname = bufname(a:bufnr)
     if bufname == ''
