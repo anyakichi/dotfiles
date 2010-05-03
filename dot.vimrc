@@ -268,6 +268,9 @@ let g:NeoComplCache_CtagsProgram = ctagsprg
 " taglist.vim
 let g:Tlist_Ctags_Cmd = ctagsprg
 
+" vcscommand.vim
+let g:VCSCommandMapPrefix = '<Leader>v'
+
 
 "
 " Functions
