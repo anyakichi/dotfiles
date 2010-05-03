@@ -52,7 +52,7 @@ set timeoutlen=3000
 set ttimeoutlen=50
 
 set history=1000
-set wildmode=longest,full
+set wildmode=list:longest,full
 set wildmenu
 
 set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
