@@ -136,17 +136,6 @@ function! s:forbiddenAll(char)
 	    \s:GetCurrentSyntaxRegionIf(a:char) ==# "Character"
 endfunction
 
-function! s:forbiddenQuote(char)
-    return &lisp || s:getlc(-1) =~ '\w'
-endfunction
-
-function! s:forbiddenDoubleQuote(char)
-    if &filetype ==# "vim"
-	let l:region = s:GetCurrentSyntaxRegionIf(a:char)
-	return l:region ==# "Comment"
-    endif
-endfunction
-
 function! s:AutoCloseEnable(yesno)
     if a:yesno
 	for key in keys(g:AutoClosePairs)
@@ -207,9 +196,7 @@ if !exists("g:AutoExpandChars") || type(g:AutoExpandChars) != type([])
 endif
 
 if !exists("g:AutoCloseForbidden") || type(g:AutoCloseForbidden) != type({})
-    let g:AutoCloseForbidden = { "ALL": function("s:forbiddenAll"),
-				\"'":   function("s:forbiddenQuote"),
-				\"\"":  function("s:forbiddenDoubleQuote") }
+    let g:AutoCloseForbidden = { "ALL": function("s:forbiddenAll") }
 endif
 
 if exists("g:AutoCloseOn") && type(g:AutoCloseOn) == type(0)
