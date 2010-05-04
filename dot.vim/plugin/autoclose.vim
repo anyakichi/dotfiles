@@ -59,11 +59,18 @@ endfunction
 function! s:AutoClose(char)
     if a:char == "'" || a:char == '"'
 	let l:regions = ["Character", "Constant", "SpecialChar", "String"]
+
 	if index(l:regions, s:getSynName()) >= 0 ||
 	  \index(l:regions, s:GetCurrentSyntaxRegionIf(' ')) >= 0
 	    return s:ClosePair(a:char)
 	endif
-	return s:InsertPair(a:char)
+
+	let l:dummy = a:char . ' ' . a:char
+	if index(l:regions, s:GetCurrentSyntaxRegionIf(l:dummy)) >= 0
+	    return s:InsertPair(a:char)
+	endif
+
+	return a:char
     endif
 
     if index(g:AutoExpandChars, a:char) >= 0
