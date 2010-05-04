@@ -85,7 +85,7 @@ filetype plugin indent on
 "
 syntax on
 if has("gui")
-    let g:CSApprox_hook_pre = 'hi Normal guibg=#2a2a2a'
+    let g:CSApprox_hook_pre = 'hi Normal guifg=#d0d0d0 guibg=#262626'
     let g:CSApprox_hook_post = [
 	\'exe "hi TabLine cterm=none ctermfg=fg ctermbg=" .
 	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
