@@ -270,7 +270,7 @@ let g:autofmt_allow_over_tw = 2
 source $VIMRUNTIME/macros/matchit.vim
 
 " neocomplcache
-let g:NeoComplCache_EnableAtStartup = 1
+let g:NeoComplCache_EnableAtStartup = 0
 let g:NeoComplCache_MaxList = 10
 let g:NeoComplCache_SmartCase = 1
 let g:NeoComplCache_CtagsProgram = ctagsprg
