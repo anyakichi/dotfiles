@@ -254,7 +254,20 @@ autocmd FileType scheme setlocal sw=2
 let g:CSApprox_verbose_level = 0
 
 " NERD_commenter
+let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
+
+nmap <Leader>cc <Plug>NERDCommenterAlignLeft
+vmap <Leader>c  <Plug>NERDCommenterComment
+nmap <Leader>C  <Plug>NERDCommenterToEOL
+vmap <Leader>C  <Plug>NERDCommenterAlignLeft
+nmap <Leader>xm <Plug>NERDCommenterMinimal
+nmap <Leader>xs <Plug>NERDCommenterSexy
+vmap <Leader>xm <Plug>NERDCommenterMinimal
+vmap <Leader>xs <Plug>NERDCommenterSexy
+nmap <Leader>xa <Plug>NERDCommenterAltDelims
+nmap <Leader>u  <Plug>NERDCommenterUncomment
+vmap <Leader>u  <Plug>NERDCommenterUncomment
 
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
