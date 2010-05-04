@@ -74,7 +74,6 @@ if has("path_extra")
 endif
 
 let g:filetype_m = 'objc'
-let g:maplocalleader = "[Space]"
 
 let ctagsprg = '/usr/pkg/bin/exctags'
 
@@ -112,6 +111,7 @@ command! -nargs=1 -bar -complete=file W new <args>
 "
 " Mappings
 "
+let g:maplocalleader = "[Space]"
 nmap <Space> [Space]
 xmap <Space> [Space]
 nnoremap [Space] <Nop>
@@ -140,7 +140,8 @@ nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
 nnoremap t; t
 nnoremap t <Nop>
 
-nnoremap to :<C-u>edit 
+nnoremap to :<C-u>edit<Space>
+nnoremap <expr> tO ':<C-u>edit ' . GetRelativePath()
 nnoremap <silent> t] :buffer<CR>
 nnoremap <silent> tn :bnext<CR>
 nnoremap <silent> tp :bprevious<CR>
@@ -149,20 +150,22 @@ nnoremap <silent> tl :<C-u>buffers<CR>
 
 nnoremap <C-n> gt
 nnoremap <C-p> gT
-nnoremap tt :<C-u>tabnew 
+nnoremap tt :<C-u>tabnew<Space>
+nnoremap <expr> tT ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <silent> t<CR> :<C-u>tabnew<CR>
-nnoremap <silent> tT :<C-u>tabnew<CR>
-nnoremap th :<C-u>tab help 
+nnoremap th :<C-u>tab help<Space>
 nnoremap <silent> td :<C-u>tabclose<CR>
 nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
 nnoremap tgf <C-w>gf
 nnoremap tgF <C-w>gF
+for n in range(1, 9)
+    exe 'nnoremap <silent> t' . n ' :<C-u>tabnext ' . n . '<CR>'
+endfor
 
-nnoremap ts :<C-u>split 
-nnoremap tS <C-w>n
-nnoremap tv :<C-u>vsplit 
-nnoremap tV <C-w>v
-nnoremap tO <C-w>o
+nnoremap ts :<C-u>split<Space>
+nnoremap <expr> tS ':<C-u>split ' . GetRelativePath()
+nnoremap tv :<C-u>vsplit<Space>
+nnoremap <expr> tV ':<C-u>vsplit ' . GetRelativePath()
 nnoremap tc <C-w>c
 nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
@@ -170,7 +173,7 @@ nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
-nnoremap <silent> t[Space]v :<C-u>tabnew $HOME/.vimrc<CR>
+nnoremap <silent> t<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 
@@ -282,29 +285,6 @@ let g:VCSCommandMapPrefix = '<Leader>v'
 "
 " Functions
 "
-function! GetBufname(bufnr, tail)
-    let bufname = bufname(a:bufnr)
-    if bufname == ''
-	let buftype = getbufvar(a:bufnr, '&buftype')
-	if buftype == ''
-	    return '[No Name]'
-	elseif buftype ==# 'quickfix'
-	    return '[Quickfix List]'
-	elseif buftype ==# 'nofile' || buftype ==# 'acwrite'
-	    return '[Scratch]'
-	endif
-    endif
-    if a:tail
-	return fnamemodify(bufname, ':t')
-    endif
-    let fullpath = fnamemodify(bufname, ':p')
-    if exists('b:lcd') && b:lcd != ''
-	let bufname = matchstr(fullpath, '^\V\(' . escape(b:lcd, '\')
-		    \ . '\v)?[/\\]?\zs.*')
-    endif
-    return bufname
-endfunction
-
 function! MakeTabLine()
     let s = ''
 
@@ -325,24 +305,40 @@ function! MakeTabLine()
 
     let s .= '%#TabLineFill#%T'
     let s .= '%=%#TabLine#'
-    let s .= '%{substitute(getcwd(), $HOME, "~", "")}'
+    let s .= '%{fnamemodify(getcwd(), ":~:h")}%<'
     return s
 endfunction
 
 function! MakeTabLabel(n)
     let bufnrs = tabpagebuflist(a:n)
-    let curbufnr = bufnrs[tabpagewinnr(a:n) - 1]
+    let bufnr = bufnrs[tabpagewinnr(a:n) - 1]
+
+    let bufname = bufname(bufnr)
+    if bufname == ''
+	let bufname = '[No Name]'
+    else
+	let bufname = fnamemodify(bufname, ":t")
+    endif
 
     let no = len(bufnrs)
     if no == 1
 	let no = ''
     endif
+
     let mod = len(filter(bufnrs, 'getbufvar(v:val, "&modified")')) ? '+' : ''
     let sp = (no . mod) == '' ? '' : ' '
-    let title = GetBufname(curbufnr, 1)
 
-    let s = no . mod . sp . title
+    let s = no . mod . sp . bufname
     return s
+endfunction
+
+function! GetRelativePath()
+    let path = expand('%:~:.:h')
+    if path == '.'
+	return ""
+    else
+	return path . '/'
+    endif
 endfunction
 
 function! MoveToNewTab()
