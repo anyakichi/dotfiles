@@ -58,8 +58,9 @@ endfunction
 
 function! s:AutoClose(char)
     if a:char == "'" || a:char == '"'
-	let l:regions = ["Character", "SpecialChar", "String"]
-	if index(l:regions, s:getSynName()) >= 0
+	let l:regions = ["Character", "Constant", "SpecialChar", "String"]
+	if index(l:regions, s:getSynName()) >= 0 ||
+	  \index(l:regions, s:GetCurrentSyntaxRegionIf(' ')) >= 0
 	    return s:ClosePair(a:char)
 	endif
 	return s:InsertPair(a:char)
