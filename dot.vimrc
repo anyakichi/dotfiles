@@ -45,6 +45,7 @@ set splitright
 set winminheight=0
 
 set nobackup
+set directory=~/.vim/swap
 set hidden
 
 set timeout
