@@ -356,14 +356,14 @@ endfunction
 
 function! MoveToNewTab()
     if winnr('$') > 1
-	tabnew %
-	tabprevious
 	close
+	tabnew #
+	tabprevious
 	tabnext
     elseif bufnr('$') > 1
-	tabnew %
+	buffer #
+	tabnew #
 	tabprevious
-	bprevious
 	tabnext
     endif
 endfunction
