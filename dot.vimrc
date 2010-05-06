@@ -357,16 +357,31 @@ function! GetRelativePath()
 endfunction
 
 function! MoveToNewTab()
-    if winnr('$') > 1
-	close
-	tabnew #
-	tabprevious
-	tabnext
-    elseif bufnr('$') > 1
-	buffer #
-	tabnew #
-	tabprevious
-	tabnext
+    if &modified
+	if winnr('$') > 1
+	    close
+	    tabnew #
+	    tabprevious
+	    tabnext
+	elseif bufnr('$') > 1
+	    buffer #
+	    tabnew #
+	    tabprevious
+	    tabnext
+	endif
+    else
+	if winnr('$') > 1
+	    tabnew %
+	    tabprevious
+	    close
+	    tabnext
+	elseif bufnr('$') > 1
+	    let bufnr = bufnr('#')
+	    tabnew %
+	    tabprevious
+	    execute 'buffer ' . bufnr
+	    tabnext
+	endif
     endif
 endfunction
 
