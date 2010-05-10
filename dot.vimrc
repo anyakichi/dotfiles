@@ -358,32 +358,19 @@ function! GetRelativePath()
 endfunction
 
 function! MoveToNewTab()
-    if &modified
-	if winnr('$') > 1
-	    close
-	    tabnew #
-	    tabprevious
-	    tabnext
-	elseif bufnr('$') > 1
-	    buffer #
-	    tabnew #
-	    tabprevious
-	    tabnext
-	endif
-    else
-	if winnr('$') > 1
-	    tabnew %
-	    tabprevious
-	    close
-	    tabnext
-	elseif bufnr('$') > 1
-	    let bufnr = bufnr('#')
-	    tabnew %
-	    tabprevious
-	    execute 'buffer ' . bufnr
-	    tabnext
-	endif
+    let bufnr = bufnr('%')
+
+    if winnr('$') > 1
+	close
+    elseif bufnr('$') > 1
+	buffer #
     endif
+
+    tabnew
+    let tmpnr = bufnr('%')
+
+    execute 'buffer ' . bufnr
+    execute 'bwipeout ' . tmpnr
 endfunction
 
 
