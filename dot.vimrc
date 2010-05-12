@@ -157,6 +157,7 @@ nnoremap <silent> t<CR> :<C-u>tabnew<CR>
 nnoremap th :<C-u>tab help<Space>
 nnoremap <silent> td :<C-u>tabclose<CR>
 nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
+nmap	 tK <Leader>Ktm
 nnoremap tgf <C-w>gf
 nnoremap tgF <C-w>gF
 for n in range(1, 9)
@@ -282,6 +283,9 @@ let g:alternateExtensions_m = "h"
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
+" man.vim
+runtime ftplugin/man.vim
+
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
@@ -293,6 +297,10 @@ let g:NeoComplCache_CtagsProgram = ctagsprg
 
 " taglist.vim
 let g:Tlist_Ctags_Cmd = ctagsprg
+
+" tohtml.vim
+let g:html_use_css = 1
+let g:use_xhtml = 1
 
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
