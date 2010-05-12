@@ -366,7 +366,8 @@ function! GetRelativePath()
 endfunction
 
 function! MoveToNewTab()
-    let bufnr = bufnr('%')
+    tab split
+    tabprevious
 
     if winnr('$') > 1
 	close
@@ -374,11 +375,7 @@ function! MoveToNewTab()
 	buffer #
     endif
 
-    tabnew
-    let tmpnr = bufnr('%')
-
-    execute 'buffer ' . bufnr
-    execute 'bwipeout ' . tmpnr
+    tabnext
 endfunction
 
 
