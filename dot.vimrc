@@ -246,10 +246,13 @@ ab #P
 "
 " Auto commands
 "
-autocmd FileType python					setlocal fo-=t
-autocmd FileType docbk,eruby,html,ruby,tex,xhtml,xml	setlocal sw=2
-autocmd FileType mail					setlocal tw=72
-autocmd FileType scheme setlocal sw=2
+augroup vimrc-filetype
+    au!
+    au FileType python					setl fo-=t
+    au FileType docbk,eruby,html,ruby,tex,xhtml,xml	setl sw=2
+    au FileType mail					setl tw=72
+    au FileType scheme					setl sw=2
+augroup END
 
 
 "
