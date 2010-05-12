@@ -143,7 +143,6 @@ nnoremap t <Nop>
 
 nnoremap to :<C-u>edit<Space>
 nnoremap <expr> tO ':<C-u>edit ' . GetRelativePath()
-nnoremap <silent> t] :buffer<CR>
 nnoremap <silent> tn :bnext<CR>
 nnoremap <silent> tp :bprevious<CR>
 nnoremap <silent> tD :<C-u>bdelete<CR>
@@ -155,6 +154,7 @@ nnoremap tt :<C-u>tabnew<Space>
 nnoremap <expr> tT ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <silent> t<CR> :<C-u>tabnew<CR>
 nnoremap th :<C-u>tab help<Space>
+nnoremap t] <C-]>:call MoveToNewTab()<CR>
 nnoremap <silent> td :<C-u>tabclose<CR>
 nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
 nmap	 tK <Leader>Ktm
