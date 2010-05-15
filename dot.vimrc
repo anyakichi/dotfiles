@@ -154,7 +154,7 @@ nnoremap tt :<C-u>tabnew<Space>
 nnoremap <expr> tT ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <silent> t<CR> :<C-u>tabnew<CR>
 nnoremap th :<C-u>tab help<Space>
-nnoremap t] <C-]>:call MoveToNewTab()<CR>
+nnoremap <silent> t] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap <silent> td :<C-u>tabclose<CR>
 nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
 nmap	 tK <Leader>Ktm
