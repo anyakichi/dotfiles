@@ -20,7 +20,7 @@ xterm-256color|xterm 256 color:\
 
 mlterm|multi lingual terminal emulator:\
 	:am:km:mi:ms:xn:\
-	:Co#8:co#80:it#8:li#24:pa#64:\
+	:Co#256:co#80:it#8:li#24:pa#64:\
 	:*6=\E[4~:@0=\E[1~:@7=\EOF:AB=\E[4%dm:AF=\E[3%dm:\
 	:AL=\E[%dL:DC=\E[%dP:DL=\E[%dM:DO=\E[%dB:F1=\E[23~:\
 	:F2=\E[24~:IC=\E[%d@:Km=\E[M:LE=\E[%dD:\
@@ -41,7 +41,3 @@ mlterm|multi lingual terminal emulator:\
 	:te=\E[?1049l:ti=\E[?1049h:\
 	:ue=\E[24m:up=\E[A:us=\E[4m:\
 	:ve=\E[?25h:vi=\E[?25l:
-
-mlterm-256color|mlterm 256 color:\
-	:Co#256:pa#32767:\
-	:AB=\E[48;5;%dm:AF=\E[38;5;%dm:tc=mlterm:
