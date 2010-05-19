@@ -8,7 +8,6 @@ PATH=${PATH}:/usr/pkg/sbin:/usr/games:/usr/local/bin:/usr/local/sbin
 export PATH
 
 umask 022
-ulimit -c 0
 ulimit -d 262144
 ulimit -n 512
 ulimit -s 8192
@@ -18,7 +17,6 @@ export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export EDITOR=vim
 export GPG_TTY=`tty`
-export JAVA_HOME=/usr/pkg/java/sun-1.5
 export LANG=en_US.UTF-8
 export LESS=-cM
 export MAIL=${HOME}/Mail
@@ -69,4 +67,4 @@ start_gpgagent()
         eval $(eval gpg-agent ${_args} "$@")
 }
 
-[ -r ~/.profile_local ] && source ~/.profile_local
+[ -f ~/.profile_local ] && . ~/.profile_local
