@@ -14,7 +14,6 @@ limit -s
 #
 # Parameters
 #
-
 PROMPT='%m%# '
 RPROMPT=' %~'
 
@@ -56,13 +55,13 @@ alias lla='ls -la'
 alias lsd='ls -ld *(-/DN)'
 alias lsa='ls -ld .*'
 
-# Aliases for screen
-if [ ! -z "${STY}" ]; then
+# Aliases for ssh
+if [[ -n "${STY}" ]] then
 	alias ssh=ssh-screen
-fi
-
-if [ ! -z "${TMUX}" ]; then
+elif [[ -n "${TMUX}" ]] then
 	alias ssh=ssh-tmux
+else
+	alias ssh=xssh
 fi
 
 # Global aliases
@@ -122,8 +121,26 @@ compinit
 
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
-ssh-screen() { screen -t ${(@)argv[$#]/.*/} ssh "$@" }
-ssh-tmux() { tmux new-window -n ${(@)argv[$#]/.*/} "ssh $*" }
+
+_ssh_wrapper() {
+	for pid in `pgrep ssh-agent`; do
+		test "${pid}" = "${SSH_AGENT_PID}" && \
+		    ! ssh-add -l >/dev/null && ssh-add 2>/dev/null
+	done
+	"$@"
+}
+
+xssh() {
+	_ssh_wrapper ssh "$@"
+}
+
+ssh-screen() {
+	_ssh_wrapper screen -t ${(@)argv[$#]/.*/} ssh "$@"
+}
+
+ssh-tmux() {
+	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "ssh $*"
+}
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
