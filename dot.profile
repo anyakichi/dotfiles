@@ -3,6 +3,8 @@
 # 	Sh configuration
 #
 
+stty status '^T' -ixon
+
 ulimit -d 262144
 ulimit -n 512
 ulimit -s 8192
