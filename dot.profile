@@ -31,4 +31,6 @@ export XML_CATALOG_FILES=/usr/pkg/etc/xml/catalog
 MAILCHECK=0
 WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
+eval `keychain --eval --timeout 10 2>/dev/null`
+
 [ -f ~/.profile_local ] && . ~/.profile_local
