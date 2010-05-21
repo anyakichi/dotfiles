@@ -4,6 +4,14 @@
 #
 
 #
+# Resource limits
+#
+unlimit
+limit stacksize 8192
+limit -s
+
+
+#
 # Parameters
 #
 
