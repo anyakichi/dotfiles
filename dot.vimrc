@@ -25,7 +25,7 @@ set cursorline
 set laststatus=2
 set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}
 	      \%{&ff!='unix'?'['.&ff.']':''}%{&bin?'[bin]':''}%m%r
-	      \%=%-14.(%l,%c%V%)\ %P
+	      \%=%-10.(%l,%c%V%)\ %P
 set tabline=%!MakeTabLine()
 
 set nohlsearch
@@ -157,6 +157,7 @@ nnoremap th :<C-u>tab help<Space>
 nnoremap <silent> t] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap <silent> td :<C-u>tabclose<CR>
 nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
+nnoremap <silent> tM :<C-u>call MoveToNewWindow()<CR>
 nmap	 tK <Leader>Ktm
 nnoremap tgf <C-w>gf
 nnoremap tgF <C-w>gF
@@ -381,6 +382,22 @@ function! MoveToNewTab()
     endif
 
     tabnext
+endfunction
+
+function! MoveToNewWindow()
+    let bufnr = bufnr('%')
+
+    if winnr('$') > 1
+	close
+    elseif bufnr('$') > 1
+	buffer #
+    endif
+
+    vnew
+    let tmpnr = bufnr('%')
+
+    execute 'buffer ' . bufnr
+    execute 'bwipeout ' . tmpnr
 endfunction
 
 
