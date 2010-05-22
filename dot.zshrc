@@ -23,6 +23,9 @@ HISTFILE=~/.zsh_history
 HISTSIZE=1000
 SAVEHIST=1000
 
+MAILCHECK=0
+WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
+
 cdpath=(~ ~/src ~/Documents)
 fpath=(~/.zfunc $fpath)
 hosts=(`hostname` sopht.jp ftp.netbsd.org)
