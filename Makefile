@@ -19,7 +19,7 @@ FILES=	\
 	${RCDIR}/.vimrc		\
 	${RCDIR}/.zfunc		\
 	${RCDIR}/.zlogin	\
-	${RCDIR}/.zshenv	\
+	${RCDIR}/.zprofile	\
 	${RCDIR}/.zshrc
 
 .PHONY: all install clean
@@ -27,7 +27,7 @@ FILES=	\
 all: ${RCDIR} ${FILES}
 
 install: all
-	@cp -r ${RCDIR}/.??* ${HOME}/
+	@cp -rP ${RCDIR}/.??* ${HOME}/
 
 clean:
 	rm -rf ${RCDIR}
@@ -89,8 +89,8 @@ ${RCDIR}/.zfunc: dot.zfunc
 ${RCDIR}/.zlogin: dot.zlogin
 	cp $? $@
 
-${RCDIR}/.zshenv: dot.zshenv
-	cp $? $@
+${RCDIR}/.zprofile: ${RCDIR}/.profile
+	(cd ${RCDIR} && ln -s .profile .zprofile)
 
 ${RCDIR}/.zshrc: dot.zshrc
 	cp $? $@
