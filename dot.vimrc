@@ -23,9 +23,7 @@ set shiftround
 set showcmd
 set cursorline
 set laststatus=2
-set statusline=%<%f\ %y%{'['.(&fenc!=''?&fenc:&enc).']'}
-	      \%{&ff!='unix'?'['.&ff.']':''}%{&bin?'[bin]':''}%m%r
-	      \%=%-10.(%l,%c%V%)\ %P
+set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
 set nohlsearch
@@ -315,6 +313,22 @@ let g:VCSCommandMapPrefix = '<Leader>v'
 "
 " Functions
 "
+function! MakeStatusLine()
+    let s  = '%<%f %y'
+    let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
+    if &ff != 'unix'
+	let s .= '[' . &ff . ']'
+    endif
+    if &bin
+	let s .= '[bin]'
+    endif
+    let s .= '%m%r'
+    let s .= '%='
+    let s .= winwidth('%') >= 80 ? '%-14.' : '%-8.'
+    let s .= '(%l,%c%V%) %P'
+    return s
+endfunction
+
 function! MakeTabLine()
     let s = ''
 
