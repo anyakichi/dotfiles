@@ -64,7 +64,7 @@ if [[ -n "${STY}" ]] then
 elif [[ -n "${TMUX}" ]] then
 	alias ssh=ssh-tmux
 else
-	alias ssh=xssh
+	alias ssh=ssh-wrapper
 fi
 
 # Global aliases
@@ -127,14 +127,10 @@ freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
 _ssh_wrapper() {
 	for pid in `pgrep ssh-agent`; do
-		test "${pid}" = "${SSH_AGENT_PID}" && \
+		[[ "${pid}" == "${SSH_AGENT_PID}" ]] && \
 		    ! ssh-add -l >/dev/null && ssh-add 2>/dev/null
 	done
 	"$@"
-}
-
-xssh() {
-	_ssh_wrapper ssh "$@"
 }
 
 ssh-screen() {
@@ -145,7 +141,11 @@ ssh-tmux() {
 	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "ssh $*"
 }
 
-compdef _ssh ssh-screen=ssh ssh-tmux=ssh
+ssh-wrapper() {
+	_ssh_wrapper ssh "$@"
+}
+
+compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
 
 
 #
@@ -170,7 +170,7 @@ bindkey -M menuselect \
 #
 # Local configuration
 #
-[ -r ~/.zshrc_local ] && source ~/.zshrc_local
+[ -f ~/.zshrc_local ] && source ~/.zshrc_local
 
 
 #
