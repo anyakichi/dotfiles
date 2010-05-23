@@ -125,6 +125,7 @@ compinit
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
+which pgrep >/dev/null 2>&1 || \
 pgrep() {
 	ps axco pid,command | grep ${1} | awk '{print $1}'
 }
