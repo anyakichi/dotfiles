@@ -125,12 +125,16 @@ compinit
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
+pgrep() {
+	ps axco pid,command | grep ${1} | awk '{print $1}'
+}
+
 _ssh_wrapper() {
 	for pid in `pgrep ssh-agent`; do
 		[[ "${pid}" == "${SSH_AGENT_PID}" ]] && \
 		    ! ssh-add -l >/dev/null && ssh-add 2>/dev/null
 	done
-	"$@"
+	eval "$@"
 }
 
 ssh-screen() {
