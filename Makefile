@@ -27,7 +27,7 @@ FILES=	\
 all: ${RCDIR} ${FILES}
 
 install: all
-	@cp -rP ${RCDIR}/.??* ${HOME}/
+	@cp -r ${RCDIR}/.??* ${HOME}/
 
 clean:
 	rm -rf ${RCDIR}
