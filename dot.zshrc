@@ -139,15 +139,18 @@ _ssh_wrapper() {
 }
 
 ssh-screen() {
-	_ssh_wrapper screen -t ${(@)argv[$#]/.*/} ssh "$@"
+	ssh=`whence -cp ssh`
+	_ssh_wrapper screen -t ${(@)argv[$#]/.*/} ${ssh} "$@"
 }
 
 ssh-tmux() {
-	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "ssh $*"
+	ssh=`whence -cp ssh`
+	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "${ssh} $*"
 }
 
 ssh-wrapper() {
-	_ssh_wrapper ssh "$@"
+	ssh=`whence -cp ssh`
+	_ssh_wrapper ${ssh} "$@"
 }
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
