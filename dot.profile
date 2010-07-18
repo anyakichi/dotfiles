@@ -3,7 +3,9 @@
 # 	Sh configuration
 #
 
-stty status '^T' -ixon
+if tty -s; then
+	stty status '^T' -ixon
+fi
 
 ulimit -d 262144
 ulimit -n 512
@@ -28,6 +30,6 @@ export PERL_BADLANG=0
 export SGML_CATALOG_FILES=/usr/pkg/etc/sgml/catalog
 export XML_CATALOG_FILES=/usr/pkg/etc/xml/catalog
 
-[ -x `which keychain` ] && eval `keychain -q --eval --timeout 10`
+which keychain >/dev/null && eval `keychain -q --eval --timeout 10`
 
 [ -f ~/.profile_local ] && . ~/.profile_local
