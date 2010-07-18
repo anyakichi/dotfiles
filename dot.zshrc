@@ -24,7 +24,6 @@ HISTSIZE=1000
 SAVEHIST=1000
 
 MAILCHECK=0
-WORDCHARS="*?_-.[]~=&;!#$%^(){}<>"
 
 cdpath=(~ ~/src ~/Documents)
 fpath=(~/.zfunc $fpath)
@@ -173,6 +172,15 @@ bindkey '^I' complete-word
 bindkey -M menuselect \
 	'^P' up-line-or-history '^N' down-line-or-history \
 	'^B' backward-char '^F' forward-char
+
+
+#
+# Widgets
+#
+autoload -U select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /:@+|"
+zstyle ':zle:*' word-style unspecified
 
 
 #
