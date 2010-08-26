@@ -118,7 +118,7 @@ xnoremap [Space] <Nop>
 
 nmap t [Tab]
 nnoremap [Tab] <Nop>
-nnoremap t; t
+nnoremap [Tab]; t
 
 noremap Q gq
 nnoremap Y y$
