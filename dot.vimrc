@@ -116,6 +116,10 @@ xmap <Space> [Space]
 nnoremap [Space] <Nop>
 xnoremap [Space] <Nop>
 
+nmap t [Tab]
+nnoremap [Tab] <Nop>
+nnoremap t; t
+
 noremap Q gq
 nnoremap Y y$
 nnoremap ZQ <Nop>
@@ -138,45 +142,42 @@ nnoremap g* g*zz
 nnoremap g# g#zz
 nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
 
-nnoremap t; t
-nnoremap t <Nop>
-
-nnoremap to :<C-u>edit<Space>
-nnoremap <expr> tO ':<C-u>edit ' . GetRelativePath()
-nnoremap <silent> tn :bnext<CR>
-nnoremap <silent> tp :bprevious<CR>
-nnoremap <silent> tD :<C-u>bdelete<CR>
-nnoremap <silent> tl :<C-u>buffers<CR>
+nnoremap [Tab]o :<C-u>edit<Space>
+nnoremap <expr> [Tab]O ':<C-u>edit ' . GetRelativePath()
+nnoremap <silent> [Tab]n :bnext<CR>
+nnoremap <silent> [Tab]p :bprevious<CR>
+nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
+nnoremap <silent> [Tab]l :<C-u>buffers<CR>
 
 nnoremap <C-n> gt
 nnoremap <C-p> gT
-nnoremap tt :<C-u>tabnew<Space>
-nnoremap <expr> tT ':<C-u>tabnew ' . GetRelativePath()
-nnoremap <silent> t<CR> :<C-u>tabnew<CR>
-nnoremap th :<C-u>tab help<Space>
-nnoremap <silent> t] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> td :<C-u>tabclose<CR>
-nnoremap <silent> tm :<C-u>call MoveToNewTab()<CR>
-nnoremap <silent> tM :<C-u>call MoveToNewWindow()<CR>
-nmap	 tK <Leader>Ktm
-nnoremap tgf <C-w>gf
-nnoremap tgF <C-w>gF
+nnoremap [Tab]t :<C-u>tabnew<Space>
+nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
+nnoremap <silent> [Tab]<CR> :<C-u>tabnew<CR>
+nnoremap [Tab]h :<C-u>tab help<Space>
+nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
+nnoremap <silent> [Tab]d :<C-u>tabclose<CR>
+nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
+nnoremap <silent> [Tab]M :<C-u>call MoveToNewWindow()<CR>
+nmap	 [Tab]K <Leader>Ktm
+nnoremap [Tab]gf <C-w>gf
+nnoremap [Tab]gF <C-w>gF
 for n in range(1, 9)
-    exe 'nnoremap <silent> t' . n ' :<C-u>tabnext ' . n . '<CR>'
+    exe 'nnoremap <silent> [Tab]' . n ' :<C-u>tabnext ' . n . '<CR>'
 endfor
 
-nnoremap ts :<C-u>split<Space>
-nnoremap <expr> tS ':<C-u>split ' . GetRelativePath()
-nnoremap tv :<C-u>vsplit<Space>
-nnoremap <expr> tV ':<C-u>vsplit ' . GetRelativePath()
-nnoremap tc <C-w>c
+nnoremap [Tab]s :<C-u>split<Space>
+nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
+nnoremap [Tab]v :<C-u>vsplit<Space>
+nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
+nnoremap [Tab]c <C-w>c
 nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
-nnoremap <silent> t<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
+nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
 nnoremap <silent> [Space]V :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :!sort<CR>
 xnoremap <silent> [Space]s :!sort<CR>
