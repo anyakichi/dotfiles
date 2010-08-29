@@ -187,8 +187,8 @@ nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
-cnoremap <C-n> <Down>
-cnoremap <C-p> <Up>
+cnoremap <C-n> <PageDown>
+cnoremap <C-p> <PageUp>
 
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
