@@ -161,8 +161,8 @@ nnoremap <silent> [Tab]d :<C-u>tabclose<CR>
 nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
 nnoremap <silent> [Tab]M :<C-u>call MoveToNewWindow()<CR>
 nmap	 [Tab]K <Leader>Ktm
-nnoremap [Tab]gf <C-w>gf
-nnoremap [Tab]gF <C-w>gF
+nnoremap [Tab]f <C-w>gf
+nnoremap [Tab]F <C-w>gF
 for n in range(1, 9)
     exe 'nnoremap <silent> [Tab]' . n ' :<C-u>tabnext ' . n . '<CR>'
 endfor
