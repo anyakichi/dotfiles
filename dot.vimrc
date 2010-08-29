@@ -61,7 +61,6 @@ set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
 set completeopt=menuone
 
-set clipboard& clipboard^=unnamed
 set pastetoggle=<C-_>
 
 if has("mouse")
