@@ -71,11 +71,11 @@ ${RCDIR}/.tmux.conf: dot.tmux.conf
 ${RCDIR}/.vim: dot.vim
 	mkdir -p $@
 	find "$?/dist" -maxdepth 2 -mindepth 2 \( \
-	    -name filetype.vim -o -name scripts.vim -o -name autoload -o \
-	    -name colors -o -name compiler -o -name doc -o -name ftplugin -o \
-	    -name indent -o -name indent -o -name keymap -o -name lang -o \
-	    -name menu.vim -o -name plugin -o -name print -o -name spell -o \
-	    -name syntax -o -name tutor \) \
+	    -name filetype.vim -o -name scripts.vim -o -name after -o \
+	    -name autoload -o -name colors -o -name compiler -o -name doc -o \
+	    -name ftplugin -o -name indent -o -name indent -o -name keymap -o \
+	    -name lang -o -name menu.vim -o -name plugin -o -name print -o \
+	    -name spell -o -name syntax -o -name tutor -o -name snippets \) \
 	    -exec cp -rp {} $@ \;
 	find "$?" -maxdepth 1 -mindepth 1 \! -name dist -exec cp -rp {} $@ \;
 	vim -e -s -u "NONE" -c ':helptags rc/.vim/doc' -c ':q'
