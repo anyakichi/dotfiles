@@ -57,6 +57,8 @@ alias lla='ls -la'
 alias lsd='ls -ld *(-/DN)'
 alias lsa='ls -ld .*'
 
+alias mq='hg -R $(hg root)/.hg/patches'
+
 # Aliases for ssh
 if [[ -n "${STY}" ]] then
 	alias ssh=ssh-screen
