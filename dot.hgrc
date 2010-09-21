@@ -8,6 +8,7 @@ vd = vimdiff
 
 [extensions]
 extdiff =
+mq =
 pager =
 rebase =
 
