@@ -9,6 +9,7 @@ FILES=	\
 	${RCDIR}/.hgrc		\
 	${RCDIR}/.mailcap	\
 	${RCDIR}/.mlterm	\
+	${RCDIR}/.mutt		\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
