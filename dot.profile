@@ -4,7 +4,8 @@
 #
 
 if tty -s; then
-	stty status '^T' -ixon
+	stty -ixon
+	stty status '^T' 2>/dev/null
 fi
 
 ulimit -d 262144
