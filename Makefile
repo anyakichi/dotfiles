@@ -13,7 +13,6 @@ FILES=	\
 	${RCDIR}/.muttrc	\
 	${RCDIR}/.profile	\
 	${RCDIR}/.screenrc	\
-	${RCDIR}/.subversion	\
 	${RCDIR}/.termcap	\
 	${RCDIR}/.tmux.conf	\
 	${RCDIR}/.vim		\
@@ -59,9 +58,6 @@ ${RCDIR}/.profile: dot.profile
 
 ${RCDIR}/.screenrc: dot.screenrc
 	cp $? $@
-
-${RCDIR}/.subversion: dot.subversion
-	cp -r $? $@
 
 ${RCDIR}/.termcap: dot.termcap
 	cp $? $@
