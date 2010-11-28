@@ -184,6 +184,7 @@ nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 
+cnoremap <C-x> <C-f>
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
