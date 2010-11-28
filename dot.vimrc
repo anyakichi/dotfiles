@@ -427,22 +427,28 @@ if has('ruby')
 
     let s:ruby_buffer = ""
 
-    function! RubyEval(code)
-	ruby <<RUBY
-lambda {
-    result = eval(VIM.evaluate("a:code"), TOPLEVEL_BINDING)
+    ruby <<RUBY
+class VimRuby
+    @@binding = binding
 
-    if result.instance_of?(String)
-	str = result.gsub(/"/, '\\"')
-	VIM.command(%(let s:ruby_buffer = "#{str}" . "\n"))
-    else
-	str = result.inspect.gsub(/"/, '\\"')
-	VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+    def VimRuby.evaluate(code)
+	result = eval(code, @@binding)
+
+	if result.instance_of?(String)
+	    str = result.gsub(/"/, '\\"')
+	    VIM.command(%(let s:ruby_buffer = "#{str}" . "\n"))
+	else
+	    str = result.inspect.gsub(/"/, '\\"')
+	    VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+	end
+
+	return result
     end
-
-    p result
-}.call
+end
 RUBY
+
+    function! RubyEval(code)
+	ruby p VimRuby.evaluate(VIM.evaluate("a:code"))
     endfunction
 
     function! Ruby(type, ...)
