@@ -177,9 +177,9 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
-nnoremap <silent> [Space]V :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
