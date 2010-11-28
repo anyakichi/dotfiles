@@ -413,6 +413,73 @@ function! MoveToNewWindow()
     execute 'bwipeout ' . tmpnr
 endfunction
 
+if has('ruby')
+    nnoremap <silent> [Space]r :set operatorfunc=Ruby<CR>g@
+    nnoremap <silent> [Space]rr :call RubyLines()<CR>
+    nmap [Space]R [Space]r$
+    nnoremap <silent> [Space]rp :<C-u>call RubyPaste()<CR>
+
+    xnoremap <silent> [Space]r :<C-u>call Ruby(visualmode(), 1)<CR>
+    xnoremap <silent> [Space]R :<C-u>call Ruby('V', 1)<CR>
+
+    command! -range Ruby :<line1>,<line2>call RubyLines()
+    command! -range RubyPaste :<line1>,<line2>call RubyPaste()
+
+    let s:ruby_buffer = ""
+
+    function! RubyEval(code)
+	ruby <<RUBY
+lambda {
+    result = eval(VIM.evaluate("a:code"), TOPLEVEL_BINDING)
+
+    if result.instance_of?(String)
+	str = result.gsub(/"/, '\\"')
+	VIM.command(%(let s:ruby_buffer = "#{str}" . "\n"))
+    else
+	str = result.inspect.gsub(/"/, '\\"')
+	VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+    end
+
+    p result
+}.call
+RUBY
+    endfunction
+
+    function! Ruby(type, ...)
+	let saved_sel = &selection
+	let &selection = "inclusive"
+	let saved_reg = @"
+
+	if a:0
+	    silent exe "normal! `<" . a:type . "`>y"
+	elseif a:type == 'line'
+	    silent exe "normal! '[V']y"
+	elseif a:type == 'block'
+	    silent exe "normal! `[\<C-v>`]y"
+	else
+	    silent exe "normal! `[v`]y"
+	endif
+
+	call RubyEval(@")
+
+	let &selection = saved_sel
+	let @" = saved_reg
+    endfunction
+
+    function! RubyLines() range
+	let lines = getline(a:firstline, a:lastline)
+	let code = join(lines, "\n")
+	call RubyEval(code)
+    endfunction
+
+    function! RubyPaste()
+	let saved_reg = @"
+	let @" = s:ruby_buffer
+	normal! p
+	let @" = saved_reg
+    endfunction
+endif
+
 
 "
 " Local settings
