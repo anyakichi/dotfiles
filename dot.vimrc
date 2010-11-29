@@ -258,6 +258,11 @@ augroup vimrc-filetype
     au FileType scheme					setl sw=2
 augroup END
 
+augroup vimrc-pdf
+    au!
+    au BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
+augroup END
+
 
 "
 " Plugins
