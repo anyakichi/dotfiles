@@ -435,12 +435,13 @@ class VimRuby
 	result = eval(code, @@binding)
 
 	if result.instance_of?(String)
-	    str = result.gsub(/"/, '\\"')
-	    VIM.command(%(let s:ruby_buffer = "#{str}" . "\n"))
+	    str = result
 	else
-	    str = result.inspect.gsub(/"/, '\\"')
-	    VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+	    str = result.inspect
 	end
+
+	str.gsub!(/"/, '\\"')
+	VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
 
 	return result
     end
