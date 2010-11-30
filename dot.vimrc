@@ -258,6 +258,11 @@ augroup vimrc-filetype
     au FileType scheme					setl sw=2
 augroup END
 
+augroup vimrc-pdf
+    au!
+    au BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
+augroup END
+
 
 "
 " Plugins
@@ -435,12 +440,13 @@ class VimRuby
 	result = eval(code, @@binding)
 
 	if result.instance_of?(String)
-	    str = result.gsub(/"/, '\\"')
-	    VIM.command(%(let s:ruby_buffer = "#{str}" . "\n"))
+	    str = result
 	else
-	    str = result.inspect.gsub(/"/, '\\"')
-	    VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+	    str = result.inspect
 	end
+
+	str.gsub!(/"/, '\\"')
+	VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
 
 	return result
     end
