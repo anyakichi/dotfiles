@@ -418,26 +418,83 @@ function! MoveToNewWindow()
     execute 'bwipeout ' . tmpnr
 endfunction
 
+
+"
+" Ruby interface
+"
 if has('ruby')
-    nnoremap <silent> [Space]r :set operatorfunc=Ruby<CR>g@
-    nnoremap <silent> [Space]rr :call RubyLines()<CR>
-    nmap [Space]R [Space]r$
-    nnoremap <silent> [Space]rp :<C-u>call RubyPaste()<CR>
+    nnoremap <silent> [Space]e :set operatorfunc=RubyFunc<CR>g@
+    nnoremap <silent> [Space]ee :call Ruby("")<CR>
+    nmap [Space]E [Space]e$
 
-    xnoremap <silent> [Space]r :<C-u>call Ruby(visualmode(), 1)<CR>
-    xnoremap <silent> [Space]R :<C-u>call Ruby('V', 1)<CR>
+    nnoremap <silent> [Space]y :set operatorfunc=RubyYankFunc<CR>g@
+    nnoremap <silent> [Space]yy :call RubyYank("0")<CR>
+    nmap [Space]Y [Space]y$
 
-    command! -range Ruby :<line1>,<line2>call RubyLines()
-    command! -range RubyPaste :<line1>,<line2>call RubyPaste()
+    nnoremap <silent> [Space]x :<C-u>call RubyVar()<CR>
+    nnoremap <silent> [Space]X :<C-u>call RubyVars()<CR>
 
-    let s:ruby_buffer = ""
+    nnoremap <silent> [Space]p :<C-u>RubyPut<CR>
+    nnoremap <silent> [Space]P :<C-u>RubyPut!<CR>
+    nnoremap <silent> [Space]<C-p> :<C-u>call RubyPasteBuffer()<CR>
+    for i in range(0, 9)
+	let prefix = 'nnoremap <silent> "'
+	execute prefix . i . '<Space>p :<C-u>RubyPut ' . i . '<CR>'
+	execute prefix . i . '<Space>p :<C-u>RubyPut! ' . i . '<CR>'
+    endfor
+
+    xnoremap <silent> [Space]e :<C-u>call RubyFunc(visualmode(), 1)<CR>
+    xnoremap <silent> [Space]E :<C-u>call RubyFunc('V', 1)<CR>
+
+    xnoremap <silent> [Space]y :<C-u>call RubyYankFunc(visualmode(),1)<CR>
+    xnoremap <silent> [Space]Y :<C-u>call RubyYankFunc('V', 1)<CR>
+
+    command! -nargs=? -range Ruby :<line1>,<line2>call Ruby(<q-args>)
+    command! -range -register RubyYank :<line1>,<line2>call RubyYank('<reg>')
+    command! -bang -register RubyPut :call RubyPaste('<bang>', '<reg>')
 
     ruby <<RUBY
 class VimRuby
     @@binding = binding
+    @@bindings = []
+    eval("x = nil; xs = []", @@binding)
+
+    @@results = []
+
+    def VimRuby.push()
+	@@bindings.push(@@binding)
+	@@binding = binding
+	eval("x = nil; xs = []", @@binding)
+    end
+
+    def VimRuby.pop()
+	@@binding = @@bindings.pop
+    end
 
     def VimRuby.evaluate(code)
-	result = eval(code, @@binding)
+	return eval(code, @@binding)
+    end
+
+    def VimRuby.evaluate!(code)
+	result = evaluate(code)
+
+	@@results.unshift(result)
+	@@results.pop while @@results.length > 10
+
+	return result
+    end
+
+    def VimRuby.yank(text)
+	result = evaluate(<<EOF)
+	    xs.unshift("#{text}")
+	    xs.pop while xs.length > 10
+	    x = xs[0]
+EOF
+	return result
+    end
+
+    def VimRuby.paste(i)
+	result = @@results[i.to_i]
 
 	if result.instance_of?(String)
 	    str = result
@@ -446,23 +503,43 @@ class VimRuby
 	end
 
 	str.gsub!(/"/, '\\"')
-	VIM.command(%(let s:ruby_buffer = '#{str}' . "\n"))
+	VIM.command(%(let @" = '#{str}' . "\n"))
 
 	return result
+    end
+
+    def VimRuby.paste_buffer()
+	return @@results
     end
 end
 RUBY
 
     function! RubyEval(code)
-	ruby p VimRuby.evaluate(VIM.evaluate("a:code"))
+	ruby p VimRuby.evaluate!(VIM.evaluate("a:code"))
     endfunction
 
-    function! Ruby(type, ...)
+    function! RubyEvalYank(text)
+	ruby VimRuby.yank(VIM.evaluate("a:text"))
+    endfunction
+
+    function! RubyVar()
+	ruby p VimRuby.evaluate("x")
+    endfunction
+
+    function! RubyVars()
+	ruby p VimRuby.evaluate("xs")
+    endfunction
+
+    function! RubyPasteBuffer()
+	ruby p VimRuby.paste_buffer
+    endfunction
+
+    function! RubyDo(type, visual, yank)
 	let saved_sel = &selection
 	let &selection = "inclusive"
 	let saved_reg = @"
 
-	if a:0
+	if a:visual
 	    silent exe "normal! `<" . a:type . "`>y"
 	elseif a:type == 'line'
 	    silent exe "normal! '[V']y"
@@ -472,22 +549,45 @@ RUBY
 	    silent exe "normal! `[v`]y"
 	endif
 
-	call RubyEval(@")
+	if a:yank
+	    call RubyEvalYank(@")
+	else
+	    call RubyEval(@")
+	end
 
 	let &selection = saved_sel
 	let @" = saved_reg
     endfunction
 
-    function! RubyLines() range
-	let lines = getline(a:firstline, a:lastline)
-	let code = join(lines, "\n")
+    function! RubyFunc(type, ...)
+	call RubyDo(a:type, a:0, 0)
+    endfunction
+
+    function! RubyYankFunc(type, ...)
+	call RubyDo(a:type, a:0, 1)
+    endfunction
+
+    function! Ruby(code) range
+	if a:code != ""
+	    let code = a:code
+	else
+	    let lines = getline(a:firstline, a:lastline)
+	    let code = join(lines, "\n")
+	endif
 	call RubyEval(code)
     endfunction
 
-    function! RubyPaste()
+    function! RubyYank(reg) range
+	let lines = getline(a:firstline, a:lastline)
+	let text = join(lines, "\n")
+	call RubyEvalYank(text)
+    endfunction
+
+    function! RubyPaste(bang, reg)
+	let cmd = empty(a:bang) ? 'p' : 'P'
 	let saved_reg = @"
-	let @" = s:ruby_buffer
-	normal! p
+	ruby VimRuby.paste(VIM.evaluate("a:reg"))
+	execute 'normal! ' . cmd
 	let @" = saved_reg
     endfunction
 endif
