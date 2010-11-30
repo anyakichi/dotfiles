@@ -177,12 +177,12 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-nnoremap <silent> <LocalLeader>V :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
-nnoremap <silent> <LocalLeader>v :<C-u>source $HOME/.vimrc<CR>
-nnoremap <silent> <LocalLeader>s :sort<CR>
-xnoremap <silent> <LocalLeader>s :sort<CR>
-nnoremap <silent> <LocalLeader>t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
+nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> [Space]s :sort<CR>
+xnoremap <silent> [Space]s :sort<CR>
+nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
 
 cnoremap <C-x> <C-f>
 cnoremap <C-a> <Home>
@@ -414,13 +414,13 @@ function! MoveToNewWindow()
 endfunction
 
 if has('ruby')
-    nnoremap <silent> <LocalLeader>r :set operatorfunc=Ruby<CR>g@
-    nnoremap <silent> <LocalLeader>rr :call RubyLines()<CR>
-    nmap <LocalLeader>R <LocalLeader>r$
-    nnoremap <silent> <LocalLeader>rp :<C-u>call RubyPaste()<CR>
+    nnoremap <silent> [Space]r :set operatorfunc=Ruby<CR>g@
+    nnoremap <silent> [Space]rr :call RubyLines()<CR>
+    nmap [Space]R [Space]r$
+    nnoremap <silent> [Space]rp :<C-u>call RubyPaste()<CR>
 
-    xnoremap <silent> <LocalLeader>r :<C-u>call Ruby(visualmode(), 1)<CR>
-    xnoremap <silent> <LocalLeader>R :<C-u>call Ruby('V', 1)<CR>
+    xnoremap <silent> [Space]r :<C-u>call Ruby(visualmode(), 1)<CR>
+    xnoremap <silent> [Space]R :<C-u>call Ruby('V', 1)<CR>
 
     command! -range Ruby :<line1>,<line2>call RubyLines()
     command! -range RubyPaste :<line1>,<line2>call RubyPaste()
