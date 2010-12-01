@@ -423,9 +423,9 @@ endfunction
 " Ruby interface
 "
 if has('ruby')
-    nnoremap <silent> [Space]e :set operatorfunc=RubyFunc<CR>g@
-    nnoremap <silent> [Space]ee :call Ruby("")<CR>
-    nmap [Space]E [Space]e$
+    nnoremap <silent> [Space]r :set operatorfunc=RubyFunc<CR>g@
+    nnoremap <silent> [Space]rr :call Ruby("")<CR>
+    nmap [Space]R [Space]r$
 
     nnoremap <silent> [Space]y :set operatorfunc=RubyYankFunc<CR>g@
     nnoremap <silent> [Space]yy :call RubyYank("0")<CR>
@@ -443,8 +443,8 @@ if has('ruby')
 	execute prefix . i . '<Space>p :<C-u>RubyPut! ' . i . '<CR>'
     endfor
 
-    xnoremap <silent> [Space]e :<C-u>call RubyFunc(visualmode(), 1)<CR>
-    xnoremap <silent> [Space]E :<C-u>call RubyFunc('V', 1)<CR>
+    xnoremap <silent> [Space]r :<C-u>call RubyFunc(visualmode(), 1)<CR>
+    xnoremap <silent> [Space]R :<C-u>call RubyFunc('V', 1)<CR>
 
     xnoremap <silent> [Space]y :<C-u>call RubyYankFunc(visualmode(),1)<CR>
     xnoremap <silent> [Space]Y :<C-u>call RubyYankFunc('V', 1)<CR>
@@ -491,6 +491,10 @@ class VimRuby
 	    x = xs[0]
 EOF
 	return result
+    end
+
+    def VimRuby.reg(reg='"')
+	return VIM.evaluate('@' + reg)
     end
 
     def VimRuby.paste(i)
