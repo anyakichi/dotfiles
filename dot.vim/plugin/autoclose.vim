@@ -58,7 +58,7 @@ endfunction
 
 function! s:AutoClose(char)
     if a:char == "'" || a:char == '"'
-	let l:regions = ["Character", "Constant", "SpecialChar", "String"]
+	let l:regions = ["Character", "Constant", "Special", "SpecialChar", "String"]
 
 	if index(l:regions, s:getSynName()) >= 0 ||
 	  \index(l:regions, s:GetCurrentSyntaxRegionIf(' ')) >= 0
