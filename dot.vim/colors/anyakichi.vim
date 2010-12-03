@@ -31,7 +31,7 @@ hi LineNr	ctermfg=DarkRed
 " hi ModeMsg
 " hi MoreMsg
 " hi NonText
-hi clear Normal
+" hi Normal	cterm=bold	ctermfg=7
 hi Pmenu	ctermfg=Black ctermbg=Gray
 hi PmenuSel	ctermfg=Black ctermbg=DarkYellow
 hi PmenuSbar	ctermbg=Black
