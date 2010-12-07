@@ -107,6 +107,8 @@ command! -nargs=1 -bar -complete=file T tabnew <args>
 command! -nargs=1 -bar -complete=file V vnew <args>
 command! -nargs=1 -bar -complete=file W new <args>
 
+command! -register RegCopy let @<reg> = @@
+
 
 "
 " Mappings
@@ -183,6 +185,11 @@ nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
+
+for i in range(char2nr('a'), char2nr('z'))
+    let c = nr2char(i)
+    execute 'nnoremap <silent> [Space]"' . c . ' :<C-u>RegCopy ' . c . '<CR>'
+endfor
 
 cnoremap <C-x> <C-f>
 cnoremap <C-a> <Home>
