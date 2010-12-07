@@ -431,11 +431,11 @@ endfunction
 "
 if has('ruby')
     nnoremap <silent> [Space]r :set operatorfunc=RubyFunc<CR>g@
-    nnoremap <silent> [Space]rr :call Ruby("")<CR>
+    nnoremap <silent> [Space]rr :Ruby<CR>
     nmap [Space]R [Space]r$
 
     nnoremap <silent> [Space]y :set operatorfunc=RubyYankFunc<CR>g@
-    nnoremap <silent> [Space]yy :call RubyYank("0")<CR>
+    nnoremap <silent> [Space]yy :RubyYank<CR>
     nmap [Space]Y [Space]y$
 
     nnoremap <silent> [Space]x :<C-u>call RubyVar()<CR>
@@ -456,8 +456,8 @@ if has('ruby')
     xnoremap <silent> [Space]y :<C-u>call RubyYankFunc(visualmode(),1)<CR>
     xnoremap <silent> [Space]Y :<C-u>call RubyYankFunc('V', 1)<CR>
 
-    command! -nargs=? -range Ruby :<line1>,<line2>call Ruby(<q-args>)
-    command! -range -register RubyYank :<line1>,<line2>call RubyYank('<reg>')
+    command! -nargs=? -range Ruby :call Ruby(<line1>, <line2>, <q-args>)
+    command! -range -register RubyYank :call RubyYank(<line1>, <line2>, '<reg>')
     command! -bang -register RubyPut :call RubyPaste('<bang>', '<reg>')
 
     ruby <<RUBY
@@ -578,18 +578,18 @@ RUBY
 	call RubyDo(a:type, a:0, 1)
     endfunction
 
-    function! Ruby(code) range
+    function! Ruby(line1, line2, code)
 	if a:code != ""
 	    let code = a:code
 	else
-	    let lines = getline(a:firstline, a:lastline)
+	    let lines = getline(a:line1, a:line2)
 	    let code = join(lines, "\n")
 	endif
 	call RubyEval(code)
     endfunction
 
-    function! RubyYank(reg) range
-	let lines = getline(a:firstline, a:lastline)
+    function! RubyYank(line1, line2, reg)
+	let lines = getline(a:line1, a:line2)
 	let text = join(lines, "\n")
 	call RubyEvalYank(text)
     endfunction
