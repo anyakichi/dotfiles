@@ -304,6 +304,9 @@ let g:alternateExtensions_m = "h"
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
+" capslock.vim
+imap <C-a> <Plug>CapsLockToggle
+
 " man.vim
 runtime ftplugin/man.vim
 
@@ -335,6 +338,7 @@ function! MakeStatusLine()
     endif
     let s .= '%m%r'
     let s .= '%='
+    let s .= CapsLockStatusline() . ' '
     let s .= winwidth('%') >= 80 ? '%-14.' : '%-8.'
     let s .= '(%l,%c%V%) %P'
     return s
