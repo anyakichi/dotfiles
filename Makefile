@@ -67,6 +67,7 @@ ${RCDIR}/.tmux.conf: dot.tmux.conf
 
 ${RCDIR}/.vim: dot.vim
 	mkdir -p $@
+	mkdir -p $@/swap
 	find "$?/dist" -maxdepth 2 -mindepth 2 \( \
 	    -name filetype.vim -o -name scripts.vim -o -name after -o \
 	    -name autoload -o -name colors -o -name compiler -o -name doc -o \
