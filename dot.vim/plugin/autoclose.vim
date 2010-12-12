@@ -44,6 +44,26 @@ function! s:IsEmptyPair()
 	    \get(g:AutoClosePairs, l:prev, "") == l:next
 endfunction
 
+function! s:IsEmptyExpandedPair()
+    let prevline = getline(line('.') - 1)
+    let nextline = getline(line('.') + 1)
+
+    if empty(prevline) || empty(nextline)
+	return 0
+    endif
+
+    let prev = prevline[len(prevline) - 1]
+    let next = nextline[len(nextline) - 1]
+
+    if empty(prev) || empty(next)
+	return 0
+    endif
+
+    let curline = getline('.')
+
+    return curline =~ "^\\s*$" && get(g:AutoClosePairs, prev, "") == next
+endfunction
+
 function! s:IsForbidden(char)
     if has_key(g:AutoCloseForbidden, "ALL") &&
 		\call(g:AutoCloseForbidden["ALL"], [a:char])
@@ -106,9 +126,21 @@ function! s:ClosePair(char)
 endfunction
 
 function! s:ExpandPair(char)
+    if s:getlc(-2) == a:char && s:getlc(-1) == a:char && s:IsEmptyPair()
+	let indent = matchstr(getline('.'), "^\\s\\+")
+	return "\<CR>0\<C-d>" . indent . "\<Esc>O"
+    endif
+
     if s:getlc(-1) == a:char && s:IsEmptyPair()
 	return "\<CR>\<Esc>O"
     endif
+
+    if s:IsEmptyExpandedPair()
+	let cchar = g:AutoClosePairs[a:char]
+	let pair = a:char . a:char . cchar . cchar
+	return "\<Esc>ddkJxi" . pair . "\<Left>\<Left>"
+    endif
+
     return s:InsertPair(a:char)
 endfunction
 
