@@ -78,7 +78,8 @@ endfunction
 
 function! s:AutoClose(char)
     if a:char == "'" || a:char == '"'
-	let l:regions = ["Character", "Constant", "Special", "SpecialChar", "String"]
+	let type = has_key(g:AutoCloseQuotedRegions, &ft) ? &ft : "default"
+	let l:regions = g:AutoCloseQuotedRegions[type]
 
 	if index(l:regions, s:getSynName()) >= 0 ||
 	  \index(l:regions, s:GetCurrentSyntaxRegionIf(' ')) >= 0
@@ -229,6 +230,16 @@ endif
 
 if !exists("g:AutoCloseForbidden") || type(g:AutoCloseForbidden) != type({})
     let g:AutoCloseForbidden = { "ALL": function("s:forbiddenAll") }
+endif
+
+if !exists("g:AutoCloseQuotedRegions") ||
+	\type(g:AutoCloseQuotedRegions) != type({})
+    let g:AutoCloseQuotedRegions = {
+	\"c": ["Character", "Constant", "Special", "SpecialChar", "String"] }
+endif
+if !has_key(g:AutoCloseQuotedRegions, "default")
+    let g:AutoCloseQuotedRegions['default'] =
+	\["Character", "SpecialChar", "String"]
 endif
 
 if exists("g:AutoCloseOn") && type(g:AutoCloseOn) == type(0)
