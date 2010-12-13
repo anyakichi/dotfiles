@@ -65,15 +65,10 @@ function! s:IsEmptyExpandedPair()
 endfunction
 
 function! s:IsForbidden(char)
-    if has_key(g:AutoCloseForbidden, "ALL") &&
-		\call(g:AutoCloseForbidden["ALL"], [a:char])
-	return 1
-    endif
-    if has_key(g:AutoCloseForbidden, a:char) &&
-		\call(g:AutoCloseForbidden[a:char], [a:char])
-	return 1
-    endif
-    return 0
+    let Func1 = get(g:AutoCloseForbidden, "ALL", function("s:NotForbidden"))
+    let Func2 = get(g:AutoCloseForbidden, a:char, function("s:NotForbidden"))
+
+    return call(Func1, [a:char]) || call(Func2, [a:char])
 endfunction
 
 function! s:AutoClose(char)
@@ -159,6 +154,10 @@ function! s:DeletePair()
         return "\<BS>\<Del>"
     endif    
     return "\<BS>"
+endfunction
+
+function! s:NotForbidden(char)
+    return 0
 endfunction
 
 function! s:forbiddenAll(char)
