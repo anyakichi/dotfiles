@@ -55,7 +55,7 @@ function! s:IsEmptyExpandedPair()
     let prev = prevline[len(prevline) - 1]
     let next = nextline[len(nextline) - 1]
 
-    if empty(prev) || empty(next)
+    if empty(prev) || empty(next) || prevline !~ "^\\s*" . prev . "$"
 	return 0
     endif
 
