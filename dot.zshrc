@@ -146,7 +146,7 @@ ssh-screen() {
 
 ssh-tmux() {
 	ssh=`whence -cp ssh`
-	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "${ssh} $*"
+	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "'${ssh} $*'"
 }
 
 ssh-wrapper() {
