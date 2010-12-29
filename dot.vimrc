@@ -190,6 +190,7 @@ nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
+nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
     let c = nr2char(i)
