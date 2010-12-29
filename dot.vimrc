@@ -128,10 +128,15 @@ nnoremap Y y$
 nnoremap ZQ <Nop>
 nnoremap ZZ <Nop>
 
-noremap j gj
-noremap k gk
-noremap gj j
-noremap gk k
+nnoremap j gj
+nnoremap k gk
+xnoremap j gj
+xnoremap k gk
+
+nnoremap gj j
+nnoremap gk k
+xnoremap gj j
+xnoremap gk k
 
 nnoremap dP dd"2P
 
