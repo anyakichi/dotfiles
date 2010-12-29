@@ -208,6 +208,7 @@ inoremap <C-b> <Left>
 inoremap <C-f> <Right>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
+inoremap <C-l> <C-o><C-l>
 
 
 "
