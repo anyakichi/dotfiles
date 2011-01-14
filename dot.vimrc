@@ -320,6 +320,26 @@ runtime ftplugin/man.vim
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
+" skk.vim
+let g:skk_jisyo = '~/.skk/skk-jisyo'
+let g:skk_auto_save_jisyo = 1
+let g:skk_external_prog = "~/bin/skklookup"
+let g:skk_external_prog_encoding = "euc-jp"
+
+let g:skk_egg_like_newline = 1
+let g:skk_keep_state = 1
+let g:skk_sticky_key = ';'
+
+let g:skk_user_rom_kana_rules = ""
+    \. "(	（\<NL>"
+    \. ")	）\<NL>"
+
+let g:skk_ascii_mode_string = 'aA'
+let g:skk_hira_mode_string = 'あ'
+let g:skk_kata_mode_string = 'ア'
+let g:skk_zenei_mode_string = 'Ａ'
+let g:skk_abbrev_mode_string = 'aあ'
+
 " taglist.vim
 let g:Tlist_Ctags_Cmd = ctagsprg
 
@@ -345,7 +365,10 @@ function! MakeStatusLine()
     endif
     let s .= '%m%r'
     let s .= '%='
-    let s .= CapsLockStatusline() . ' '
+    let extra = SkkGetModeStr() . CapsLockStatusline()
+    if extra !~ '^\s*$'
+	let s .= extra . ' '
+    endif
     let s .= winwidth('%') >= 80 ? '%-14.' : '%-8.'
     let s .= '(%l,%c%V%) %P'
     return s
