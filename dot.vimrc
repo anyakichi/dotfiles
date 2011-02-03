@@ -350,6 +350,12 @@ let g:use_xhtml = 1
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
 
+" vimwiki.vim
+let g:vimwiki_list = [
+\   { 'path': '~/vimwiki', 'path_html': '~/Web/wiki', 'auto_export': 1 }
+\]
+let g:vimwiki_badsyms = ' '
+
 
 "
 " Functions
