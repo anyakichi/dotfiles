@@ -325,7 +325,6 @@ let g:skk_external_prog = "~/bin/skklookup"
 let g:skk_external_prog_encoding = "euc-jp"
 
 let g:skk_egg_like_newline = 1
-let g:skk_keep_state = 1
 let g:skk_sticky_key = ';'
 
 let g:skk_user_rom_kana_rules = ""
