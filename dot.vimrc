@@ -140,8 +140,6 @@ xnoremap gk k
 
 nnoremap dP dd"2P
 
-nnoremap / /\v
-nnoremap ? ?\v
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
