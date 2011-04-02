@@ -174,6 +174,8 @@ bindkey '^I' complete-word
 bindkey -M menuselect \
 	'^P' up-line-or-history '^N' down-line-or-history \
 	'^B' backward-char '^F' forward-char
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
 
 
 #
