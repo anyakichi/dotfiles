@@ -35,6 +35,7 @@ set smartcase
 
 set formatoptions=tcroqlmM
 set textwidth=78
+set nofoldenable
 
 set background=dark
 set display=lastline
