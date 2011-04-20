@@ -349,6 +349,10 @@ let g:Tlist_Ctags_Cmd = s:ctagsprg
 let g:html_use_css = 1
 let g:use_xhtml = 1
 
+" twitvim.vim
+let g:twitvim_enable_python = 1
+nmap [Space]t :PosttoTwitter<CR>
+
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
 
