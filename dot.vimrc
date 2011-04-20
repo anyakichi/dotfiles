@@ -75,7 +75,11 @@ endif
 
 let g:filetype_m = 'objc'
 
-let ctagsprg = '/usr/pkg/bin/exctags'
+if executable('exctags')
+    let s:ctagsprg = 'exctags'
+else
+    let s:ctagsprg = 'ctags'
+endif
 
 filetype plugin indent on
 
@@ -187,7 +191,7 @@ nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
-nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . ctagsprg . ' *)&'<CR>
+nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . s:ctagsprg . ' *)&'<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
@@ -338,7 +342,7 @@ let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
 " taglist.vim
-let g:Tlist_Ctags_Cmd = ctagsprg
+let g:Tlist_Ctags_Cmd = s:ctagsprg
 
 " tohtml.vim
 let g:html_use_css = 1
