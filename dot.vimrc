@@ -324,11 +324,7 @@ runtime ftplugin/man.vim
 source $VIMRUNTIME/macros/matchit.vim
 
 " skk.vim
-let g:skk_jisyo = '~/.skk/skk-jisyo'
 let g:skk_auto_save_jisyo = 1
-let g:skk_external_prog = "~/bin/skklookup"
-let g:skk_external_prog_encoding = "euc-jp"
-
 let g:skk_egg_like_newline = 1
 let g:skk_sticky_key = ';'
 
