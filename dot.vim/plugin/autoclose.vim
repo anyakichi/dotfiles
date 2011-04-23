@@ -216,9 +216,35 @@ function! s:ToggleAutoClose()
     endif
 endfunction
 
+
 "
 " Configuration
 "
+
+" set SpecialChar, String, Character highlight if they are not set.
+for synpair in [["SpecialChar", "Special"], ["String", "Constant"],
+	       \["Character", "Constant"]]
+    if synIDtrans(hlID(synpair[0])) == hlID(synpair[1])
+	let dic = {}
+
+	let color = synIDattr(hlID(synpair[1]), "fg")
+	if color != -1
+	    let dic["guifg"] = color
+	    let dic["ctermfg"] = color
+	endif
+
+	let color = synIDattr(hlID(synpair[1]), "bg")
+	if color != -1
+	    let dic["guibg"] = color
+	    let dic["ctermbg"] = color
+	endif
+
+	let args = join(map(items(dic), 'join(v:val, "=")'), " ")
+
+	execute 'highlight ' . synpair[0] . ' ' . args
+    endif
+endfor
+
 if !exists("g:AutoClosePairs") || type(g:AutoClosePairs) != type({})
     let g:AutoClosePairs = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'"}
 endif
@@ -233,8 +259,7 @@ endif
 
 if !exists("g:AutoCloseQuotedRegions") ||
 	\type(g:AutoCloseQuotedRegions) != type({})
-    let g:AutoCloseQuotedRegions = {
-	\"c": ["Character", "Constant", "Special", "SpecialChar", "String"] }
+    let g:AutoCloseQuotedRegions = {}
 endif
 if !has_key(g:AutoCloseQuotedRegions, "default")
     let g:AutoCloseQuotedRegions['default'] =
