@@ -1,0 +1,27 @@
+diff -r 71e463f94de9 dot.vim/dist/vim-ref/autoload/ref/man.vim
+--- a/dot.vim/dist/vim-ref/autoload/ref/man.vim	Sun Apr 24 23:47:27 2011 +0900
++++ b/dot.vim/dist/vim-ref/autoload/ref/man.vim	Sun Apr 24 23:48:42 2011 +0900
+@@ -130,10 +130,21 @@
+ 
+ 
+ function! s:source.option(opt)  " {{{2
++  if exists('g:ref_man_' . a:opt)
++    return g:ref_man_{a:opt}
++  endif
++
+   if a:opt ==# 'manpath'
+-    return ref#system('manpath').stdout
++    let ret = ref#system('manpath')
++    if ret.result == 0
++      return ref#system('manpath').stdout
++    endif
++    if $MANPATH != ''
++      return $MANPATH
++    endif
+   endif
+-  return g:ref_man_{a:opt}
++
++  return ''
+ endfunction
+ 
+ 
