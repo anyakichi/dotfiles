@@ -170,6 +170,8 @@ nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap <silent> [Tab]d :<C-u>tabclose<CR>
 nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
 nnoremap <silent> [Tab]M :<C-u>call MoveToNewWindow()<CR>
+nnoremap <silent> [Tab]r :<C-u>call ReorganizeTabs(0)<CR>
+nnoremap <silent> [Tab]R :<C-u>call ReorganizeTabs(1)<CR>
 nmap	 [Tab]K <Leader>Ktm
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
@@ -362,6 +364,15 @@ let g:vimwiki_badsyms = ' '
 "
 " Functions
 "
+function! s:any(list, item)
+    for i in a:list
+	if type(i) == type(a:item) && i == a:item
+	    return 1
+	endif
+    endfor
+    return 0
+endfunction
+
 function! MakeStatusLine()
     let s  = '%<%f %y'
     let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
@@ -465,6 +476,51 @@ function! MoveToNewWindow()
 
     execute 'buffer ' . bufnr
     execute 'bwipeout ' . tmpnr
+endfunction
+
+" Close duplicate tabs and open hidden buffers in new tabs.
+function! ReorganizeTabs(only)
+    let tablists = []
+    let bufs = {}
+
+    tabfirst
+    let tabnr = 1
+
+    while type(tabpagebuflist(tabnr)) == type([])
+	let tablist = tabpagebuflist(tabnr)
+
+	if a:only && len(tablist) > 1
+	    execute "normal! 999\<C-w>k"
+	    only
+	endif
+
+	if s:any(tablists, tablist)
+	    tabclose
+	    continue
+	endif
+
+	call add(tablists, tablist)
+
+	for i in tablist
+	    let bufs[i] = 1
+	endfor
+
+	tabnext
+	let tabnr += 1
+    endwhile
+
+    tablast
+
+    for n in range(1, bufnr('$'))
+	if get(bufs, n, 0) || !buflisted(n)
+	    continue
+	endif
+
+	tab split
+	execute 'buffer ' . n
+    endfor
+
+    tabfirst
 endfunction
 
 
