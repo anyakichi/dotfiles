@@ -76,7 +76,7 @@ ${RCDIR}/.vim: dot.vim
 	    -name spell -o -name syntax -o -name tutor -o -name snippets \) \
 	    -exec cp -rp {} $@ \;
 	find "$?/dist" -maxdepth 2 -mindepth 2 -name '*.patch'		\
-	    -exec sh -c 'patch -p4 -d $@ < {}' \;
+	    -exec sh -c 'patch -s -p4 -d $@ < {}' \;
 	find "$?" -maxdepth 1 -mindepth 1 \! -name dist -exec cp -rp {} $@ \;
 	find "$@" -name '*.orig' -exec rm -f {} \;
 	vim -e -s -u "NONE" -c ':helptags rc/.vim/doc' -c ':q'
