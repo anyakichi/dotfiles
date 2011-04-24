@@ -351,6 +351,22 @@ let g:use_xhtml = 1
 let g:twitvim_enable_python = 1
 nmap [Space]t :PosttoTwitter<CR>
 
+" unite.vim
+let g:unite_enable_start_insert = 1
+
+nnoremap [Space]ub :<C-u>Unite buffer<CR>
+nnoremap [Space]uf :<C-u>Unite -buffer-name=files file<CR>
+nnoremap [Space]um :<C-u>Unite file_mru<CR>
+nnoremap [Space]ur :<C-u>Unite register<CR>
+
+au FileType unite call s:unite_hook()
+function! s:unite_hook()
+    nnoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
+    inoremap <silent> <buffer> <expr> <C-t> unite#do_action('tabopen')
+    nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
+    imap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
+endfunction
+
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
 
