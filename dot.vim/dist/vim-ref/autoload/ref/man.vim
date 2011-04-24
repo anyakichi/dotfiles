@@ -130,19 +130,8 @@ endfunction
 
 
 function! s:source.option(opt)  " {{{2
-  if !exists('g:ref_man_' . a:opt)  " {{{2
-    return g:ref_man_{a:opt}
-  endif
-
   if a:opt ==# 'manpath'
-    let ret = ref#system('manpath')
-    if ret.result
-      return ref#system('manpath').stdout
-    endif
-    if $MANPATH != ''
-      return $MANPATH
-    endif
-    return '/usr/share/man:/usr/pkg/man'
+    return ref#system('manpath').stdout
   endif
   return g:ref_man_{a:opt}
 endfunction
