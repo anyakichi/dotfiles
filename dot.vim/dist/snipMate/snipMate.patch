@@ -1,0 +1,90 @@
+diff -r faecdad57f87 dot.vim/dist/snipMate/after/plugin/snipMate.vim
+--- a/dot.vim/dist/snipMate/after/plugin/snipMate.vim	Sat Apr 23 10:33:34 2011 +0900
++++ b/dot.vim/dist/snipMate/after/plugin/snipMate.vim	Sat Apr 23 16:38:31 2011 +0900
+@@ -5,10 +5,12 @@
+ endif
+ let s:did_snips_mappings = 1
+ 
+-ino <silent> <tab> <c-r>=TriggerSnippet()<cr>
+-snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet()<cr>
+-ino <silent> <s-tab> <c-r>=BackwardsSnippet()<cr>
+-snor <silent> <s-tab> <esc>i<right><c-r>=BackwardsSnippet()<cr>
++ino <silent> <C-]> <c-r>=TriggerSnippet("\<C-]>", 1)<cr>
++ino <silent> <tab> <c-r>=TriggerSnippet("\<tab>", 0)<cr>
++snor <silent> <C-]> <esc>i<right><c-r>=TriggerSnippet("\<tab>", 1)<cr>
++snor <silent> <tab> <esc>i<right><c-r>=TriggerSnippet("\<tab>", 0)<cr>
++ino <silent> <s-tab> <c-r>=BackwardsSnippet("\<s-tab>")<cr>
++snor <silent> <s-tab> <esc>i<right><c-r>=BackwardsSnippet("\<s-tab>")<cr>
+ ino <silent> <c-r><tab> <c-r>=ShowAvailableSnips()<cr>
+ 
+ " The default mappings for these are annoying & sometimes break snipMate.
+diff -r faecdad57f87 dot.vim/dist/snipMate/autoload/snipMate.vim
+--- a/dot.vim/dist/snipMate/autoload/snipMate.vim	Sat Apr 23 10:33:34 2011 +0900
++++ b/dot.vim/dist/snipMate/autoload/snipMate.vim	Sat Apr 23 16:38:31 2011 +0900
+@@ -166,7 +166,7 @@
+ 	return [snipPos, i - 1]
+ endf
+ 
+-fun snipMate#jumpTabStop(backwards)
++fun snipMate#jumpTabStop(backwards, char, start)
+ 	let leftPlaceholder = exists('s:origWordLen')
+ 	                      \ && s:origWordLen != g:snipPos[s:curPos][2]
+ 	if leftPlaceholder && exists('s:oldEndCol')
+@@ -196,7 +196,7 @@
+ 	if s:curPos == s:snipLen
+ 		let sMode = s:endCol == g:snipPos[s:curPos-1][1]+g:snipPos[s:curPos-1][2]
+ 		call s:RemoveSnippet()
+-		return sMode ? "\<tab>" : TriggerSnippet()
++		return sMode ? a:char : TriggerSnippet(a:char, a:start)
+ 	endif
+ 
+ 	call cursor(g:snipPos[s:curPos][0], g:snipPos[s:curPos][1])
+diff -r faecdad57f87 dot.vim/dist/snipMate/plugin/snipMate.vim
+--- a/dot.vim/dist/snipMate/plugin/snipMate.vim	Sat Apr 23 10:33:34 2011 +0900
++++ b/dot.vim/dist/snipMate/plugin/snipMate.vim	Sat Apr 23 16:38:31 2011 +0900
+@@ -122,7 +122,7 @@
+ 	endfor
+ endf
+ 
+-fun! TriggerSnippet()
++fun! TriggerSnippet(char, start)
+ 	if exists('g:SuperTabMappingForward')
+ 		if g:SuperTabMappingForward == "<tab>"
+ 			let SuperTabKey = "\<c-n>"
+@@ -139,7 +139,11 @@
+ 		call feedkeys("\<tab>") | return ''
+ 	endif
+ 
+-	if exists('g:snipPos') | return snipMate#jumpTabStop(0) | endif
++	if exists('g:snipPos') | return snipMate#jumpTabStop(0, a:char, a:start) | endif
++
++	if !a:start
++		return a:char
++	endif
+ 
+ 	let word = matchstr(getline('.'), '\S\+\%'.col('.').'c')
+ 	for scope in [bufnr('%')] + split(&ft, '\.') + ['_']
+@@ -157,11 +161,11 @@
+ 		call feedkeys(SuperTabKey)
+ 		return ''
+ 	endif
+-	return "\<tab>"
++	return a:char
+ endf
+ 
+-fun! BackwardsSnippet()
+-	if exists('g:snipPos') | return snipMate#jumpTabStop(1) | endif
++fun! BackwardsSnippet(char)
++	if exists('g:snipPos') | return snipMate#jumpTabStop(1, a:char, 0) | endif
+ 
+ 	if exists('g:SuperTabMappingForward')
+ 		if g:SuperTabMappingBackward == "<s-tab>"
+@@ -174,7 +178,7 @@
+ 		call feedkeys(SuperTabKey)
+ 		return ''
+ 	endif
+-	return "\<s-tab>"
++	return a:char
+ endf
+ 
+ " Check if word under cursor is snippet trigger; if it isn't, try checking if
