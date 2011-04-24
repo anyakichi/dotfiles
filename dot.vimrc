@@ -172,7 +172,6 @@ nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
 nnoremap <silent> [Tab]M :<C-u>call MoveToNewWindow()<CR>
 nnoremap <silent> [Tab]r :<C-u>call ReorganizeTabs(0)<CR>
 nnoremap <silent> [Tab]R :<C-u>call ReorganizeTabs(1)<CR>
-nmap	 [Tab]K <Leader>Ktm
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
 for n in range(1, 9)
@@ -319,11 +318,14 @@ let g:autofmt_allow_over_tw = 2
 " capslock.vim
 imap <C-a> <Plug>CapsLockToggle
 
-" man.vim
-runtime ftplugin/man.vim
-
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
+
+" ref.vim
+let g:ref_detect_filetype = {'_': 'man'}
+let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
+
+nmap [Tab]K <Plug>(ref-keyword)tm
 
 " skk.vim
 let g:skk_auto_save_jisyo = 1
