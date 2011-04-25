@@ -3,11 +3,6 @@
 # 	Sh configuration
 #
 
-if tty -s; then
-	stty -ixon
-	stty status '^T' 2>/dev/null
-fi
-
 ulimit -d 262144
 ulimit -n 512
 ulimit -s 8192

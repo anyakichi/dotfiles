@@ -4,6 +4,15 @@
 #
 
 #
+# Terminal setup
+#
+if tty -s; then
+	stty -ixon
+	stty status '^T' 2>/dev/null
+fi
+
+
+#
 # Resource limits
 #
 unlimit
