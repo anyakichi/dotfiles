@@ -3,4 +3,14 @@
 # 	Mailcap configuration
 #
 
+text/html;	firefox %s; nametemplate=%s.html; test=sh -c 'test $DISPLAY'
+text/html;	w3m %s; nametemplate=%s.html
 text/html;	w3m -dump %s; nametemplate=%s.html; copiousoutput
+
+application/pdf; acroread %s; test=sh -c 'test $DISPLAY'
+application/pdf; vim %s
+application/pdf; pdftotext %s -; copiousoutput
+
+application/*;	vim %s
+image/*;	display %s
+text/*;		vim %s
