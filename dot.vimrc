@@ -169,19 +169,18 @@ nnoremap [Tab]h :<C-u>tab help<Space>
 nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap <silent> [Tab]d :<C-u>tabclose<CR>
 nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
-nnoremap <silent> [Tab]M :<C-u>call MoveToNewWindow()<CR>
+nnoremap <silent> [Tab]M :tabmove<CR>
 nnoremap <silent> [Tab]r :<C-u>call ReorganizeTabs(0)<CR>
 nnoremap <silent> [Tab]R :<C-u>call ReorganizeTabs(1)<CR>
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
-for n in range(1, 9)
-    exe 'nnoremap <silent> [Tab]' . n ' :<C-u>tabnext ' . n . '<CR>'
-endfor
 
 nnoremap [Tab]s :<C-u>split<Space>
 nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
+nnoremap <silent> [Tab]<C-s> :<C-u>call MoveToNewWindow(0)<CR>
 nnoremap [Tab]v :<C-u>vsplit<Space>
 nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
+nnoremap <silent> [Tab]<C-v> :<C-u>call MoveToNewWindow(1)<CR>
 nnoremap [Tab]c <C-w>c
 nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
@@ -325,7 +324,7 @@ source $VIMRUNTIME/macros/matchit.vim
 let g:ref_detect_filetype = {'_': 'man'}
 let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
 
-nmap [Tab]K <Plug>(ref-keyword)tm
+nmap [Tab]K <Plug>(ref-keyword)[Tab]m
 
 " skk.vim
 let g:skk_auto_save_jisyo = 1
@@ -480,7 +479,7 @@ function! MoveToNewTab()
     tabnext
 endfunction
 
-function! MoveToNewWindow()
+function! MoveToNewWindow(vertical)
     let bufnr = bufnr('%')
 
     if winnr('$') > 1
@@ -489,11 +488,12 @@ function! MoveToNewWindow()
 	buffer #
     endif
 
-    vnew
-    let tmpnr = bufnr('%')
-
+    if a:vertical
+	vsplit
+    else
+	split
+    endif
     execute 'buffer ' . bufnr
-    execute 'bwipeout ' . tmpnr
 endfunction
 
 " Close duplicate tabs and open hidden buffers in new tabs.
