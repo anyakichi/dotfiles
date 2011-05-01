@@ -1,4 +1,4 @@
-.vim/bundle/skk.vim = ssh://sopht.jp//var/repos/skk.vim
+.vim/bundle/skk.vim = [git]https://github.com/anyakichi/skk.vim.git
 .vim/bundle/snipmate.vim = ssh://sopht.jp//var/repos/snipmate.vim
 .vim/bundle/unite.vim = [git]https://github.com/Shougo/unite.vim.git
 .vim/bundle/vim-fakeclip = [git]ssh://sopht.jp//var/repos/vim-fakeclip.git
