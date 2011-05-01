@@ -5,4 +5,4 @@
 
 syntax: regexp
 ^[^.].*
-^\.(?!cvsrc$|hgignore$|hgrc$|mailcap$|mlterm\b|mutt\b|muttrc$|profile$|screenrc$|termcap$|tmux.conf$|vim\b|vimrc$|zfunc\b|zlogin$|zshrc$).*$
+^\.(?!mlterm\b|mutt\b|vim\b|zfunc\b).*$
