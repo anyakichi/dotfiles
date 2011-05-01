@@ -3,6 +3,7 @@
 .vim/bundle/unite.vim = [git]https://github.com/Shougo/unite.vim.git
 .vim/bundle/vim-fakeclip = [git]ssh://sopht.jp//var/repos/vim-fakeclip.git
 .vim/bundle/vim-quickrun = [git]https://github.com/thinca/vim-quickrun.git
+.vim/bundle/vim-ref = [git]ssh://sopht.jp//var/repos/vim-ref.git
 .vim/bundle/vim-surround = ssh://sopht.jp//var/repos/vim-surround
 .vim/bundle/vim-textobj-kakko = ssh://sopht.jp//var/repos/vim-textobj-kakko
 .vim/bundle/vim-textobj-xbrackets = ssh://sopht.jp//var/repos/vim-textobj-xbrackets

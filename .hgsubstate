@@ -3,6 +3,7 @@
 4d9a9bbde19766fc30be9f456c1415c58c6be416 .vim/bundle/unite.vim
 368b8b18cda8df356c2b504ee229c529582b3c88 .vim/bundle/vim-fakeclip
 6b0be76a5d0f124f7623a0b4517904d22a529e11 .vim/bundle/vim-quickrun
+74617a0707291721aa1bf2b0cbc25a423ba79fec .vim/bundle/vim-ref
 ccfee7d19f41fc4d3aabc20b25a6a0d2dbc5e113 .vim/bundle/vim-surround
 113f94967bdb062afd43a207a61d8cc49648f6a1 .vim/bundle/vim-textobj-kakko
 262c966b90cf77b11fb0b197514c4cbcf7cae8a7 .vim/bundle/vim-textobj-xbrackets
