@@ -1,0 +1,8 @@
+#
+# .hgignore:
+#	Ignore all files but the managed dotfiles.
+#
+
+syntax: regexp
+^[^.].*
+^\.(?!cvsrc$|hgignore$|hgrc$|mailcap$|mlterm\b|mutt\b|muttrc$|profile$|screenrc$|termcap$|tmux.conf$|vim\b|vimrc$|zfunc\b|zlogin$|zshrc$).*$
