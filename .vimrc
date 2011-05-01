@@ -104,9 +104,9 @@ if has("gui") && &t_Co == 256
 	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
 	\'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
 
-    colorscheme moria
+    silent! colorscheme moria
 else
-    colorscheme nya
+    silent! colorscheme nya
 endif
 
 
@@ -407,7 +407,13 @@ function! MakeStatusLine()
     endif
     let s .= '%m%r'
     let s .= '%='
-    let extra = SkkGetModeStr() . CapsLockStatusline()
+    let extra = ''
+    if exists("*SkkGetModeStr")
+	let extra .= SkkGetModeStr()
+    endif
+    if exists("*CapsLockStatusline")
+	let extra .= CapsLockStatusline()
+    endif
     if extra !~ '^\s*$'
 	let s .= extra . ' '
     endif
