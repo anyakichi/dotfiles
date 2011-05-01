@@ -1,2 +1,3 @@
 .vim/bundle/skk.vim = ssh://sopht.jp//var/repos/skk.vim
+.vim/bundle/vim-surround = ssh://sopht.jp//var/repos/vim-surround
 .vim/bundle/vim-textobj-kakko = ssh://sopht.jp//var/repos/vim-textobj-kakko
