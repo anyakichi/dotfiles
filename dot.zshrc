@@ -195,6 +195,10 @@ select-word-style default
 zstyle ':zle:*' word-chars " /:@+|"
 zstyle ':zle:*' word-style unspecified
 
+autoload -U factorize-last-two-args
+zle -N factorize-last-two-args
+bindkey '^X^F' factorize-last-two-args
+
 
 #
 # Local configuration
