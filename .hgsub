@@ -1,3 +1,4 @@
+.vim/bundle/nerdcommenter = [git]https://github.com/scrooloose/nerdcommenter.git
 .vim/bundle/skk.vim = https://www.sopht.jp/repos/hg/skk.vim
 .vim/bundle/snipmate.vim = https://www.sopht.jp/repos/hg/snipmate.vim
 .vim/bundle/unite.vim = [git]https://github.com/Shougo/unite.vim.git
