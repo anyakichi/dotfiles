@@ -1,2 +1,10 @@
+.vim/bundle/skk.vim = https://www.sopht.jp/repos/hg/skk.vim
+.vim/bundle/snipmate.vim = https://www.sopht.jp/repos/hg/snipmate.vim
 .vim/bundle/unite.vim = [git]https://github.com/Shougo/unite.vim.git
+.vim/bundle/vim-fakeclip = https://www.sopht.jp/repos/hg/vim-fakeclip
 .vim/bundle/vim-quickrun = [git]https://github.com/thinca/vim-quickrun.git
+.vim/bundle/vim-ref = https://www.sopht.jp/repos/hg/vim-ref
+.vim/bundle/vim-surround = https://www.sopht.jp/repos/hg/vim-surround
+.vim/bundle/vim-textobj-kakko = https://www.sopht.jp/repos/hg/vim-textobj-kakko
+.vim/bundle/vim-textobj-xbrackets = https://www.sopht.jp/repos/hg/vim-textobj-xbrackets
+.vim/bundle/vimwiki = https://www.sopht.jp/repos/hg/vimwiki
