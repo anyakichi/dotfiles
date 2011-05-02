@@ -6,6 +6,7 @@ e393ee9124994db5c794d06386b39b21b80f149a .vim/bundle/vim-fakeclip
 41d33deae051e7e875aef2d804cb9508ab77ffa9 .vim/bundle/vim-ref
 c4101c205ef9e06bdfeff571a7dbba2576f08974 .vim/bundle/vim-repeat
 995ad861822ada082a8c69be2fa6eecf0ff07038 .vim/bundle/vim-surround
+90a5d85dfc2c91b15acba8ad68a98029ff25ff87 .vim/bundle/vim-textobj-indent
 113f94967bdb062afd43a207a61d8cc49648f6a1 .vim/bundle/vim-textobj-kakko
 262c966b90cf77b11fb0b197514c4cbcf7cae8a7 .vim/bundle/vim-textobj-xbrackets
 37a6ab2b1ea03f037a214bb5336b4813fdba9132 .vim/bundle/vimwiki
