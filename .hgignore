@@ -5,4 +5,7 @@
 
 syntax: regexp
 ^[^.].*
+^\.vim/spell/
+^\.vim/swap/
+^\.vim/(?:.*/)?doc/tags$
 ^\.(?!mlterm\b|mutt\b|vim\b|zfunc\b).*$
