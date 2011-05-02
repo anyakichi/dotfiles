@@ -4,6 +4,7 @@
 .vim/bundle/vim-fakeclip = https://www.sopht.jp/repos/hg/vim-fakeclip
 .vim/bundle/vim-quickrun = [git]https://github.com/thinca/vim-quickrun.git
 .vim/bundle/vim-ref = https://www.sopht.jp/repos/hg/vim-ref
+.vim/bundle/vim-repeat = [git]https://github.com/tpope/vim-repeat.git
 .vim/bundle/vim-surround = https://www.sopht.jp/repos/hg/vim-surround
 .vim/bundle/vim-textobj-kakko = https://www.sopht.jp/repos/hg/vim-textobj-kakko
 .vim/bundle/vim-textobj-xbrackets = https://www.sopht.jp/repos/hg/vim-textobj-xbrackets
