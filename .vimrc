@@ -329,6 +329,14 @@ imap <C-a> <Plug>CapsLockToggle
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
+" omnicppcomplete.vim
+let g:OmniCpp_ShowPrototypeInAbbr = 1
+let g:OmniCpp_MayCompleteArrow = 0
+let g:OmniCpp_MayCompleteDot = 0
+let g:OmniCpp_MayCompleteNamespace = 0
+let g:OmniCpp_MayCompleteScope = 0
+let g:OmniCpp_SelectFirstItem = 2
+
 " ref.vim
 let g:ref_detect_filetype = {'_': 'man'}
 if !executable("manpath")
