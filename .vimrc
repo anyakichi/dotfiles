@@ -348,6 +348,9 @@ let g:skk_kata_mode_string = 'ア'
 let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
+" snipmate.vim
+let g:snips_author = 'INAJIMA Daisuke'
+
 " taglist.vim
 let g:Tlist_Ctags_Cmd = s:ctagsprg
 
