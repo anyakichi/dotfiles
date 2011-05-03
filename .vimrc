@@ -326,6 +326,10 @@ let g:autofmt_allow_over_tw = 2
 " capslock.vim
 imap <C-a> <Plug>CapsLockToggle
 
+" cecutil.vim
+nmap [Tab]= <Plug>SaveWinPosn
+nmap [Tab]- <Plug>RestoreWinPosn
+
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
