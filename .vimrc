@@ -277,10 +277,11 @@ ab #P
 "
 augroup vimrc-filetype
     au!
-    au FileType python					setl fo-=t
-    au FileType docbk,eruby,html,ruby,tex,xhtml,xml	setl sw=2
-    au FileType mail					setl tw=72
-    au FileType scheme					setl sw=2
+    au FileType c,cpp				setl tags+=~/.vim/tags/c.tags
+    au FileType python				setl fo-=t
+    au FileType docbk,html,tex,xhtml,xml	setl sw=2
+    au FileType eruby,ruby,scheme		setl sw=2
+    au FileType mail				setl tw=72
 augroup END
 
 augroup vimrc-pdf
