@@ -12,6 +12,7 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+
 "
 " Options
 "
@@ -329,7 +330,9 @@ source $VIMRUNTIME/macros/matchit.vim
 
 " ref.vim
 let g:ref_detect_filetype = {'_': 'man'}
-let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
+if !executable("manpath")
+    let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
+endif
 
 nmap [Tab]K <Plug>(ref-keyword)[Tab]m
 
