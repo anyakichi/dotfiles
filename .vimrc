@@ -224,7 +224,7 @@ inoremap <C-l> <C-o><C-l>
 "
 " Abbreviations
 "
-ab #C	Copyright (c) YEAR INAJIMA Daisuke All rights reserved.
+ab #C	Copyright (c) <C-r>=strftime("%Y")<CR> INAJIMA Daisuke. All rights reserved.
 ab #L	
 \Permission is hereby granted, free of charge, to any person obtaining a<CR>
 \copy of this software and associated documentation files (the "Software"),<CR>
