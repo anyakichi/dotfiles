@@ -14,3 +14,4 @@
 .vim/bundle/vim-textobj-user = [git]https://github.com/kana/vim-textobj-user.git
 .vim/bundle/vim-textobj-xbrackets = https://www.sopht.jp/repos/hg/vim-textobj-xbrackets
 .vim/bundle/vimwiki = https://www.sopht.jp/repos/hg/vimwiki
+.vim/bundle/xmledit = [git]https://github.com/sukima/xmledit.git
