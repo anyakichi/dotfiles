@@ -180,6 +180,7 @@ zmodload -a zsh/zprof zprof
 #
 bindkey -e
 bindkey ' ' magic-space
+bindkey '^D' list-choices
 bindkey '^I' complete-word
 bindkey -M menuselect \
 	'^P' up-line-or-history '^N' down-line-or-history \
