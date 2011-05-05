@@ -29,8 +29,8 @@ RPROMPT=' %~'
 DIRSTACKSIZE=20
 
 HISTFILE=~/.zsh_history
-HISTSIZE=1000
-SAVEHIST=1000
+HISTSIZE=10000
+SAVEHIST=10000
 
 MAILCHECK=0
 
@@ -116,11 +116,12 @@ setopt complete_in_word
 setopt extended_glob
 
 # History
-setopt inc_append_history hist_ignore_alldups hist_ignore_dups
-setopt hist_reduce_blanks
+setopt extended_history
+setopt hist_ignore_alldups hist_ignore_dups hist_ignore_space hist_reduce_blanks
+setopt inc_append_history
 
 # Input/Output
-setopt correct
+setopt correct list_packed
 
 # Zle
 setopt no_beep
