@@ -97,7 +97,7 @@ filetype plugin indent on
 " Syntax coloring
 "
 syntax on
-if &t_Co == 256
+if (has('gui') || v:version >= 703) && &t_Co == 256
     let g:CSApprox_hook_pre = 'hi Normal guifg=#d0d0d0 guibg=#262626'
     let g:CSApprox_hook_post = [
 	\'exe "hi TabLine cterm=none ctermfg=fg ctermbg=" .
