@@ -153,12 +153,6 @@ xnoremap gk k
 
 nnoremap dP dd"2P
 
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zz
-nnoremap g# g#zz
 nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
 
 nnoremap [Tab]o :<C-u>edit<Space>
