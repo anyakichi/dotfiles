@@ -337,11 +337,16 @@ let g:OmniCpp_SelectFirstItem = 2
 
 " ref.vim
 let g:ref_detect_filetype = {'_': 'man'}
+let g:ref_no_default_key_mappings = 1
+
 if !executable("manpath")
     let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
 endif
 
-nmap [Tab]K <Plug>(ref-keyword)[Tab]m
+nnoremap <silent> K :<C-u>call Ref('normal')<CR>
+vnoremap <silent> K :<C-u>call Ref('visual')<CR>
+
+nmap [Tab]K K[Tab]m
 
 " skk.vim
 let g:skk_auto_save_jisyo = 1
@@ -696,6 +701,17 @@ RUBY
 	let @" = saved_reg
     endfunction
 endif
+
+function! Ref(mode)
+    if &filetype ==# 'vim'
+	execute 'silent! help ' . expand("<cword>")
+	if &filetype !=# 'help'
+	    echo 'No entry'
+	endif
+    else
+	call ref#K(a:mode)
+    endif
+endfunction
 
 
 "
