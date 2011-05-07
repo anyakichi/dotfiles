@@ -169,20 +169,23 @@ nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <silent> [Tab]<CR> :<C-u>tabnew<CR>
 nnoremap [Tab]h :<C-u>tab help<Space>
 nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> [Tab]d :<C-u>tabclose<CR>
-nnoremap <silent> [Tab]m :<C-u>call MoveToNewTab()<CR>
+nnoremap <silent> [Tab]d :<C-u>call tabutil#close()<CR>
+nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
+nnoremap <silent> [Tab]u :<C-u>call tabutil#undo()<CR>
+nnoremap <silent> [Tab]U :<C-u>call tabutil#undoall()<CR>
+nnoremap <silent> [Tab]m :<C-u>call tabutil#split()<CR>
 nnoremap <silent> [Tab]M :tabmove<CR>
-nnoremap <silent> [Tab]r :<C-u>call ReorganizeTabs(0)<CR>
-nnoremap <silent> [Tab]R :<C-u>call ReorganizeTabs(1)<CR>
+nnoremap <silent> [Tab]r :<C-u>call tabutil#reorganize()<CR>
+nnoremap <silent> [Tab]R :<C-u>call tabutil#reorganize1()<CR>
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
 
 nnoremap [Tab]s :<C-u>split<Space>
 nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
-nnoremap <silent> [Tab]<C-s> :<C-u>call MoveToNewWindow(0)<CR>
+nnoremap <silent> [Tab]<C-s> :<C-u>call tabutil#wsplit()<CR>
 nnoremap [Tab]v :<C-u>vsplit<Space>
 nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
-nnoremap <silent> [Tab]<C-v> :<C-u>call MoveToNewWindow(1)<CR>
+nnoremap <silent> [Tab]<C-v> :<C-u>call tabutil#vsplit()<CR>
 nnoremap [Tab]c <C-w>c
 nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
@@ -406,15 +409,6 @@ let g:vimwiki_badsyms = ' '
 "
 " Functions
 "
-function! s:any(list, item)
-    for i in a:list
-	if type(i) == type(a:item) && i == a:item
-	    return 1
-	endif
-    endfor
-    return 0
-endfunction
-
 function! MakeStatusLine()
     let s  = '%<%f %y'
     let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
@@ -497,80 +491,8 @@ function! GetRelativePath()
     endif
 endfunction
 
-function! MoveToNewTab()
-    tab split
-    tabprevious
 
-    if winnr('$') > 1
-	close
-    elseif bufnr('$') > 1
-	buffer #
-    endif
 
-    tabnext
-endfunction
-
-function! MoveToNewWindow(vertical)
-    let bufnr = bufnr('%')
-
-    if winnr('$') > 1
-	close
-    elseif bufnr('$') > 1
-	buffer #
-    endif
-
-    if a:vertical
-	vsplit
-    else
-	split
-    endif
-    execute 'buffer ' . bufnr
-endfunction
-
-" Close duplicate tabs and open hidden buffers in new tabs.
-function! ReorganizeTabs(only)
-    let tablists = []
-    let bufs = {}
-
-    tabfirst
-    let tabnr = 1
-
-    while type(tabpagebuflist(tabnr)) == type([])
-	let tablist = tabpagebuflist(tabnr)
-
-	if a:only && len(tablist) > 1
-	    execute "normal! 999\<C-w>k"
-	    only
-	endif
-
-	if s:any(tablists, tablist)
-	    tabclose
-	    continue
-	endif
-
-	call add(tablists, tablist)
-
-	for i in tablist
-	    let bufs[i] = 1
-	endfor
-
-	tabnext
-	let tabnr += 1
-    endwhile
-
-    tablast
-
-    for n in range(1, bufnr('$'))
-	if get(bufs, n, 0) || !buflisted(n)
-	    continue
-	endif
-
-	tab split
-	execute 'buffer ' . n
-    endfor
-
-    tabfirst
-endfunction
 
 
 "
