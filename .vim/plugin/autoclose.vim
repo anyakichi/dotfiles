@@ -14,7 +14,7 @@ let g:loaded_autoclose = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-function s:getlc(offset)
+function! s:getlc(offset)
     let l:i = col('.') - 1 + a:offset
 
     if l:i < 0
@@ -23,7 +23,7 @@ function s:getlc(offset)
     return getline('.')[l:i]
 endfunction
 
-function s:getSynName()
+function! s:getSynName()
     return synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
 endfunction
 
@@ -86,6 +86,29 @@ function! s:AutoClose(char)
 	    return s:InsertPair(a:char)
 	endif
 
+	return a:char
+    endif
+
+    if a:char == '>'
+	let region = synIDattr(synID(line("."), col(".") - 1, 1), "name")
+	if match(region, "xmlProcessing") == -1 &&
+	\  match(region, 'docbk\|html\|xml') == 0
+	    if s:getlc(-1) == '>'
+		return "\<CR>\<Esc>O"
+	    elseif s:getlc(-1) != '/'
+		let pos_save = getpos('.')
+		let reg_save = getreg('a')
+
+		call search('<', 'bW')
+		execute 'normal! l"ayaw'
+		let close_tag = '</' . getreg('a') . '>'
+
+		call setreg('a', reg_save)
+		call setpos('.', pos_save)
+
+		return '>' . close_tag . repeat("\<Left>", len(close_tag))
+	    endif
+	endif
 	return a:char
     endif
 
@@ -184,6 +207,7 @@ function! s:AutoCloseEnable(yesno)
 		    \' <C-R>=<SID>AutoClose("' . val . '")<CR>'
 	    endif
 	endfor
+	inoremap <silent> > <C-r>=<SID>AutoClose('>')<CR>
 	inoremap <expr> <BS>  <SID>DeletePair()
 	inoremap <expr> <C-H> <SID>DeletePair()
 
@@ -199,6 +223,7 @@ function! s:AutoCloseEnable(yesno)
 		exec 'iunmap ' . val
 	    endif
 	endfor
+	iunmap >
 	iunmap <BS>
 	iunmap <C-H>
 
