@@ -338,6 +338,13 @@ let g:OmniCpp_MayCompleteNamespace = 0
 let g:OmniCpp_MayCompleteScope = 0
 let g:OmniCpp_SelectFirstItem = 2
 
+" quickrun.vim
+let g:quickrun_config = {}
+
+nmap <Leader>r <Plug>(quickrun)
+nmap <Leader>e <Plug>(quickrun-op)
+nmap <Leader>ee <Plug>(quickrun-op)j
+
 " ref.vim
 let g:ref_detect_filetype = {'_': 'man'}
 let g:ref_no_default_key_mappings = 1
