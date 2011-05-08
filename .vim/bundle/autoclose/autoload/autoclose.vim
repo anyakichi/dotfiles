@@ -115,7 +115,7 @@ function! autoclose#tag(char)
 	    let reg_save = getreg('a')
 
 	    call search('<', 'bW')
-	    execute 'normal! l"ayaw'
+	    execute 'normal! l"ayiw'
 	    let close_tag = '</' . getreg('a') . '>'
 
 	    call setreg('a', reg_save)
