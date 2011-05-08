@@ -5,10 +5,8 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-let s:running = 0
-
-function! s:getlc(offset)
-    let i = col('.') - 1 + a:offset
+function! s:getlc(off)
+    let i = col('.') - 1 + a:off
     return i < 0 ? '' : getline('.')[i]
 endfunction
 
@@ -26,109 +24,22 @@ function! s:get_syngr_name_after(str, off)
     let line = getline('.')
     let tmp = line[:col('.')-2] . a:str . line[col('.')-1:]
     call setline('.', tmp)
+    redraw
     let region = s:get_syngr_name(a:off)
     call setline('.', line)
-    redraw
     return region
 endfunction
 
-function! autoclose#is_empty()
-    let prev = s:getlc(-1)
-    let next = s:getlc(0)
-
-    return !empty(prev) && !empty(next) &&
-    \      get(g:autoclose_pairs, prev, "") == next
+function! s:insert_mode()
+    if ((col("']") == col("$") && col(".") + 1 == col("$")) ||
+    \	(line("']") == line("$") + 1 && line(".") == line("$")))
+	return 'a'
+    else
+	return 'i'
+    endif
 endfunction
 
-function! autoclose#is_empty_ex()
-    let prevline = getline(line('.') - 1)
-    let nextline = getline(line('.') + 1)
-
-    if empty(prevline) || empty(nextline)
-	return 0
-    endif
-
-    let prev = prevline[len(prevline) - 1]
-    let next = nextline[len(nextline) - 1]
-
-    if empty(prev) || empty(next) || prevline !~ "^\\s*" . prev . "$"
-	return 0
-    endif
-
-    let curline = getline('.')
-
-    return curline =~ "^\\s*$" && get(g:autoclose_pairs, prev, "") == next
-endfunction
-
-function! autoclose#is_forbidden(char)
-    let Func = function("autoclose#not_forbidden")
-    let Func1 = get(g:autoclose_forbidden, "_", Func)
-    let Func2 = get(g:autoclose_forbidden, a:char, Func)
-
-    return call(Func1, [a:char]) || call(Func2, [a:char])
-endfunction
-
-function! autoclose#pair(char)
-    if index(g:autoclose_expand_chars, a:char) >= 0
-	return autoclose#expand(a:char)
-    elseif has_key(g:autoclose_pairs, a:char)
-	return autoclose#insert(a:char)
-    endif
-
-    for key in keys(g:autoclose_pairs)
-	if g:autoclose_pairs[key] == a:char
-	    if index(g:autoclose_expand_chars, key) >= 0
-		return autoclose#shrink(a:char)
-	    endif
-	    return autoclose#close(a:char)
-	endif
-    endfor
-
-    return a:char
-endfunction
-
-function! autoclose#quote(char)
-    let type = has_key(g:autoclose_quoted_regions, &ft) ? &ft : "_"
-    let regions = g:autoclose_quoted_regions[type]
-
-    if index(regions, s:get_syngr_name(0)) >= 0 ||
-    \  index(regions, s:get_syngr_name_after(' ', 0)) >= 0
-	return autoclose#close(a:char)
-    endif
-
-    let dummy = a:char . ' ' . a:char
-    if index(regions, s:get_syngr_name_after(dummy, 1)) >= 0
-	return autoclose#insert(a:char)
-    endif
-
-    return a:char
-endfunction
-
-function! autoclose#tag(char)
-    let region = synIDattr(synID(line("."), col(".") - 1, 1), "name")
-    if match(region, "xmlProcessing") == -1 &&
-		\  match(region, 'docbk\|html\|xml') == 0
-	if s:getlc(-1) == '>'
-	    return "\<CR>\<Esc>O"
-	elseif s:getlc(-1) != '/'
-	    let pos_save = getpos('.')
-	    let reg_save = getreg('a')
-
-	    call search('<', 'bW')
-	    execute 'normal! l"ayiw'
-	    let close_tag = '</' . getreg('a') . '>'
-
-	    call setreg('a', reg_save)
-	    call setpos('.', pos_save)
-
-	    return '>' . close_tag . repeat("\<Left>", len(close_tag))
-	endif
-    endif
-
-    return a:char
-endfunction
-
-function! autoclose#insert(char)
+function! autoclose#open(char)
     if autoclose#is_forbidden(a:char)
 	return a:char
     endif
@@ -143,114 +54,189 @@ function! autoclose#close(char)
 endfunction
 
 function! autoclose#expand(char)
-    if s:getlc(-2) == a:char && s:getlc(-1) == a:char && autoclose#is_empty()
-	let indent = matchstr(getline('.'), "^\\s\\+")
-	return "\<CR>0\<C-d>" . indent . "\<Esc>O"
-    endif
-
     if s:getlc(-1) == a:char && autoclose#is_empty()
 	return "\<CR>\<Esc>O"
     endif
 
-    if autoclose#is_empty_ex()
+    if autoclose#is_expanded(a:char)
 	let cchar = g:autoclose_pairs[a:char]
-	let pair = a:char . a:char . cchar . cchar
-	return "\<Esc>ddkJxi" . pair . "\<Left>\<Left>"
+	delete _
+	left
+	execute "normal! k$gJ"
+	return a:char . cchar . "\<Left>"
     endif
 
-    return autoclose#insert(a:char)
+    return autoclose#open(a:char)
 endfunction
 
 function! autoclose#shrink(char)
     if s:getlc(-1) == a:char && getline(line('.')) == getline(line('.') + 1)
-	return "\<Esc>ddA"
+	delete _
+	return "\<Right>"
     endif
     return autoclose#close(a:char)
 endfunction
 
-function! autoclose#delete()
-    if autoclose#is_empty()
-        return "\<BS>\<Del>"
-    endif    
-    return "\<BS>"
+function! autoclose#quote(char)
+    let type = has_key(g:autoclose_quoted_regions, &ft) ? &ft : "_"
+    let regions = g:autoclose_quoted_regions[type]
+
+    if index(regions, s:get_syngr_name(0)) >= 0 ||
+    \  index(regions, s:get_syngr_name_after(' ', 0)) >= 0
+	return autoclose#close(a:char)
+    endif
+
+    let dummy = a:char . ' ' . a:char
+    if index(regions, s:get_syngr_name_after(dummy, 1)) >= 0
+	return autoclose#open(a:char)
+    endif
+
+    return a:char
 endfunction
 
-function! autoclose#not_forbidden(char)
+function! autoclose#open_tag(char)
+    let region = synIDattr(synID(line("."), col(".") - 1, 1), "name")
+    if match(region, "xmlProcessing") == -1 &&
+    \  match(region, 'docbk\|html\|xml') == 0
+	if s:getlc(-1) == '>'
+	    return "\<CR>\<Esc>O"
+	elseif s:getlc(-1) != '/'
+	    let pos_save = getpos('.')
+	    let reg_save = getreg('"')
+
+	    normal! hv
+	    call search('<', 'bW')
+	    normal! y
+	    let tagname = matchstr(getreg('"'), '^<\s*\zs[[:alnum:]_:.-]\+')
+	    if tagname == ''
+		call setreg('"', reg_save)
+		call setpos('.', pos_save)
+		return a:char
+	    endif
+	    let close_tag = '</' . tagname . '>'
+
+	    call setreg('"', reg_save)
+	    call setpos('.', pos_save)
+
+	    return '>' . close_tag . repeat("\<Left>", len(close_tag))
+	endif
+    endif
+
+    return a:char
+endfunction
+
+function! autoclose#close_tag(char)
+    if !(s:getlc(-1) == '<' && s:getlc(0) == '<' && s:getlc(1) == '/')
+	return a:char
+    endif
+    normal! "_x
+    if search('>', 'W') == 0
+	return "<\<Left>" . a:char
+    endif
+    return "\<Right>"
+endfunction
+
+function! autoclose#delete()
+    let char = s:getlc(-1)
+    if char =~ '\s\?' && autoclose#is_expanded()
+	return "\<Esc>ddkJxi"
+    elseif index(g:autoclose_tag_chars, char) >= 0 && autoclose#is_empty_tag()
+	normal! hx"_da<
+	return s:insert_mode() == 'a' ? "\<Right>" : ''
+    elseif autoclose#is_empty()
+        return "\<BS>\<Del>"
+    else
+	return "\<BS>"
+    endif    
+endfunction
+
+function! autoclose#is_empty()
+    let prev = s:getlc(-1)
+    let next = s:getlc(0)
+
+    return !empty(prev) && !empty(next) &&
+    \      get(g:autoclose_pairs, prev, "") == next
+endfunction
+
+function! autoclose#is_expanded(...)
+    let char = a:0 > 1 ? a:1 : ''
+
+    if line('.') == 1 || line('.') == line('$')
+	return 0
+    endif
+
+    let curline = getline(line('.'))
+    if curline !~ '^\s*$'
+	return 0
+    endif
+
+    let prevline = getline(line('.') - 1)
+    let nextline = getline(line('.') + 1)
+    if prevline =~ '^\s*$' || nextline =~ '^\s*$'
+	return 0
+    endif
+
+    let pos_save = getpos('.')
+
+    if search('\S', 'bW', line('.') - 1) == 0
+	call setpos('.', pos_save)
+	return 0
+    endif
+
+    let open = s:getlc(0)
+    if open == '>'
+	let open = 't'
+    elseif index(keys(g:autoclose_pairs), open) == -1
+	call setpos('.', pos_save)
+	return 0
+    endif
+
+    if char != '' && char != open
+	call setpos('.', pos_save)
+	return 0
+    endif
+
+    let reg_save = getreg('"')
+
+    execute 'normal! yi' . open
+    let reg = getreg('"')
+
+    call setreg('"', reg_save)
+    call setpos('.', pos_save)
+
+    return (reg == '' && getline('.') =~ '^\s*$') || reg =~ '^\_s*$'
+endfunction
+
+function! autoclose#is_empty_tag()
+    let pos_save = getpos('.')
+    let reg_save = getreg('"')
+
+    normal! hyit
+    let result = (getreg('"') == '')
+
+    call setreg('"', reg_save)
+    call setpos('.', pos_save)
+    return result
+endfunction
+
+function! autoclose#is_forbidden(char)
+    let Func = function("autoclose#no_rule")
+    let Func = get(g:autoclose_rules, "_", Func)
+    let Func = get(g:autoclose_rules, a:char, Func)
+
+    return call(Func, [a:char])
+endfunction
+
+function! autoclose#no_rule(char)
     return 0
 endfunction
 
-function! autoclose#forbidden_default(char)
+function! autoclose#default_rule(char)
     let prev = s:getlc(-1)
     let next = s:getlc(0)
 
     return prev ==# '\' || (next != "" && next =~ '\w') ||
-	    \s:get_syngr_name_after(a:char, 0) ==# "Character"
-endfunction
-
-function! autoclose#enable(yesno)
-    if a:yesno && !s:running
-	for key in keys(g:autoclose_pairs)
-	    let val = g:autoclose_pairs[key]
-
-	    if key == val
-		let kv = (key == '"' ? '\"' : key)
-		exec 'inoremap <silent> ' . key .
-		    \' <C-R>=autoclose#quote("' . kv . '")<CR>'
-	    else
-		exec 'inoremap <silent> ' . key .
-		    \' <C-R>=autoclose#pair("' . key . '")<CR>'
-		exec 'inoremap <silent> ' . val .
-		    \' <C-R>=autoclose#pair("' . val . '")<CR>'
-	    endif
-	endfor
-	for c in g:autoclose_tag_chars
-	    execute 'inoremap <silent> '.c.' <C-r>=autoclose#tag("'.c.'")<CR>'
-	endfor
-	inoremap <expr> <BS>  autoclose#delete()
-	inoremap <expr> <C-H> autoclose#delete()
-
-	let s:running = 1
-    elseif !a:yesno && s:running
-	for key in keys(g:autoclose_pairs)
-	    let val = g:autoclose_pairs[key]
-
-	    if key == val
-		exec 'iunmap ' . key
-	    else
-		exec 'iunmap ' . key
-		exec 'iunmap ' . val
-	    endif
-	endfor
-	for c in g:autoclose_tag_chars
-	    execute 'iunmap ' . c
-	endfor
-	iunmap <BS>
-	iunmap <C-H>
-
-	let s:running = 0
-    endif
-endfunction
-
-function! autoclose#toggle()
-    if s:running
-        echo "AutoClose OFF"
-	call autoclose#enable(0)
-    else
-        echo "AutoClose ON"
-	call autoclose#enable(1)
-    endif
-endfunction
-
-function! autoclose#autoclose(...)
-    if a:0 == 0
-	call autoclose#toggle()
-    else
-	if a:1 == '0' || a:1 =~ 'off'
-	    call autoclose#enable(0)
-	else
-	    call autoclose#enable(1)
-	endif
-    endif
+    \	   s:get_syngr_name_after(a:char, 0) ==# "Character"
 endfunction
 
 let &cpo = s:cpo_save
