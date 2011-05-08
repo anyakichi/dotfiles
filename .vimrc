@@ -498,8 +498,16 @@ function! GetRelativePath()
     endif
 endfunction
 
-
-
+function! Ref(mode)
+    if &filetype ==# 'vim'
+	execute 'silent! help ' . expand("<cword>")
+	if &filetype !=# 'help'
+	    echo 'No entry'
+	endif
+    else
+	call ref#K(a:mode)
+    endif
+endfunction
 
 
 "
