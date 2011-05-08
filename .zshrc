@@ -53,6 +53,7 @@ alias make='nocorrect make'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
+alias man='LANG=C man'
 
 alias j=jobs
 alias pu=pushd
