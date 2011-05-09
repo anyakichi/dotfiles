@@ -278,8 +278,8 @@ augroup vimrc-filetype
     au!
     au FileType c,cpp				setl tags+=~/.vim/tags/c.tags
     au FileType python				setl fo-=t
-    au FileType docbk,html,tex,xhtml,xml	setl sw=2
-    au FileType eruby,ruby,scheme		setl sw=2
+    au FileType docbk,html,markdown,xhtml,xml	setl sw=2
+    au FileType eruby,ruby,scheme,tex		setl sw=2
     au FileType mail				setl tw=72
 augroup END
 
@@ -496,11 +496,7 @@ endfunction
 
 function! GetRelativePath()
     let path = expand('%:~:.:h')
-    if path == '.'
-	return ""
-    else
-	return path . '/'
-    endif
+    return path == '.' ? '' : path . '/'
 endfunction
 
 function! s:tabclose()
