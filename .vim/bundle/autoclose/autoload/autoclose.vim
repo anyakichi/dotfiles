@@ -239,4 +239,36 @@ function! autoclose#default_rule(char)
     \	   s:get_syngr_name_after(a:char, 0) ==# "Character"
 endfunction
 
+function! autoclose#syntax_fixup()
+    for syn in ["Special", "String", "Character"]
+	if synIDtrans(hlID(syn)) == hlID(syn)
+	    continue
+	endif
+
+	let args = []
+
+	for mode in ['gui', 'cterm', 'term']
+	    let attrs = ['bold', 'underline', 'undercurl', 'reverse',
+	    \		 'italic', 'standout']
+	    call filter(attrs, 'synIDattr(hlID("Operator"), v:val, "'.mode.'")')
+
+	    if !empty(attrs)
+		call add(args, mode . '=' . join(attrs, ','))
+	    endif
+
+	    if mode == 'gui' || mode == 'cterm'
+		for fgbg in ['fg', 'bg']
+		    let color = synIDattr(synIDtrans(hlID(syn)), fgbg, mode)
+		    if color != -1
+			call add(args, mode . fgbg . '=' . color)
+		    endif
+		endfor
+	    endif
+	endfor
+
+	let argstr = empty(args) ? 'NONE' : join(args, ' ')
+	execute 'highlight ' . syn . ' ' . argstr
+    endfor
+endfunction
+
 let &cpo = s:cpo_save

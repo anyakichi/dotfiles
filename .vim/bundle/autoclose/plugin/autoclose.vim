@@ -12,6 +12,11 @@ set cpo&vim
 
 let s:autoclose_enabled = 0
 
+augroup autoclose
+    autocmd!
+    autocmd VimEnter * call autoclose#syntax_fixup()
+augroup END
+
 command! -nargs=? AutoClose :call <SID>autoclose(<f-args>)
 
 function! s:autoclose(...)
