@@ -169,7 +169,7 @@ nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <silent> [Tab]<CR> :<C-u>tabnew<CR>
 nnoremap [Tab]h :<C-u>tab help<Space>
 nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
-nnoremap <silent> [Tab]d :<C-u>call tabutil#close()<CR>
+nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
 nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
 nnoremap <silent> [Tab]u :<C-u>call tabutil#undo()<CR>
 nnoremap <silent> [Tab]U :<C-u>call tabutil#undoall()<CR>
@@ -191,6 +191,8 @@ nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
+
+nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
@@ -358,6 +360,9 @@ vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
 
 nmap [Tab]K K[Tab]m
 
+" scratch.vim
+let g:scratch_filetype = 'ruby'
+
 " skk.vim
 let g:skk_auto_save_jisyo = 1
 let g:skk_egg_like_newline = 1
@@ -495,6 +500,14 @@ function! GetRelativePath()
 	return ""
     else
 	return path . '/'
+    endif
+endfunction
+
+function! s:tabclose()
+    if scratch#is_visible()
+	call scratch#close()
+    else
+	call tabutil#close()
     endif
 endfunction
 
