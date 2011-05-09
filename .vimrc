@@ -353,8 +353,8 @@ if !executable("manpath")
     let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
 endif
 
-nnoremap <silent> K :<C-u>call Ref('normal')<CR>
-vnoremap <silent> K :<C-u>call Ref('visual')<CR>
+nnoremap <silent> K :<C-u>call <SID>ref('normal')<CR>
+vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
 
 nmap [Tab]K K[Tab]m
 
@@ -498,7 +498,7 @@ function! GetRelativePath()
     endif
 endfunction
 
-function! Ref(mode)
+function! s:ref(mode)
     if &filetype ==# 'vim'
 	execute 'silent! help ' . expand("<cword>")
 	if &filetype !=# 'help'
