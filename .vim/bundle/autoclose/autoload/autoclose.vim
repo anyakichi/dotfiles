@@ -241,7 +241,10 @@ endfunction
 
 function! autoclose#syntax_fixup()
     for syn in ["Special", "String", "Character"]
-	if synIDtrans(hlID(syn)) == hlID(syn)
+	let id = hlID(syn)
+	let tid = synIDtrans(id)
+
+	if id == tid
 	    continue
 	endif
 
@@ -250,7 +253,7 @@ function! autoclose#syntax_fixup()
 	for mode in ['gui', 'cterm', 'term']
 	    let attrs = ['bold', 'underline', 'undercurl', 'reverse',
 	    \		 'italic', 'standout']
-	    call filter(attrs, 'synIDattr(hlID("Operator"), v:val, "'.mode.'")')
+	    call filter(attrs, 'synIDattr(' . tid . ', v:val, "' . mode . '")')
 
 	    if !empty(attrs)
 		call add(args, mode . '=' . join(attrs, ','))
@@ -258,7 +261,7 @@ function! autoclose#syntax_fixup()
 
 	    if mode == 'gui' || mode == 'cterm'
 		for fgbg in ['fg', 'bg']
-		    let color = synIDattr(synIDtrans(hlID(syn)), fgbg, mode)
+		    let color = synIDattr(tid, fgbg, mode)
 		    if color != -1
 			call add(args, mode . fgbg . '=' . color)
 		    endif
