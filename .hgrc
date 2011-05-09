@@ -24,5 +24,4 @@ opts.vimdiff = -f '+next' '+execute "DirDiff" argv(0) argv(1)'
 pager = LESS='FX' less
 quiet = True
 
-[ui]
-username = INAJIMA Daisuke <inajima@sopht.jp>
+%include ~/.hgrc.local
