@@ -78,30 +78,6 @@ function! s:autoclose(...)
     endif
 endfunction
 
-" set SpecialChar, String, Character highlight if they are not set.
-for synpair in [["SpecialChar", "Special"], ["String", "Constant"],
-	       \["Character", "Constant"]]
-    if synIDtrans(hlID(synpair[0])) == hlID(synpair[1])
-	let dic = {}
-
-	let color = synIDattr(hlID(synpair[1]), "fg")
-	if color != -1
-	    let dic["guifg"] = color
-	    let dic["ctermfg"] = color
-	endif
-
-	let color = synIDattr(hlID(synpair[1]), "bg")
-	if color != -1
-	    let dic["guibg"] = color
-	    let dic["ctermbg"] = color
-	endif
-
-	let args = join(map(items(dic), 'join(v:val, "=")'), " ")
-
-	execute 'highlight ' . synpair[0] . ' ' . args
-    endif
-endfor
-
 if !exists("g:autoclose_pairs")
     let g:autoclose_pairs = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'", "`": "`"}
 endif
