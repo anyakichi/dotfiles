@@ -281,6 +281,7 @@ augroup vimrc-filetype
     au FileType docbk,html,markdown,xhtml,xml	setl sw=2
     au FileType eruby,ruby,scheme,tex		setl sw=2
     au FileType mail				setl tw=72
+    au FileType vimwiki				setl fo+=mM
 augroup END
 
 augroup vimrc-pdf
