@@ -240,7 +240,10 @@ function! autoclose#default_rule(char)
 endfunction
 
 function! autoclose#syntax_fixup()
-    for syn in ["Special", "String", "Character"]
+    let syns = get(g:autoclose_quoted_regions, &filetype, [])
+    let syns = extend(copy(syns), g:autoclose_quoted_regions['_'])
+
+    for syn in syns
 	let id = hlID(syn)
 	let tid = synIDtrans(id)
 
