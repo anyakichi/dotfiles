@@ -16,6 +16,15 @@ function! scratch#open(mod)
 	setlocal bufhidden=hide buftype=nofile nobuflisted noswapfile
 	let &filetype = g:scratch_filetype
     else
+	if scratch#is_scratch()
+	    return
+	endif
+
+	if scratch#is_visible()
+	    execute bufwinnr(s:scratch_bufnr) . 'wincmd w'
+	    return
+	endif
+
 	for tabnr in range(1, tabpagenr('$'))
 	    if index(tabpagebuflist(tabnr), s:scratch_bufnr) >= 0
 		execute 'tabnext ' . tabnr
@@ -40,11 +49,15 @@ function! scratch#close(mod)
 endfunction
 
 function! scratch#toggle(mod)
-    if scratch#is_visible()
+    if scratch#is_scratch()
 	call scratch#close(a:mod)
     else
 	call scratch#open(a:mod)
     endif
+endfunction
+
+function! scratch#is_scratch()
+    return bufnr('%') == s:scratch_bufnr
 endfunction
 
 function! scratch#is_visible()
