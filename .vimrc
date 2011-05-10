@@ -98,13 +98,15 @@ filetype plugin indent on
 "
 syntax on
 if (has('gui') || v:version >= 703) && &t_Co == 256
-    let g:CSApprox_hook_pre = 'hi Normal guifg=#d0d0d0 guibg=#262626'
-    let g:CSApprox_hook_post = [
-	\'exe "hi TabLine cterm=none ctermfg=fg ctermbg=" .
-	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
-	\'exe "hi TabLineFill cterm=none ctermfg=fg ctermbg=" .
-	    \g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
-	\'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
+    if !has('gui_running')
+	let g:CSApprox_hook_pre = 'hi Normal guifg=#d0d0d0 guibg=#262626'
+	let g:CSApprox_hook_post = [
+	\   'execute "hi TabLine cterm=none ctermfg=fg ctermbg=" .
+	\	     g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
+	\   'execute "hi TabLineFill cterm=none ctermfg=fg ctermbg=" .
+	\	     g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
+	\   'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
+    endif
 
     silent! colorscheme moria
 else
