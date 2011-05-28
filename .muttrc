@@ -70,6 +70,7 @@ hdr_order Date: From: To: Cc: Subject:
 
 iconv-hook Windows-31J cp932
 
+alternative_order text/plain text
 auto_view text/html
 
 bind generic l next-page
