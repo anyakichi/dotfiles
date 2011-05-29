@@ -374,6 +374,7 @@ let g:skk_sticky_key = ';'
 let g:skk_user_rom_kana_rules = ""
     \. "(	（\<NL>"
     \. ")	）\<NL>"
+let g:skk_special_midasi_keys = "<>"
 
 let g:skk_ascii_mode_string = 'aA'
 let g:skk_hira_mode_string = 'あ'
