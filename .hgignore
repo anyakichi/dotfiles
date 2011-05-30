@@ -8,5 +8,5 @@ syntax: regexp
 ^\.vim/spell/
 ^\.vim/swap/
 ^\.vim/(?:.*/)?doc/tags$
-^\.mutt/(?:index/|hcache)
+^\.mutt/(?:cache/|index/)
 ^\.(?!mlterm\b|mutt\b|vim\b|zfunc\b).*$
