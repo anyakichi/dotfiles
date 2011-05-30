@@ -103,8 +103,12 @@ bind pager <BackSpace> search-toggle
 macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
 macro index,pager Y "<change-folder>?"	"show folder list"
 macro browser	  Y "<exit>"		"exit this menu"
+macro index	  i "<change-folder>?<toggle-mailboxes>"	\
+					"show incoming mailboxes list"
 macro index,pager . "<shell-escape>fetchmail<Enter>"		\
 					"retrieve mail with fetchmail"
+macro index,pager \cf "<shell-escape>estmail<Enter><change-folder>=.Search<Enter>" \
+					"search with Hyper Estraier"
 
 #color normal white default
 color hdrdefault brightwhite default
