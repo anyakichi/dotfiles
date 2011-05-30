@@ -98,16 +98,13 @@ bind pager j next-line
 bind pager k previous-line
 bind pager l next-undeleted
 bind pager h previous-undeleted
-bind pager \cn search-toggle
+bind pager <BackSpace> search-toggle
 
-macro	index	i	<change-folder>?\t
-macro	browser	q	<exit><quit>
-#macro	index	c	<change-folder>?\t
-#macro	pager	c	<change-folder>?\t
-macro	index	\cv	|urlview\n
-macro	pager	\cv	|urlview\n
-macro	index	.	"|fetchmail\n"		'get new mail'
-macro	pager	.	"|fetchmail\n"		'get new mail'
+macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
+macro index,pager Y "<change-folder>?"	"show folder list"
+macro browser	  Y "<exit>"		"exit this menu"
+macro index,pager . "<shell-escape>fetchmail<Enter>"		\
+					"retrieve mail with fetchmail"
 
 #color normal white default
 color hdrdefault brightwhite default

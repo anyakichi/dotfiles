@@ -7,7 +7,7 @@ set sidebar_width=30
 set sidebar_visible=no
 set sidebar_delim='|'
 
-macro browser,index,pager \cb '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro browser,index,pager \cs '<enter-command>toggle sidebar_visible<enter><refresh>'
 
 bind index,pager \en sidebar-next
 bind index,pager \ep sidebar-prev
