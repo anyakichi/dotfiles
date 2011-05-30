@@ -40,7 +40,8 @@ set editor="vim '+/^$'"
 
 set read_inc=100
 
-set header_cache="~/.mutt/hcache"
+set header_cache="~/.mutt/cache"
+set message_cachedir="~/.mutt/cache"
 
 # Cryptographic
 set crypt_autosign=no
