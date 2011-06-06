@@ -8,7 +8,7 @@ set folder=~/Mail
 set spoolfile=~/Mail
 
 set mbox=+
-set record=+Outbox
+set record=+Sent
 set postponed=+Drafts
 set nomove
 
