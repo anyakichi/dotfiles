@@ -10,11 +10,9 @@ set spoolfile=~/Mail
 set mbox=+
 set record=+Sent
 set postponed=+Drafts
+
 set nomove
-
 set sort=threads
-set ispell=/usr/pkg/bin/ispell
-
 set include
 
 set send_charset="us-ascii:iso-2022-jp:utf-8"
@@ -25,6 +23,7 @@ set thorough_search=yes
 set rfc2047_parameters=yes
 set forward_decode=yes
 set mime_forward_decode=no
+set ignore_linear_white_space=yes
 
 set edit_headers=yes
 set fast_reply=yes
@@ -33,8 +32,6 @@ set nomarkers
 
 set reverse_name
 set noreverse_realname
-
-set ignore_linear_white_space=yes
 
 set editor="vim '+/^$'"
 
