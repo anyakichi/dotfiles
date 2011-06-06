@@ -15,6 +15,11 @@ set nomove
 set sort=threads
 set include
 
+set date_format="%Y/%m/%d %H:%M:%S"
+set folder_format="%2C %t %3N %F %5s %d %f"
+set index_format="%5C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
+set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
+
 set send_charset="us-ascii:iso-2022-jp:utf-8"
 set assumed_charset="shift_jis:iso-2022-jp:euc-jp:utf-8"
 set attach_charset="euc-jp:utf-8"
