@@ -14,3 +14,5 @@ au BufNewFile,BufRead ?\+_local
 	    \ fnameescape(substitute(expand("<afile>"), "_local$", "", ""))
 
 au BufNewFile,BufRead *.erb				setf eruby
+
+au BufNewFile,BufRead *.sieve				setf sieve
