@@ -12,3 +12,4 @@ macro browser,index,pager \cs '<enter-command>toggle sidebar_visible<enter><refr
 bind index,pager \en sidebar-next
 bind index,pager \ep sidebar-prev
 bind index,pager \eo sidebar-open
+bind index,pager \e<Return> sidebar-open
