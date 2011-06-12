@@ -16,8 +16,8 @@ set sort=threads
 set include
 
 set date_format="%Y/%m/%d %H:%M:%S"
-set folder_format="%2C %t %3N %F %5s %d %f"
-set index_format="%5C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
+set folder_format="%2C %t %N %F %2l %-8.8u %-8.8g %5s %d %f"
+set index_format="%4C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
 set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
 
 set send_charset="us-ascii:iso-2022-jp:utf-8"
