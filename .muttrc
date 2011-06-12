@@ -49,15 +49,8 @@ set message_cachedir="~/.mutt/cache"
 set crypt_autosign=no
 set crypt_autopgp=no
 set crypt_autosmime=no
-
-# Settings for PGP
-source /usr/pkg/share/examples/mutt/gpg.rc
+set crypt_use_gpgme
 set pgp_timeout=0
-
-# Settings for S/MIME
-source /usr/pkg/share/examples/mutt/smime.rc
-set smime_is_default=no
-set smime_ca_location=/usr/pkg/share/examples/mutt/ca-bundle.crt
 
 # Japanese Extention
 set cjk_width
