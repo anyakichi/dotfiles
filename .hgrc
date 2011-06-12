@@ -9,6 +9,7 @@ vd = vimdiff
 [extensions]
 bookmarks =
 convert =
+color =
 extdiff =
 graphlog =
 hggit =
