@@ -134,27 +134,18 @@ pgrep() {
 	ps axco pid,command | grep ${1} | awk '{print $1}'
 }
 
-_ssh_wrapper() {
-	for pid in `pgrep ssh-agent`; do
-		[[ "${pid}" == "${SSH_AGENT_PID}" ]] && \
-		    ! ssh-add -l >/dev/null && ssh-add 2>/dev/null
-	done
-	eval "$@"
-}
+sshgpg="gpg-connect-agent updatestartuptty /bye >/dev/null; $(whence -cp ssh)"
 
 ssh-screen() {
-	ssh=`whence -cp ssh`
-	_ssh_wrapper screen -t ${(@)argv[$#]/.*/} ${ssh} "$@"
+	screen -t ${(@)argv[$#]/.*/} ${SHELL} -c "${sshgpg} $@"
 }
 
 ssh-tmux() {
-	ssh=`whence -cp ssh`
-	_ssh_wrapper tmux new-window -n ${(@)argv[$#]/.*/} "'${ssh} $*'"
+	tmux new-window -n ${(@)argv[$#]/.*/} "${SHELL} -c '${sshgpg} $*'"
 }
 
 ssh-wrapper() {
-	ssh=`whence -cp ssh`
-	_ssh_wrapper ${ssh} "$@"
+	eval ${sshgpg} "$@"
 }
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
