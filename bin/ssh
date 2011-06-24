@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if $(which gpg-connect-agent >/dev/null 2>&1); then
+	gpg-connect-agent updatestartuptty /bye >/dev/null
+fi
+
+PATH=$(echo $PATH | sed "s,$HOME/bin:,,")
+exec $(basename $0) "$@"
