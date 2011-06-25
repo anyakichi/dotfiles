@@ -3,6 +3,9 @@
 " 	Syntax definitions for mail.
 "
 
-hi mailQuoted1  ctermfg=Cyan cterm=none
-hi mailQuoted2  ctermfg=Green cterm=none
-hi mailQuoted3  ctermfg=Magenta cterm=none
+hi link mailQuoted1 Identifier
+hi link mailQuoted2 String
+hi link mailQuoted3 PreProc
+hi link mailQuoted4 mailQuoted1
+hi link mailQuoted5 mailQuoted2
+hi link mailQuoted6 mailQuoted3
