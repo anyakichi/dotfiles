@@ -105,26 +105,6 @@ macro index,pager . "<shell-escape>fetchmail<Enter>"		\
 macro index,pager \cf "<shell-escape>estmail<Enter><change-folder>=.Search<Enter>" \
 					"search with Hyper Estraier"
 
-#color normal white default
-color hdrdefault brightwhite default
-color header yellow default ^Subject
-color quoted cyan default
-color quoted1 green default
-color quoted2 magenta default
-color signature brightwhite default
-color indicator cyan blue
-color error white red
-color status white blue
-#color tree magenta default
-#color tilde magenta default
-#color message brightyellow default
-#color markers brightyellow default
-color attachment magenta default
-color search default green
-
-color body cyan default "(ftp|https?)://[^ ]+"
-color body cyan default [-a-z_0-9.]+@[-a-z_0-9.]+
-
-mono header bold ^Subject
+source `~/.mutt/muttcolor`
 
 source ~/.mutt/muttrc_local

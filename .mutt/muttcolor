@@ -1,0 +1,11 @@
+#!/bin/sh
+
+file=color.rc
+
+case "$TERM" in
+	*-256color)
+		file=color256.rc
+		;;
+esac
+
+echo ~/.mutt/$file
