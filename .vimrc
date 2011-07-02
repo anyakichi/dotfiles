@@ -419,6 +419,7 @@ let g:vimwiki_list = [
 \   { 'path': '~/vimwiki', 'path_html': '~/Web/wiki', 'auto_export': 1 }
 \]
 let g:vimwiki_badsyms = ' '
+let g:vimwiki_hl_headers = 1
 
 
 "
