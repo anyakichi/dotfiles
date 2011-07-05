@@ -14,7 +14,7 @@ let s:autoclose_enabled = 0
 
 augroup autoclose
     autocmd!
-    autocmd VimEnter * call autoclose#syntax_fixup()
+    autocmd VimEnter * call <SID>autoclose_fixup()
 augroup END
 
 command! -nargs=? AutoClose :call <SID>autoclose(<f-args>)
@@ -81,6 +81,44 @@ function! s:autoclose(...)
 	let s:autoclose_enabled = 0
         echo "AutoClose OFF"
     endif
+endfunction
+
+function! s:autoclose_fixup()
+    let syns = get(g:autoclose_quoted_regions, &filetype, [])
+    let syns = extend(copy(syns), g:autoclose_quoted_regions['_'])
+
+    for syn in syns
+	let id = hlID(syn)
+	let tid = synIDtrans(id)
+
+	if id == tid
+	    continue
+	endif
+
+	let args = []
+
+	for mode in ['gui', 'cterm', 'term']
+	    let attrs = ['bold', 'underline', 'undercurl', 'reverse',
+	    \		 'italic', 'standout']
+	    call filter(attrs, 'synIDattr(' . tid . ', v:val, "' . mode . '")')
+
+	    if !empty(attrs)
+		call add(args, mode . '=' . join(attrs, ','))
+	    endif
+
+	    if mode == 'gui' || mode == 'cterm'
+		for fgbg in ['fg', 'bg']
+		    let color = synIDattr(tid, fgbg, mode)
+		    if color != -1
+			call add(args, mode . fgbg . '=' . color)
+		    endif
+		endfor
+	    endif
+	endfor
+
+	let argstr = empty(args) ? 'NONE' : join(args, ' ')
+	execute 'highlight ' . syn . ' ' . argstr
+    endfor
 endfunction
 
 if !exists("g:autoclose_pairs")

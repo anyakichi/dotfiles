@@ -239,42 +239,4 @@ function! autoclose#default_rule(char)
     \	   s:get_syngr_name_after(a:char, 0) ==# "Character"
 endfunction
 
-function! autoclose#syntax_fixup()
-    let syns = get(g:autoclose_quoted_regions, &filetype, [])
-    let syns = extend(copy(syns), g:autoclose_quoted_regions['_'])
-
-    for syn in syns
-	let id = hlID(syn)
-	let tid = synIDtrans(id)
-
-	if id == tid
-	    continue
-	endif
-
-	let args = []
-
-	for mode in ['gui', 'cterm', 'term']
-	    let attrs = ['bold', 'underline', 'undercurl', 'reverse',
-	    \		 'italic', 'standout']
-	    call filter(attrs, 'synIDattr(' . tid . ', v:val, "' . mode . '")')
-
-	    if !empty(attrs)
-		call add(args, mode . '=' . join(attrs, ','))
-	    endif
-
-	    if mode == 'gui' || mode == 'cterm'
-		for fgbg in ['fg', 'bg']
-		    let color = synIDattr(tid, fgbg, mode)
-		    if color != -1
-			call add(args, mode . fgbg . '=' . color)
-		    endif
-		endfor
-	    endif
-	endfor
-
-	let argstr = empty(args) ? 'NONE' : join(args, ' ')
-	execute 'highlight ' . syn . ' ' . argstr
-    endfor
-endfunction
-
 let &cpo = s:cpo_save
