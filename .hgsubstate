@@ -3,6 +3,7 @@ f98bf4acef9d9aa5e7f5b42eba09e259908f639b .vim/bundle/csapprox
 5a9371437f97eef12325c04607de5e58b7168432 .vim/bundle/nerdcommenter
 73a46ffe6de24f919603e025d92d271f618663b4 .vim/bundle/skk.vim
 822c9fe9a7b93760cfa67cd5b3d1ad90c08e5fb0 .vim/bundle/snipmate.vim
+bb5d57afd9016705b1d7d6d9b707e5b70b4051ba .vim/bundle/vcscommand
 e393ee9124994db5c794d06386b39b21b80f149a .vim/bundle/vim-fakeclip
 6b0be76a5d0f124f7623a0b4517904d22a529e11 .vim/bundle/vim-quickrun
 41d33deae051e7e875aef2d804cb9508ab77ffa9 .vim/bundle/vim-ref
