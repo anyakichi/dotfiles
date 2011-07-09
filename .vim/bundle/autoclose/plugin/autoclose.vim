@@ -53,9 +53,10 @@ function! s:autoclose(...)
 	    endif
 	endfor
 	for c in g:autoclose_tag_chars
-	    execute 'inoremap <silent> '.c.' <C-r>=autoclose#open_tag("'.c.'")<CR>'
+	    execute 'inoremap <silent> ' . c .
+	    \       ' <C-r>=autoclose#open_tag("' . c . '")<CR>'
 	endfor
-	inoremap <silent> < <C-r>=autoclose#close_tag('<')<CR>
+	inoremap <silent> <     <C-r>=autoclose#close_tag('<')<CR>
 	inoremap <silent> <BS>  <C-r>=autoclose#delete()<CR>
 	inoremap <silent> <C-h> <C-r>=autoclose#delete()<CR>
 
@@ -75,8 +76,9 @@ function! s:autoclose(...)
 	for c in g:autoclose_tag_chars
 	    execute 'iunmap ' . c
 	endfor
+	iunmap <
 	iunmap <BS>
-	iunmap <C-H>
+	iunmap <C-h>
 
 	let s:autoclose_enabled = 0
         echo "AutoClose OFF"
@@ -122,7 +124,8 @@ function! s:autoclose_fixup()
 endfunction
 
 if !exists("g:autoclose_pairs")
-    let g:autoclose_pairs = {'(': ')', '{': '}', '[': ']', '"': '"', "'": "'", "`": "`"}
+    let g:autoclose_pairs = {'(': ')', '{': '}', '[': ']',
+    \			     '"': '"', "'": "'", "`": "`"}
 endif
 
 if !exists("g:autoclose_expand_chars")
