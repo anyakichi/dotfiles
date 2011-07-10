@@ -57,6 +57,8 @@ set nobackup
 set directory=~/.vim/swap
 set hidden
 
+set complete-=t
+
 set timeout
 set timeoutlen=3000
 set ttimeoutlen=50
@@ -207,6 +209,7 @@ nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . s:ctagsprg . ' *)&'<CR>
+nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
@@ -283,7 +286,6 @@ ab #P
 "
 augroup vimrc-filetype
     au!
-    au FileType c,cpp				setl tags+=~/.vim/tags/c.tags
     au FileType python				setl fo-=t
     au FileType docbk,html,markdown,xhtml,xml	setl sw=2
     au FileType eruby,ruby,scheme,tex		setl sw=2
@@ -495,6 +497,15 @@ function! s:tabclose()
 	call scratch#close()
     else
 	call tabutil#close()
+    endif
+endfunction
+
+function! s:toggle_fttag()
+    let tags_file = &filetype . '.tags'
+    let tags_save = &l:tags
+    execute 'setl tags+=' . tags_file
+    if tags_save == &l:tags
+	execute 'setl tags-=' . tags_file
     endif
 endfunction
 
