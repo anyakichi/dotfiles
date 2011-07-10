@@ -154,7 +154,13 @@ xnoremap gk k
 
 nnoremap dP dd"2P
 
-nnoremap <silent> <C-h> :<C-u>set hlsearch!<CR>
+cnoremap <silent> <expr> <CR>
+\        getcmdtype() ==# '/' ? "\<CR>:\<C-u>set hlsearch\<CR>" : "\<CR>"
+nnoremap * :<C-u>set hlsearch<CR>*
+nnoremap # :<C-u>set hlsearch<CR>#
+nnoremap g* :<C-u>set hlsearch<CR>g*
+nnoremap g# :<C-u>set hlsearch<CR>g#
+nnoremap <silent> <Esc><Esc> :<C-u>set nohlsearch<CR>
 
 nnoremap [Tab]o :<C-u>edit<Space>
 nnoremap <expr> [Tab]O ':<C-u>edit ' . GetRelativePath()
