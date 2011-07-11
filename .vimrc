@@ -378,6 +378,7 @@ let g:scratch_filetype = 'ruby'
 let g:skk_auto_save_jisyo = 1
 let g:skk_egg_like_newline = 1
 let g:skk_sticky_key = ';'
+let g:skk_manual_save_jisyo_keys = "g<C-s>"
 
 let g:skk_user_rom_kana_rules = ""
     \. "(	（\<NL>"
@@ -392,6 +393,15 @@ let g:skk_abbrev_mode_string = 'aあ'
 
 " snipmate.vim
 let g:snips_author = 'INAJIMA Daisuke'
+
+" surround.vim
+nmap s <Plug>Ysurround
+nmap ss <Plug>Yssurround
+nmap S <Plug>Ysurround$
+nmap gs <Plug>Ygsurround
+nmap gsgs <Plug>Ygssurround
+nmap gss <Plug>Ygssurround
+nmap gS <Plug>Ygsurround$
 
 " tohtml.vim
 let g:html_use_css = 1
