@@ -210,6 +210,7 @@ nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . s:ctagsprg . ' *)&'<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
+nnoremap <silent> [Space]z :<C-u>set spell! <Bar> set spell?<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
