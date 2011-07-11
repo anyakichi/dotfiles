@@ -16,6 +16,7 @@ hggit =
 mq =
 pager =
 rebase =
+record =
 
 [extdiff]
 cmd.vimdiff = vim
