@@ -158,10 +158,10 @@ nnoremap dP dd"2P
 
 cnoremap <silent> <expr> <CR>
 \        getcmdtype() ==# '/' ? "\<CR>:\<C-u>set hlsearch\<CR>" : "\<CR>"
-nnoremap * :<C-u>set hlsearch<CR>*
-nnoremap # :<C-u>set hlsearch<CR>#
-nnoremap g* :<C-u>set hlsearch<CR>g*
-nnoremap g# :<C-u>set hlsearch<CR>g#
+nnoremap <silent> * *:set hlsearch<CR>
+nnoremap <silent> # #:set hlsearch<CR>
+nnoremap <silent> g* g*:set hlsearch<CR>
+nnoremap <silent> g# g#:set hlsearch<CR>
 nnoremap <silent> <Esc><Esc> :<C-u>set nohlsearch<CR>
 
 nnoremap [Tab]o :<C-u>edit<Space>
