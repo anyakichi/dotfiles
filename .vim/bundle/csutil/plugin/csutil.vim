@@ -1,6 +1,6 @@
 " Cscope utility for vim.
 " Maintainer: INAJIMA Daisuke <inajima@sopht.jp>
-" Revision: 0.2
+" Revision: 0.3
 
 if exists("loaded_csutil")
     finish
@@ -49,8 +49,7 @@ endif
 
 augroup csutil
     autocmd!
-    autocmd BufEnter * call csutil#load()
-    autocmd BufLeave * call csutil#unload()
+    autocmd BufEnter * call csutil#setup()
 augroup END
 
 let &cpo = s:cpo_save

@@ -1,42 +1,33 @@
 " Cscope utility for vim.
 " Maintainer: INAJIMA Daisuke <inajima@sopht.jp>
-" Revision: 0.2
+" Revision: 0.3
 
 let s:cpo_save = &cpo
 set cpo&vim
 
-function! csutil#load()
-    if !exists("b:csutil_dbdir")
-	let cscope_db = findfile("cscope.out", ".;")
-	if cscope_db == ''
-	    return
-	endif
-	let b:csutil_dbdir = fnamemodify(cscope_db, ":p:h")
-    endif
+let s:csutil_dbdir = ""
 
-    if cscope_connection(3, "out", b:csutil_dbdir)
+function! csutil#setup()
+    let cscope_db = findfile("cscope.out", ".;")
+    let cscope_dbdir = cscope_db == '' ? '' : fnamemodify(cscope_db, ":p:h")
+
+    if s:csutil_dbdir == cscope_dbdir
 	return
     endif
 
     let csverb_save = &csverb
     set nocsverb
-    execute "cscope add " . b:csutil_dbdir . "/cscope.out " . b:csutil_dbdir
-    let &csverb = csverb_save
-endfunction
 
-function! csutil#unload()
-    if !exists("b:csutil_dbdir")
-	return
+    if s:csutil_dbdir != ''
+	execute 'cscope' 'kill' s:csutil_dbdir
     endif
 
-    if !cscope_connection(3, "out", b:csutil_dbdir)
-	return
+    if cscope_dbdir != ''
+	execute 'cscope' 'add' cscope_dbdir . "/cscope.out" cscope_dbdir
     endif
 
-    let csverb_save = &csverb
-    set nocsverb
-    execute "cscope kill " . b:csutil_dbdir
     let &csverb = csverb_save
+    let s:csutil_dbdir = cscope_dbdir
 endfunction
 
 let &cpo = s:cpo_save
