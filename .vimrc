@@ -505,7 +505,7 @@ function! s:tabclose()
 endfunction
 
 function! s:toggle_fttag()
-    let tags_file = &filetype . '.tags'
+    let tags_file = '~/.vim/tags/' . &filetype . '.tags'
     let tags_save = &l:tags
     execute 'setl tags+=' . tags_file
     if tags_save == &l:tags
