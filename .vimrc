@@ -86,12 +86,6 @@ endif
 
 let g:filetype_m = 'objc'
 
-if executable('exctags')
-    let s:ctagsprg = 'exctags'
-else
-    let s:ctagsprg = 'ctags'
-endif
-
 filetype plugin indent on
 
 
@@ -203,14 +197,13 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
-nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
-nnoremap <silent> [Tab]<Space>v :<C-u>tabnew $HOME/.vimrc<CR>
-nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
-nnoremap <silent> [Space]s :sort<CR>
-xnoremap <silent> [Space]s :sort<CR>
-nnoremap <silent> [Space]t :exe '!(cd %:p:h; ' . s:ctagsprg . ' *)&'<CR>
+nnoremap <silent> [Space]h :<C-u>set hlsearch! <Bar> set hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! <Bar> set spell?<CR>
+nnoremap <silent> [Space]s :sort<CR>
+xnoremap <silent> [Space]s :sort<CR>
+nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> [Space]V :<C-u>source $HOME/.vimrc<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
