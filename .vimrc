@@ -197,8 +197,11 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
-nnoremap <silent> [Space]h :<C-u>set hlsearch! <Bar> set hlsearch?<CR>
+nnoremap gc `[v`]
+onoremap gc :<C-u>normal! `[v`]<CR>
+
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
+nnoremap <silent> [Space]h :<C-u>set hlsearch! <Bar> set hlsearch?<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! <Bar> set spell?<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
