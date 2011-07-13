@@ -197,6 +197,24 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
+nnoremap Q q
+
+nnoremap q gq
+nnoremap qq gqgq
+vnoremap q gq
+vnoremap Q gw
+
+nnoremap <silent> q. :<C-u>cc<CR>
+nnoremap <silent> qn :<C-u>cnext<CR>
+nnoremap <silent> qp :<C-u>cprevious<CR>
+nnoremap <silent> qN :<C-u>clast<CR>
+nnoremap <silent> qP :<C-u>cfirst<CR>
+nnoremap <silent> ql :<C-u>clist<CR>
+nnoremap <silent> qo :<C-u>copen<CR>
+nnoremap <silent> qc :<C-u>cclose<CR>
+nnoremap <silent> qm :<C-u>make<CR>
+nnoremap qM :<C-u>make<Space>
+
 nnoremap gc `[v`]
 onoremap gc :<C-u>normal! `[v`]<CR>
 
