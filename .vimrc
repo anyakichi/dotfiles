@@ -124,29 +124,21 @@ command! -register RegCopy let @<reg> = @@
 " Mappings
 "
 let g:maplocalleader = "[Space]"
-nmap <Space> [Space]
-xmap <Space> [Space]
-nnoremap [Space] <Nop>
-xnoremap [Space] <Nop>
+map <Space> [Space]
+noremap [Space] <Nop>
 
 nmap t [Tab]
 nnoremap [Tab] <Nop>
 nnoremap [Tab]; t
 
-noremap Q gq
 nnoremap Y y$
 nnoremap ZQ <Nop>
 nnoremap ZZ <Nop>
 
-nnoremap j gj
-nnoremap k gk
-xnoremap j gj
-xnoremap k gk
-
-nnoremap gj j
-nnoremap gk k
-xnoremap gj j
-xnoremap gk k
+noremap j gj
+noremap k gk
+noremap gj j
+noremap gk k
 
 nnoremap dP dd"2P
 
