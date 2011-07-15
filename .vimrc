@@ -360,9 +360,12 @@ let g:OmniCpp_SelectFirstItem = 2
 " quickrun.vim
 let g:quickrun_config = {}
 
+command! -nargs=* -range -complete=customlist,quickrun#complete QuickRun1
+\ call quickrun#run('-start <line1> -end <line2> ' . <q-args>)
+
 nmap <Leader>r <Plug>(quickrun)
 nmap <Leader>e <Plug>(quickrun-op)
-nmap <Leader>ee <Plug>(quickrun-op)j
+nmap <silent> <Leader>ee :QuickRun1<CR>
 
 " ref.vim
 let g:ref_detect_filetype = {'_': 'man'}
