@@ -215,8 +215,8 @@ nnoremap gc `[v`]
 vnoremap <silent> gc :<C-u>normal gc<CR>
 onoremap <silent> gc :<C-u>normal gc<CR>
 
+nnoremap <silent> [Space]/ :<C-u>set hlsearch! <Bar> set hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
-nnoremap <silent> [Space]h :<C-u>set hlsearch! <Bar> set hlsearch?<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! <Bar> set spell?<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
