@@ -154,37 +154,49 @@ nnoremap <silent> g* g*:set hlsearch<CR>
 nnoremap <silent> g# g#:set hlsearch<CR>
 nnoremap <silent> <Esc><Esc> :<C-u>set nohlsearch<CR>
 
+nnoremap <C-n> gt
+nnoremap <C-p> gT
+nnoremap <silent> g<C-n> :<C-u>tablast<CR>
+nnoremap <silent> g<C-p> :<C-u>tabfirst<CR>
+
+nnoremap <silent> [Tab]a :<C-u>tabs<CR>
+
+nnoremap <silent> [Tab]l :<C-u>call tabutil#move(v:count1)<CR>
+nnoremap <silent> [Tab]h :<C-u>call tabutil#move(-v:count1)<CR>
+nnoremap <silent> [Tab]L :<C-u>tabmove<CR>
+nnoremap <silent> [Tab]H :<C-u>tabmove 0<CR>
+nnoremap <silent> <expr> [Tab]; ':<C-u>tabmove ' . v:count . '<CR>'
+
 nnoremap [Tab]o :<C-u>edit<Space>
+nnoremap [Tab]t :<C-u>tabnew<Space>
+nnoremap [Tab]s :<C-u>split<Space>
+nnoremap [Tab]v :<C-u>vsplit<Space>
 nnoremap <expr> [Tab]O ':<C-u>edit ' . GetRelativePath()
+nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
+nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
+nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
+
 nnoremap <silent> [Tab]n :bnext<CR>
 nnoremap <silent> [Tab]p :bprevious<CR>
 nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
-nnoremap <silent> [Tab]l :<C-u>buffers<CR>
 
-nnoremap <C-n> gt
-nnoremap <C-p> gT
-nnoremap [Tab]t :<C-u>tabnew<Space>
-nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
-nnoremap <silent> [Tab]<CR> :<C-u>tabnew<CR>
-nnoremap [Tab]h :<C-u>tab help<Space>
-nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
 nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
 nnoremap <silent> [Tab]u :<C-u>call tabutil#undo()<CR>
 nnoremap <silent> [Tab]U :<C-u>call tabutil#undoall()<CR>
+
 nnoremap <silent> [Tab]m :<C-u>call tabutil#split()<CR>
-nnoremap <silent> [Tab]M :tabmove<CR>
+nnoremap <silent> [Tab]<C-t> :<C-u>call tabutil#split()<CR>
+nnoremap <silent> [Tab]<C-s> :<C-u>call tabutil#wsplit()<CR>
+nnoremap <silent> [Tab]<C-v> :<C-u>call tabutil#vsplit()<CR>
+
 nnoremap <silent> [Tab]r :<C-u>call tabutil#reorganize()<CR>
 nnoremap <silent> [Tab]R :<C-u>call tabutil#reorganize1()<CR>
+
+nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
 
-nnoremap [Tab]s :<C-u>split<Space>
-nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
-nnoremap <silent> [Tab]<C-s> :<C-u>call tabutil#wsplit()<CR>
-nnoremap [Tab]v :<C-u>vsplit<Space>
-nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
-nnoremap <silent> [Tab]<C-v> :<C-u>call tabutil#vsplit()<CR>
 nnoremap [Tab]c <C-w>c
 nnoremap <Esc>h <C-w>h
 nnoremap <Esc>j <C-w>j
@@ -193,6 +205,9 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
+nnoremap <expr> [Tab]<C-h> &ft =~ 'vim\<Bar>help'
+\				? ":tab help "
+\				: ":Ref -open=tabnew " . ref#detect() . ' '
 nnoremap <expr> <C-h> &ft =~ 'vim\<Bar>help' ? ":help "
 \					     : ":Ref " . ref#detect() .' '
 

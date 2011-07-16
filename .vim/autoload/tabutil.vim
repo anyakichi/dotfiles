@@ -146,6 +146,12 @@ function! tabutil#undoall()
     endwhile
 endfunction
 
+" Move a tab.
+function! tabutil#move(count)
+    let pos = (tabpagenr() + a:count - 1 + tabpagenr('$')) % tabpagenr('$')
+    execute 'tabmove' pos
+endfuncti
+
 " Close duplicate tabs and open hidden buffers in new tabs.
 function! tabutil#reorganize()
     let tablists = []
