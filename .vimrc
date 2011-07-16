@@ -128,9 +128,6 @@ highlight RedundantSpaces guibg=#808080 ctermbg=Grey
 " Commands
 "
 command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
-command! -nargs=1 -bar -complete=file T tabnew <args>
-command! -nargs=1 -bar -complete=file V vnew <args>
-command! -nargs=1 -bar -complete=file W new <args>
 
 command! -register RegCopy let @<reg> = @@
 
