@@ -228,8 +228,8 @@ nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! <Bar> set spell?<CR>
 nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
-nnoremap <silent> [Space]v :<C-u>edit $HOME/.vimrc<CR>
-nnoremap <silent> [Space]V :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
+nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
