@@ -42,7 +42,7 @@ set ignorecase
 set incsearch
 set smartcase
 
-set formatoptions=tcroqlmM
+set formatoptions=tcroqnlmM
 set textwidth=78
 set nofoldenable
 
