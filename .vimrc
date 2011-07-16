@@ -244,7 +244,8 @@ inoremap <C-f> <Right>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-l> <C-o><C-l>
-inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') . 'v\%(\k\+\\|.\)')
+inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') .
+\			       'v\%(\k\+\\|.\)')
 
 
 "
