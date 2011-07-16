@@ -110,7 +110,6 @@ else
 endif
 
 highlight RedundantSpaces guibg=#808080 ctermbg=Grey
-call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
 
 
 "
@@ -311,6 +310,16 @@ augroup vimrc-quickfix
     au BufWinEnter quickfix let g:qfixnr = bufnr("$")
     au BufWinLeave * if exists("g:qfixnr") && expand("<abuf>") == g:qfixnr |
     \			unlet! g:qfixnr | endif
+augroup END
+
+augroup vimrc-syntax
+    au!
+    au VimEnter    * call <SID>matchupdate('RedundantSpaces',
+    \					   '\(\s\+$\| \+\ze\t\)')
+    au InsertEnter * call <SID>matchupdate('RedundantSpaces',
+    \					   '\(\s\+$\| \+\ze\t\)\%#\@!')
+    au InsertLeave * call <SID>matchupdate('RedundantSpaces',
+    \					   '\(\s\+$\| \+\ze\t\)')
 augroup END
 
 augroup vimrc-pdf
@@ -531,6 +540,17 @@ function! s:tabclose()
     else
 	call tabutil#close()
     endif
+endfunction
+
+if !exists('s:matches')
+    let s:matches = {}
+endif
+function! s:matchupdate(group, pattern)
+    if has_key(s:matches, a:group)
+	call matchdelete(s:matches[a:group])
+    endif
+
+    let s:matches[a:group] = matchadd(a:group, a:pattern)
 endfunction
 
 function! s:toggle_fttag()
