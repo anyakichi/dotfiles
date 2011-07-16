@@ -24,6 +24,7 @@ set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 set ambiwidth=double
 
 set tabstop=8
+set softtabstop=8
 set shiftwidth=4
 set noexpandtab
 set autoindent
