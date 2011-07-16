@@ -1,6 +1,6 @@
 #
 # dot.mailcap:
-# 	Mailcap configuration
+#	Mailcap configuration
 #
 
 text/html;	firefox %s; nametemplate=%s.html; test=sh -c 'test $DISPLAY'

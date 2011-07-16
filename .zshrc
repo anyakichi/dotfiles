@@ -1,6 +1,6 @@
 #
 # dot.zshrc:
-# 	Zsh configuration
+#	Zsh configuration
 #
 
 #

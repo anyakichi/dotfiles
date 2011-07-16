@@ -1,6 +1,6 @@
 #
 # dot.zshenv:
-# 	Zsh environment
+#	Zsh environment
 #
 
 #

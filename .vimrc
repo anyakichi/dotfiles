@@ -1,6 +1,6 @@
 "
 " dot.vimrc:
-" 	Vim configuration
+"	Vim configuration
 "
 
 scriptencoding utf-8

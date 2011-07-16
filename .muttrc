@@ -1,6 +1,6 @@
 #
 # dot.muttrc:
-# 	Mutt configuration
+#	Mutt configuration
 #
 
 set mbox_type=Maildir

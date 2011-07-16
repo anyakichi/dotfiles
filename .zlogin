@@ -1,6 +1,6 @@
 #
 # dot.zlogin:
-# 	Zsh login stript
+#	Zsh login stript
 #
 
 [ -x /usr/games/fortune ] && /usr/games/fortune

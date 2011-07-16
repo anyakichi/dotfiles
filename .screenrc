@@ -1,6 +1,6 @@
 #
 # dot.screenrc:
-# 	Screen configuration
+#	Screen configuration
 #
 
 escape ^Z^Z

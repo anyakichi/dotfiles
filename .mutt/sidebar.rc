@@ -1,6 +1,6 @@
 #
 # sidebar.rc:
-# 	Mutt configuration for sidebar
+#	Mutt configuration for sidebar
 #
 
 set sidebar_width=30

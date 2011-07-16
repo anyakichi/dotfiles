@@ -1,6 +1,6 @@
 #
 # dot.profile:
-# 	Sh configuration
+#	Sh configuration
 #
 
 start_gpgagent()
