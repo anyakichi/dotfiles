@@ -315,6 +315,12 @@ let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
 let g:alternateExtensions_M = "H"
 let g:alternateExtensions_m = "h"
 
+" alignta.vim
+nnoremap <silent> <Leader>as :Alignta! \S\+<CR>
+xnoremap <silent> <Leader>as :Alignta! \S\+<CR>
+nnoremap <Leader>al :Alignta!<Space>
+xnoremap <Leader>al :Alignta!<Space>
+
 " autofmt.vim
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
