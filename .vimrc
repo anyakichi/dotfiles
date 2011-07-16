@@ -192,6 +192,9 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
+nnoremap <expr> <C-h> &ft =~ 'vim\<Bar>help' ? ":help "
+\					     : ":Ref " . ref#detect() .' '
+
 nnoremap Q q
 
 nnoremap q gw
