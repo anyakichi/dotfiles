@@ -18,72 +18,83 @@ call pathogen#helptags()
 "
 set backspace=indent,eol,start
 
+" Encodings
 set fileencoding=utf-8
 set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 
-set ambiwidth=double
-
-set tabstop=8
-set softtabstop=8
-set shiftwidth=4
-set noexpandtab
+" Indentation
 set autoindent
-set smartindent
+set noexpandtab
 set shiftround
+set shiftwidth=4
+set smartindent
+set softtabstop=8
+set tabstop=8
+set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
+	      \i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
 
-set showcmd
-set cursorline
+" Status information
 set laststatus=2
+set showcmd
 set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
+" Searching
 set nohlsearch
 set ignorecase
 set incsearch
 set smartcase
 
+" Formatting
 set formatoptions=tcroqnlmM
 set textwidth=78
-set nofoldenable
 
+" Completion
+set complete-=t
+set completeopt=menuone
+
+" Appearance
+set ambiwidth=double
 set background=dark
+set cursorline
 set display=lastline
+
+" Command line
+set history=1000
+set wildmenu
+set wildmode=list:longest,full
+
+" Visual mode
 set virtualedit=block
 
+" Buffer
+set hidden
+set switchbuf=usetab
+
+" Window
 set splitbelow
 set splitright
 set winminheight=0
 
+" Backup and swap
 set nobackup
 set directory=~/.vim/swap
-set hidden
 
-set complete-=t
-
+" Timeouts
 set timeout
 set timeoutlen=3000
 set ttimeoutlen=50
 
-set history=1000
-set wildmode=list:longest,full
-set wildmenu
-
-set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
-		\i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
-
-set path=.,/usr/include,/usr/pkg/include,/usr/local/include
-
-set completeopt=menuone
-
+" Mappings
 set cedit=<C-x>
 set pastetoggle=<C-_>
 
+" File searching
+set path=.,/usr/include,/usr/pkg/include,/usr/local/include
+set tags=./tags;/
+
 if has("mouse")
     set mouse=a
-endif
-
-if has("path_extra")
-    set tags=./tags;/
 endif
 
 let g:filetype_m = 'objc'
