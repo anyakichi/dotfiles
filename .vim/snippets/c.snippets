@@ -13,6 +13,12 @@ snippet mainn
 		${1}
 		return 0;
 	}
+# #include <...>
+snippet #inc
+	#include <${1:stdio}.h>${2}
+# #include "..."
+snippet #incl
+	#include "${1:`Filename("$1")`}.h"${2}
 # Header Include-Guard
 snippet once
 	#ifndef ${1:`toupper('_' . substitute(fnamemodify(bufname(''), ':t'), "\\.", "_", "g") . '_')`}
