@@ -184,8 +184,8 @@ nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
 nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
 
-nnoremap <silent> [Tab]n :bnext<CR>
-nnoremap <silent> [Tab]p :bprevious<CR>
+nnoremap <silent> <expr> [Tab]n ':<C-u>tab sbnext ' . v:count1 . '<CR>'
+nnoremap <silent> <expr> [Tab]p ':<C-u>tab sbprevious ' . v:count1 . '<CR>'
 nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
 
 nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
