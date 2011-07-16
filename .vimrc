@@ -196,16 +196,17 @@ nnoremap qq gqgq
 vnoremap q gq
 vnoremap Q gw
 
-nnoremap <silent> q. :<C-u>cc<CR>
+nnoremap <silent> q; :<C-u>cc<CR>
 nnoremap <silent> qn :<C-u>cnext<CR>
 nnoremap <silent> qp :<C-u>cprevious<CR>
 nnoremap <silent> qN :<C-u>clast<CR>
 nnoremap <silent> qP :<C-u>cfirst<CR>
 nnoremap <silent> ql :<C-u>clist<CR>
-nnoremap <silent> qo :<C-u>copen<CR>
-nnoremap <silent> qc :<C-u>cclose<CR>
+nnoremap <silent> qo :<C-u>colder<CR>
+nnoremap <silent> qi :<C-u>cnewer<CR>
 nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
+nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen") . '<CR>'
 
 nnoremap gc `[v`]
 vnoremap <silent> gc :<C-u>normal gc<CR>
@@ -299,6 +300,13 @@ augroup vimrc-filetype
     au FileType eruby,ruby,scheme,tex		setl sw=2
     au FileType mail				setl tw=72
     au FileType vimwiki				setl fo+=mM
+augroup END
+
+augroup vimrc-quickfix
+    au!
+    au BufWinEnter quickfix let g:qfixnr = bufnr("$")
+    au BufWinLeave * if exists("g:qfixnr") && expand("<abuf>") == g:qfixnr |
+    \			unlet! g:qfixnr | endif
 augroup END
 
 augroup vimrc-pdf
