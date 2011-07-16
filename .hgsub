@@ -1,5 +1,6 @@
 .vim/bundle/calendar-vim = [git]https://github.com/mattn/calendar-vim.git
 .vim/bundle/csapprox = [git]https://github.com/godlygeek/csapprox.git
+.vim/bundle/gundo.vim = https://bitbucket.org/sjl/gundo.vim
 .vim/bundle/nerdcommenter = [git]https://github.com/scrooloose/nerdcommenter.git
 .vim/bundle/skk.vim = https://www.sopht.jp/repos/hg/skk.vim
 .vim/bundle/snipmate.vim = https://www.sopht.jp/repos/hg/snipmate.vim
