@@ -144,10 +144,10 @@ noremap k gk
 noremap gj j
 noremap gk k
 
-nnoremap dP dd"2P
+nnoremap dP "_ddP
 
 cnoremap <silent> <expr> <CR>
-\        getcmdtype() ==# '/' ? "\<CR>:\<C-u>set hlsearch\<CR>" : "\<CR>"
+\        getcmdtype() == '/' ? "\<CR>:set hlsearch\<CR>" : "\<CR>"
 nnoremap <silent> * *:set hlsearch<CR>
 nnoremap <silent> # #:set hlsearch<CR>
 nnoremap <silent> g* g*:set hlsearch<CR>
