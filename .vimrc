@@ -75,6 +75,7 @@ set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 
 set completeopt=menuone
 
+set cedit=<C-x>
 set pastetoggle=<C-_>
 
 if has("mouse")
@@ -197,6 +198,10 @@ nnoremap <expr> <C-h> &ft =~ 'vim\<Bar>help' ? ":help "
 
 nnoremap Q q
 
+nnoremap q: q:
+nnoremap q/ q/
+nnoremap q? q?
+
 nnoremap q gw
 nnoremap qq gww
 vnoremap q gw
@@ -232,7 +237,6 @@ for i in range(char2nr('a'), char2nr('z'))
     execute 'nnoremap <silent> [Space]"' . c . ' :<C-u>RegCopy ' . c . '<CR>'
 endfor
 
-cnoremap <C-x> <C-f>
 cnoremap <C-a> <Home>
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
@@ -550,7 +554,11 @@ if !exists('s:matches')
 endif
 function! s:matchupdate(group, pattern)
     if has_key(s:matches, a:group)
-	call matchdelete(s:matches[a:group])
+	try
+	    call matchdelete(s:matches[a:group])
+	catch
+	    return
+	endtry
     endif
 
     let s:matches[a:group] = matchadd(a:group, a:pattern)
