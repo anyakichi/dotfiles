@@ -194,9 +194,9 @@ nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
 nnoremap Q q
 
-nnoremap q gq
-nnoremap qq gqgq
-vnoremap q gq
+nnoremap q gw
+nnoremap qq gww
+vnoremap q gw
 vnoremap Q gw
 
 nnoremap <silent> q; :<C-u>cc<CR>
