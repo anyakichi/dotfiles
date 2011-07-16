@@ -202,12 +202,7 @@ nnoremap q: q:
 nnoremap q/ q/
 nnoremap q? q?
 
-nnoremap q gw
-nnoremap qq gww
-vnoremap q gw
-vnoremap Q gw
-
-nnoremap <silent> q; :<C-u>cc<CR>
+nnoremap <silent> qq :<C-u>cc<CR>
 nnoremap <silent> qn :<C-u>cnext<CR>
 nnoremap <silent> qp :<C-u>cprevious<CR>
 nnoremap <silent> qN :<C-u>clast<CR>
@@ -217,6 +212,7 @@ nnoremap <silent> qo :<C-u>colder<CR>
 nnoremap <silent> qi :<C-u>cnewer<CR>
 nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
+nnoremap qg :<C-u>grep<Space>
 nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen") . '<CR>'
 
 nnoremap gc `[v`]
