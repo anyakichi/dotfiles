@@ -108,6 +108,9 @@ else
     silent! colorscheme nya
 endif
 
+highlight RedundantSpaces guibg=#808080 ctermbg=Grey
+call matchadd('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
+
 
 "
 " Commands
