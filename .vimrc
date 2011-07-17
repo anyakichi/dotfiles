@@ -87,7 +87,7 @@ set ttimeoutlen=50
 
 " Mappings
 set cedit=<C-x>
-set pastetoggle=<C-_>
+set pastetoggle=<C-q>
 
 " File searching
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
@@ -149,6 +149,7 @@ nnoremap [Tab]; t
 nnoremap Y y$
 nnoremap ZQ <Nop>
 nnoremap ZZ <Nop>
+nnoremap <C-_> g<C-]>
 
 noremap j gj
 noremap k gk
@@ -203,12 +204,12 @@ nnoremap <silent> [Tab]<C-t> :<C-u>call tabutil#split()<CR>
 nnoremap <silent> [Tab]<C-s> :<C-u>call tabutil#wsplit()<CR>
 nnoremap <silent> [Tab]<C-v> :<C-u>call tabutil#vsplit()<CR>
 nmap [Tab]m [Tab]<C-t>
-nmap [Tab]; [Tab]<C-t>
 
 nnoremap <silent> [Tab]r :<C-u>call tabutil#reorganize()<CR>
 nnoremap <silent> [Tab]R :<C-u>call tabutil#reorganize1()<CR>
 
-nnoremap <silent> [Tab]] :<C-u>tab tag <C-r>=expand("<cword>")<CR><CR>
+nnoremap <silent> [Tab]] :<C-u>tab tag <C-r><C-w><CR>
+nnoremap <silent> [Tab]; :<C-u>tab tjump <C-r><C-w><CR>
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
 
