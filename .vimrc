@@ -283,6 +283,8 @@ inoremap <C-f> <Right>
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-l> <C-o><C-l>
+inoremap <C-g><CR> <C-o>o
+inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') .
 \			       'v\%(\k\+\\|.\)')
 
@@ -555,6 +557,16 @@ function! s:matchupdate(group, pattern)
     endif
 
     let s:matches[a:group] = matchadd(a:group, a:pattern)
+endfunction
+
+function! s:newxmlline()
+    let col = col(".")
+    copy .
+    if col != 1
+	execute 'normal!' (col - 1) . 'l'
+    endif
+    normal! dit
+    return ''
 endfunction
 
 function! s:toggle_fttag()
