@@ -93,6 +93,9 @@ set pastetoggle=<C-_>
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 set tags=./tags;/
 
+" Compatibility
+set cpoptions+=$
+
 if has("mouse")
     set mouse=a
 endif
