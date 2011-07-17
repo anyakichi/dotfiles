@@ -172,11 +172,18 @@ nnoremap <silent> g<C-p> :<C-u>tabfirst<CR>
 
 nnoremap <silent> [Tab]a :<C-u>tabs<CR>
 
+nnoremap <silent> <expr> [Tab]b ':<C-u>tab sbuffer ' . v:count1 . '<CR>'
+nnoremap <silent> <expr> [Tab]n ':<C-u>tab sbnext ' . v:count1 . '<CR>'
+nnoremap <silent> <expr> [Tab]p ':<C-u>tab sbprevious ' . v:count1 . '<CR>'
+nnoremap <silent> [Tab]x :<C-u>quit<CR>
+nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
+nmap [Tab]g [Tab]b
+
 nnoremap <silent> [Tab]l :<C-u>call tabutil#move(v:count1)<CR>
 nnoremap <silent> [Tab]h :<C-u>call tabutil#move(-v:count1)<CR>
 nnoremap <silent> [Tab]L :<C-u>tabmove<CR>
 nnoremap <silent> [Tab]H :<C-u>tabmove 0<CR>
-nnoremap <silent> <expr> [Tab]; ':<C-u>tabmove ' . v:count . '<CR>'
+nnoremap <silent> <expr> [Tab]M ':<C-u>tabmove ' . v:count . '<CR>'
 
 nnoremap [Tab]o :<C-u>edit<Space>
 nnoremap [Tab]t :<C-u>tabnew<Space>
@@ -187,19 +194,16 @@ nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
 nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
 nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
 
-nnoremap <silent> <expr> [Tab]n ':<C-u>tab sbnext ' . v:count1 . '<CR>'
-nnoremap <silent> <expr> [Tab]p ':<C-u>tab sbprevious ' . v:count1 . '<CR>'
-nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
-
 nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
 nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
 nnoremap <silent> [Tab]u :<C-u>call tabutil#undo()<CR>
 nnoremap <silent> [Tab]U :<C-u>call tabutil#undoall()<CR>
 
-nnoremap <silent> [Tab]m :<C-u>call tabutil#split()<CR>
 nnoremap <silent> [Tab]<C-t> :<C-u>call tabutil#split()<CR>
 nnoremap <silent> [Tab]<C-s> :<C-u>call tabutil#wsplit()<CR>
 nnoremap <silent> [Tab]<C-v> :<C-u>call tabutil#vsplit()<CR>
+nmap [Tab]m [Tab]<C-t>
+nmap [Tab]; [Tab]<C-t>
 
 nnoremap <silent> [Tab]r :<C-u>call tabutil#reorganize()<CR>
 nnoremap <silent> [Tab]R :<C-u>call tabutil#reorganize1()<CR>
