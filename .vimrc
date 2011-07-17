@@ -227,6 +227,7 @@ nnoremap <expr> <C-h> &ft =~ 'vim\<Bar>help' ? ":help "
 \					     : ":Ref " . ref#detect() .' '
 
 nnoremap Q q
+nnoremap q <Nop>
 
 nnoremap q: q:
 nnoremap q/ q/
