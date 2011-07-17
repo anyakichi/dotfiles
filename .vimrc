@@ -246,6 +246,11 @@ nnoremap qM :<C-u>make<Space>
 nnoremap qg :<C-u>grep<Space>
 nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen") . '<CR>'
 
+onoremap aa a>
+onoremap ia i>
+onoremap ar a]
+onoremap ir i]
+
 nnoremap <expr> gc
 \		'`[' .
 \		['v','V'][(col("'[") == 1 && col("']") >= len(getline("']")))] .
