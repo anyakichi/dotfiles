@@ -176,9 +176,9 @@ nnoremap <silent> g<C-p> :<C-u>tabfirst<CR>
 
 nnoremap <silent> [Tab]a :<C-u>tabs<CR>
 
-nnoremap <silent> <expr> [Tab]b ':<C-u>tab sbuffer ' . v:count1 . '<CR>'
-nnoremap <silent> <expr> [Tab]n ':<C-u>tab sbnext ' . v:count1 . '<CR>'
-nnoremap <silent> <expr> [Tab]p ':<C-u>tab sbprevious ' . v:count1 . '<CR>'
+nnoremap <silent> <expr> [Tab]b ":\<C-u>tab sbuffer " . v:count1 . "\<CR>"
+nnoremap <silent> <expr> [Tab]n ":\<C-u>tab sbnext " . v:count1 . "\<CR>"
+nnoremap <silent> <expr> [Tab]p ":\<C-u>tab sbprevious " . v:count1 . "\<CR>"
 nnoremap <silent> [Tab]x :<C-u>quit<CR>
 nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
 nmap [Tab]g [Tab]b
@@ -187,16 +187,16 @@ nnoremap <silent> [Tab]l :<C-u>call tabutil#move(v:count1)<CR>
 nnoremap <silent> [Tab]h :<C-u>call tabutil#move(-v:count1)<CR>
 nnoremap <silent> [Tab]L :<C-u>tabmove<CR>
 nnoremap <silent> [Tab]H :<C-u>tabmove 0<CR>
-nnoremap <silent> <expr> [Tab]M ':<C-u>tabmove ' . v:count . '<CR>'
+nnoremap <silent> <expr> [Tab]M ":\<C-u>tabmove " . v:count . "\<CR>"
 
 nnoremap [Tab]o :<C-u>edit<Space>
 nnoremap [Tab]t :<C-u>tabnew<Space>
 nnoremap [Tab]s :<C-u>split<Space>
 nnoremap [Tab]v :<C-u>vsplit<Space>
-nnoremap <expr> [Tab]O ':<C-u>edit ' . GetRelativePath()
-nnoremap <expr> [Tab]T ':<C-u>tabnew ' . GetRelativePath()
-nnoremap <expr> [Tab]S ':<C-u>split ' . GetRelativePath()
-nnoremap <expr> [Tab]V ':<C-u>vsplit ' . GetRelativePath()
+nnoremap <expr> [Tab]O ":\<C-u>edit " . GetRelativePath()
+nnoremap <expr> [Tab]T ":\<C-u>tabnew " . GetRelativePath()
+nnoremap <expr> [Tab]S ":\<C-u>split " . GetRelativePath()
+nnoremap <expr> [Tab]V ":\<C-u>vsplit " . GetRelativePath()
 
 nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
 nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
@@ -224,11 +224,11 @@ nnoremap <Esc>l <C-w>l
 
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
-nnoremap <expr> [Tab]<C-h> &ft =~ 'vim\<Bar>help'
+nnoremap <expr> [Tab]<C-h> &ft =~ "vim\\<Bar>help"
 \				? ":tab help "
 \				: ":Ref -open=tabnew " . ref#detect() . ' '
-nnoremap <expr> <C-h> &ft =~ 'vim\<Bar>help' ? ":help "
-\					     : ":Ref " . ref#detect() .' '
+nnoremap <expr> <C-h> &ft =~ "vim\\<Bar>help" ? ":help "
+\					      : ":Ref " . ref#detect() .' '
 
 nnoremap Q q
 nnoremap q <Nop>
@@ -248,7 +248,7 @@ nnoremap <silent> qi :<C-u>cnewer<CR>
 nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
 nnoremap qg :<C-u>grep<Space>
-nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen") . '<CR>'
+nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen")."\<CR>"
 
 onoremap aa a>
 onoremap ia i>
@@ -257,7 +257,7 @@ onoremap ir i]
 
 nnoremap <expr> gc
 \		'`[' .
-\		['v','V'][(col("'[") == 1 && col("']") >= len(getline("']")))] .
+\		((col("'[") == 1 && col("']") >= len(getline("']")))?'V':'v') .
 \		'`]'
 vnoremap <silent> gc :<C-u>normal gc<CR>
 onoremap <silent> gc :<C-u>normal gc<CR>
