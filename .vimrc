@@ -59,6 +59,9 @@ set background=dark
 set cursorline
 set display=lastline
 
+" Folding
+set nofoldenable
+
 " Command line
 set history=1000
 set wildmenu
