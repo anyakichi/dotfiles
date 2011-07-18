@@ -288,7 +288,10 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 inoremap <C-l> <C-o><C-l>
+inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : <SID>complete_key()
 inoremap <C-g><CR> <C-o>o
+inoremap <C-_> <C-x><C-f>
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') .
 \			       'v\%(\k\+\\|.\)')
@@ -297,6 +300,11 @@ inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') .
 "
 " Auto commands
 "
+augroup vimrc-after
+    au!
+    au VimEnter * call s:after()
+augroup END
+
 augroup vimrc-filetype
     au!
     au FileType python				setl fo-=t
@@ -549,6 +557,17 @@ function! s:tabclose()
     endif
 endfunction
 
+function! s:complete_key()
+    let context = getline('.')[:col('.')-2]
+    if context =~ '/$'
+	return "\<C-x>\<C-f>\<C-p>"
+    elseif !empty(&omnifunc)
+	return "\<C-x>\<C-o>"
+    else
+	return "\<C-n>"
+    endif
+endfunction
+
 if !exists('s:matches')
     let s:matches = {}
 endif
@@ -592,6 +611,10 @@ function! s:ref(mode)
     else
 	call ref#K(a:mode)
     endif
+endfunction
+
+function! s:after()
+    inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
 endfunction
 
 
