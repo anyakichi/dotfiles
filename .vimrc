@@ -52,6 +52,7 @@ set textwidth=78
 " Completion
 set complete-=t
 set completeopt=menuone
+set pumheight=10
 
 " Appearance
 set ambiwidth=double
@@ -284,17 +285,28 @@ cnoremap <C-p> <PageUp>
 
 inoremap <C-b> <Left>
 inoremap <C-f> <Right>
-inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
-inoremap <C-l> <C-o><C-l>
+
+inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
+inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "\<C-o>\<C-l>"
+inoremap <expr> <C-n> pumvisible() ? "\<C-n>" : <SID>complete_key("\<C-n>")
+inoremap <expr> <C-p> pumvisible() ? "\<C-p>" : <SID>complete_key("\<C-p>")
 inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : <SID>complete_key()
+inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : <SID>complete_key("\<C-k>")
+inoremap <expr> <C-e> pumvisible()
+\			? ("\<C-e>" . <SID>complete_key() . "\<C-p>\<Down>")
+\			: <SID>insert_word_from_line(line('.') + 1)
+inoremap <expr> <C-y> pumvisible()
+\			? "\<C-y>"
+\			: <SID>insert_word_from_line(line('.') - 1)
+inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <expr> <C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-g>u\<C-u>"
+inoremap <C-w> <C-g>u<C-w>
+inoremap <expr> <C-_> <SID>complete_key("\<C-x>\<C-f>")
+
 inoremap <C-g><CR> <C-o>o
-inoremap <C-_> <C-x><C-f>
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
-inoremap <expr> <C-y> matchstr(getline(line('.')-1), '\%' . virtcol('.') .
-\			       'v\%(\k\+\\|.\)')
 
 
 "
@@ -557,14 +569,40 @@ function! s:tabclose()
     endif
 endfunction
 
-function! s:complete_key()
-    let context = getline('.')[:col('.')-2]
-    if context =~ '/$'
-	return "\<C-x>\<C-f>\<C-p>"
-    elseif !empty(&omnifunc)
+function! s:komplete()
+    if &omnifunc != ''
 	return "\<C-x>\<C-o>"
+    elseif &filetype == 'vim'
+	return "\<C-x>\<C-v>"
     else
 	return "\<C-n>"
+    endif
+endfunction
+
+function! s:complete_key(...)
+    if a:0 == 0
+	if exists('s:last_complete_key')
+	    if s:last_complete_key == "\<C-k>"
+		return s:komplete()
+	    elseif s:last_complete_key == "\<C-]>"
+		return "\<C-x>\<C-]>"
+	    else
+		return s:last_complete_key
+	    endif
+	else
+	    return "\<C-n>"
+	endif
+    endif
+
+    let s:last_complete_key = a:1
+
+    if a:1 == "\<C-k>"
+	return s:komplete()
+    elseif a:1 == "\<C-]>"
+	let result = TriggerSnippet(a:1, 1)
+	return result != a:1 ? result : "\<C-x>\<C-]>"
+    else
+	return a:1
     endif
 endfunction
 
@@ -581,6 +619,11 @@ function! s:matchupdate(group, pattern)
     endif
 
     let s:matches[a:group] = matchadd(a:group, a:pattern)
+endfunction
+
+function! s:insert_word_from_line(lnum)
+    let line = getline(a:lnum)
+    return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
 endfunction
 
 function! s:newxmlline()
@@ -600,6 +643,7 @@ function! s:toggle_fttag()
     if tags_save == &l:tags
 	execute 'setl tags-=' . tags_file
     endif
+    setl tags?
 endfunction
 
 function! s:ref(mode)
@@ -614,7 +658,26 @@ function! s:ref(mode)
 endfunction
 
 function! s:after()
+    " a.vim
+    iunmap <Leader>ih
+    iunmap <Leader>is
+    iunmap <Leader>ihn
+
+    " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
+
+    " snipmate.vim
+    iunmap <Tab>
+    sunmap <Tab>
+    iunmap <S-Tab>
+    sunmap <S-Tab>
+    inoremap <silent> <C-]> <C-r>=<SID>complete_key("\<C-]>")<CR>
+    inoremap <silent> <Tab> <C-r>=TriggerSnippet("\<Tab>", 0)<CR>
+    snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
+    snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
+    inoremap <silent> <S-Tab> <c-r>=BackwardsSnippet("\<S-Tab>")<CR>
+    snoremap <silent> <S-Tab>
+    \	     <Esc>i<Right><C-r>=BackwardsSnippet("\<S-Tab>")<CR>
 endfunction
 
 
