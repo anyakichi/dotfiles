@@ -330,6 +330,8 @@ augroup END
 
 augroup vimrc-quickfix
     autocmd!
+    autocmd QuickFixCmdPost [^l]* cwindow
+    autocmd QuickFixCmdPost l* lwindow
 augroup END
 
 augroup vimrc-syntax
