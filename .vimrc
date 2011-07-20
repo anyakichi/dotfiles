@@ -147,6 +147,9 @@ nmap t [Tab]
 nnoremap [Tab] <Nop>
 nnoremap [Tab]; t
 
+nnoremap <C-g> <Nop>
+nnoremap <C-g><C-g> <C-g>
+
 nnoremap Y y$
 nnoremap ZQ <Nop>
 nnoremap ZZ <Nop>
@@ -171,6 +174,8 @@ nnoremap <C-n> gt
 nnoremap <C-p> gT
 nnoremap <silent> g<C-n> :<C-u>tablast<CR>
 nnoremap <silent> g<C-p> :<C-u>tabfirst<CR>
+nmap <C-g><C-n> g<C-n>
+nmap <C-g><C-p> g<C-p>
 
 nnoremap <silent> [Tab]a :<C-u>tabs<CR>
 
