@@ -597,30 +597,23 @@ function! s:complete_key(...)
     if a:1 == "\<C-k>"
 	return s:komplete()
     elseif a:1 == "\<C-]>"
-	let result = TriggerSnippet(a:1, 1)
-	return result != a:1 ? result : "\<C-x>\<C-]>"
+	return TriggerSnippet("\<C-x>\<C-]>", 1)
     else
 	return a:1
     endif
 endfunction
 
-if !exists('s:matches')
-    let s:matches = {}
-endif
 function! s:matchupdate(group, pattern)
-    if has_key(s:matches, a:group)
-	try
-	    call matchdelete(s:matches[a:group])
-	catch
-	    return
-	endtry
-    endif
+    for match in getmatches()
+	if match['group'] ==# a:group
+	    call matchdelete(match['id'])
+	endif
+    endfor
 
-    let s:matches[a:group] = matchadd(a:group, a:pattern)
+    call matchadd(a:group, a:pattern)
 endfunction
 
 function! s:insert_word_from_line(lnum)
-    let line = getline(a:lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
 endfunction
 
