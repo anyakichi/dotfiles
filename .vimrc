@@ -188,13 +188,13 @@ nnoremap <silent> [Tab]H :<C-u>tabmove 0<CR>
 nnoremap <silent> <expr> [Tab]M ":\<C-u>tabmove " . v:count . "\<CR>"
 
 nnoremap [Tab]o :<C-u>edit<Space>
-nnoremap [Tab]t :<C-u>tabnew<Space>
+nnoremap [Tab]t :<C-u>tab split<Space>
 nnoremap [Tab]s :<C-u>split<Space>
 nnoremap [Tab]v :<C-u>vsplit<Space>
-nnoremap <expr> [Tab]O ":\<C-u>edit " . GetRelativePath()
-nnoremap <expr> [Tab]T ":\<C-u>tabnew " . GetRelativePath()
-nnoremap <expr> [Tab]S ":\<C-u>split " . GetRelativePath()
-nnoremap <expr> [Tab]V ":\<C-u>vsplit " . GetRelativePath()
+nmap <expr> [Tab]O "[Tab]o" . <SID>relpath()
+nmap <expr> [Tab]T "[Tab]t" . <SID>relpath()
+nmap <expr> [Tab]S "[Tab]s" . <SID>relpath()
+nmap <expr> [Tab]V "[Tab]v" . <SID>relpath()
 
 nnoremap <silent> [Tab]d :<C-u>call <SID>tabclose()<CR>
 nnoremap <silent> [Tab]q :<C-u>call tabutil#only()<CR>
@@ -553,9 +553,13 @@ function! MakeTabLabel(n)
     return s
 endfunction
 
-function! GetRelativePath()
+function! s:relpath()
     let path = expand('%:~:.:h')
-    return path == '.' ? '' : path . '/'
+    if path == '' || path == '.'
+	return ''
+    else
+	return path . '.'
+    endif
 endfunction
 
 function! s:tabclose()
