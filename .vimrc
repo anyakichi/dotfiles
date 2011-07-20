@@ -313,39 +313,39 @@ inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 " Auto commands
 "
 augroup vimrc-after
-    au!
-    au VimEnter * call s:after()
+    autocmd!
+    autocmd VimEnter * call s:after()
 augroup END
 
 augroup vimrc-filetype
-    au!
-    au FileType python				setl fo-=t
-    au FileType docbk,html,markdown,xhtml,xml	setl sw=2
-    au FileType eruby,ruby,scheme,tex		setl sw=2
-    au FileType mail				setl tw=72
-    au FileType vimwiki				setl fo+=mM
+    autocmd!
+    autocmd FileType python				setl fo-=t
+    autocmd FileType docbk,html,markdown,xhtml,xml	setl sw=2
+    autocmd FileType eruby,ruby,scheme,tex		setl sw=2
+    autocmd FileType mail				setl tw=72
+    autocmd FileType vimwiki				setl fo+=mM
 augroup END
 
 augroup vimrc-quickfix
-    au!
-    au BufWinEnter quickfix let g:qfixnr = bufnr("$")
-    au BufWinLeave * if exists("g:qfixnr") && expand("<abuf>") == g:qfixnr |
+    autocmd!
+    autocmd BufWinEnter quickfix let g:qfixnr = bufnr("$")
+    autocmd BufWinLeave * if exists("g:qfixnr") && expand("<abuf>") == g:qfixnr|
     \			unlet! g:qfixnr | endif
 augroup END
 
 augroup vimrc-syntax
-    au!
-    au VimEnter    * call <SID>matchupdate('RedundantSpaces',
-    \					   '\(\s\+$\| \+\ze\t\)')
-    au InsertEnter * call <SID>matchupdate('RedundantSpaces',
-    \					   '\(\s\+$\| \+\ze\t\)\%#\@!')
-    au InsertLeave * call <SID>matchupdate('RedundantSpaces',
-    \					   '\(\s\+$\| \+\ze\t\)')
+    autocmd!
+    autocmd VimEnter    * call s:matchupdate('RedundantSpaces',
+    \					     '\(\s\+$\| \+\ze\t\)')
+    autocmd InsertEnter * call s:matchupdate('RedundantSpaces',
+    \					     '\(\s\+$\| \+\ze\t\)\%#\@!')
+    autocmd InsertLeave * call s:matchupdate('RedundantSpaces',
+    \					     '\(\s\+$\| \+\ze\t\)')
 augroup END
 
 augroup vimrc-pdf
-    au!
-    au BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
+    autocmd!
+    autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
 augroup END
 
 
