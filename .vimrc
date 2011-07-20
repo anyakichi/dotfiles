@@ -325,6 +325,10 @@ augroup END
 
 augroup vimrc-filetype
     autocmd!
+    autocmd Filetype *
+    \	    if &omnifunc == "" |
+    \		setlocal omnifunc=syntaxcomplete#Complete |
+    \	    endif
     autocmd FileType python				setlocal fo-=t
     autocmd FileType docbk,html,markdown,xhtml,xml	setlocal sw=2
     autocmd FileType eruby,ruby,scheme,tex		setlocal sw=2
