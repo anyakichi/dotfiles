@@ -240,18 +240,22 @@ nnoremap q: q:
 nnoremap q/ q/
 nnoremap q? q?
 
+nnoremap <silent> <C-j> :<C-u>cnext<CR>
+nnoremap <silent> <C-k> :<C-u>cprevious<CR>
+nnoremap <silent> g<C-j> :<C-u>clast<CR>
+nnoremap <silent> g<C-k> :<C-u>cfirst<CR>
+nmap <C-g><C-j> g<C-j>
+nmap <C-g><C-k> g<C-k>
+
+nnoremap <silent> q. :<C-u>call <SID>toggle_quickfix()<CR>
 nnoremap <silent> qq :<C-u>cc<CR>
-nnoremap <silent> qn :<C-u>cnext<CR>
-nnoremap <silent> qp :<C-u>cprevious<CR>
-nnoremap <silent> qN :<C-u>clast<CR>
-nnoremap <silent> qP :<C-u>cfirst<CR>
-nnoremap <silent> ql :<C-u>clist<CR>
+nnoremap <silent> qa :<C-u>clist<CR>
 nnoremap <silent> qo :<C-u>colder<CR>
 nnoremap <silent> qi :<C-u>cnewer<CR>
+
 nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
 nnoremap qg :<C-u>grep<Space>
-nnoremap <silent> q. :<C-u>call <SID>toggle_quickfix()<CR>
 
 onoremap aa a>
 onoremap ia i>
