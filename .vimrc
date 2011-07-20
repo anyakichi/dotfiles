@@ -316,11 +316,11 @@ augroup END
 
 augroup vimrc-filetype
     autocmd!
-    autocmd FileType python				setl fo-=t
-    autocmd FileType docbk,html,markdown,xhtml,xml	setl sw=2
-    autocmd FileType eruby,ruby,scheme,tex		setl sw=2
-    autocmd FileType mail				setl tw=72
-    autocmd FileType vimwiki				setl fo+=mB
+    autocmd FileType python				setlocal fo-=t
+    autocmd FileType docbk,html,markdown,xhtml,xml	setlocal sw=2
+    autocmd FileType eruby,ruby,scheme,tex		setlocal sw=2
+    autocmd FileType mail				setlocal tw=72
+    autocmd FileType vimwiki				setlocal fo+=mB
 augroup END
 
 augroup vimrc-quickfix
