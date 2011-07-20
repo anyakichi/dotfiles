@@ -46,7 +46,7 @@ set incsearch
 set smartcase
 
 " Formatting
-set formatoptions=tcroqnlmM
+set formatoptions=tcroqnlmB
 set textwidth=78
 
 " Completion
@@ -320,7 +320,7 @@ augroup vimrc-filetype
     autocmd FileType docbk,html,markdown,xhtml,xml	setl sw=2
     autocmd FileType eruby,ruby,scheme,tex		setl sw=2
     autocmd FileType mail				setl tw=72
-    autocmd FileType vimwiki				setl fo+=mM
+    autocmd FileType vimwiki				setl fo+=mB
 augroup END
 
 augroup vimrc-quickfix
