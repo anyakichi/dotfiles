@@ -246,7 +246,7 @@ nnoremap <silent> qi :<C-u>cnewer<CR>
 nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
 nnoremap qg :<C-u>grep<Space>
-nnoremap <silent> <expr> q. (exists("g:qfixnr") ? ":cclose" : ":copen")."\<CR>"
+nnoremap <silent> q. :<C-u>call <SID>toggle_quickfix()<CR>
 
 onoremap aa a>
 onoremap ia i>
@@ -325,9 +325,6 @@ augroup END
 
 augroup vimrc-quickfix
     autocmd!
-    autocmd BufWinEnter quickfix let g:qfixnr = bufnr("$")
-    autocmd BufWinLeave * if exists("g:qfixnr") && expand("<abuf>") == g:qfixnr|
-    \			unlet! g:qfixnr | endif
 augroup END
 
 augroup vimrc-syntax
@@ -635,6 +632,16 @@ function! s:newxmlline()
     endif
     normal! dit
     return ''
+endfunction
+
+function! s:toggle_quickfix()
+    for bufnr in range(1, winnr('$'))
+	if getwinvar(bufnr, '&buftype') ==# 'quickfix'
+	    cclose
+	    return
+	endif
+    endfor
+    copen
 endfunction
 
 function! s:toggle_fttag()
