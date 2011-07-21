@@ -240,14 +240,18 @@ nnoremap q: q:
 nnoremap q/ q/
 nnoremap q? q?
 
-nnoremap <silent> <C-j> :<C-u>cnext<CR>
-nnoremap <silent> <C-k> :<C-u>cprevious<CR>
-nnoremap <silent> g<C-j> :<C-u>clast<CR>
-nnoremap <silent> g<C-k> :<C-u>cfirst<CR>
+nnoremap <silent> <C-j> :cnext<CR>
+nnoremap <silent> <C-k> :cprevious<CR>
+nnoremap <silent> <expr> g<C-j> ":\<C-u>clast " .
+\					(v:count == 0 ? '' : v:count) . "\<CR>"
+nnoremap <silent> <expr> g<C-k> ":\<C-u>cfirst " .
+\					(v:count == 0 ? '' : v:count) . "\<CR>"
 nmap <C-g><C-j> g<C-j>
 nmap <C-g><C-k> g<C-k>
 
 nnoremap <silent> q. :<C-u>call <SID>toggle_quickfix()<CR>
+nnoremap <silent> qn :cnfile<CR>
+nnoremap <silent> qp :cpfile<CR>
 nnoremap <silent> qq :<C-u>cc<CR>
 nnoremap <silent> qa :<C-u>clist<CR>
 nnoremap <silent> qo :<C-u>colder<CR>
