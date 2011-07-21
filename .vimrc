@@ -711,8 +711,12 @@ function! s:after()
     sunmap <Tab>
     iunmap <S-Tab>
     sunmap <S-Tab>
-    inoremap <silent> <expr> <C-]> pumvisible() ? "<C-]>" : "<C-r>=TriggerSnippet(\"\\<C-x>\\<C-]>\", 1)<CR>"
-    inoremap <silent> <expr> <Tab> pumvisible() ? <SID>compjump(1) : "\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
+    inoremap <silent> <expr> <C-]> pumvisible() ?
+    \			"<C-]>" :
+    \			"<C-r>=TriggerSnippet(\"\\<C-x>\\<C-]>\", 1)<CR>"
+    inoremap <silent> <expr> <Tab> pumvisible() ?
+    \			<SID>compjump(1) :
+    \			"\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
     snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
     snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
     inoremap <silent> <S-Tab> <c-r>=BackwardsSnippet("\<S-Tab>")<CR>
