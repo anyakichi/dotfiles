@@ -40,6 +40,7 @@ set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
 " Searching
+set grepprg=internal
 set nohlsearch
 set ignorecase
 set incsearch
@@ -283,36 +284,33 @@ for i in range(char2nr('a'), char2nr('z'))
     execute 'nnoremap <silent> [Space]"' . c . ' :<C-u>RegCopy ' . c . '<CR>'
 endfor
 
-cnoremap <C-a> <Home>
-cnoremap <C-b> <Left>
-cnoremap <C-f> <Right>
-cnoremap <C-n> <PageDown>
-cnoremap <C-p> <PageUp>
+" Insert and command mode mappings
+noremap! <C-a> <Home>
+noremap! <C-b> <Left>
+noremap! <C-f> <Right>
 
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
 inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "\<C-o>\<C-l>"
-inoremap <expr> <C-n> pumvisible() ? "\<C-n>" : <SID>complete_key("\<C-n>")
-inoremap <expr> <C-p> pumvisible() ? "\<C-p>" : <SID>complete_key("\<C-p>")
-inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
-inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : <SID>complete_key("\<C-k>")
-inoremap <expr> <C-e> pumvisible()
-\			? ("\<C-e>" . <SID>complete_key() . "\<C-p>\<Down>")
-\			: <SID>insert_word_from_line(line('.') + 1)
-inoremap <expr> <C-y> pumvisible()
-\			? "\<C-y>"
-\			: <SID>insert_word_from_line(line('.') - 1)
-inoremap <expr> <C-d> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
-inoremap <expr> <C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-g>u\<C-u>"
-inoremap <C-w> <C-g>u<C-w>
-inoremap <expr> <C-_> <SID>complete_key("\<C-x>\<C-f>")
+inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "<C-p>" : <SID>compstart()
+inoremap <expr> <C-i> pumvisible() ? <SID>compjump(1) : "\<C-i>"
+inoremap <expr> <C-d> pumvisible() ? <SID>compjump(-1) : "\<C-d>"
+inoremap <expr> <C-e> pumvisible() ? "\<C-e>"
+\				   : <SID>insert_word_from_line(line('.') + 1)
+inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
+\				   : <SID>insert_word_from_line(line('.') - 1)
+inoremap <expr> <C-f> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<Right>"
+inoremap <expr> <C-b> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<Left>"
+inoremap <C-_> <C-x><C-f>
 
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
+
+cnoremap <C-n> <PageDown>
+cnoremap <C-p> <PageUp>
 
 
 "
@@ -492,6 +490,10 @@ let g:vimwiki_hl_headers = 1
 "
 " Functions
 "
+function! s:SID_PREFIX()
+    return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+endfunction
+
 function! MakeStatusLine()
     let s  = '%<%f %y'
     let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
@@ -582,39 +584,62 @@ function! s:tabclose()
     endif
 endfunction
 
-function! s:komplete()
-    if &omnifunc != ''
-	return "\<C-x>\<C-o>"
-    elseif &filetype == 'vim'
-	return "\<C-x>\<C-v>"
-    else
-	return "\<C-n>"
+function! s:complist()
+    let complist = []
+
+    if &completefunc != ''
+	call add(complist, "\<C-x>\<C-u>")
     endif
+    if &filetype ==# 'vim'
+	call add(complist, "\<C-x>\<C-v>")
+    endif
+    if &omnifunc != ''
+	call add(complist, "\<C-x>\<C-o>")
+    endif
+    call add(complist, "\<C-n>")
+
+    return complist
 endfunction
 
-function! s:complete_key(...)
-    if a:0 == 0
-	if exists('s:last_complete_key')
-	    if s:last_complete_key == "\<C-k>"
-		return s:komplete()
-	    elseif s:last_complete_key == "\<C-]>"
-		return "\<C-x>\<C-]>"
-	    else
-		return s:last_complete_key
-	    endif
-	else
-	    return "\<C-n>"
-	endif
+function! s:compkey()
+    let complist = s:complist()
+    let b:compend = b:compend % len(complist)
+    let b:compindex = b:compindex % len(complist)
+
+    return complist[b:compindex]
+endfunction
+
+function! s:compstart()
+    if pumvisible()
+	return s:compjump(1)
     endif
 
-    let s:last_complete_key = a:1
+    let complist = s:complist()
+    let b:compindex = 0
+    let b:compend = len(complist) - 1
+    return complist[b:compindex] .
+    \      "\<C-r>=" . s:SID_PREFIX() . "compafter(1)\<CR>"
+endfunction
 
-    if a:1 == "\<C-k>"
-	return s:komplete()
-    elseif a:1 == "\<C-]>"
-	return TriggerSnippet("\<C-x>\<C-]>", 1)
+function! s:compjump(step)
+    let complist = s:complist()
+    let b:compend = b:compindex
+    let b:compindex = (b:compindex + a:step) % len(complist)
+
+    return "\<C-e>" . complist[b:compindex] .
+    \	   "\<C-r>=" . s:SID_PREFIX() . "compafter(" . a:step . ")\<CR>"
+endfunction
+
+function! s:compafter(step)
+    if pumvisible()
+	return "\<C-p>\<Down>"
+    elseif b:compend == b:compindex
+	return ''
     else
-	return a:1
+	let complist = s:complist()
+	let b:compindex = (b:compindex + a:step) % len(complist)
+	return "\<C-e>" . complist[b:compindex] .
+	\      "\<C-r>=" . s:SID_PREFIX() . "compafter(" . a:step . ")\<CR>"
     endif
 endfunction
 
@@ -687,8 +712,8 @@ function! s:after()
     sunmap <Tab>
     iunmap <S-Tab>
     sunmap <S-Tab>
-    inoremap <silent> <C-]> <C-r>=<SID>complete_key("\<C-]>")<CR>
-    inoremap <silent> <Tab> <C-r>=TriggerSnippet("\<Tab>", 0)<CR>
+    inoremap <silent> <expr> <C-]> pumvisible() ? "<C-]>" : "<C-r>=TriggerSnippet(\"\\<C-x>\\<C-]>\", 1)<CR>"
+    inoremap <silent> <expr> <Tab> pumvisible() ? <SID>compjump(1) : "\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
     snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
     snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
     inoremap <silent> <S-Tab> <c-r>=BackwardsSnippet("\<S-Tab>")<CR>
