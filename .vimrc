@@ -74,7 +74,6 @@ set virtualedit=block
 
 " Buffer
 set hidden
-set switchbuf=usetab
 
 " Window
 set splitbelow
