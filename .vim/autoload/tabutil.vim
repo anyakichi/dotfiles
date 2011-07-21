@@ -152,6 +152,30 @@ function! tabutil#move(count)
     execute 'tabmove' pos
 endfuncti
 
+" Open a buffer in new tab or jump to the buffer in another tab.
+function! tabutil#buffer(count)
+    let swb_save = &switchbuf
+    set switchbuf=usetab
+    execute 'tab sbuffer' a:count
+    let &switchbuf = swb_save
+endfunction
+
+" Open the next buffer in new tab or jump to the buffer in another tab.
+function! tabutil#bnext(count)
+    let swb_save = &switchbuf
+    set switchbuf=usetab
+    execute 'tab sbnext' a:count
+    let &switchbuf = swb_save
+endfunction
+
+" Open the previous buffer in new tab or jump to the buffer in another tab.
+function! tabutil#bprevious(count)
+    let swb_save = &switchbuf
+    set switchbuf=usetab
+    execute 'tab sbprevious' a:count
+    let &switchbuf = swb_save
+endfunction
+
 " Close duplicate tabs and open hidden buffers in new tabs.
 function! tabutil#reorganize()
     let tablists = []

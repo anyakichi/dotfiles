@@ -179,9 +179,9 @@ nmap <C-g><C-p> g<C-p>
 
 nnoremap <silent> [Tab]a :<C-u>tabs<CR>
 
-nnoremap <silent> <expr> [Tab]b ":\<C-u>tab sbuffer " . v:count1 . "\<CR>"
-nnoremap <silent> <expr> [Tab]n ":\<C-u>tab sbnext " . v:count1 . "\<CR>"
-nnoremap <silent> <expr> [Tab]p ":\<C-u>tab sbprevious " . v:count1 . "\<CR>"
+nnoremap <silent> [Tab]b :<C-u>call tabutil#buffer(v:count1)<CR>
+nnoremap <silent> [Tab]n :<C-u>call tabutil#bnext(v:count1)<CR>
+nnoremap <silent> [Tab]p :<C-u>call tabutil#bprevious(v:count1)<CR>
 nnoremap <silent> [Tab]x :<C-u>quit<CR>
 nnoremap <silent> [Tab]D :<C-u>bdelete<CR>
 nmap [Tab]g [Tab]b
