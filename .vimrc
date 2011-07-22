@@ -263,6 +263,8 @@ nnoremap <silent> qm :<C-u>make<CR>
 nnoremap qM :<C-u>make<Space>
 nnoremap qg :<C-u>grep<Space>
 
+nnoremap <silent> q] :<C-u>call <SID>ltag()<CR>
+
 onoremap aa a>
 onoremap ia i>
 onoremap ar a]
@@ -682,6 +684,25 @@ function! s:toggle_quickfix()
 	endif
     endfor
     copen
+endfunction
+
+function! s:ltag()
+    let word = expand('<cword>')
+    if word == ''
+	echohl ErrorMsg
+	echo 'E349: No identifier under cursor'
+	echohl None
+	return
+    endif
+    try
+	execute 'ltag' word
+    catch
+	echohl ErrorMsg
+	echo substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', '')
+	echohl None
+	return
+    endtry
+    lwindow
 endfunction
 
 function! s:toggle_rshl()
