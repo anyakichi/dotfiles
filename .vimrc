@@ -216,6 +216,7 @@ nnoremap <silent> [Tab]R :<C-u>call tabutil#reorganize1()<CR>
 
 nnoremap <silent> [Tab]] :<C-u>tab tag <C-r><C-w><CR>
 nnoremap <silent> [Tab]; :<C-u>tab tjump <C-r><C-w><CR>
+nnoremap <silent> [Tab]<CR> :<C-u>tab wincmd <C-v><CR><CR>
 nnoremap [Tab]f <C-w>gf
 nnoremap [Tab]F <C-w>gF
 
