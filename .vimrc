@@ -307,7 +307,7 @@ inoremap <expr> <C-k> pumvisible() ? "<C-p>" : <SID>compstart()
 inoremap <expr> <C-i> pumvisible() ? <SID>compjump(1) : "\<C-i>"
 inoremap <expr> <C-d> pumvisible() ? <SID>compjump(-1) : "\<C-d>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>"
-\				   : <SID>insert_word_from_line(line('.') + 1)
+\				   : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \				   : <SID>insert_word_from_line(line('.') - 1)
 inoremap <expr> <C-f> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<Right>"
