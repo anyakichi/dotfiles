@@ -331,6 +331,7 @@ cnoremap <C-p> <PageUp>
 augroup vimrc-after
     autocmd!
     autocmd VimEnter * call s:after()
+    autocmd BufNewFile,BufReadPost * call s:buffer_hook()
 augroup END
 
 augroup vimrc-filetype
@@ -750,6 +751,15 @@ function! s:ref(mode)
     else
 	call ref#K(a:mode)
     endif
+endfunction
+
+function! s:buffer_hook()
+    if findfile('build.sh', '.;') != ''
+	" NetBSD source tree
+	return
+    endif
+
+    silent call s:toggle_fttag()
 endfunction
 
 function! s:after()
