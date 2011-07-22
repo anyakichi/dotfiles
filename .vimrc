@@ -640,10 +640,8 @@ function! s:compjump(step)
 endfunction
 
 function! s:compafter(step)
-    if pumvisible()
-	return "\<C-p>\<Down>"
-    elseif b:compend == b:compindex
-	return ''
+    if pumvisible() || b:compend == b:compindex
+	return ""
     else
 	let complist = s:complist()
 	let b:compindex = (b:compindex + a:step) % len(complist)
