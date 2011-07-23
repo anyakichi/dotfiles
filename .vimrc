@@ -796,3 +796,7 @@ endfunction
 if filereadable($HOME . '/.vim/local.vim')
     source $HOME/.vim/local.vim
 endif
+
+
+set secure
+
