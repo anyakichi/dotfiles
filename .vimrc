@@ -328,33 +328,33 @@ cnoremap <C-p> <PageUp>
 "
 " Auto commands
 "
-augroup vimrc-after
+augroup MyAutoCmd
     autocmd!
-    autocmd VimEnter * call s:after()
+
+    " Fix up settings after loading all plugins
+    autocmd VimEnter * call s:vim_enter_hook()
+
+    " Hook function for buffer
     autocmd BufNewFile,BufReadPost * call s:buffer_hook()
-augroup END
 
-augroup vimrc-filetype
-    autocmd!
+    " Use syntax complete
     autocmd Filetype *
-    \	    if &omnifunc == "" |
-    \		setlocal omnifunc=syntaxcomplete#Complete |
-    \	    endif
-    autocmd FileType python				setlocal fo-=t
-    autocmd FileType docbk,html,markdown,xhtml,xml	setlocal sw=2
-    autocmd FileType eruby,ruby,scheme,tex		setlocal sw=2
-    autocmd FileType mail				setlocal tw=72
-    autocmd FileType vimwiki				setlocal fo+=mB
-augroup END
+    \	if &omnifunc == "" |
+    \	    setlocal omnifunc=syntaxcomplete#Complete |
+    \	endif
 
-augroup vimrc-quickfix
-    autocmd!
+    " Additional settings for each file type
+    autocmd FileType python		setlocal formatoptions-=t
+    autocmd FileType docbk,eruby,html,markdown,scheme,tex,xhtml,xml
+    \	setlocal shiftwidth=2
+    autocmd FileType mail		setlocal textwidth=72
+    autocmd FileType vimwiki		setlocal formatoptions+=mB
+
+    " Open the quickfix window automatically
     autocmd QuickFixCmdPost [^l]* cwindow
     autocmd QuickFixCmdPost l* lwindow
-augroup END
 
-augroup vimrc-syntax
-    autocmd!
+    " Syntax setup
     autocmd VimEnter *
     \	call s:toggle_rshl() |
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
@@ -362,10 +362,8 @@ augroup vimrc-syntax
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd InsertLeave *
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
-augroup END
 
-augroup vimrc-pdf
-    autocmd!
+    " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
 augroup END
 
@@ -753,29 +751,20 @@ function! s:ref(mode)
     endif
 endfunction
 
-function! s:buffer_hook()
-    if findfile('build.sh', '.;') != ''
-	" NetBSD source tree
-	return
-    endif
-
-    silent call s:toggle_fttag()
-endfunction
-
-function! s:after()
+function! s:vim_enter_hook()
     " a.vim
-    iunmap <Leader>ih
-    iunmap <Leader>is
-    iunmap <Leader>ihn
+    silent! iunmap <Leader>ih
+    silent! iunmap <Leader>is
+    silent! iunmap <Leader>ihn
 
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
 
     " snipmate.vim
-    iunmap <Tab>
-    sunmap <Tab>
-    iunmap <S-Tab>
-    sunmap <S-Tab>
+    silent! iunmap <Tab>
+    silent! sunmap <Tab>
+    silent! iunmap <S-Tab>
+    silent! sunmap <S-Tab>
     inoremap <silent> <expr> <C-]> pumvisible() ?
     \			"\<C-]>" :
     \			"\<C-r>=TriggerSnippet(\"\\<lt>C-x>\\<C-]>\", 1)\<CR>"
@@ -789,6 +778,15 @@ function! s:after()
     \	     <Esc>i<Right><C-r>=BackwardsSnippet("\<S-Tab>")<CR>
 endfunction
 
+function! s:buffer_hook()
+    if findfile('build.sh', '.;') != ''
+	" NetBSD source tree
+	return
+    endif
+
+    silent call s:toggle_fttag()
+endfunction
+
 
 "
 " Local settings
@@ -798,5 +796,13 @@ if filereadable($HOME . '/.vim/local.vim')
 endif
 
 
-set secure
+"
+" Epilogue
+"
+if !exists('s:loaded_vimrc')
+    let s:loaded_vimrc = 1
+else
+    call s:vim_enter_hook()
+endif
 
+set secure
