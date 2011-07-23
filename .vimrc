@@ -103,8 +103,6 @@ endif
 
 let g:filetype_m = 'objc'
 
-let s:qf_prefix = 'l'
-
 filetype plugin indent on
 
 
@@ -244,28 +242,26 @@ nnoremap q: q:
 nnoremap q/ q/
 nnoremap q? q?
 
-nnoremap <silent> qq :<C-u>call <SID>qf_toggle()<CR>
+nnoremap <silent> q\ :<C-u>call qfutil#toggle()<CR>
 
-nnoremap <silent> <expr> <C-j> ":" . <SID>qfcmd("next") . "\<CR>"
-nnoremap <silent> <expr> <C-k> ":" . <SID>qfcmd("previous") . "\<CR>"
-nnoremap <silent> <expr> g<C-j> ":\<C-u>" . <SID>qfcmd("last ") .
-\				(v:count == 0 ? '' : v:count) . "\<CR>"
-nnoremap <silent> <expr> g<C-k> ":\<C-u>" . <SID>qfcmd("first ") .
-\				(v:count == 0 ? '' : v:count) . "\<CR>"
+nnoremap <silent> <C-j> :<C-u>call qfutil#next(v:count)<CR>
+nnoremap <silent> <C-k> :<C-u>call qfutil#previous(v:count)<CR>
+nnoremap <silent> g<C-j> :<C-u>call qfutil#last(v:count)<CR>
+nnoremap <silent> g<C-k> :<C-u>call qfutil#first(v:count)<CR>
 nmap <C-g><C-j> g<C-j>
 nmap <C-g><C-k> g<C-k>
 
-nnoremap <silent> q. :<C-u>call <SID>qf_toggle_window()<CR>
-nnoremap <silent> <expr> q, ":" . <SID>qfcmd("") . <SID>qfcmd("") . "\<CR>"
-nnoremap <silent> <expr> qn ":" . <SID>qfcmd("nfile") . "\<CR>"
-nnoremap <silent> <expr> qp ":" . <SID>qfcmd("pfile") . "\<CR>"
-nnoremap <silent> <expr> qa ":\<C-u>" . <SID>qfcmd("list ") . "\<CR>"
-nnoremap <silent> <expr> qo ":\<C-u>" . <SID>qfcmd("older ") . v:count1 ."\<CR>"
-nnoremap <silent> <expr> qi ":\<C-u>" . <SID>qfcmd("newer ") . v:count1 ."\<CR>"
+nnoremap <silent> q. :<C-u>call qfutil#toggle_window()<CR>
+nnoremap <silent> qq :<C-u>call qfutil#qq(v:count)<CR>
+nnoremap <silent> qn :<C-u>call qfutil#nfile(v:count)<CR>
+nnoremap <silent> qp :<C-u>call qfutil#pfile(v:count)<CR>
+nnoremap <silent> qa :<C-u>call qfutil#list()<CR>
+nnoremap <silent> qo :<C-u>call qfutil#older(v:count)<CR>
+nnoremap <silent> qi :<C-u>call qfutil#newer(v:count)<CR>
 
-nnoremap <silent> <expr> qm ":\<C-u>" . <SID>qfcmd("make") . "\<CR>"
-nnoremap <expr> q<Space> ":<C-u>" . <SID>qfcmd("make ")
-nnoremap <expr> qg ":\<C-u>" . <SID>qfcmd("grep ")
+nnoremap <silent> <expr> qm qfutil#make_expr()
+nnoremap <expr> q<Space> qfutil#make_expr('')
+nnoremap <expr> qg qfutil#grep_expr('')
 
 nnoremap <silent> q] :<C-u>call <SID>ltag()<CR>
 
@@ -675,32 +671,6 @@ function! s:newxmlline()
     endif
     normal! dit
     return ''
-endfunction
-
-function! s:qfcmd(cmd)
-    if s:qf_prefix == 'c' && (a:cmd =~# "^grep" || a:cmd =~# "^make")
-	return a:cmd
-    endif
-    return s:qf_prefix . a:cmd
-endfunction
-
-function! s:qf_toggle()
-    let s:qf_prefix = s:qf_prefix == 'l' ? 'c' : 'l'
-    if s:qf_prefix == 'l'
-	echo 'location list'
-    else
-	echo 'quickfix'
-    endif
-endfunction
-
-function! s:qf_toggle_window()
-    for bufnr in range(1, winnr('$'))
-	if getwinvar(bufnr, '&buftype') ==# 'quickfix'
-	    execute s:qfcmd('close')
-	    return
-	endif
-    endfor
-    execute s:qfcmd('window')
 endfunction
 
 function! s:ltag()
