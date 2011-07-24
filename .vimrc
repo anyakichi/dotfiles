@@ -127,6 +127,7 @@ endif
 
 highlight link IdeographicSpace RedundantSpaces
 match IdeographicSpace /　/
+highlight RedundantSpaces guibg=#404040 ctermbg=Grey
 
 
 "
@@ -284,7 +285,6 @@ nnoremap <silent> [Space]s :sort<CR>
 xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
-nnoremap <silent> [Space]<Space> :<C-u>call <SID>toggle_rshl()<CR>
 nnoremap [Space]= `[=`]
 
 for i in range(char2nr('a'), char2nr('z'))
@@ -352,7 +352,6 @@ augroup MyAutoCmd
 
     " Syntax setup
     autocmd VimEnter *
-    \	call s:toggle_rshl() |
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
     autocmd InsertEnter *
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
@@ -690,14 +689,6 @@ function! s:ltag()
 	return
     endtry
     lwindow
-endfunction
-
-function! s:toggle_rshl()
-    if synIDattr(hlID('RedundantSpaces'), 'bg') == -1
-	highlight RedundantSpaces guibg=#808080 ctermbg=Grey
-    else
-	highlight clear RedundantSpaces
-    endif
 endfunction
 
 function! s:toggle_fttag()
