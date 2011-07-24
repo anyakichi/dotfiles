@@ -580,7 +580,7 @@ function! s:relpath()
     if path == '' || path == '.'
 	return ''
     else
-	return path . '.'
+	return path . '/'
     endif
 endfunction
 
