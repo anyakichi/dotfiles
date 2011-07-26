@@ -48,7 +48,7 @@ endfunction
 
 function! autoclose#close(char)
     if s:getlc(0) == a:char
-	return "\<Right>" 
+	return "\<Right>"
     endif
     return a:char
 endfunction
@@ -62,7 +62,7 @@ function! autoclose#expand(char)
 	let cchar = g:autoclose_pairs[a:char]
 	delete _
 	left
-	execute "normal! k$gJ"
+	normal! k$gJ
 	return a:char . cchar . "\<Left>"
     endif
 
@@ -147,7 +147,7 @@ function! autoclose#delete()
         return "\<BS>\<Del>"
     else
 	return "\<BS>"
-    endif    
+    endif
 endfunction
 
 function! autoclose#is_empty()
