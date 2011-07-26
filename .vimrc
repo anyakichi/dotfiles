@@ -264,7 +264,7 @@ nnoremap <silent> <expr> qm qfutil#make_expr()
 nnoremap <expr> q<Space> qfutil#make_expr('')
 nnoremap <expr> qg qfutil#grep_expr('')
 
-nnoremap <silent> q] :<C-u>call <SID>ltag()<CR>
+nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
 
 onoremap aa a>
 onoremap ia i>
@@ -670,25 +670,6 @@ function! s:newxmlline()
     endif
     normal! dit
     return ''
-endfunction
-
-function! s:ltag()
-    let word = expand('<cword>')
-    if word == ''
-	echohl ErrorMsg
-	echo 'E349: No identifier under cursor'
-	echohl None
-	return
-    endif
-    try
-	execute 'ltag' word
-    catch
-	echohl ErrorMsg
-	echo substitute(v:exception, '^Vim\%((\a\+)\)\=:', '', '')
-	echohl None
-	return
-    endtry
-    lwindow
 endfunction
 
 function! s:toggle_fttag()

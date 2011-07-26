@@ -171,4 +171,16 @@ function! qfutil#toggle_window()
     call s:execute_with_arg('window', '')
 endfunction
 
+function! qfutil#ltag()
+    let word = expand('<cword>')
+    if word == ''
+	echohl ErrorMsg
+	echo 'E349: No identifier under cursor'
+	echohl None
+	return
+    endif
+    call s:execute('ltag', word)
+    lwindow
+endfunction
+
 let &cpo = s:save_cpo
