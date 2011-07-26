@@ -207,6 +207,49 @@ function! autoclose#is_expanded(...)
     return (reg == '' && getline('.') =~ '^\s*$') || reg =~ '^\_s*$'
 endfunction
 
+function! autoclose#exit_forward()
+    if s:get_syngr_name(0) ==# "String"
+	while s:get_syngr_name(0) ==# "String" &&
+	\     !(line('.') == line('$') && col('.') == col('$') - 1)
+	    call search('\_.', 'W', line('w$'))
+	endwhile
+	if col('.') == 1
+	    call search('\_.', 'bW')
+	    return "\<Right>"
+	endif
+	return ""
+    endif
+
+    if searchpair('[[<({]', '', '[\]>)}]', 'W',
+       \	  's:get_syngr_name(0) ==# "String"', line('w$'))
+	return "\<Right>"
+    else
+	return ""
+    endif
+endfunction
+
+function! autoclose#exit_backward()
+    if s:get_syngr_name(0) ==# "String"
+	while s:get_syngr_name(0) ==# "String" &&
+	\     !(line('.') == 1 && col('.') == 1)
+	    call search('\_.', 'bW', line('w0'))
+	endwhile
+	call search('\_.', 'W')
+	return ""
+    endif
+
+    if searchpair('[[<({]', '', '[\]>)}]', 'bW',
+       \	  's:get_syngr_name(0) ==# "String"', line('w0'))
+	return ""
+    else
+	if s:get_syngr_name(-1) ==# "String" || s:getlc(-1) =~ '[\]>)}]'
+	    normal! h
+	    return autoclose#exit_backward()
+	endif
+	return ""
+    endif
+endfunction
+
 function! autoclose#is_empty_tag()
     let pos_save = getpos('.')
     let reg_save = getreg('"')

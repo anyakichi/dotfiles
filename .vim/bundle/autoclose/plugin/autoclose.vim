@@ -59,6 +59,8 @@ function! s:autoclose(...)
 	inoremap <silent> <     <C-r>=autoclose#close_tag('<')<CR>
 	inoremap <silent> <BS>  <C-r>=autoclose#delete()<CR>
 	inoremap <silent> <C-h> <C-r>=autoclose#delete()<CR>
+	inoremap <silent> <C-g><C-i> <C-r>=autoclose#exit_forward()<CR>
+	inoremap <silent> <C-g><C-o> <C-r>=autoclose#exit_backward()<CR>
 
 	let s:autoclose_enabled = 1
         echo "AutoClose ON"
@@ -79,6 +81,8 @@ function! s:autoclose(...)
 	iunmap <
 	iunmap <BS>
 	iunmap <C-h>
+	iunmap <C-g><C-i>
+	iunmap <C-g><C-o>
 
 	let s:autoclose_enabled = 0
         echo "AutoClose OFF"
