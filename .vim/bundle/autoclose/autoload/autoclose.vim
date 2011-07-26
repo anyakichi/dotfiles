@@ -58,14 +58,6 @@ function! autoclose#expand(char)
 	return "\<CR>\<Esc>O"
     endif
 
-    if autoclose#is_expanded(a:char)
-	let cchar = g:autoclose_pairs[a:char]
-	delete _
-	left
-	normal! k$gJ
-	return a:char . cchar . "\<Left>"
-    endif
-
     return autoclose#open(a:char)
 endfunction
 
