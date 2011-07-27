@@ -7,8 +7,12 @@ if !exists('g:qfutil_mode')
     let g:qfutil_mode = 'l'
 endif
 
-function! s:qfutil_mode()
-    return exists('b:qfutil_mode') ? b:qfutil_mode : g:qfutil_mode
+function! qfutil#mode()
+    return g:qfutil_mode
+endfunction
+
+function! qfutil#_mode()
+    return g:qfutil_mode == 'c' ? '' : g:qfutil_mode
 endfunction
 
 function! qfutil#toggle()
