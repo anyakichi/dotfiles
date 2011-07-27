@@ -325,13 +325,11 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
 inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "\<C-o>\<C-l>"
 inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "<C-p>" : <SID>compstart()
-inoremap <expr> <C-i> pumvisible() ? <SID>compjump(1) : "\<C-i>"
-inoremap <expr> <C-d> pumvisible() ? <SID>compjump(-1) : "\<C-d>"
-inoremap <expr> <C-e> pumvisible() ? "\<C-e>"
-\				   : "\<End>"
+inoremap <expr> <C-l> pumvisible() ? <SID>compjump(1) : "\<C-o>\<C-l>"
+inoremap <expr> <C-s> pumvisible() ? <SID>compjump(-1) : "\<C-s>"
+inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \				   : <SID>insert_word_from_line(line('.') - 1)
 inoremap <expr> <C-f> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<Right>"
@@ -359,9 +357,9 @@ augroup MyAutoCmd
 
     " Use syntax complete
     autocmd Filetype *
-    \	if &omnifunc == "" |
-    \	    setlocal omnifunc=syntaxcomplete#Complete |
-    \	endif
+    \	if &omnifunc == ""
+    \|	    setlocal omnifunc=syntaxcomplete#Complete
+    \|	endif
 
     " Additional settings for each file type
     autocmd FileType python		setlocal formatoptions-=t
@@ -381,6 +379,13 @@ augroup MyAutoCmd
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd InsertLeave *
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
+
+    " Completion
+    autocmd CursorMovedI *
+    \	if !pumvisible()
+    \|	    let b:compindex = 0
+    \|	    let b:compend = len(s:complist()) - 1
+    \|	endif
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
@@ -427,7 +432,7 @@ set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
 " capslock.vim
-imap <C-a> <Plug>CapsLockToggle
+imap <C-l> <Plug>CapsLockToggle
 
 " cecutil.vim
 nmap [Tab]= <Plug>SaveWinPosn
@@ -646,8 +651,6 @@ function! s:compstart()
     endif
 
     let complist = s:complist()
-    let b:compindex = 0
-    let b:compend = len(complist) - 1
     return complist[b:compindex] .
     \      "\<C-r>=" . s:SID_PREFIX() . "compafter(1)\<CR>"
 endfunction
@@ -723,6 +726,9 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>is
     silent! iunmap <Leader>ihn
 
+    " capslock.vim
+    execute 'inoremap <expr> <C-l> pumvisible() ? <SID>compjump(1) : "' .
+    \				       maparg("<Plug>CapsLockToggle", 'i') . '"'
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
 
