@@ -97,6 +97,11 @@ set pastetoggle=<C-q>
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 set tags=./tags;/
 
+" Cscope
+set cscopetag
+set cscopetagorder=1
+set cscopequickfix=s-,c-,d-,i-,t-,e-
+
 if has("mouse")
     set mouse=a
 endif
