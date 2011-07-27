@@ -51,7 +51,7 @@ set formatoptions=tcroqnlmB
 set textwidth=78
 
 " Completion
-set complete-=t
+set complete=.,w,b,u
 set completeopt=menuone
 set pumheight=10
 
@@ -633,6 +633,7 @@ function! s:complist()
 	call add(complist, "\<C-x>\<C-o>")
     endif
     call add(complist, "\<C-n>")
+    call add(complist, "\<C-x>\<C-i>")
 
     return complist
 endfunction
