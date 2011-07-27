@@ -248,6 +248,7 @@ nnoremap q: q:
 nnoremap q/ q/
 nnoremap q? q?
 
+" Quickfix
 nnoremap <silent> q\ :<C-u>call qfutil#toggle()<CR>
 
 nnoremap <silent> <C-j> :<C-u>call qfutil#next(v:count)<CR>
@@ -270,6 +271,24 @@ nnoremap <expr> q<Space> qfutil#make_expr('')
 nnoremap <expr> qg qfutil#grep_expr('')
 
 nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
+
+" Cscope
+nmap <C-\><C-\> <Plug>(csutil-toggle-csto)
+
+for type in ['s', 'g', 'd', 'c', 't', 'e']
+    let mapping = '<C-\>' . type
+    let target = ':<C-u>call csutil#find("<cword>", "' . type .
+    \						   '", qfutil#_mode())<CR>'
+    execute 'nnoremap' '<silent>' mapping target
+endfor
+
+for type in ['f', 'i']
+    let mapping = '<C-\>' . type
+    let target = ':<C-u>call csutil#find("<cfile>", "' . type .
+    \						   '", qfutil#_mode())<CR>'
+    execute 'nnoremap' '<silent>' mapping target
+endfor
+
 
 onoremap aa a>
 onoremap ia i>
