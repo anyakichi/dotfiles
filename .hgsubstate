@@ -7,6 +7,7 @@ f98bf4acef9d9aa5e7f5b42eba09e259908f639b .vim/bundle/csapprox
 bb5d57afd9016705b1d7d6d9b707e5b70b4051ba .vim/bundle/vcscommand
 be793e5278249baf8fe925001b3ff20e8e64c8f7 .vim/bundle/vim-alignta
 e393ee9124994db5c794d06386b39b21b80f149a .vim/bundle/vim-fakeclip
+b811a1c7d1f472db7bdf954385504713e2f57b22 .vim/bundle/vim-histsearch
 6b0be76a5d0f124f7623a0b4517904d22a529e11 .vim/bundle/vim-quickrun
 41d33deae051e7e875aef2d804cb9508ab77ffa9 .vim/bundle/vim-ref
 c4101c205ef9e06bdfeff571a7dbba2576f08974 .vim/bundle/vim-repeat
