@@ -339,6 +339,9 @@ inoremap <C-_> <C-x><C-f>
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 
+inoremap <expr> <C-g>- <SID>border_line('-')
+inoremap <expr> <C-g>= <SID>border_line('=')
+
 cnoremap <C-n> <PageDown>
 cnoremap <C-p> <PageUp>
 
@@ -688,6 +691,13 @@ endfunction
 
 function! s:insert_word_from_line(lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
+endfunction
+
+function! s:border_line(char)
+    if line('.') == 1
+	return ''
+    endif
+    return repeat(a:char, strdisplaywidth(getline(line('.') - 1)))
 endfunction
 
 function! s:newxmlline()
