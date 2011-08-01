@@ -243,8 +243,13 @@ function! autoclose#exit_backward()
 endfunction
 
 function! autoclose#is_empty_tag()
+    if !(s:getlc(-1) == '>' && s:getlc(0) == '<')
+	return 0
+    endif
+
     let pos_save = getpos('.')
     let reg_save = getreg('"')
+    call setreg('"', '')
 
     normal! hyit
     let result = (getreg('"') == '')
