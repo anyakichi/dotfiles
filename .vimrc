@@ -324,16 +324,15 @@ noremap! <C-f> <Right>
 inoremap <C-u> <C-g>u<C-u>
 inoremap <C-w> <C-g>u<C-w>
 
-inoremap <expr> <CR> pumvisible() ? "\<C-y>\<CR>" : "\<CR>"
-inoremap <expr> <C-j> pumvisible() ? "<C-n>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "<C-p>" : <SID>compstart()
-inoremap <expr> <C-l> pumvisible() ? <SID>compjump(1) : "\<C-o>\<C-l>"
-inoremap <expr> <C-s> pumvisible() ? <SID>compjump(-1) : "\<C-s>"
+inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-j>"
+inoremap <expr> <C-k> pumvisible() ? "\<Up>" : circomp#start()
+inoremap <expr> <C-f> pumvisible() ? "\<PageDown>" : "\<Right>"
+inoremap <expr> <C-b> pumvisible() ? "\<PageUp>" : "\<Left>"
+inoremap <expr> <C-i> pumvisible() ? circomp#next() : "\<C-i>"
+inoremap <expr> <C-a> pumvisible() ? circomp#prev() : "\<Home>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \				   : <SID>insert_word_from_line(line('.') - 1)
-inoremap <expr> <C-f> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<Right>"
-inoremap <expr> <C-b> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<Left>"
 inoremap <C-_> <C-x><C-f>
 
 inoremap <C-g><CR> <C-o>o
@@ -382,13 +381,6 @@ augroup MyAutoCmd
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd InsertLeave *
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
-
-    " Completion
-    autocmd CursorMovedI *
-    \	if !pumvisible()
-    \|	    let b:compindex = 0
-    \|	    let b:compend = len(s:complist()) - 1
-    \|	endif
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
@@ -623,62 +615,6 @@ function! s:tabclose()
     endif
 endfunction
 
-function! s:complist()
-    let complist = []
-
-    if &completefunc != ''
-	call add(complist, "\<C-x>\<C-u>")
-    endif
-    if &filetype ==# 'vim'
-	call add(complist, "\<C-x>\<C-v>")
-    endif
-    if &omnifunc != ''
-	call add(complist, "\<C-x>\<C-o>")
-    endif
-    call add(complist, "\<C-n>")
-    call add(complist, "\<C-x>\<C-i>")
-
-    return complist
-endfunction
-
-function! s:compkey()
-    let complist = s:complist()
-    let b:compend = b:compend % len(complist)
-    let b:compindex = b:compindex % len(complist)
-
-    return complist[b:compindex]
-endfunction
-
-function! s:compstart()
-    if pumvisible()
-	return s:compjump(1)
-    endif
-
-    let complist = s:complist()
-    return complist[b:compindex] .
-    \      "\<C-r>=" . s:SID_PREFIX() . "compafter(1)\<CR>"
-endfunction
-
-function! s:compjump(step)
-    let complist = s:complist()
-    let b:compend = b:compindex
-    let b:compindex = (b:compindex + a:step) % len(complist)
-
-    return "\<C-e>" . complist[b:compindex] .
-    \	   "\<C-r>=" . s:SID_PREFIX() . "compafter(" . a:step . ")\<CR>"
-endfunction
-
-function! s:compafter(step)
-    if pumvisible() || b:compend == b:compindex
-	return ""
-    else
-	let complist = s:complist()
-	let b:compindex = (b:compindex + a:step) % len(complist)
-	return "\<C-e>" . complist[b:compindex] .
-	\      "\<C-r>=" . s:SID_PREFIX() . "compafter(" . a:step . ")\<CR>"
-    endif
-endfunction
-
 function! s:matchupdate(group, pattern)
     for match in getmatches()
 	if match['group'] ==# a:group
@@ -738,10 +674,10 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>ihn
 
     " capslock.vim
-    execute 'inoremap <expr> <C-l> pumvisible() ? <SID>compjump(1) : "' .
+    execute 'inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "' .
     \				       maparg("<Plug>CapsLockToggle", 'i') . '"'
     " skk.vim
-    inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<C-r>=SkkToggle()\<CR>"
+    inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
 
     " snipmate.vim
     silent! iunmap <Tab>
@@ -752,7 +688,7 @@ function! s:vim_enter_hook()
     \			"\<C-]>" :
     \			"\<C-r>=TriggerSnippet(\"\\<lt>C-x>\\<C-]>\", 1)\<CR>"
     inoremap <silent> <expr> <Tab> pumvisible() ?
-    \			<SID>compjump(1) :
+    \			circomp#next() :
     \			"\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
     snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
     snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
