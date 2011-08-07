@@ -147,7 +147,7 @@ function! qfutil#newer(count)
     call s:execute_with_nr('newer', a:count)
 endfunction
 
-function! qfutil#make_expr(...)
+function! qfutil#make(...)
     let cmd = g:qfutil_mode ==# 'c' ? 'make' : 'lmake'
     if a:0 == 0
 	return ":\<C-u>" . cmd . "\<CR>"
@@ -156,7 +156,7 @@ function! qfutil#make_expr(...)
     endif
 endfunction
 
-function! qfutil#grep_expr(...)
+function! qfutil#grep(...)
     let cmd = g:qfutil_mode ==# 'c' ? 'grep' : 'lgrep'
     if a:0 == 0
 	return ":\<C-u>" . cmd . "\<CR>"

@@ -266,9 +266,9 @@ nnoremap <silent> qa :<C-u>call qfutil#list()<CR>
 nnoremap <silent> qo :<C-u>call qfutil#older(v:count)<CR>
 nnoremap <silent> qi :<C-u>call qfutil#newer(v:count)<CR>
 
-nnoremap <silent> <expr> qm qfutil#make_expr()
-nnoremap <expr> q<Space> qfutil#make_expr('')
-nnoremap <expr> qg qfutil#grep_expr('')
+nnoremap <silent> <expr> qm qfutil#make()
+nnoremap <expr> q<Space> qfutil#make('')
+nnoremap <expr> qg qfutil#grep('')
 
 nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
 
