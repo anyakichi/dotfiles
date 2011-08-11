@@ -9,6 +9,7 @@
 .vim/bundle/vim-circomp = https://bitbucket.org/anyakichi/vim-circomp
 .vim/bundle/vim-fakeclip = https://www.sopht.jp/repos/hg/vim-fakeclip
 .vim/bundle/vim-histsearch = https://bitbucket.org/anyakichi/vim-histsearch
+.vim/bundle/vim-qfutil = https://bitbucket.org/anyakichi/vim-qfutil
 .vim/bundle/vim-quickrun = [git]https://github.com/thinca/vim-quickrun.git
 .vim/bundle/vim-ref = https://www.sopht.jp/repos/hg/vim-ref
 .vim/bundle/vim-repeat = [git]https://github.com/tpope/vim-repeat.git
