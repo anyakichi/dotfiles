@@ -302,11 +302,12 @@ nnoremap <expr> gc
 vnoremap <silent> gc :<C-u>normal gc<CR>
 onoremap <silent> gc :<C-u>normal gc<CR>
 
+call operator#user#define_ex_command('sort', 'sort')
+map [Space]s <Plug>(operator-sort)
+
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! spell?<CR>
-nnoremap <silent> [Space]s :sort<CR>
-xnoremap <silent> [Space]s :sort<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap [Space]= `[=`]
