@@ -274,20 +274,20 @@ nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
 " Cscope
 nmap <C-\><C-\> <Plug>(csutil-toggle-csto)
 
-for type in ['s', 'g', 'd', 'c', 't', 'e']
-    let mapping = '<C-\>' . type
-    let target = ':<C-u>call csutil#find("<cword>", "' . type .
-    \						   '", qfutil#_mode())<CR>'
-    execute 'nnoremap' '<silent>' mapping target
+for s:type in ['s', 'g', 'd', 'c', 't', 'e']
+    let s:mapping = '<C-\>' . s:type
+    let s:target = ':<C-u>call csutil#find("<cword>", "' . s:type .
+    \					   '", qfutil#_mode())<CR>'
+    execute 'nnoremap' '<silent>' s:mapping s:target
 endfor
 
-for type in ['f', 'i']
-    let mapping = '<C-\>' . type
-    let target = ':<C-u>call csutil#find("<cfile>", "' . type .
-    \						   '", qfutil#_mode())<CR>'
-    execute 'nnoremap' '<silent>' mapping target
+for s:type in ['f', 'i']
+    let s:mapping = '<C-\>' . s:type
+    let s:target = ':<C-u>call csutil#find("<cfile>", "' . s:type .
+    \					   '", qfutil#_mode())<CR>'
+    execute 'nnoremap' '<silent>' s:mapping s:target
 endfor
-
+unlet s:type s:mapping s:target
 
 onoremap aa a>
 onoremap ia i>
@@ -311,10 +311,12 @@ nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap [Space]= `[=`]
 
-for i in range(char2nr('a'), char2nr('z'))
-    let c = nr2char(i)
-    execute 'nnoremap <silent> [Space]"' . c . ' :<C-u>RegCopy ' . c . '<CR>'
+for s:nr in range(char2nr('a'), char2nr('z'))
+    let s:char = nr2char(s:nr)
+    let s:cmd = '<C-u>RegCopy ' . s:char . '<CR>'
+    execute 'nnoremap' '<silent>' '[Space]"'.s:char s:cmd
 endfor
+unlet s:nr s:char s:cmd
 
 " Insert and command mode mappings
 noremap! <C-a> <Home>
