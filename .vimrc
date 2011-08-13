@@ -159,7 +159,6 @@ nnoremap <C-g><C-g> <C-g>
 nnoremap Y y$
 nnoremap ZQ <Nop>
 nnoremap ZZ <Nop>
-nnoremap <C-_> g<C-]>
 
 noremap j gj
 noremap k gk
@@ -335,7 +334,7 @@ inoremap <expr> <C-a> pumvisible() ? circomp#prev() : "\<Home>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \				   : <SID>insert_word_from_line(line('.') - 1)
-inoremap <C-_> <C-x><C-f>
+inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
 
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
@@ -600,6 +599,11 @@ function! MakeTabLabel(n)
     return s
 endfunction
 
+function! s:compkey(key)
+    let down = "\<C-r>=pumvisible() ? \"\\<Down>\" : ''\<CR>"
+    return a:key . "\<C-p>" . down
+endfunction
+
 function! s:relpath()
     let path = expand('%:~:.:h')
     if path == '' || path == '.'
@@ -678,17 +682,15 @@ function! s:vim_enter_hook()
     " capslock.vim
     execute 'inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "' .
     \				       maparg("<Plug>CapsLockToggle", 'i') . '"'
+
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
 
     " snipmate.vim
-    silent! iunmap <Tab>
-    silent! sunmap <Tab>
-    silent! iunmap <S-Tab>
-    silent! sunmap <S-Tab>
     inoremap <silent> <expr> <C-]> pumvisible() ?
     \			"\<C-]>" :
-    \			"\<C-r>=TriggerSnippet(\"\\<lt>C-x>\\<C-]>\", 1)\<CR>"
+    \			"\<C-r>=TriggerSnippet(" .
+    \			    "<SID>compkey(\"\\<lt>C-x>\\<C-]>\"), 1)\<CR>"
     inoremap <silent> <expr> <Tab> pumvisible() ?
     \			circomp#next() :
     \			"\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
