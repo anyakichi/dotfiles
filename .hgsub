@@ -6,6 +6,7 @@
 .vim/bundle/snipmate.vim = https://www.sopht.jp/repos/hg/snipmate.vim
 .vim/bundle/vcscommand = [git]http://repo.or.cz/r/vcscommand.git
 .vim/bundle/vim-alignta = [git]https://github.com/h1mesuke/vim-alignta.git
+.vim/bundle/vim-autoclose = https://bitbucket.org/anyakichi/vim-autoclose
 .vim/bundle/vim-circomp = https://bitbucket.org/anyakichi/vim-circomp
 .vim/bundle/vim-csutil = https://bitbucket.org/anyakichi/vim-csutil
 .vim/bundle/vim-fakeclip = https://www.sopht.jp/repos/hg/vim-fakeclip

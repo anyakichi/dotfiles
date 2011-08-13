@@ -6,6 +6,7 @@ f98bf4acef9d9aa5e7f5b42eba09e259908f639b .vim/bundle/csapprox
 822c9fe9a7b93760cfa67cd5b3d1ad90c08e5fb0 .vim/bundle/snipmate.vim
 bb5d57afd9016705b1d7d6d9b707e5b70b4051ba .vim/bundle/vcscommand
 be793e5278249baf8fe925001b3ff20e8e64c8f7 .vim/bundle/vim-alignta
+a6c0563b78e0751d03badaabb892d05b5401f069 .vim/bundle/vim-autoclose
 f31cebd52038e26ec3b022df3996765b6e28dc8b .vim/bundle/vim-circomp
 6c1b7b1c1cc4f49e1ee5d3b245473c8fc68fd235 .vim/bundle/vim-csutil
 e393ee9124994db5c794d06386b39b21b80f149a .vim/bundle/vim-fakeclip
