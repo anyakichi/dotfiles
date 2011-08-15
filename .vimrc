@@ -8,9 +8,7 @@ scriptencoding utf-8
 "
 " set runtimepath by pathogen.vim
 "
-filetype off
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+call pathogen#infect()
 
 
 "
