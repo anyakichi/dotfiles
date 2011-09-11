@@ -73,6 +73,7 @@ fi
 # Global aliases
 alias -g G='|grep'
 alias -g L='|less'
+alias -g LL='2>&1|less'
 alias -g M='|more'
 alias -g H='|head'
 alias -g I='|iconv'
