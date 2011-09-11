@@ -433,6 +433,17 @@ imap <C-l> <Plug>CapsLockToggle
 nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
+" mark.vim
+nmap [Space]m <Plug>MarkSet
+xmap [Space]m <Plug>MarkSet
+nmap [Space]M <Plug>MarkRegex
+xmap [Space]M <Plug>MarkRegex
+nmap [Space]n <Plug>MarkToggle
+nmap [Space]N <Plug>MarkAllClear
+nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
+nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
+nmap <silent> <Esc><Esc> <Plug>MarkAllClear:set nohlsearch<CR>
+
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
