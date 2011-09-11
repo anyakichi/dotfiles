@@ -36,9 +36,10 @@ typeset -U cdpath fpath hosts mailpath manpath path
 #
 # Aliases
 #
+alias grep=egrep
 alias mz='mutt -Z'
 alias vi=vim
-alias grep=egrep
+alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 
 alias cp='nocorrect cp'
 alias make='nocorrect make'
