@@ -337,8 +337,9 @@ inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 
-inoremap <expr> <C-g>- <SID>border_line('-')
 inoremap <expr> <C-g>= <SID>border_line('=')
+inoremap <expr> <C-g>- <SID>border_line('-')
+inoremap <expr> <C-g>~ <SID>border_line('~')
 
 cnoremap <C-n> <PageDown>
 cnoremap <C-p> <PageUp>
@@ -646,10 +647,11 @@ function! s:insert_word_from_line(lnum)
 endfunction
 
 function! s:border_line(char)
-    if line('.') == 1
+    let prevline = line('.') - 1
+    if prevline == 0
 	return ''
     endif
-    return repeat(a:char, strdisplaywidth(getline(line('.') - 1)))
+    return repeat(a:char, strdisplaywidth(getline(prevline)) - col('.') + 1)
 endfunction
 
 function! s:newxmlline()
