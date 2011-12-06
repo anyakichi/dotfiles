@@ -16,7 +16,6 @@
 .vim/bundle/vim-quickrun = [git]https://github.com/thinca/vim-quickrun.git
 .vim/bundle/vim-ref = https://www.sopht.jp/repos/hg/vim-ref
 .vim/bundle/vim-repeat = [git]https://github.com/tpope/vim-repeat.git
-.vim/bundle/vim-surround = https://www.sopht.jp/repos/hg/vim-surround
 .vim/bundle/vim-tabutil = https://bitbucket.org/anyakichi/vim-tabutil
 .vim/bundle/vim-textobj-comment = [git]https://github.com/thinca/vim-textobj-comment.git
 .vim/bundle/vim-textobj-indent = [git]https://github.com/kana/vim-textobj-indent.git
