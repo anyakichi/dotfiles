@@ -16,6 +16,7 @@ e19b7efb5defd9eff96e9bbea764721b5c168612 .vim/bundle/vim-qfutil
 da5e568779059ff831547ce2bc91d5c5789f708e .vim/bundle/vim-quickrun
 41d33deae051e7e875aef2d804cb9508ab77ffa9 .vim/bundle/vim-ref
 c4101c205ef9e06bdfeff571a7dbba2576f08974 .vim/bundle/vim-repeat
+b947692aab922775c0f58e6a68f290538b38ae1e .vim/bundle/vim-surround
 ed6f28189e3194816678f0e32833b14dab3ddf10 .vim/bundle/vim-tabutil
 8114ff8fb422458a5bbee595ef4df79d0bd34560 .vim/bundle/vim-textobj-comment
 90a5d85dfc2c91b15acba8ad68a98029ff25ff87 .vim/bundle/vim-textobj-indent
