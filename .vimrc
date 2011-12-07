@@ -263,8 +263,10 @@ nnoremap <silent> qo :<C-u>call qfutil#older(v:count)<CR>
 nnoremap <silent> qi :<C-u>call qfutil#newer(v:count)<CR>
 
 nnoremap <silent> <expr> qm qfutil#make()
+nnoremap qM :<C-u>QFMake<Space>
 nnoremap <expr> q<Space> qfutil#make('')
-nnoremap <expr> qg qfutil#grep('')
+nnoremap qg :<C-u>QFGrep<Space>
+nnoremap qG :<C-u>QFGrep <C-r><C-w><Space>
 
 nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
 
