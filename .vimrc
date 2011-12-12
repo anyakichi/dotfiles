@@ -476,8 +476,12 @@ endif
 
 nnoremap <silent> K :<C-u>call <SID>ref('normal')<CR>
 vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
-
 nmap [Tab]K K[Tab]m
+
+cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2)
+\                    ? "Ref " . ref#detect() : "R"
+cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4)
+\                    ? "Ref man" : "Man"
 
 " scratch.vim
 let g:scratch_filetype = 'ruby'
