@@ -234,8 +234,6 @@ nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 nnoremap <expr> [Tab]<C-h> &ft =~ "vim\\<Bar>help"
 \				? ":tab help "
 \				: ":Ref -open=tabnew " . ref#detect() . ' '
-nnoremap <expr> <C-h> &ft =~ "vim\\<Bar>help" ? ":help "
-\					      : ":Ref " . ref#detect() .' '
 
 nnoremap Q q
 nnoremap q <Nop>
