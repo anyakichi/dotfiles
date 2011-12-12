@@ -22,7 +22,7 @@ set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 
 " Indentation
 set autoindent
-set expandtab
+set noexpandtab
 set shiftround
 set shiftwidth=4
 set smartindent
@@ -364,12 +364,11 @@ augroup MyAutoCmd
     \|	endif
 
     " Additional settings for each file type
-    autocmd FileType c,cpp,sh		setlocal noexpandtab
-    autocmd FileType python		setlocal formatoptions-=t
+    autocmd FileType python		setlocal fo-=t et
     autocmd FileType docbk,eruby,html,markdown,scheme,tex,xhtml,xml
-    \	setlocal shiftwidth=2
-    autocmd FileType mail		setlocal textwidth=72
-    autocmd FileType vimwiki		setlocal formatoptions+=mB
+    \	setlocal sw=2
+    autocmd FileType mail		setlocal tw=72
+    autocmd FileType vimwiki		setlocal fo+=mB
 
     " Open the quickfix window automatically
     autocmd QuickFixCmdPost [^l]* cwindow
