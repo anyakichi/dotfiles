@@ -8,7 +8,10 @@ set sidebar_visible=no
 set sidebar_delim='|'
 
 macro browser,index,pager \cs '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro browser,index,pager \es '<enter-command>toggle sidebar_visible<enter><refresh>'
 
+bind index,pager \ej sidebar-next
+bind index,pager \ek sidebar-prev
 bind index,pager \en sidebar-next
 bind index,pager \ep sidebar-prev
 bind index,pager \eo sidebar-open
