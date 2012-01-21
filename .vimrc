@@ -723,6 +723,11 @@ function! s:buffer_hook()
     if findfile('build.sh', '.;') != ''
 	" NetBSD source tree
 	return
+    elseif findfile('conf.py', '.;') != ''
+	" Shpinx document
+	if executable('gmake')
+	    set makeprg=gmake
+	endif
     endif
 
     silent call s:toggle_fttag()
