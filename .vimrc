@@ -166,7 +166,7 @@ noremap gk k
 nnoremap dP "_ddP
 
 cnoremap <silent> <expr> <CR>
-\        getcmdtype() == '/' ? "\<CR>:set hlsearch\<CR>" : "\<CR>"
+\	 getcmdtype() == '/' ? "\<CR>:set hlsearch\<CR>" : "\<CR>"
 nnoremap <silent> * *:set hlsearch<CR>
 nnoremap <silent> # #:set hlsearch<CR>
 nnoremap <silent> g* g*:set hlsearch<CR>
@@ -399,16 +399,16 @@ let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
 
 nmap <Leader>cc <Plug>NERDCommenterAlignLeft
-vmap <Leader>c  <Plug>NERDCommenterComment
-nmap <Leader>C  <Plug>NERDCommenterToEOL
-vmap <Leader>C  <Plug>NERDCommenterAlignLeft
+vmap <Leader>c	<Plug>NERDCommenterComment
+nmap <Leader>C	<Plug>NERDCommenterToEOL
+vmap <Leader>C	<Plug>NERDCommenterAlignLeft
 nmap <Leader>xm <Plug>NERDCommenterMinimal
 nmap <Leader>xs <Plug>NERDCommenterSexy
 vmap <Leader>xm <Plug>NERDCommenterMinimal
 vmap <Leader>xs <Plug>NERDCommenterSexy
 nmap <Leader>xa <Plug>NERDCommenterAltDelims
-nmap <Leader>u  <Plug>NERDCommenterUncomment
-vmap <Leader>u  <Plug>NERDCommenterUncomment
+nmap <Leader>u	<Plug>NERDCommenterUncomment
+vmap <Leader>u	<Plug>NERDCommenterUncomment
 
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
@@ -478,9 +478,9 @@ vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
 nmap [Tab]K K[Tab]m
 
 cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2)
-\                    ? "Ref " . ref#detect() : "R"
+\		     ? "Ref " . ref#detect() : "R"
 cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4)
-\                    ? "Ref man" : "Man"
+\		     ? "Ref man" : "Man"
 
 " scratch.vim
 let g:scratch_filetype = 'ruby'
