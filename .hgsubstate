@@ -22,4 +22,5 @@ ed6f28189e3194816678f0e32833b14dab3ddf10 .vim/bundle/vim-tabutil
 90a5d85dfc2c91b15acba8ad68a98029ff25ff87 .vim/bundle/vim-textobj-indent
 113f94967bdb062afd43a207a61d8cc49648f6a1 .vim/bundle/vim-textobj-kakko
 7af47d2d9512eddb832c885b93de332421856eff .vim/bundle/vim-textobj-user
+7a974cb50e1dd9d9868f97132a18a0c4fc7fbcfc .vim/bundle/vim-textobj-xbrackets
 da4a121404986c1b46b18d291da882c204446031 .vim/bundle/vimwiki
