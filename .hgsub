@@ -22,5 +22,4 @@
 .vim/bundle/vim-textobj-indent = [git]https://github.com/kana/vim-textobj-indent.git
 .vim/bundle/vim-textobj-kakko = https://www.sopht.jp/repos/hg/vim-textobj-kakko
 .vim/bundle/vim-textobj-user = [git]https://github.com/kana/vim-textobj-user.git
-.vim/bundle/vim-textobj-xbrackets = https://www.sopht.jp/repos/hg/vim-textobj-xbrackets
 .vim/bundle/vimwiki = https://www.sopht.jp/repos/hg/vimwiki
