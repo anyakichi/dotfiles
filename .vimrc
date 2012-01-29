@@ -368,6 +368,7 @@ augroup MyAutoCmd
     autocmd FileType docbk,eruby,html,markdown,scheme,tex,xhtml,xml
     \	setlocal sw=2
     autocmd FileType mail		setlocal tw=72
+    autocmd FileType taskpaper		setlocal sw=2 ts=2
     autocmd FileType vimwiki		setlocal fo+=mB
 
     " Open the quickfix window automatically
