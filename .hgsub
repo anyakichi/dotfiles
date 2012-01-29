@@ -9,7 +9,6 @@
 .vim/bundle/vim-autoclose = https://bitbucket.org/anyakichi/vim-autoclose
 .vim/bundle/vim-circomp = https://bitbucket.org/anyakichi/vim-circomp
 .vim/bundle/vim-csutil = https://bitbucket.org/anyakichi/vim-csutil
-.vim/bundle/vim-fakeclip = https://www.sopht.jp/repos/hg/vim-fakeclip
 .vim/bundle/vim-histsearch = https://bitbucket.org/anyakichi/vim-histsearch
 .vim/bundle/vim-operator-user = [git]https://github.com/kana/vim-operator-user.git
 .vim/bundle/vim-qfutil = https://bitbucket.org/anyakichi/vim-qfutil
