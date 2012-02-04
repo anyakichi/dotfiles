@@ -4,6 +4,7 @@
 .vim/bundle/nerdcommenter = [git]https://github.com/scrooloose/nerdcommenter.git
 .vim/bundle/skk.vim = [git]https://github.com/anyakichi/skk.vim.git
 .vim/bundle/snipmate.vim = https://www.sopht.jp/repos/hg/snipmate.vim
+.vim/bundle/taskpaper.vim = [git]https://github.com/anyakichi/taskpaper.vim.git
 .vim/bundle/vcscommand = [git]http://repo.or.cz/r/vcscommand.git
 .vim/bundle/vim-alignta = [git]https://github.com/h1mesuke/vim-alignta.git
 .vim/bundle/vim-autoclose = https://bitbucket.org/anyakichi/vim-autoclose
