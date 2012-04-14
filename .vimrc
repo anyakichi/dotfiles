@@ -347,6 +347,10 @@ cnoremap <C-g> <C-r>=<SID>kill_arg()<CR>
 cnoremap <C-q> <C-r>=<SID>grep_go_to_pattern()<CR>
 cnoremap <expr> <C-_> <SID>relpath()
 
+" Comma separated numbers
+nnoremap <silent> <C-g>, :<C-u>call <SID>separate_number_with_comma_n()<CR>
+inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
+
 
 "
 " Auto commands
@@ -717,6 +721,59 @@ function! s:ref(mode)
     else
 	call ref#K(a:mode)
     endif
+endfunction
+
+function! s:get_comma_separated_number_pos(...)
+    let line = a:0 > 0 ? a:1 : getline('.')
+    let pos = a:0 > 1 ? a:2 : col('.') - 1
+    let len = len(line)
+
+    if line[pos] !~ '[0-9,]'
+	" Not a number
+	return [-1, -1]
+    endif
+
+    let begin = pos - len(matchstr(line[:(pos)], '[0-9,]\+$')) + 1
+    let end   = pos + len(matchstr(line[(pos):], '^[0-9,]\+')) - 1
+
+    return [begin, end]
+endfunction
+
+function! s:separate_number_with_comma(num)
+    let num = substitute(a:num, ',', '', 'g')
+    let res = ''
+    for i in range(len(num))
+	if i % 3 == 0
+	    let res = ',' . res
+	endif
+	let res = num[len(num) - 1 - i] . res
+    endfor
+    return res[:-2]
+endfunction
+
+function! s:separate_number_with_comma_n()
+    let line = getline('.')
+    let range = s:get_comma_separated_number_pos(line)
+
+    if range[0] == -1
+	return
+    endif
+
+    let new = s:separate_number_with_comma(line[range[0]:range[1]])
+    call setline('.', line[:(range[0] - 1)] . new . line[(range[1] + 1):])
+endfunction
+
+function! s:separate_number_with_comma_i()
+    let line = getline('.')
+    let pos = col('.') - 1
+
+    if line[pos] =~ '[0-9]' || line[pos - 1] !~ '[0-9]'
+	return ''
+    endif
+
+    let range = s:get_comma_separated_number_pos(line, pos - 1)
+    return repeat("\<BS>", range[1] - range[0] + 1) .
+    \      s:separate_number_with_comma(line[range[0]:range[1]])
 endfunction
 
 function! s:vim_enter_hook()
