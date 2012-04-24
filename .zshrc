@@ -174,6 +174,11 @@ bindkey -M menuselect \
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
+bindkey -M menuselect '^J' down-line-or-history
+bindkey -M menuselect '^K' up-line-or-history
+bindkey -M menuselect '^L' forward-char
+bindkey -M menuselect '^H' backward-char
+
 
 #
 # Widgets
@@ -197,6 +202,9 @@ bindkey '^X^F' factorize-last-two-args
 #
 # Completion
 #
+
+zstyle ':completion:*' use-cache true
+zstyle ':completion:*:default' menu select=2
 
 # Completers to use
 zstyle ':completion:*::::' completer _expand _complete _match _prefix _ignored \
