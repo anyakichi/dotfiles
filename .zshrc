@@ -110,7 +110,7 @@ setopt pushd_ignore_dups pushd_minus pushd_silent pushd_to_home
 setopt complete_in_word
 
 # Expansion and Grobbing
-setopt extended_glob
+setopt extended_glob numeric_glob_sort
 
 # History
 setopt extended_history
@@ -122,6 +122,8 @@ setopt correct list_packed
 
 # Zle
 setopt no_beep
+setopt print_exit_value
+setopt transient_rprompt
 
 
 #
