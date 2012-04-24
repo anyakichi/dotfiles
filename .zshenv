@@ -52,3 +52,9 @@ if [ -f ~/.gpg-agent-info ]; then
 	export GPG_AGENT_INFO
 	export SSH_AUTH_SOCK
 fi
+
+
+#
+# Local configuration
+#
+[ -f ~/.zshenv_local ] && source ~/.zshenv_local
