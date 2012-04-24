@@ -29,6 +29,7 @@ MAILCHECK=0
 cdpath=(~ ~/src ~/Documents)
 fpath=(~/.zfunc $fpath)
 hosts=(`hostname` sopht.jp ftp.netbsd.org)
+path=(~/bin ~/local/bin ~/local/sbin $path)
 
 typeset -U cdpath fpath hosts mailpath manpath path
 
