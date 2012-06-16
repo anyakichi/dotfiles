@@ -5,6 +5,7 @@ f98bf4acef9d9aa5e7f5b42eba09e259908f639b .vim/bundle/csapprox
 92d307b26d5773d0300c5588d2b9d16cfc37237b .vim/bundle/skk.vim
 822c9fe9a7b93760cfa67cd5b3d1ad90c08e5fb0 .vim/bundle/snipmate.vim
 9529f4fe4068fd227e0a851b3d11a99f6eeff0f8 .vim/bundle/taskpaper.vim
+8ca7e501c25ff8f29e41e7134c95944107dd31ed .vim/bundle/unite.vim
 bffbab0357b89fed164dbe114649c9d82993ee1a .vim/bundle/vcscommand
 be793e5278249baf8fe925001b3ff20e8e64c8f7 .vim/bundle/vim-alignta
 a6c0563b78e0751d03badaabb892d05b5401f069 .vim/bundle/vim-autoclose
