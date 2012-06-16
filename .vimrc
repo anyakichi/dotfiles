@@ -533,6 +533,9 @@ let g:use_xhtml = 1
 let g:twitvim_enable_python = 1
 nmap [Space]t :PosttoTwitter<CR>
 
+" unite.vim
+nnoremap [Space]uo :<C-u>Unite outline<CR>
+
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
 
