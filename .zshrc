@@ -176,11 +176,6 @@ bindkey -M menuselect \
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 
-bindkey -M menuselect '^J' down-line-or-history
-bindkey -M menuselect '^K' up-line-or-history
-bindkey -M menuselect '^L' forward-char
-bindkey -M menuselect '^H' backward-char
-
 
 #
 # Widgets
