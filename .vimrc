@@ -650,6 +650,12 @@ function! s:tabclose()
     if scratch#is_visible()
 	call scratch#close()
     else
+	for bufnr in range(1, winnr('$'))
+	    if getwinvar(bufnr, '&buftype') ==# 'quickfix'
+		tabclose
+		return
+	    endif
+	endfor
 	call tabutil#close()
     endif
 endfunction
