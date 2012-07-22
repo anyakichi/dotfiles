@@ -537,6 +537,8 @@ let g:twitvim_enable_python = 1
 nmap [Space]t :PosttoTwitter<CR>
 
 " unite.vim
+let g:unite_source_outline_cache_limit = 1000000
+
 nnoremap [Space]uo :<C-u>Unite outline<CR>
 
 " vcscommand.vim
