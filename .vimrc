@@ -112,7 +112,9 @@ filetype plugin indent on
 " Syntax coloring
 "
 syntax on
-if (has('gui') || v:version >= 703) && &t_Co == 256
+if has('gui_macvim')
+    set background=light
+elseif (has('gui') || v:version >= 703) && &t_Co == 256
     if !has('gui_running')
 	let g:CSApprox_hook_post = [
 	\   'execute "hi TabLine cterm=none ctermfg=fg ctermbg=" .
