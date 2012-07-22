@@ -16,11 +16,9 @@ start_gpgagent()
 	fi
 
 	_pid=$(echo ${GPG_AGENT_INFO} |sed -e 's/.*gpg-agent:\([^:]*\):.*$/\1/')
-	for _p in `pgrep gpg-agent`; do
-		if [ "x${_p}" = "x${_pid}" ]; then
-			return
-		fi
-	done
+	if [ "x$(ps -p ${_pid} -co command=)" = "xgpg-agent" ]; then
+		return
+	fi
 
         eval $(gpg-agent --daemon --write-env-file "${_info}")
 }
