@@ -57,6 +57,7 @@ set ambiwidth=double
 set background=dark
 set cursorline
 set display=lastline
+set notitle
 
 " Folding
 set nofoldenable
