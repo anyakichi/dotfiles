@@ -46,11 +46,7 @@ set header_cache="~/.mutt/cache"
 set message_cachedir="~/.mutt/cache"
 
 # Cryptographic
-set crypt_autosign=no
-set crypt_autopgp=no
-set crypt_autosmime=no
 set crypt_use_gpgme
-set pgp_timeout=0
 
 # Japanese Extention
 set cjk_width
