@@ -44,7 +44,7 @@ set incsearch
 set smartcase
 
 " Formatting
-set formatoptions=tcroqnlmB
+set formatoptions=tcroqlmB
 set textwidth=78
 
 " Completion
