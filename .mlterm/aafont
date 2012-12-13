@@ -3,6 +3,10 @@
 #	Antialias font settings
 #
 
-ISO8859_1=DejaVu Sans Mono-iso10646-1;
-ISO10646_UCS4_1=TakaoGothic-iso10646-1;
-ISO10646_UCS4_1_BIWIDTH=TakaoGothic-iso10646-1;
+ISO8859_1=DejaVu Sans Mono-iso10646-1:120;
+ISO10646_UCS4_1=TakaoGothic-iso10646-1:120;
+ISO10646_UCS4_1_BIWIDTH=TakaoGothic-iso10646-1:120;
+
+JISX0201_KATA=TakaoGothic-iso10646-1:120;
+JISX0201_ROMAN=TakaoGothic-iso10646-1:120;
+JISX0208_1983=TakaoGothic-iso10646-1:120;
