@@ -4,6 +4,7 @@
 "
 
 scriptencoding utf-8
+set nocompatible
 
 "
 " set runtimepath by pathogen.vim
