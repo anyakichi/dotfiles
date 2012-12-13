@@ -20,3 +20,4 @@ col_size_of_width_a = 2
 termtype = xterm-256color
 mod_meta_mode = esc
 iso88591_font_for_usascii = true
+use_anti_alias = true
