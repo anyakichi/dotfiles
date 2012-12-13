@@ -122,7 +122,6 @@ setopt correct list_packed
 
 # Zle
 setopt no_beep
-setopt print_exit_value
 setopt transient_rprompt
 
 
