@@ -38,7 +38,6 @@ set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
 " Searching
-set grepprg=internal
 set nohlsearch
 set ignorecase
 set incsearch
