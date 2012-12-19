@@ -298,7 +298,10 @@ nnoremap <expr> gc
 vnoremap <silent> gc :<C-u>normal gc<CR>
 onoremap <silent> gc :<C-u>normal gc<CR>
 
-call operator#user#define_ex_command('sort', 'sort')
+try
+    call operator#user#define_ex_command('sort', 'sort')
+catch
+endtry
 map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
