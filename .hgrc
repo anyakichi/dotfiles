@@ -8,8 +8,8 @@ vd = vimdiff
 
 [extensions]
 bookmarks =
-convert =
 color =
+convert =
 extdiff =
 graphlog =
 mq =
