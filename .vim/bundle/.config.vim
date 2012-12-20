@@ -18,10 +18,14 @@ try
 
     NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
 
+    NeoBundle 'DirDiff.vim'
     NeoBundle 'DrawIt'
     NeoBundle 'Mark--Karkat'
     NeoBundle 'OmniCppComplete'
     NeoBundle 'VisIncr'
+    NeoBundle 'a.vim'
+    NeoBundle 'capslock.vim'
+    NeoBundle 'moria'
     NeoBundle 'utl.vim'
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
@@ -32,6 +36,7 @@ try
     NeoBundle 'https://github.com/godlygeek/csapprox.git'
     NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
     NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
+    NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
     NeoBundle 'https://github.com/kana/vim-fakeclip.git'
     NeoBundle 'https://github.com/kana/vim-operator-user.git'
     NeoBundle 'https://github.com/kana/vim-textobj-indent.git'
@@ -41,7 +46,7 @@ try
     NeoBundle 'https://github.com/thinca/vim-quickrun.git'
     NeoBundle 'https://github.com/thinca/vim-textobj-comment.git'
     NeoBundle 'https://github.com/tpope/vim-repeat.git'
-    NeoBundle 'https://github.com/vim-jp/autofmt'
+    NeoBundle 'https://github.com/vim-jp/autofmt.git'
 
     NeoBundle 'https://bitbucket.org/anyakichi/vim-autoclose'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
