@@ -7,6 +7,8 @@ if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
+let g:neobundle#types#git#default_protocol = 'https'
+
 let g:neobundle#default_options = {
 \   'http': { 'type__shallow': 0 },
 \}
