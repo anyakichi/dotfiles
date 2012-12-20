@@ -5,6 +5,7 @@
 
 syntax: regexp
 ^[^.].*
+^\.vim/bundle/
 ^\.vim/spell/
 ^\.vim/swap/
 ^\.vim/(?:.*/)?doc/tags$
