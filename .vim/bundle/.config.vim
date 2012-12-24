@@ -55,6 +55,7 @@ try
     NeoBundle 'https://bitbucket.org/anyakichi/vim-histsearch'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-tabutil'
+    NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-subword'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-xbrackets'
     NeoBundle 'https://bitbucket.org/sjl/gundo.vim', '', 'hg'
     NeoBundle 'https://www.sopht.jp/repos/hg/snipmate.vim', '', 'hg'
