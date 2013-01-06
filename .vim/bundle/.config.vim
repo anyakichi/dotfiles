@@ -7,6 +7,9 @@ if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
 
+map [Space]<Space> [Load]
+nnoremap [Load] <Nop>
+
 let g:neobundle#types#git#default_protocol = 'https'
 
 let g:neobundle#default_options = {
@@ -30,12 +33,10 @@ try
     NeoBundle 'utl.vim'
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
-    NeoBundle 'https://github.com/Shougo/unite.vim.git'
     NeoBundle 'https://github.com/anyakichi/skk.vim.git'
     NeoBundle 'https://github.com/anyakichi/taskpaper.vim.git'
     NeoBundle 'https://github.com/anyakichi/vim-surround.git'
     NeoBundle 'https://github.com/godlygeek/csapprox.git'
-    NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
     NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
     NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
     NeoBundle 'https://github.com/kana/vim-fakeclip.git'
@@ -62,6 +63,10 @@ try
     NeoBundle 'https://www.sopht.jp/repos/hg/vim-ref'
     NeoBundle 'https://www.sopht.jp/repos/hg/vim-textobj-kakko'
     NeoBundle 'https://www.sopht.jp/repos/hg/vimwiki'
+
+    NeoBundleLazy 'https://github.com/Shougo/unite.vim.git'
+    NeoBundleLazy 'https://github.com/h1mesuke/unite-outline.git'
+    nnoremap [Load]u :<C-u>NeoBundleSource unite.vim unite-outline<CR>
 catch
     " echo 'Install neobundle.vim to get plugins'
 endtry
