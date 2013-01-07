@@ -543,6 +543,7 @@ nnoremap [Space]uo :<C-u>Unite outline<CR>
 
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
+let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
 
 " vimwiki.vim
 let g:vimwiki_list = [
