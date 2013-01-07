@@ -20,7 +20,7 @@ let g:neobundle#default_options = {
 try
     call neobundle#rc(expand('~/.vim/bundle'))
 
-    NeoBundle 'https://github.com/Shougo/neobundle.vim.git'
+    NeoBundleFetch 'https://github.com/Shougo/neobundle.vim.git'
 
     NeoBundle 'DirDiff.vim'
     NeoBundle 'DrawIt'
