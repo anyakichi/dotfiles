@@ -137,7 +137,7 @@ highlight RedundantSpaces guibg=#404040 ctermbg=Grey
 "
 command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
 
-command! -register RegCopy let @<reg> = @@
+command! -nargs=1 RegCopy call s:regcopy(<q-args>)
 
 
 "
@@ -310,13 +310,6 @@ nnoremap <silent> [Space]z :<C-u>set spell! spell?<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap [Space]= `[=`]
-
-for s:nr in range(char2nr('a'), char2nr('z'))
-    let s:char = nr2char(s:nr)
-    let s:cmd = '<C-u>RegCopy ' . s:char . '<CR>'
-    execute 'nnoremap' '<silent>' '[Space]"'.s:char s:cmd
-endfor
-unlet s:nr s:char s:cmd
 
 " Insert and command mode mappings
 noremap! <C-a> <Home>
@@ -631,6 +624,14 @@ function! MakeTabLabel(n)
 
     let s = no . mod . sp . bufname
     return s
+endfunction
+
+function! s:regcopy(reg)
+    if a:reg ==# '&'
+	call {fakeclip#_sid_prefix()}write_pastebuffer(@@)
+    else
+	execute 'let' '@'.a:reg '= @@'
+    endif
 endfunction
 
 function! s:compkey(key, ...)
