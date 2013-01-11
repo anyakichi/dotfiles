@@ -129,7 +129,7 @@ endif
 
 highlight link IdeographicSpace RedundantSpaces
 match IdeographicSpace /　/
-highlight RedundantSpaces guibg=#404040 ctermbg=Grey
+highlight RedundantSpaces guibg=#303030 ctermbg=Grey
 
 
 "
