@@ -460,7 +460,7 @@ let g:OmniCpp_MayCompleteScope = 0
 let g:OmniCpp_SelectFirstItem = 2
 
 " qfutil.vim
-let g:qfutil_default_grep_file = '%:h/**'
+let g:qfutil_default_grep_file = '%:h'
 
 " quickrun.vim
 let g:quickrun_config = {}
