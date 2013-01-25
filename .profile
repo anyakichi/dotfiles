@@ -16,7 +16,7 @@ start_gpgagent()
 	fi
 
 	_pid=$(echo ${GPG_AGENT_INFO} |sed -e 's/.*gpg-agent:\([^:]*\):.*$/\1/')
-	if [ "x$(ps -p ${_pid} -co command=)" = "xgpg-agent" ]; then
+	if [ "x$(ps -p ${_pid} -o comm=)" = "xgpg-agent" ]; then
 		return
 	fi
 
