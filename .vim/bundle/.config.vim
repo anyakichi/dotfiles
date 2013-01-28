@@ -65,9 +65,9 @@ try
     NeoBundle 'https://www.sopht.jp/repos/hg/vim-textobj-kakko'
     NeoBundle 'https://www.sopht.jp/repos/hg/vimwiki'
 
-    NeoBundleLazy 'https://github.com/Shougo/unite.vim.git'
-    NeoBundleLazy 'https://github.com/h1mesuke/unite-outline.git'
-    nnoremap [Load]u :<C-u>NeoBundleSource unite.vim unite-outline<CR>
+    NeoBundleLazy 'https://github.com/Shougo/unite.vim.git',
+    \             {'autoload': {'commands': ['Unite']}}
+    NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
 catch
     " echo 'Install neobundle.vim to get plugins'
 endtry
