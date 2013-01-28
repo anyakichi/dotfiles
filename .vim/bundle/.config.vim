@@ -33,7 +33,6 @@ try
     NeoBundle 'utl.vim'
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
-    NeoBundle 'https://github.com/anyakichi/skk.vim.git'
     NeoBundle 'https://github.com/anyakichi/taskpaper.vim.git'
     NeoBundle 'https://github.com/anyakichi/vim-surround.git'
     NeoBundle 'https://github.com/godlygeek/csapprox.git'
@@ -68,6 +67,9 @@ try
     NeoBundleLazy 'https://github.com/Shougo/unite.vim.git',
     \             {'autoload': {'commands': ['Unite']}}
     NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
+
+    NeoBundleLazy 'https://github.com/anyakichi/skk.vim.git',
+    \             {'autoload': {'functions': ['SkkToggle']}}
 catch
     " echo 'Install neobundle.vim to get plugins'
 endtry
