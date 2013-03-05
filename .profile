@@ -5,7 +5,11 @@
 
 start_gpgagent()
 {
-	which gpg-agent 2>&1 >/dev/null || return
+	local _info _pid _comm
+
+	if which gpg-agent 2>&1 >/dev/null; then
+		return
+	fi
 
 	_info="${HOME}/.gpg-agent-info"
 
@@ -16,7 +20,8 @@ start_gpgagent()
 	fi
 
 	_pid=$(echo ${GPG_AGENT_INFO} |sed -e 's/.*gpg-agent:\([^:]*\):.*$/\1/')
-	if [ "x$(ps -p ${_pid} -o comm=)" = "xgpg-agent" ]; then
+	_comm=$(echo $(ps -p ${_pid} -o comm=) | sed -e 's/ *$//')
+	if [ "x${_comm}" = "xgpg-agent" ]; then
 		return
 	fi
 
