@@ -7,9 +7,7 @@ start_gpgagent()
 {
 	local _info _pid _comm
 
-	if which gpg-agent 2>&1 >/dev/null; then
-		return
-	fi
+	which gpg-agent 2>&1 >/dev/null || return
 
 	_info="${HOME}/.gpg-agent-info"
 
