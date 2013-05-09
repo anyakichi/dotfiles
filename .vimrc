@@ -260,7 +260,7 @@ nnoremap <silent> qi :<C-u>call qfutil#newer(v:count)<CR>
 
 nnoremap <silent> <expr> qm qfutil#make()
 nnoremap qM :<C-u>QFMake<Space>
-nnoremap <expr> q<Space> qfutil#make('')
+nnoremap q<Space> :<C-u>QFMake<Space>
 nnoremap qg :<C-u>QFGrep<Space>
 nnoremap qG :<C-u>QFGrep <C-r><C-w><Space>
 
