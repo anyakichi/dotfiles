@@ -114,12 +114,11 @@ if has('gui_macvim')
     set background=light
 elseif (has('gui') || v:version >= 703) && &t_Co == 256
     if !has('gui_running')
-	let g:CSApprox_hook_post = [
-	\   'execute "hi TabLine cterm=none ctermfg=fg ctermbg=" .
-	\	     g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
-	\   'execute "hi TabLineFill cterm=none ctermfg=fg ctermbg=" .
-	\	     g:CSApprox_approximator_function(0x33, 0x4b, 0x7d)',
-	\   'hi TabLineSel cterm=bold ctermfg=fg ctermbg=bg']
+	let g:CSApprox_hook_pre = [
+	\   'highlight TabLine gui=none guifg=fg guibg=#334b7d',
+	\   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
+	\   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
+	\   'highlight RedundantSpaces guibg=#303030']
     endif
 
     silent! colorscheme moria
@@ -129,7 +128,6 @@ endif
 
 highlight link IdeographicSpace RedundantSpaces
 match IdeographicSpace /　/
-highlight RedundantSpaces guibg=#303030 ctermbg=Grey
 
 
 "
