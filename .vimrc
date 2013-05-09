@@ -536,6 +536,18 @@ nnoremap [Space]uo :<C-u>Unite outline<CR>
 let g:VCSCommandMapPrefix = '<Leader>v'
 let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
 
+" vimshell.vim
+nmap <silent> [Space]r	:<C-u>set opfunc=<SID>vimshell_send<CR>g@
+nmap <silent> [Space]R	:<C-u>set opfunc=<SID>vimshell_send<CR>g@$
+nmap <silent> [Space]rr	:<C-u>call <SID>vimshell_send(v:count1)<CR>
+
+xmap <silent> [Space]r	:<C-u>call <SID>vimshell_send('v')<CR>
+xmap <silent> [Space]R	:<C-u>call <SID>vimshell_send('V')<CR>
+
+function! s:vimshell_send(type)
+    call s:do_opfunc(a:type, 'vimshell#interactive#send')
+endfunction
+
 " vimwiki.vim
 let g:vimwiki_list = [
 \   { 'path': '~/vimwiki', 'path_html': '~/Web/wiki', 'auto_export': 1 }
@@ -622,6 +634,39 @@ function! MakeTabLabel(n)
 
     let s = no . mod . sp . bufname
     return s
+endfunction
+
+function! s:do_opfunc(type, func, ...)
+    let type_map = {"char": "v", "line": "V", "block": "\<C-v>"}
+
+    let reg_save = [getreg('a'), getregtype('a')]
+    let sel_save = &selection
+    let cb_save  = &clipboard
+
+    let &selection = "inclusive"
+    set clipboard-=unnamed clipboard-=unnamedplus
+
+    if has_key(type_map, a:type)
+	silent execute 'normal! `[' . type_map[a:type] . '`]"ay'
+    elseif index(["v", "V", "\<C-v>"], a:type) >= 0
+	silent execute 'normal! `<' . a:type . '`>"ay'
+    elseif a:type =~ '^\d\+$'
+        execute 'silent normal! ' . a:type . '"ayy'
+    else
+        let &selection = sel_save
+        let &clipboard = cb_save
+        return
+    endif
+
+    if a:0
+	call call(a:func, [@a, a:1])
+    else
+	call call(a:func, [@a])
+    endif
+
+    let &clipboard = cb_save
+    let &selection = sel_save
+    call setreg('a', reg_save[0], reg_save[1])
 endfunction
 
 function! s:regcopy(reg)
