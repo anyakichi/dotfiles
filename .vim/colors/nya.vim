@@ -1,6 +1,6 @@
 "
-" nya.vim:
-" 	Nya color scheme
+" anyakichi.vim:
+" 	Anyakichi color scheme
 "
 
 set bg=dark
@@ -55,19 +55,19 @@ hi PmenuThumb	ctermfg=DarkCyan
 " hi WildMenu
 
 
-hi Comment	ctermfg=DarkYellow
+hi Comment	ctermfg=DarkCyan
 
-hi Constant	ctermfg=DarkGreen cterm=none
-hi String	ctermfg=DarkGreen cterm=none
-hi Character	ctermfg=DarkGreen cterm=none
+hi Constant	ctermfg=DarkYellow
+hi String	ctermfg=Gray
+hi Character	ctermfg=DarkYellow
 " hi Number
 " hi Boolean
 " hi Float
 
-hi Identifier	ctermfg=Cyan cterm=none
+hi Identifier	ctermfg=LightGray
 " hi Function
 
-hi Statement	ctermfg=Blue cterm=bold
+hi Statement	ctermfg=DarkGreen
 " hi Conditional
 " hi Repeat
 " hi Label
@@ -75,13 +75,13 @@ hi Statement	ctermfg=Blue cterm=bold
 " hi Keyword
 " hi Exception
 
-hi PreProc	ctermfg=Magenta cterm=none
+hi PreProc	ctermfg=DarkRed
 " hi Include
 " hi Define
 " hi Macro
 " hi PreCondit
 
-hi Type		ctermfg=Yellow cterm=bold
+hi Type		ctermfg=DarkGreen
 " hi StorageClass
 " hi Structure
 " hi Typedef
