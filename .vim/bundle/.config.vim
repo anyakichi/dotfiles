@@ -70,9 +70,6 @@ try
     \             {'autoload': {'commands': ['Unite']}}
     NeoBundle 'https://github.com/h1mesuke/unite-outline.git'
 
-    NeoBundleLazy 'https://github.com/Shougo/vimshell.git',
-    \             {'autoload': {'commands': ['VimShellInteractive']}}
-
     NeoBundleLazy 'https://github.com/anyakichi/skk.vim.git',
     \             {'autoload': {'functions': ['SkkToggle']}}
 catch
