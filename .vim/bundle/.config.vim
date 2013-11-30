@@ -36,7 +36,8 @@ try
     NeoBundle 'https://github.com/Shougo/vimproc.git',
     NeoBundle 'https://github.com/anyakichi/taskpaper.vim.git'
     NeoBundle 'https://github.com/anyakichi/vim-surround.git'
-    NeoBundle 'https://github.com/godlygeek/csapprox.git'
+    NeoBundle 'https://github.com/anyakichi/csapprox.git', 'performance-tuning'
+    NeoBundle 'https://github.com/benmills/vimux.git'
     NeoBundle 'https://github.com/h1mesuke/vim-alignta.git'
     NeoBundle 'https://github.com/jamessan/vim-gnupg.git'
     NeoBundle 'https://github.com/kana/vim-fakeclip.git'
