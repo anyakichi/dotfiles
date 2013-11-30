@@ -864,7 +864,7 @@ function! s:vim_enter_hook()
     inoremap <silent> <expr> <C-]> pumvisible() ?
     \			"\<C-]>" :
     \			"\<C-r>=TriggerSnippet(" .
-    \			    "<SID>compkey(\"\\<lt>C-x>\\<C-]>\"), 1)\<CR>"
+    \			    "<SID>compkey(\"\\<lt>C-x>\\<lt>C-]>\"), 1)\<CR>"
     inoremap <silent> <expr> <Tab> pumvisible() ?
     \			circomp#next() :
     \			"\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
