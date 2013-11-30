@@ -61,6 +61,7 @@ unignore from: date subject to cc
 hdr_order Date: From: To: Cc: Subject:
 
 iconv-hook Windows-31J cp932
+iconv-hook shift-jis cp932
 
 alternative_order text/plain text
 auto_view text/html
