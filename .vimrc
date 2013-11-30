@@ -352,6 +352,9 @@ inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
 augroup MyAutoCmd
     autocmd!
 
+    autocmd WinLeave *			setl nocursorline
+    autocmd WinEnter,BufRead *		setl cursorline
+
     " Fix up settings after loading all plugins
     autocmd VimEnter * call s:vim_enter_hook()
 
