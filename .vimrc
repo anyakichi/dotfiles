@@ -551,16 +551,19 @@ nnoremap [Space]uo :<C-u>Unite outline<CR>
 let g:VCSCommandMapPrefix = '<Leader>v'
 let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
 
-" vimshell.vim
-nmap <silent> [Space]r	:<C-u>set opfunc=<SID>vimshell_send<CR>g@
-nmap <silent> [Space]R	:<C-u>set opfunc=<SID>vimshell_send<CR>g@$
-nmap <silent> [Space]rr	:<C-u>call <SID>vimshell_send(v:count1)<CR>
+" vimux.vim
+let g:VimuxResetSequence = ""
 
-xmap <silent> [Space]r	:<C-u>call <SID>vimshell_send('v')<CR>
-xmap <silent> [Space]R	:<C-u>call <SID>vimshell_send('V')<CR>
+nmap <silent> [Space]r	:<C-u>set opfunc=<SID>vimux_send<CR>g@
+nmap <silent> [Space]R	:<C-u>set opfunc=<SID>vimux_send<CR>g@$
+nmap <silent> [Space]rr	:<C-u>call <SID>vimux_send(v:count1)<CR>
+nmap <silent> [Space];	:<C-u>call VimuxRunCommand(";;\n", 0)<CR>
 
-function! s:vimshell_send(type)
-    call s:do_opfunc(a:type, 'vimshell#interactive#send')
+xmap <silent> [Space]r	:<C-u>call <SID>vimux_send('v')<CR>
+xmap <silent> [Space]R	:<C-u>call <SID>vimux_send('V')<CR>
+
+function! s:vimux_send(type)
+    call s:do_opfunc(a:type, 'VimuxRunCommand', 0)
 endfunction
 
 " vimwiki.vim
@@ -673,11 +676,14 @@ function! s:do_opfunc(type, func, ...)
         return
     endif
 
-    if a:0
-	call call(a:func, [@a, a:1])
-    else
-	call call(a:func, [@a])
-    endif
+    let lines = split(@a, "\n\zs")
+    for line in lines
+	if a:0
+	    call call(a:func, [line, a:1])
+	else
+	    call call(a:func, [line])
+	endif
+    endfor
 
     let &clipboard = cb_save
     let &selection = sel_save
