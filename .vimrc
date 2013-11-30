@@ -395,6 +395,18 @@ augroup END
 
 " CSApprox
 let g:CSApprox_verbose_level = 0
+let g:CSApprox_bang_at_startup = 1
+let g:CSApprox_approximator_cache_xterm = {
+\   '008b8b':  30, 'd0d0d0': 252, '87df71': 113, '7ee0ce': 116, 'ee2c2c': 196,
+\   '41609e':  61, '2ceeee':  51, '8b0000':  88, '2c2cee':  21, 'bdcae3': 152,
+\   '90e090': 114, 'ee2cee': 201, 'e0e000': 184, 'e0cd78': 186, '7ec0ee': 111,
+\   '334b7d':  60, '9999ff': 105, 'ffffff': 231, '25365a':  23, 'ffb3ff': 219,
+\   '000000':  16, '6381be':  67, '1e90ff':  33, 'ff7272': 203, 'f09479': 210,
+\   'ffff00': 226, '202020': 234, '008b00':  28, 'e8b87e': 180, '97abd5': 110,
+\   '8fa5d1': 110, 'ffdb72': 221, '0000cd':  20, '00008b':  18, '404040': 238,
+\   '4e4e4e': 239, 'a0a0a0': 247, '8ccbea': 116, '00e700':  40, 'd7a0d7': 182,
+\   'd0d0a0': 187, 'a4e57e': 150, '606060':  59, 'ffa500': 214, '00a0ff':  39,
+\   '494949': 238}
 
 " NERD_commenter
 let g:NERDCreateDefaultMappings = 0
