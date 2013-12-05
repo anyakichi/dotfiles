@@ -352,14 +352,18 @@ inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
 augroup MyAutoCmd
     autocmd!
 
-    autocmd WinLeave *			setl nocursorline
-    autocmd WinEnter,BufRead *		setl cursorline
+    autocmd WinLeave *			setlocal nocursorline
+    autocmd WinEnter,BufRead *		setlocal cursorline
 
     " Fix up settings after loading all plugins
-    autocmd VimEnter * call s:vim_enter_hook()
+    autocmd VimEnter *                  call s:vim_enter_hook()
 
     " Hook function for buffer
-    autocmd BufNewFile,BufReadPost * call s:buffer_hook()
+    autocmd BufNewFile,BufReadPost *    call s:buffer_hook()
+
+    " Open the quickfix window automatically
+    autocmd QuickFixCmdPost [^l]*       cwindow
+    autocmd QuickFixCmdPost l*          lwindow
 
     " Use syntax complete
     autocmd Filetype *
@@ -375,10 +379,6 @@ augroup MyAutoCmd
     autocmd FileType mail		setlocal tw=72
     autocmd FileType taskpaper		setlocal sw=2 ts=2
     autocmd FileType vimwiki		setlocal fo+=mB
-
-    " Open the quickfix window automatically
-    autocmd QuickFixCmdPost [^l]* cwindow
-    autocmd QuickFixCmdPost l* lwindow
 
     " Syntax setup
     autocmd VimEnter *
