@@ -315,7 +315,7 @@ noremap! <C-b> <Left>
 noremap! <C-f> <Right>
 
 inoremap <C-u> <C-g>u<C-u>
-inoremap <C-w> <C-g>u<C-w>
+inoremap <expr> <C-w> "\<C-g>u" . <SID>ctrl_w()
 
 inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<Up>" : circomp#start()
@@ -742,6 +742,13 @@ endfunction
 
 function! s:insert_word_from_line(lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
+endfunction
+
+function! s:ctrl_w()
+    if strpart(getline('.'), col('.') - 3, 2) =~ '\s\s'
+        return "\<C-o>:let &sts=&ts\<CR>\<BS>\<C-o>:let &sts=0\<CR>"
+    endif
+    return "\<C-w>"
 endfunction
 
 function! s:kill_arg()
