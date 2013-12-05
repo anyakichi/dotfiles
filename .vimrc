@@ -369,7 +369,7 @@ augroup MyAutoCmd
 
     " Additional settings for each file type
     autocmd FileType c,cpp		setlocal noet
-    autocmd FileType haskell,python	setlocal fo-=t
+    autocmd FileType python	        setlocal fo-=t sts=0
     autocmd FileType docbk,eruby,html,markdown,ruby,scheme,tex,xhtml,xml
     \	setlocal sw=2
     autocmd FileType mail		setlocal tw=72
