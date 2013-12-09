@@ -574,6 +574,12 @@ let g:vimwiki_list = [
 let g:vimwiki_badsyms = ' '
 let g:vimwiki_hl_headers = 1
 
+" visualstar.vim
+xmap <silent> *  <Plug>(visualstar-*):set hlsearch<CR>
+xmap <silent> #  <Plug>(visualstar-#):set hlsearch<CR>
+xmap <silent> g* <Plug>(visualstar-g*):set hlsearch<CR>
+xmap <silent> g# <Plug>(visualstar-g#):set hlsearch<CR>
+
 
 "
 " Functions
