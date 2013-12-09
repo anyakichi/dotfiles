@@ -49,6 +49,7 @@ try
     NeoBundle 'https://github.com/scrooloose/nerdcommenter.git'
     NeoBundle 'https://github.com/thinca/vim-quickrun.git'
     NeoBundle 'https://github.com/thinca/vim-textobj-comment.git'
+    NeoBundle 'https://github.com/thinca/vim-visualstar.git'
     NeoBundle 'https://github.com/tpope/vim-repeat.git'
     NeoBundle 'https://github.com/vim-jp/autofmt.git'
 
