@@ -494,9 +494,9 @@ if !executable("manpath")
     let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
 endif
 
-nnoremap <silent> K :<C-u>call <SID>ref('normal')<CR>
+nnoremap <silent> K :<C-u>call <SID>ref('split')<CR>
+nmap <silent> [Tab]K :<C-u>call <SID>ref('tabnew')<CR>
 vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
-nmap [Tab]K K[Tab]m
 
 cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2)
 \		     ? "Ref " . ref#detect() : "R"
@@ -806,14 +806,22 @@ function! s:toggle_fttag()
     setl tags?
 endfunction
 
-function! s:ref(mode)
+function! s:ref(open)
     if &filetype ==# 'vim'
-	execute 'silent! help ' . expand("<cword>")
-	if &filetype !=# 'help'
-	    echo 'No entry'
-	endif
+        if a:open == 'tabnew'
+            execute 'silent! tab help ' . expand("<cword>")
+        else
+            execute 'silent! help ' . expand("<cword>")
+        endif
+        if &filetype !=# 'help'
+            echo 'No entry'
+        endif
     else
-	call ref#K(a:mode)
+        try
+            call ref#open(ref#detect(), expand("<cword>"), {'open': a:open})
+        catch /^ref:/
+            echo 'No entry'
+        endtry
     endif
 endfunction
 
