@@ -57,6 +57,7 @@ try
     NeoBundle 'https://bitbucket.org/anyakichi/vim-circomp'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-csutil'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-histsearch'
+    NeoBundle 'https://bitbucket.org/anyakichi/vim-ocp-index'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-qfutil'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-tabutil'
     NeoBundle 'https://bitbucket.org/anyakichi/vim-textobj-ifdef'
