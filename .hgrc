@@ -17,6 +17,7 @@ pager =
 progress =
 rebase =
 record =
+shelve =
 
 [extdiff]
 cmd.vimdiff = vim
