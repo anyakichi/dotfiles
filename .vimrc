@@ -118,6 +118,7 @@ elseif (has('gui') || v:version >= 703) && &t_Co == 256
 	\   'highlight TabLine gui=none guifg=fg guibg=#334b7d',
 	\   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
 	\   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
+	\   'highlight ColorColumn guibg=#242424',
 	\   'highlight RedundantSpaces guibg=#303030']
     endif
 
@@ -307,6 +308,7 @@ nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]z :<C-u>set spell! spell?<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
+nnoremap <silent> [Space]c :<C-u>call <SID>toggle_cc()<CR>
 nnoremap [Space]= `[=`]
 
 " Insert and command mode mappings
@@ -805,6 +807,14 @@ function! s:toggle_fttag()
 	execute 'setl tags-=' . tags_file
     endif
     setl tags?
+endfunction
+
+function! s:toggle_cc()
+    if &l:cc != 0
+        let &l:cc = 0
+    else
+        let &l:cc = 81
+    endif
 endfunction
 
 function! s:ref(open)
