@@ -16,7 +16,7 @@ fi
 # Parameters
 #
 PROMPT='%m%# '
-RPROMPT=' %~'
+RPROMPT='$(my_rprompt)'
 
 DIRSTACKSIZE=20
 
@@ -112,15 +112,18 @@ setopt inc_append_history
 # Input/Output
 setopt correct list_packed
 
+# Prompt
+setopt prompt_subst
+setopt transient_rprompt
+
 # Zle
 setopt no_beep
-setopt transient_rprompt
 
 
 #
 # Functions
 #
-autoload -U compinit vcs_info zmv
+autoload -Uz add-zsh-hook compinit is-at-least zmv
 compinit
 
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
@@ -169,14 +172,35 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 
 #
-# Widgets
+# Plugins
 #
-autoload -U select-word-style
+
+# vcs_info
+autoload -Uz vcs_info
+
+zstyle ':vcs_info:*' max-exports 4
+zstyle ':vcs_info:*' formats '%s' '%b' '%R'
+zstyle ':vcs_info:*' actionformats '%s' '%b|%a' '%R'
+
+add-zsh-hook precmd vcs_info
+
+my_rprompt()
+{
+        if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
+                echo -n '%~'
+        else
+                echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %~"
+        fi
+}
+
+# select-word-style
+autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars " /:@+|"
 zstyle ':zle:*' word-style unspecified
 
-autoload -U factorize-last-two-args
+# factorize-last-two-args
+autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
 
