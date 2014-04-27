@@ -49,19 +49,11 @@ alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 alias man='LANG=C man'
 
-alias j=jobs
-alias pu=pushd
-alias po=popd
-alias d='dirs -v'
-alias h=history
-
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lsd='ls -ld *(-/DN)'
 alias lsa='ls -ld .*'
-
-alias mq='hg -R $(hg root)/.hg/patches'
 
 # Aliases for ssh
 if [[ -n "${STY}" ]] then
