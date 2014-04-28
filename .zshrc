@@ -172,8 +172,25 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 
 #
-# Plugins
+# Plugins bundled with zsh
 #
+
+# cdr
+autoload -Uz cdr chpwd_recent_dirs
+
+zstyle ':chpwd:*' recent-dirs-max 1000
+
+add-zsh-hook chpwd chpwd_recent_dirs
+
+bindkey '^_' zaw-cdr
+
+
+# select-word-style
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " /:@+|"
+zstyle ':zle:*' word-style unspecified
+
 
 # vcs_info
 autoload -Uz vcs_info
@@ -193,16 +210,36 @@ my_rprompt()
         fi
 }
 
-# select-word-style
-autoload -Uz select-word-style
-select-word-style default
-zstyle ':zle:*' word-chars " /:@+|"
-zstyle ':zle:*' word-style unspecified
+
+#
+# Third party plugins
+#
+
+# antigen
+if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
+    ADOTDIR=$HOME/.zsh/antigen
+    source $ADOTDIR/antigen.zsh
+
+    antigen bundle zsh-users/zaw
+
+    antigen apply
+fi
+
 
 # factorize-last-two-args
 autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
+
+
+# zaw
+zstyle ':filter-select:highlight' matched fg=green
+zstyle ':filter-select' max-lines 15
+zstyle ':filter-select' rotate-list yes
+zstyle ':filter-select' case-insensitive yes
+zstyle ':filter-select' extended-search yes
+
+bindkey '^R' zaw-history
 
 
 #
