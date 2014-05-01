@@ -220,7 +220,7 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
     ADOTDIR=$HOME/.zsh/antigen
     source $ADOTDIR/antigen.zsh
 
-    antigen bundle zsh-users/zaw
+    antigen bundle anyakichi/zaw --branch=filter-fix
 
     antigen apply
 fi
@@ -233,11 +233,22 @@ bindkey '^X^F' factorize-last-two-args
 
 
 # zaw
-zstyle ':filter-select:highlight' matched fg=green
-zstyle ':filter-select' max-lines 15
+autoload -Uz filter-select
+filter-select -i
+
+bindkey -M filterselect '^U' send-break
+bindkey -M filterselect '^E' accept-search
+
+zstyle ':filter-select:highlight' error fg=196,bold
+zstyle ':filter-select:highlight' marked fg=111
+zstyle ':filter-select:highlight' matched underline
+zstyle ':filter-select:highlight' selected bg=238
+zstyle ':filter-select:highlight' title fg=110,bold
+zstyle ':filter-select' max-lines 10
 zstyle ':filter-select' rotate-list yes
 zstyle ':filter-select' case-insensitive yes
 zstyle ':filter-select' extended-search yes
+zstyle ':filter-select' use-cursor-line yes
 
 bindkey '^R' zaw-history
 
