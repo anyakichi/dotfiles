@@ -121,35 +121,6 @@ setopt no_beep
 
 
 #
-# Functions
-#
-autoload -Uz add-zsh-hook compinit is-at-least zmv
-compinit
-
-setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
-freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
-
-which pgrep >/dev/null 2>&1 || \
-pgrep() {
-	ps axco pid,command | grep ${1} | awk '{print $1}'
-}
-
-ssh-screen() {
-	screen -t ${(@)argv[$#]/.*/} ${SHELL} -c "$(whence -cp ssh) $@"
-}
-
-ssh-tmux() {
-	tmux new-window -n ${(@)argv[$#]/.*/} "${SHELL} -c '$(whence -cp ssh) $*'"
-}
-
-ssh-wrapper() {
-	eval $(whence -cp ssh) "$@"
-}
-
-compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
-
-
-#
 # Modules
 #
 zmodload -i zsh/complist
@@ -172,19 +143,46 @@ bindkey '^S' history-incremental-pattern-search-forward
 
 
 #
-# Plugins bundled with zsh
+# Plugins
 #
+autoload -Uz add-zsh-hook compinit is-at-least zmv
+compinit
 
-# cdr
+
+# cdr: it must be loaded before zaw to use zaw-cdr
 autoload -Uz cdr chpwd_recent_dirs
 
-zstyle ':chpwd:*' recent-dirs-max 1000
 zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-max 1000
+zstyle ':chpwd:*' recent-dirs-prune "pattern:^${HOME}$"
 zstyle ':completion:*' recent-dirs-insert always
 
 add-zsh-hook chpwd chpwd_recent_dirs
 
-bindkey '^_' zaw-cdr
+
+# antigen
+if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
+    ADOTDIR=$HOME/.zsh/antigen
+    source $ADOTDIR/antigen.zsh
+
+    antigen bundle anyakichi/zaw --branch=filter-fix
+
+    antigen apply
+fi
+
+
+# edit-command-line
+autoload -Uz edit-command-line
+zle -N edit-command-line
+
+bindkey '^Xe' edit-command-line
+bindkey '^X^E' edit-command-line
+
+
+# factorize-last-two-args
+autoload -Uz factorize-last-two-args
+zle -N factorize-last-two-args
+bindkey '^X^F' factorize-last-two-args
 
 
 # select-word-style
@@ -202,36 +200,6 @@ zstyle ':vcs_info:*' formats '%s' '%b' '%R'
 zstyle ':vcs_info:*' actionformats '%s' '%b|%a' '%R'
 
 add-zsh-hook precmd vcs_info
-
-my_rprompt()
-{
-        if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
-                echo -n '%~'
-        else
-                echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %~"
-        fi
-}
-
-
-#
-# Third party plugins
-#
-
-# antigen
-if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
-    ADOTDIR=$HOME/.zsh/antigen
-    source $ADOTDIR/antigen.zsh
-
-    antigen bundle anyakichi/zaw --branch=filter-fix
-
-    antigen apply
-fi
-
-
-# factorize-last-two-args
-autoload -Uz factorize-last-two-args
-zle -N factorize-last-two-args
-bindkey '^X^F' factorize-last-two-args
 
 
 # zaw
@@ -253,6 +221,43 @@ zstyle ':filter-select' rotate-list yes
 zstyle ':filter-select' use-cursor-line yes
 
 bindkey '^R' zaw-history
+bindkey '^_' zaw-cdr
+
+
+#
+# Functions
+#
+
+my_rprompt()
+{
+        if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
+		echo -n "%$(($COLUMNS - 15))<...<%~"
+        else
+		echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %$(($COLUMNS - 25))<...<%~"
+        fi
+}
+
+setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
+freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
+
+which pgrep >/dev/null 2>&1 || \
+pgrep() {
+	ps axco pid,command | grep ${1} | awk '{print $1}'
+}
+
+ssh-screen() {
+	screen -t ${(@)argv[$#]/.*/} ${SHELL} -c "$(whence -cp ssh) $@"
+}
+
+ssh-tmux() {
+	tmux new-window -n ${(@)argv[$#]/.*/} "${SHELL} -c '$(whence -cp ssh) $*'"
+}
+
+ssh-wrapper() {
+	eval $(whence -cp ssh) "$@"
+}
+
+compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
 
 
 #
