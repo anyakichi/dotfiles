@@ -138,9 +138,9 @@ bindkey '^I' complete-word
 bindkey -M menuselect \
 	'^P' up-line-or-history '^N' down-line-or-history \
 	'^B' backward-char '^F' forward-char
-bindkey '^R' history-incremental-pattern-search-backward
-bindkey '^S' history-incremental-pattern-search-forward
-
+bindkey '^]' insert-last-word
+bindkey '^[u' undo
+bindkey '^[r' redo
 
 #
 # Plugins
@@ -183,6 +183,19 @@ bindkey '^X^E' edit-command-line
 autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
+
+
+# modify-current-argument
+autoload -Uz modify-current-argument
+
+quote-current-word-in-single() { modify-current-argument '${(qq)${(Q)ARG}}' }
+zle -N quote-current-word-in-single
+
+quote-current-word-in-double() { modify-current-argument '${(qqq)${(Q)ARG}}' }
+zle -N quote-current-word-in-double
+
+bindkey "^S'" quote-current-word-in-single
+bindkey '^S"' quote-current-word-in-double
 
 
 # select-word-style
