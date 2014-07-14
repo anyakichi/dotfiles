@@ -138,6 +138,8 @@ bindkey '^I' complete-word
 bindkey -M menuselect \
 	'^P' up-line-or-history '^N' down-line-or-history \
 	'^B' backward-char '^F' forward-char
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
 bindkey '^]' insert-last-word
 bindkey '^[u' undo
 bindkey '^[r' redo
@@ -234,7 +236,7 @@ zstyle ':filter-select' extended-search yes
 zstyle ':filter-select' rotate-list yes
 zstyle ':filter-select' use-cursor-line yes
 
-bindkey '^R' zaw-history
+bindkey '^X^H' zaw-history
 bindkey '^_' zaw-cdr
 
 
