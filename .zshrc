@@ -145,8 +145,9 @@ bindkey '^[r' redo
 #
 # Plugins
 #
-autoload -Uz add-zsh-hook compinit is-at-least zmv
+autoload -Uz add-zsh-hook colors compinit is-at-least zmv
 compinit
+colors
 
 
 # cdr: it must be loaded before zaw to use zaw-cdr
