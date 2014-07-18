@@ -621,18 +621,9 @@ function! MakeTabLine()
     let s = ''
 
     for n in range(1, tabpagenr('$'))
-	if n == tabpagenr()
-	    let s .= '%#TabLineSel#'
-	else
-	    let s .= '%#TabLine#'
-	endif
-
-	let s .= '%' . n . 'T'
-
-	let s .= ' %{MakeTabLabel(' . n . ')} '
-
-	let s .= '%#TabLineFill#%T'
-	let s .= '|'
+	let s .= printf('%s%%%dT %s %%#TabLineFill#|',
+	\               n == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#',
+	\               n, MakeTabLabel(n))
     endfor
 
     let s .= '%#TabLineFill#%T'
