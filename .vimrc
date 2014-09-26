@@ -328,7 +328,7 @@ inoremap <expr> <C-a> pumvisible() ? circomp#prev() : "\<Home>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \				   : <SID>insert_word_from_line(line('.') - 1)
-inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>", 1)
+inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
 
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
@@ -695,10 +695,8 @@ function! s:regcopy(reg)
     endif
 endfunction
 
-function! s:compkey(key, ...)
-    let repeat = a:0 > 0 ? a:1 : 0
-
-    let pre = repeat ? "\<C-y>" : ""
+function! s:compkey(key)
+    let pre = "\<C-r>=pumvisible() ? \"\\<C-y>\": ''\<CR>"
     let down = "\<C-r>=pumvisible() ? \"\\<Down>\" : ''\<CR>"
     return pre . a:key . "\<C-p>" . down
 endfunction
