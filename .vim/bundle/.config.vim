@@ -50,6 +50,7 @@ try
     NeoBundle 'https://github.com/thinca/vim-quickrun.git'
     NeoBundle 'https://github.com/thinca/vim-textobj-comment.git'
     NeoBundle 'https://github.com/thinca/vim-visualstar.git'
+    NeoBundle 'https://github.com/thinca/vim-ref.git'
     NeoBundle 'https://github.com/tpope/vim-fugitive.git'
     NeoBundle 'https://github.com/tpope/vim-repeat.git'
     NeoBundle 'https://github.com/vim-jp/autofmt.git'
@@ -67,7 +68,6 @@ try
     NeoBundle 'https://bitbucket.org/ludovicchabant/vim-lawrencium'
     NeoBundle 'https://bitbucket.org/sjl/gundo.vim', '', 'hg'
     NeoBundle 'https://www.sopht.jp/repos/hg/snipmate.vim', '', 'hg'
-    NeoBundle 'https://www.sopht.jp/repos/hg/vim-ref'
     NeoBundle 'https://www.sopht.jp/repos/hg/vim-textobj-kakko'
     NeoBundle 'https://www.sopht.jp/repos/hg/vimwiki'
 

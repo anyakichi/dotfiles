@@ -493,10 +493,6 @@ nmap <silent> <Leader>ee :QuickRun1<CR>
 let g:ref_detect_filetype = {'_': 'man'}
 let g:ref_no_default_key_mappings = 1
 
-if !executable("manpath")
-    let g:ref_man_manpath = '/usr/share/man:/usr/pkg/man:/usr/local/man'
-endif
-
 nnoremap <silent> K :<C-u>call <SID>ref('split')<CR>
 nmap <silent> [Tab]K :<C-u>call <SID>ref('tabnew')<CR>
 vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
