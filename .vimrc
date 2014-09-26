@@ -317,7 +317,7 @@ noremap! <C-b> <Left>
 noremap! <C-f> <Right>
 
 inoremap <C-u> <C-g>u<C-u>
-inoremap <expr> <C-w> "\<C-g>u" . <SID>ctrl_w()
+inoremap <expr> <C-w> pumvisible() ? <SID>p_ctrl_w() : "\<C-g>u" . <SID>ctrl_w()
 
 inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-j>"
 inoremap <expr> <C-k> pumvisible() ? "\<Up>" : circomp#start()
@@ -736,6 +736,12 @@ endfunction
 
 function! s:insert_word_from_line(lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
+endfunction
+
+function! s:p_ctrl_w()
+    let pos = searchpos('\<\|\>', 'bn')
+    let n = col('.') - pos[1]
+    return n > 0 ? repeat("\<C-h>", n) : "\<C-w>"
 endfunction
 
 function! s:ctrl_w()
