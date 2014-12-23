@@ -18,7 +18,7 @@ let g:neobundle#default_options = {
 \}
 
 try
-    call neobundle#rc(expand('~/.vim/bundle'))
+    call neobundle#begin(expand('~/.vim/bundle'))
 
     NeoBundleFetch 'https://github.com/Shougo/neobundle.vim.git'
 
@@ -77,6 +77,8 @@ try
 
     NeoBundleLazy 'https://github.com/anyakichi/skk.vim.git',
     \             {'autoload': {'functions': ['SkkToggle']}}
+
+    call neobundle#end()
 catch
     " echo 'Install neobundle.vim to get plugins'
 endtry
