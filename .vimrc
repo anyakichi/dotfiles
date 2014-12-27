@@ -120,7 +120,7 @@ elseif (has('gui') || v:version >= 703) && &t_Co == 256
         \   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
         \   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
         \   'highlight ColorColumn guibg=#242424',
-        \   'highlight RedundantSpaces guibg=#303030']
+        \   'highlight AnnoyingSpace guibg=#303030']
     endif
 
     silent! colorscheme moria
@@ -128,8 +128,9 @@ else
     silent! colorscheme nya
 endif
 
-highlight link IdeographicSpace RedundantSpaces
-highlight link UnexpandedTabs RedundantSpaces
+highlight link IdeographicSpace AnnoyingSpace
+highlight link RedundantSpace AnnoyingSpace
+highlight link UnexpandedTab AnnoyingSpace
 match IdeographicSpace /　/
 
 
@@ -311,6 +312,7 @@ nnoremap <silent> [Space]z :<C-u>set spell! spell?<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]c :<C-u>call <SID>toggle_cc()<CR>
+nnoremap <silent> [Space]<Tab> :<C-u>call <SID>toggle_hi_annoying_space()<CR>
 nnoremap [Space]= `[=`]
 
 " Insert and command mode mappings
@@ -386,17 +388,15 @@ augroup MyAutoCmd
     autocmd FileType vimwiki            setlocal fo+=mB
 
     " Syntax setup
-    autocmd VimEnter *
-    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
+    autocmd VimEnter,InsertLeave,User *
+    \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)')
     autocmd InsertEnter *
-    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
-    autocmd InsertLeave *
-    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
-    autocmd BufEnter *
+    \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)\%#\@!')
+    autocmd WinEnter,User *
     \   if &expandtab
-    \|      call s:matchupdate('UnexpandedTabs', '\t')
+    \|      call s:matchupdate_as('UnexpandedTab', '\t')
     \|  else
-    \|      call s:matchdelete('UnexpandedTabs')
+    \|      call s:matchdelete('UnexpandedTab')
     \|  endif
 
     " View PDF in Vim.
@@ -745,6 +745,18 @@ endfunction
 function! s:matchupdate(group, pattern)
     call s:matchdelete(a:group)
     call matchadd(a:group, a:pattern)
+endfunction
+
+function! s:matchupdate_as(group, pattern)
+    call s:matchdelete(a:group)
+    if get(b:, 'hi_annoying_space', 1)
+        call matchadd(a:group, a:pattern)
+    endif
+endfunction
+
+function! s:toggle_hi_annoying_space()
+    let b:hi_annoying_space = !get(b:, 'hi_annoying_space', 1)
+    doautocmd MyAutoCmd User
 endfunction
 
 function! s:insert_word_from_line(lnum)
