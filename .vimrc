@@ -129,6 +129,7 @@ else
 endif
 
 highlight link IdeographicSpace RedundantSpaces
+highlight link UnexpandedTabs RedundantSpaces
 match IdeographicSpace /　/
 
 
@@ -391,6 +392,12 @@ augroup MyAutoCmd
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd InsertLeave *
     \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
+    autocmd BufEnter *
+    \   if &expandtab
+    \|      call s:matchupdate('UnexpandedTabs', '\t')
+    \|  else
+    \|      call s:matchdelete('UnexpandedTabs')
+    \|  endif
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
@@ -725,13 +732,18 @@ function! s:tabclose()
     endif
 endfunction
 
-function! s:matchupdate(group, pattern)
+function! s:matchdelete(group)
     for match in getmatches()
 	if match['group'] ==# a:group
 	    call matchdelete(match['id'])
+            return 1
 	endif
     endfor
+    return 0
+endfunction
 
+function! s:matchupdate(group, pattern)
+    call s:matchdelete(a:group)
     call matchadd(a:group, a:pattern)
 endfunction
 
