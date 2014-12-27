@@ -1,6 +1,6 @@
 "
 " dot.vimrc:
-"	Vim configuration
+"       Vim configuration
 "
 
 scriptencoding utf-8
@@ -27,7 +27,7 @@ set smartindent
 set softtabstop=8
 set tabstop=8
 set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
-	      \i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
+              \i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
 
 " Status information
 set laststatus=2
@@ -115,12 +115,12 @@ if has('gui_macvim')
     set background=light
 elseif (has('gui') || v:version >= 703) && &t_Co == 256
     if !has('gui_running')
-	let g:CSApprox_hook_pre = [
-	\   'highlight TabLine gui=none guifg=fg guibg=#334b7d',
-	\   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
-	\   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
-	\   'highlight ColorColumn guibg=#242424',
-	\   'highlight RedundantSpaces guibg=#303030']
+        let g:CSApprox_hook_pre = [
+        \   'highlight TabLine gui=none guifg=fg guibg=#334b7d',
+        \   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
+        \   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
+        \   'highlight ColorColumn guibg=#242424',
+        \   'highlight RedundantSpaces guibg=#303030']
     endif
 
     silent! colorscheme moria
@@ -167,7 +167,7 @@ noremap gk k
 nnoremap dP "_ddP
 
 cnoremap <silent> <expr> <CR>
-\	 getcmdtype() == '/' ? "\<CR>:set hlsearch\<CR>" : "\<CR>"
+\        getcmdtype() == '/' ? "\<CR>:set hlsearch\<CR>" : "\<CR>"
 nnoremap <silent> * *:set hlsearch<CR>
 nnoremap <silent> # #:set hlsearch<CR>
 nnoremap <silent> g* g*:set hlsearch<CR>
@@ -233,8 +233,8 @@ nnoremap <Esc>l <C-w>l
 nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
 
 nnoremap <expr> [Tab]<C-h> &ft =~ "vim\\<Bar>help"
-\				? ":tab help "
-\				: ":Ref -open=tabnew " . ref#detect() . ' '
+\                               ? ":tab help "
+\                               : ":Ref -open=tabnew " . ref#detect() . ' '
 
 nnoremap Q q
 nnoremap q <Nop>
@@ -275,14 +275,14 @@ nmap <C-\><C-\> <Plug>(csutil-toggle-csto)
 for s:type in ['s', 'g', 'd', 'c', 't', 'e']
     let s:mapping = '<C-\>' . s:type
     let s:target = ':<C-u>call csutil#find("<cword>", "' . s:type .
-    \					   '", qfutil#_mode())<CR>'
+    \                                      '", qfutil#_mode())<CR>'
     execute 'nnoremap' '<silent>' s:mapping s:target
 endfor
 
 for s:type in ['f', 'i']
     let s:mapping = '<C-\>' . s:type
     let s:target = ':<C-u>call csutil#find("<cfile>", "' . s:type .
-    \					   '", qfutil#_mode())<CR>'
+    \                                      '", qfutil#_mode())<CR>'
     execute 'nnoremap' '<silent>' s:mapping s:target
 endfor
 unlet s:type s:mapping s:target
@@ -293,9 +293,9 @@ onoremap ar a]
 onoremap ir i]
 
 nnoremap <expr> gc
-\		'`[' .
-\		((col("'[") == 1 && col("']") >= len(getline("']")))?'V':'v') .
-\		'`]'
+\               '`[' .
+\               ((col("'[") == 1 && col("']") >= len(getline("']")))?'V':'v') .
+\               '`]'
 vnoremap <silent> gc :<C-u>normal gc<CR>
 onoremap <silent> gc :<C-u>normal gc<CR>
 
@@ -329,7 +329,7 @@ inoremap <expr> <C-i> pumvisible() ? circomp#next() : "\<C-i>"
 inoremap <expr> <C-a> pumvisible() ? circomp#prev() : "\<Home>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
-\				   : <SID>insert_word_from_line(line('.') - 1)
+\                                  : <SID>insert_word_from_line(line('.') - 1)
 inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
 
 inoremap <C-g><CR> <C-o>o
@@ -356,8 +356,8 @@ inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
 augroup MyAutoCmd
     autocmd!
 
-    autocmd WinLeave *			setlocal nocursorline
-    autocmd WinEnter,BufRead *		setlocal cursorline
+    autocmd WinLeave *                  setlocal nocursorline
+    autocmd WinEnter,BufRead *          setlocal cursorline
 
     " Fix up settings after loading all plugins
     autocmd VimEnter *                  call s:vim_enter_hook()
@@ -371,27 +371,27 @@ augroup MyAutoCmd
 
     " Use syntax complete
     autocmd Filetype *
-    \	if &omnifunc == ""
-    \|	    setlocal omnifunc=syntaxcomplete#Complete
-    \|	endif
+    \   if &omnifunc == ""
+    \|      setlocal omnifunc=syntaxcomplete#Complete
+    \|  endif
 
     " Additional settings for each file type
     autocmd FileType haskell,ocaml,python,ruby,vim
     \   setlocal et
     autocmd FileType docbk,eruby,html,markdown,ocaml,ruby,scheme,tex,xhtml,xml
     \   setlocal sw=2
-    autocmd FileType python	        setlocal fo-=t sts=0
-    autocmd FileType mail		setlocal tw=72
-    autocmd FileType taskpaper		setlocal sw=2 ts=2
-    autocmd FileType vimwiki		setlocal fo+=mB
+    autocmd FileType python             setlocal fo-=t sts=0
+    autocmd FileType mail               setlocal tw=72
+    autocmd FileType taskpaper          setlocal sw=2 ts=2
+    autocmd FileType vimwiki            setlocal fo+=mB
 
     " Syntax setup
     autocmd VimEnter *
-    \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
+    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
     autocmd InsertEnter *
-    \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
+    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd InsertLeave *
-    \	call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
+    \   call s:matchupdate('RedundantSpaces', '\(\s\+$\| \+\ze\t\)')
     autocmd BufEnter *
     \   if &expandtab
     \|      call s:matchupdate('UnexpandedTabs', '\t')
@@ -428,16 +428,16 @@ let g:NERDCreateDefaultMappings = 0
 let g:NERDSpaceDelims = 1
 
 nmap <Leader>cc <Plug>NERDCommenterAlignLeft
-vmap <Leader>c	<Plug>NERDCommenterComment
-nmap <Leader>C	<Plug>NERDCommenterToEOL
-vmap <Leader>C	<Plug>NERDCommenterAlignLeft
+vmap <Leader>c  <Plug>NERDCommenterComment
+nmap <Leader>C  <Plug>NERDCommenterToEOL
+vmap <Leader>C  <Plug>NERDCommenterAlignLeft
 nmap <Leader>xm <Plug>NERDCommenterMinimal
 nmap <Leader>xs <Plug>NERDCommenterSexy
 vmap <Leader>xm <Plug>NERDCommenterMinimal
 vmap <Leader>xs <Plug>NERDCommenterSexy
 nmap <Leader>xa <Plug>NERDCommenterAltDelims
-nmap <Leader>u	<Plug>NERDCommenterUncomment
-vmap <Leader>u	<Plug>NERDCommenterUncomment
+nmap <Leader>u  <Plug>NERDCommenterUncomment
+vmap <Leader>u  <Plug>NERDCommenterUncomment
 
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
@@ -506,9 +506,9 @@ nmap <silent> [Tab]K :<C-u>call <SID>ref('tabnew')<CR>
 vnoremap <silent> K :<C-u>call <SID>ref('visual')<CR>
 
 cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2)
-\		     ? "Ref " . ref#detect() : "R"
+\                    ? "Ref " . ref#detect() : "R"
 cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4)
-\		     ? "Ref man" : "Man"
+\                    ? "Ref man" : "Man"
 
 " scratch.vim
 let g:scratch_filetype = 'ruby'
@@ -520,8 +520,8 @@ let g:skk_sticky_key = ';'
 let g:skk_manual_save_jisyo_keys = "g<C-s>"
 
 let g:skk_user_rom_kana_rules = ""
-    \. "(	（\<NL>"
-    \. ")	）\<NL>"
+    \. "(       （\<NL>"
+    \. ")       ）\<NL>"
 let g:skk_special_midasi_keys = "<>"
 
 let g:skk_ascii_mode_string = 'aA'
@@ -562,13 +562,13 @@ let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
 " vimux.vim
 let g:VimuxResetSequence = ""
 
-nmap <silent> [Space]r	:<C-u>set opfunc=<SID>vimux_send<CR>g@
-nmap <silent> [Space]R	:<C-u>set opfunc=<SID>vimux_send<CR>g@$
-nmap <silent> [Space]rr	:<C-u>call <SID>vimux_send(v:count1)<CR>
-nmap <silent> [Space];	:<C-u>call VimuxRunCommand(";;\n", 0)<CR>
+nmap <silent> [Space]r  :<C-u>set opfunc=<SID>vimux_send<CR>g@
+nmap <silent> [Space]R  :<C-u>set opfunc=<SID>vimux_send<CR>g@$
+nmap <silent> [Space]rr :<C-u>call <SID>vimux_send(v:count1)<CR>
+nmap <silent> [Space];  :<C-u>call VimuxRunCommand(";;\n", 0)<CR>
 
-xmap <silent> [Space]r	:<C-u>call <SID>vimux_send('v')<CR>
-xmap <silent> [Space]R	:<C-u>call <SID>vimux_send('V')<CR>
+xmap <silent> [Space]r  :<C-u>call <SID>vimux_send('v')<CR>
+xmap <silent> [Space]R  :<C-u>call <SID>vimux_send('V')<CR>
 
 function! s:vimux_send(type)
     call s:do_opfunc(a:type, 'VimuxRunCommand', 0)
@@ -599,22 +599,22 @@ function! MakeStatusLine()
     let s  = '%<%f %y'
     let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
     if &ff != 'unix'
-	let s .= '[' . &ff . ']'
+        let s .= '[' . &ff . ']'
     endif
     if &bin
-	let s .= '[bin]'
+        let s .= '[bin]'
     endif
     let s .= '%m%r'
     let s .= '%='
     let extra = ''
     if exists("*SkkGetModeStr")
-	let extra .= SkkGetModeStr()
+        let extra .= SkkGetModeStr()
     endif
     if exists("*CapsLockStatusline")
-	let extra .= CapsLockStatusline()
+        let extra .= CapsLockStatusline()
     endif
     if extra !~ '^\s*$'
-	let s .= extra . ' '
+        let s .= extra . ' '
     endif
     let s .= winwidth('%') >= 80 ? '%-14.' : '%-8.'
     let s .= '(%l,%c%V%) %P'
@@ -625,9 +625,9 @@ function! MakeTabLine()
     let s = ''
 
     for n in range(1, tabpagenr('$'))
-	let s .= printf('%s%%%dT %s %%#TabLineFill#|',
-	\               n == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#',
-	\               n, MakeTabLabel(n))
+        let s .= printf('%s%%%dT %s %%#TabLineFill#|',
+        \               n == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#',
+        \               n, MakeTabLabel(n))
     endfor
 
     let s .= '%#TabLineFill#%T'
@@ -642,14 +642,14 @@ function! MakeTabLabel(n)
 
     let bufname = bufname(bufnr)
     if bufname == ''
-	let bufname = '[No Name]'
+        let bufname = '[No Name]'
     else
-	let bufname = fnamemodify(bufname, ":t")
+        let bufname = fnamemodify(bufname, ":t")
     endif
 
     let no = len(bufnrs)
     if no == 1
-	let no = ''
+        let no = ''
     endif
 
     let mod = len(filter(bufnrs, 'getbufvar(v:val, "&modified")')) ? '+' : ''
@@ -670,9 +670,9 @@ function! s:do_opfunc(type, func, ...)
     set clipboard-=unnamed clipboard-=unnamedplus
 
     if has_key(type_map, a:type)
-	silent execute 'normal! `[' . type_map[a:type] . '`]"ay'
+        silent execute 'normal! `[' . type_map[a:type] . '`]"ay'
     elseif index(["v", "V", "\<C-v>"], a:type) >= 0
-	silent execute 'normal! `<' . a:type . '`>"ay'
+        silent execute 'normal! `<' . a:type . '`>"ay'
     elseif a:type =~ '^\d\+$'
         execute 'silent normal! ' . a:type . '"ayy'
     else
@@ -683,11 +683,11 @@ function! s:do_opfunc(type, func, ...)
 
     let lines = split(@a, "\n\zs")
     for line in lines
-	if a:0
-	    call call(a:func, [line, a:1])
-	else
-	    call call(a:func, [line])
-	endif
+        if a:0
+            call call(a:func, [line, a:1])
+        else
+            call call(a:func, [line])
+        endif
     endfor
 
     let &clipboard = cb_save
@@ -697,9 +697,9 @@ endfunction
 
 function! s:regcopy(reg)
     if a:reg ==# '&'
-	call {fakeclip#_sid_prefix()}write_pastebuffer(@@)
+        call {fakeclip#_sid_prefix()}write_pastebuffer(@@)
     else
-	execute 'let' '@'.a:reg '= @@'
+        execute 'let' '@'.a:reg '= @@'
     endif
 endfunction
 
@@ -712,32 +712,32 @@ endfunction
 function! s:relpath()
     let path = expand('%:~:.:h')
     if path == '' || path == '.'
-	return ''
+        return ''
     else
-	return path . '/'
+        return path . '/'
     endif
 endfunction
 
 function! s:tabclose()
     if scratch#is_visible()
-	call scratch#close()
+        call scratch#close()
     else
-	for bufnr in range(1, winnr('$'))
-	    if getwinvar(bufnr, '&buftype') ==# 'quickfix'
-		tabclose
-		return
-	    endif
-	endfor
-	call tabutil#close()
+        for bufnr in range(1, winnr('$'))
+            if getwinvar(bufnr, '&buftype') ==# 'quickfix'
+                tabclose
+                return
+            endif
+        endfor
+        call tabutil#close()
     endif
 endfunction
 
 function! s:matchdelete(group)
     for match in getmatches()
-	if match['group'] ==# a:group
-	    call matchdelete(match['id'])
+        if match['group'] ==# a:group
+            call matchdelete(match['id'])
             return 1
-	endif
+        endif
     endfor
     return 0
 endfunction
@@ -769,7 +769,7 @@ function! s:kill_arg()
     let pos = getcmdpos() - 2
 
     if pos < 0
-	return ""
+        return ""
     endif
 
     let c = strlen(substitute(matchstr(line[:pos], '\S*\s*$'), ".", "x", "g"))
@@ -780,7 +780,7 @@ function! s:grep_go_to_pattern()
     let cmdline = getcmdline()
     let index = matchend(cmdline, '\v\C(l?grep|QFGrep)\s+\S+')
     if index >= 0
-	call setcmdpos(index + 1)
+        call setcmdpos(index + 1)
     endif
     return ""
 endfunction
@@ -788,7 +788,7 @@ endfunction
 function! s:border_line(char)
     let prevline = line('.') - 1
     if prevline == 0
-	return ''
+        return ''
     endif
     return repeat(a:char, strdisplaywidth(getline(prevline)) - col('.') + 1)
 endfunction
@@ -797,7 +797,7 @@ function! s:newxmlline()
     let col = col(".")
     copy .
     if col != 1
-	execute 'normal!' (col - 1) . 'l'
+        execute 'normal!' (col - 1) . 'l'
     endif
     normal! dit
     return ''
@@ -808,7 +808,7 @@ function! s:toggle_fttag()
     let tags_save = &l:tags
     execute 'setl tags+=' . tags_file
     if tags_save == &l:tags
-	execute 'setl tags-=' . tags_file
+        execute 'setl tags-=' . tags_file
     endif
     setl tags?
 endfunction
@@ -846,8 +846,8 @@ function! s:get_comma_separated_number_pos(...)
     let len = len(line)
 
     if line[pos] !~ '[0-9,]'
-	" Not a number
-	return [-1, -1]
+        " Not a number
+        return [-1, -1]
     endif
 
     let begin = pos - len(matchstr(line[:(pos)], '[0-9,]\+$')) + 1
@@ -860,10 +860,10 @@ function! s:separate_number_with_comma(num)
     let num = substitute(a:num, ',', '', 'g')
     let res = ''
     for i in range(len(num))
-	if i % 3 == 0
-	    let res = ',' . res
-	endif
-	let res = num[len(num) - 1 - i] . res
+        if i % 3 == 0
+            let res = ',' . res
+        endif
+        let res = num[len(num) - 1 - i] . res
     endfor
     return res[:-2]
 endfunction
@@ -873,7 +873,7 @@ function! s:separate_number_with_comma_n()
     let range = s:get_comma_separated_number_pos(line)
 
     if range[0] == -1
-	return
+        return
     endif
 
     let new = s:separate_number_with_comma(line[range[0]:range[1]])
@@ -885,7 +885,7 @@ function! s:separate_number_with_comma_i()
     let pos = col('.') - 1
 
     if line[pos] =~ '[0-9]' || line[pos - 1] !~ '[0-9]'
-	return ''
+        return ''
     endif
 
     let range = s:get_comma_separated_number_pos(line, pos - 1)
@@ -901,35 +901,35 @@ function! s:vim_enter_hook()
 
     " capslock.vim
     execute 'inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "' .
-    \				       maparg("<Plug>CapsLockToggle", 'i') . '"'
+    \                                  maparg("<Plug>CapsLockToggle", 'i') . '"'
 
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
 
     " snipmate.vim
     inoremap <silent> <expr> <C-]> pumvisible() ?
-    \			"\<C-]>" :
-    \			"\<C-r>=TriggerSnippet(" .
-    \			    "<SID>compkey(\"\\<lt>C-x>\\<lt>C-]>\"), 1)\<CR>"
+    \                   "\<C-]>" :
+    \                   "\<C-r>=TriggerSnippet(" .
+    \                       "<SID>compkey(\"\\<lt>C-x>\\<lt>C-]>\"), 1)\<CR>"
     inoremap <silent> <expr> <Tab> pumvisible() ?
-    \			circomp#next() :
-    \			"\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
+    \                   circomp#next() :
+    \                   "\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
     snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
     snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
     inoremap <silent> <S-Tab> <c-r>=BackwardsSnippet("\<S-Tab>")<CR>
     snoremap <silent> <S-Tab>
-    \	     <Esc>i<Right><C-r>=BackwardsSnippet("\<S-Tab>")<CR>
+    \        <Esc>i<Right><C-r>=BackwardsSnippet("\<S-Tab>")<CR>
 endfunction
 
 function! s:buffer_hook()
     if findfile('build.sh', '.;') != ''
-	" NetBSD source tree
-	return
+        " NetBSD source tree
+        return
     elseif findfile('conf.py', '.;') != ''
-	" Shpinx document
-	if executable('gmake')
-	    set makeprg=gmake
-	endif
+        " Shpinx document
+        if executable('gmake')
+            set makeprg=gmake
+        endif
     endif
 
     silent call s:toggle_fttag()
