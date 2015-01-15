@@ -4,7 +4,6 @@
 "
 
 scriptencoding utf-8
-set nocompatible
 
 source ~/.vim/bundle/.config.vim
 
