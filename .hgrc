@@ -10,6 +10,10 @@ show = log -pr
 [defaults]
 qnew = -Ue
 
+[diff]
+git = True
+showfunc = True
+
 [extensions]
 bookmarks =
 color =
