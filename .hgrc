@@ -7,6 +7,8 @@
 vd = vimdiff
 show = log -pr
 
+[defaults]
+qnew = -Ue
 
 [extensions]
 bookmarks =
