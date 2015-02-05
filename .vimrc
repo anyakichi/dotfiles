@@ -455,6 +455,15 @@ xnoremap <Leader>al :Alignta!<Space>
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
+" calendar.vim
+let g:calendar_keys = {
+\   'close': '<Esc><Esc>',
+\   'goto_next_month': 'n',
+\   'goto_prev_month': 'p',
+\   'goto_next_year': 'N',
+\   'goto_prev_year': 'P'
+\}
+
 " capslock.vim
 imap <C-l> <Plug>CapsLockToggle
 
