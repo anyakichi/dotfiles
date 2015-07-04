@@ -266,7 +266,8 @@ ssh-screen() {
 }
 
 ssh-tmux() {
-	tmux new-window -n ${(@)argv[$#]/.*/} "${SHELL} -c '$(whence -cp ssh) $*'"
+	tmux new-window -n ${(@)argv[$#]/.*/} \
+	    "${SHELL} -c 'export GPG_TTY=\`tty\`; $(whence -cp ssh) $*'"
 }
 
 ssh-wrapper() {
