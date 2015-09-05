@@ -23,9 +23,7 @@ endif
 let g:did_ftplugin_ocaml_after = 1
 
 function! s:asterisk()
-    if strpart(getline('.'), col('.') - 3, 4) == '(**)'
-        return "\<CR>\<C-w>\<C-o>:redraw\<CR>\<Esc>O"
-    elseif strpart(getline('.'), col('.') - 2, 2) == '()'
+    if strpart(getline('.'), col('.') - 2, 2) == '()'
         return "**\<Left>"
     endif
     return "*"
