@@ -21,7 +21,6 @@ export BLOCKSIZE=1k
 export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export EDITOR=vim
-tty -s && export GPG_TTY=`tty`
 export LANG=en_US.UTF-8
 export LESS=-cMR
 export MAIL=${HOME}/Mail
@@ -31,27 +30,41 @@ export PERL_BADLANG=0
 
 start_gpgagent()
 {
-	local _info _pid _comm
+	local _info
 
-	which gpg-agent 2>&1 >/dev/null || return
+	which gpg-agent >/dev/null 2>&1 || return
 
-	_info="${HOME}/.gpg-agent-info"
+	export GPG_TTY=$(tty)
 
-	if [ -f "${_info}" ]; then
-		. "${_info}"
-		export GPG_AGENT_INFO
-		export SSH_AUTH_SOCK
+	unset GPG_AGENT_INFO
+	gpg-connect-agent /bye >/dev/null 2>&1
+
+	if [ $? = 0 ]; then
+		# gnupg 2.1 or later
+		unset SSH_AGENT_PID
+		if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+			export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+		fi
+	else
+		# gnupg 2.0
+		_info="${HOME}/.gpg-agent-info"
+
+		if [ -f "${_info}" ]; then
+			. "${_info}"
+			export GPG_AGENT_INFO
+			export SSH_AUTH_SOCK
+		fi
+
+		gpg-connect-agent /bye >/dev/null 2>&1 || \
+		    eval $(gpg-agent --daemon --write-env-file "${_info}")
 	fi
 
-	_pid=$(echo ${GPG_AGENT_INFO} |sed -e 's/.*gpg-agent:\([^:]*\):.*$/\1/')
-	_comm=$(echo $(ps -p ${_pid} -o comm=) | sed -e 's/ *$//')
-	if [ "x${_comm}" = "xgpg-agent" ]; then
-		return
-	fi
-
-        eval $(gpg-agent --daemon --write-env-file "${_info}")
+	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
-start_gpgagent
+case "$-" in *i*)
+	start_gpgagent
+	;;
+esac
 
 [ -f ~/.profile_local ] && . ~/.profile_local
