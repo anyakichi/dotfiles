@@ -1,0 +1,63 @@
+;;
+;; .uim:
+;;	uim configuration
+;;
+
+(require "japanese.scm")
+(require-module "mozc")
+(require-module "skk")
+
+(define ja-direct-rule
+  (append '((" " " "))
+	  ja-direct-rule))
+
+
+;; custom-global.scm
+(define default-im-name 'mozc)
+(define enable-im-switch? #f)
+(define switch-im-key? (make-key-predicate '("<Shift> ")))
+(define switch-im-skip-direct-im? #f)
+(define enable-im-toggle? #t)
+(define toggle-im-key '("<Meta> " "<Shift> "))
+(define toggle-im-key? (make-key-predicate '("<Meta> " "<Shift> ")))
+(define bridge-show-input-state? #t)
+(define bridge-show-with? 'time)
+(define bridge-show-input-state-time-length 1)
+
+;; custom-global-keys1.scm
+(define generic-on-key? (make-key-predicate '("zenkaku-hankaku" "Private2")))
+(define generic-cancel-key?
+  (make-key-predicate '("escape" "<IgnoreShift><Control>["
+                        "<IgnoreCase><Control>g" "<IgnoreCase><Control>c")))
+
+;; custom-toolbar.scm
+(define toolbar-show-action-based-switcher-button? #f)
+(define toolbar-show-pref-button? #f)
+
+;; custom-xim.scm
+(define uim-xim-use-xft-font? #t)
+(define uim-xim-xft-font-name "IPAGothic")
+
+;; custom-mozc.scm
+(define mozc-widgets '(widget_mozc_input_mode widget_mozc_tool))
+(define mozc-use-with-vi? #t)
+(define mozc-keyboard-type-for-kana-input-method 'us-keyboard)
+
+;; custom-mozc-keys.scm
+(define mozc-on-key '("<IgnoreCase><Control>j"))
+(define mozc-on-key? (make-key-predicate '("<IgnoreCase><Control>j")))
+(define mozc-off-key '("<IgnoreCase>l"))
+(define mozc-off-key? (make-key-predicate '("<IgnoreCase>l")))
+
+;; custom-skk.scm
+(define skk-widgets '(widget_skk_input_mode))
+
+;; custom-skk-dict.scm
+(define skk-jisyo-code 'utf8)
+
+;; custom-skk-advanced.scm
+(define skk-use-with-vi? #t)
+(define skk-egg-like-newline? #t)
+
+;; custom-skk-keys1.scm
+(define skk-sticky-key? (make-key-predicate '(";")))
