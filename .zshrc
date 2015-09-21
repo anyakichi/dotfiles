@@ -4,6 +4,13 @@
 #
 
 #
+# Include common settings
+#
+if [ -f ${HOME}/.shrc ]; then
+	. ${HOME}/.shrc
+fi
+
+#
 # Terminal setup
 #
 if tty -s; then
