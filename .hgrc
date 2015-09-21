@@ -7,9 +7,6 @@
 vd = vimdiff
 show = log -pr
 
-[defaults]
-qnew = -Ue
-
 [diff]
 git = True
 showfunc = True
