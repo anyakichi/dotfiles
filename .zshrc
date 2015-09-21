@@ -64,14 +64,10 @@ which vim > /dev/null 2>&1 && alias vi=vim
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
 
-
-# Aliases for ssh
 if [[ -n "${STY}" ]] then
 	alias ssh=ssh-screen
 elif [[ -n "${TMUX}" ]] then
 	alias ssh=ssh-tmux
-else
-	alias ssh=ssh-wrapper
 fi
 
 # Global aliases
@@ -275,18 +271,14 @@ pgrep() {
 }
 
 ssh-screen() {
-	screen -t ${(@)argv[$#]/.*/} ${SHELL} -c "$(whence -cp ssh) $@"
+	screen -t ${(@)argv[$#]/.*/} ${SHELL} -c "gpg-wrapper ssh ${@}"
 }
 
 ssh-tmux() {
 	tmux new-window -n ${(@)argv[$#]/.*/} "gpg-wrapper ssh ${@}"
 }
 
-ssh-wrapper() {
-	eval $(whence -cp ssh) "$@"
-}
-
-compdef _ssh ssh-screen=ssh ssh-tmux=ssh ssh-wrapper=ssh
+compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
 
 #
