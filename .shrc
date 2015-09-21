@@ -37,4 +37,7 @@ start_gpgagent()
 	gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
+stty -ixon
+stty status '^T' 2>/dev/null
+
 start_gpgagent

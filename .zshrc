@@ -10,14 +10,6 @@ if [ -f ${HOME}/.shrc ]; then
 	. ${HOME}/.shrc
 fi
 
-#
-# Terminal setup
-#
-if tty -s; then
-	stty -ixon
-	stty status '^T' 2>/dev/null
-fi
-
 
 #
 # Parameters
