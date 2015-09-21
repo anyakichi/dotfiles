@@ -44,23 +44,26 @@ typeset -U cdpath fpath hosts mailpath manpath path
 #
 # Aliases
 #
-alias grep=egrep
-alias mz='mutt -Z'
-alias vi=vim
-alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
+ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lsd='ls -ld *(-/DN)'
+alias lsa='ls -ld .*'
 
 alias cp='nocorrect cp'
 alias make='nocorrect make'
 alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
+
 alias man='LANG=C man'
 
-alias ll='ls -l'
-alias la='ls -a'
-alias lla='ls -la'
-alias lsd='ls -ld *(-/DN)'
-alias lsa='ls -ld .*'
+alias grep='egrep'
+which vim > /dev/null 2>&1 && alias vi=vim
+alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
+alias mz='mutt -Z'
+
 
 # Aliases for ssh
 if [[ -n "${STY}" ]] then
@@ -82,6 +85,9 @@ alias -g S='|sort'
 alias -g T='|tail'
 alias -g W='|wc'
 alias -g X='|xargs'
+alias -g X='|xargs'
+alias -g N='>/dev/null'
+alias -g NN='>/dev/null 2>&1'
 
 # OS specific aliases
 case $OSTYPE in
