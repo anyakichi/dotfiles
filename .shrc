@@ -37,4 +37,8 @@ start_gpgagent()
 stty -ixon
 stty status '^T' 2>/dev/null
 
+if [ -f ${HOME}/.dircolors ]; then
+	eval $(dircolors -b ${HOME}/.dircolors)
+fi
+
 start_gpgagent

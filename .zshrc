@@ -284,6 +284,7 @@ compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 #
 
 zstyle ':completion:*' use-cache true
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':completion:*:default' menu select=2
 
 # Completers to use
