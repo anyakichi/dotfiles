@@ -22,6 +22,7 @@ export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export EDITOR=vim
 export LANG=en_US.UTF-8
+export LC_COLLATE=C
 export LESS=-cMR
 export MAIL=${HOME}/Mail
 export NCURSES_NO_UTF8_ACS=0
