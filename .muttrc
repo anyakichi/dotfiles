@@ -48,9 +48,6 @@ set message_cachedir="~/.mutt/cache"
 # Cryptographic
 set crypt_use_gpgme
 
-# Japanese Extention
-set cjk_width
-
 set alias_file=~/.mail_aliases
 source ~/.mail_aliases
 
