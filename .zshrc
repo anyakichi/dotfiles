@@ -1,13 +1,13 @@
 #
-# dot.zshrc:
-#	Zsh configuration
+# .zshrc:
+#       Zsh configuration
 #
 
 #
 # Include common settings
 #
 if [ -f ${HOME}/.shrc ]; then
-	. ${HOME}/.shrc
+    . ${HOME}/.shrc
 fi
 
 
@@ -55,9 +55,9 @@ alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
 
 if [[ -n "${STY}" ]] then
-	alias ssh=ssh-screen
+    alias ssh=ssh-screen
 elif [[ -n "${TMUX}" ]] then
-	alias ssh=ssh-tmux
+    alias ssh=ssh-tmux
 fi
 
 # Global aliases
@@ -77,14 +77,14 @@ alias -g NN='>/dev/null 2>&1'
 
 # OS specific aliases
 case $OSTYPE in
-	darwin*)
-		alias ka='open -a "Keychain Access"'
-		alias ldd='otool -L'
-		;;
-	netbsd*)
-		;;
-	solaris*)
-		;;
+    darwin*)
+        alias ka='open -a "Keychain Access"'
+        alias ldd='otool -L'
+        ;;
+    netbsd*)
+        ;;
+    solaris*)
+        ;;
 esac
 
 
@@ -134,8 +134,8 @@ bindkey ' ' magic-space
 bindkey '^D' list-choices
 bindkey '^I' complete-word
 bindkey -M menuselect \
-	'^P' up-line-or-history '^N' down-line-or-history \
-	'^B' backward-char '^F' forward-char
+        '^P' up-line-or-history '^N' down-line-or-history \
+        '^B' backward-char '^F' forward-char
 bindkey '^R' history-incremental-pattern-search-backward
 bindkey '^S' history-incremental-pattern-search-forward
 bindkey '^]' insert-last-word
@@ -244,11 +244,11 @@ bindkey '^_' zaw-cdr
 
 my_rprompt()
 {
-        if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
-		echo -n "%$(($COLUMNS - 15))<...<%~"
-        else
-		echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %$(($COLUMNS - 25))<...<%~"
-        fi
+    if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
+        echo -n "%$(($COLUMNS - 15))<...<%~"
+    else
+        echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %$(($COLUMNS - 25))<...<%~"
+    fi
 }
 
 setenv() { typeset -x "${1}${1:+=}${(@)argv[2,$#]}" }  # csh compatibility
@@ -256,17 +256,17 @@ freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
 which pgrep >/dev/null 2>&1 || \
 pgrep() {
-	ps axco pid,command | grep ${1} | awk '{print $1}'
+    ps axco pid,command | grep ${1} | awk '{print $1}'
 }
 
 ssh-screen() {
-	screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
-	    -c "gpg-wrapper ssh $(printf "%q " "${@}")"
+    screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
+        -c "gpg-wrapper ssh $(printf "%q " "${@}")"
 }
 
 ssh-tmux() {
-	tmux new-window -n "${(@)argv[$#]/.*/}" \
-	    "gpg-wrapper ssh $(printf "%q " "${@}")"
+    tmux new-window -n "${(@)argv[$#]/.*/}" \
+        "gpg-wrapper ssh $(printf "%q " "${@}")"
 }
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
@@ -288,7 +288,7 @@ zstyle ':completion:*:default' menu select=2
 
 # Completers to use
 zstyle ':completion:*::::' completer _expand _complete _match _prefix _ignored \
-	_correct
+        _correct
 
 # Match uppercase from lowercase
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
