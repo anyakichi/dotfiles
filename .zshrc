@@ -82,7 +82,6 @@ case $OSTYPE in
 	darwin*)
 		alias ka='open -a "Keychain Access"'
 		alias ldd='otool -L'
-		[ -x /usr/pkg/bin/vim ] && alias vim=/usr/pkg/bin/vim
 		;;
 	netbsd*)
 		;;
