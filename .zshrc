@@ -26,7 +26,7 @@ SAVEHIST=10000
 MAILCHECK=0
 
 cdpath=(~ ~/src ~/Documents)
-fpath=(~/.zfunc $fpath)
+fpath=(~/.zsh/functions $fpath)
 
 typeset -U cdpath fpath hosts mailpath manpath path
 
