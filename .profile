@@ -12,10 +12,11 @@ case $(uname) in
 		PATH=${PATH}:/usr/X11R7/bin:/usr/games
 		;;
 	*)
+		# /usr/pkg/sbin is required because pkg_install is there.
 		PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
 		;;
 esac
-export PATH
+export PATH=${HOME}/bin:${PATH}
 
 export BLOCKSIZE=1k
 export COLORFGBG="default;default"
