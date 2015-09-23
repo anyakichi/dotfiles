@@ -377,7 +377,7 @@ augroup MyAutoCmd
     \|  endif
 
     " Additional settings for each file type
-    autocmd FileType haskell,ocaml,python,ruby,typescript,vim
+    autocmd FileType haskell,ocaml,python,ruby,sh,typescript,vim,zsh
     \   setlocal et
     autocmd FileType docbk,eruby,html,markdown,ocaml,ruby,scheme,tex,xhtml,xml
     \   setlocal sw=2
