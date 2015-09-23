@@ -37,7 +37,7 @@ start_gpgagent()
 stty -ixon
 stty status '^T' 2>/dev/null
 
-if [ -f ${HOME}/.dircolors ]; then
+if [ which dircolors >/dev/null 2>&1 -a -f ${HOME}/.dircolors ]; then
 	eval $(dircolors -b ${HOME}/.dircolors)
 fi
 
