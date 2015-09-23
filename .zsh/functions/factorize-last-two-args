@@ -15,38 +15,38 @@ factorize-last-two-args()
     local cmdline
     cmdline=(${(z)BUFFER})
     if [ $#cmdline -lt 2 ]; then
-	return 0
+        return 0
     fi
 
     local arg1=$cmdline[-2] arg2=$cmdline[-1]
     if [ "$arg1[1]" = '"' -o "$arg1[1]" = "'" ]; then
-	return 0
+        return 0
     fi
     if [ "$arg2[1]" = '"' -o "$arg2[1]" = "'" ]; then
-	return 0
+        return 0
     fi
 
     local len
     if [ $#arg1 -lt $#arg2 ]; then
-	len=$#arg1
+        len=$#arg1
     else
-	len=$#arg2
+        len=$#arg2
     fi
 
     local common=''
     for i in {1..$len}; do
-	if [ $arg1[-$i] != $arg2[-$i] ]; then
-	    break
-	fi
-	common="$arg1[-$i]$common"
+        if [ $arg1[-$i] != $arg2[-$i] ]; then
+            break
+        fi
+        common="$arg1[-$i]$common"
     done
 
     if [ ! -z "$common" -a "$common[-1]" != "'" -a "$common[-1]" != '"' ]; then
-	len1=$(($#arg1 - $#common))
-	len2=$(($#arg2 - $#common))
-	cmdline[-2]="{$arg1[1,$len1],$arg2[1,$len2]}$common"
-	cmdline[-1]=()
-	BUFFER=${(j: :)cmdline}
+        len1=$(($#arg1 - $#common))
+        len2=$(($#arg2 - $#common))
+        cmdline[-2]="{$arg1[1,$len1],$arg2[1,$len2]}$common"
+        cmdline[-1]=()
+        BUFFER=${(j: :)cmdline}
     fi
 
     return 0
