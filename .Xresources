@@ -1,0 +1,71 @@
+!
+! .Xresources:
+!	X resources
+!
+
+!
+! URxvt
+!
+URxvt*termName:		xterm-256color
+URxvt*scrollBar:	false
+URxvt*fading:		20
+
+! Colors (moria theme)
+*background:		#202020
+*foreground:		#d0d0d0
+! black
+*color0:		#000000
+*color8:		#404040
+! red
+*color1:		#ee2c2c
+*color9:		#f09479
+! green
+*color2:		#90e090
+*color10:		#87df71
+! yellow
+*color3:		#e0e000
+*color11:		#e8b87e
+! blue
+*color4:		#334b7d
+*color12:		#00a0af
+! magenta
+*color5:		#d7a0d7
+*color13:		#6381be
+! cyan
+*color6:		#7ee0ce
+*color14:		#7ec0ee
+! white
+*color7:		#606060
+*color15:		#d0d0a0
+
+! Fonts
+URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:size=10.5, xft:IPAGothic:size=10.5
+URxvt*imFont:		-*-r-*-14-*
+URxvt*lineSpace:	2
+URxvt*letterSpace:	-1
+URxvt*perl-ext-common:	default,matcher
+URxvt*matcher.button:	1
+URxvt*url-launcher:	firefox
+
+
+!
+! xscreensaver
+!
+xscreensaver.mode:		blank
+xscreensaver.timeout:		0:10:00
+xscreensaver.cycle:		0:00:00
+xscreensaver.lock:		True
+xscreensaver.lockTimeout:	0:00:30
+xscreensaver.passwdTimeout:	0:01:00
+xscreensaver.dpmsEnabled:	True
+xscreensaver.dpmsStandby:	0:10:00
+xscreensaver.dpmsSuspend:	0:15:00
+xscreensaver.dpmsOff:		0:20:00
+
+xscreensaver.Dialog.headingFont:	-*-dejavu sans-bold-r-*--12-*-*-*-*-*-*-*
+xscreensaver.Dialog.bodyFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.labelFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.unameFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.buttonFont:		-*-dejavu sans-bold-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.Dialog.dateFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
+xscreensaver.passwd.passwdFont:		-*-dejavu sans-bold-r-*-*-12-*-*-*-*-*-*-*
