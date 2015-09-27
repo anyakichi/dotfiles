@@ -27,8 +27,8 @@ URxvt*scrollBar:	false
 *background:		#202020
 *foreground:		#d0d0d0
 ! black
-*color0:		#000000
-*color8:		#404040
+*color0:		#404040
+*color8:		#606060
 ! red
 *color1:		#ee2c2c
 *color9:		#f09479
@@ -36,8 +36,8 @@ URxvt*scrollBar:	false
 *color2:		#90e090
 *color10:		#87df71
 ! yellow
-*color3:		#e0e000
-*color11:		#e8b87e
+*color3:		#e0cd78
+*color11:		#e0e000
 ! blue
 *color4:		#334b7d
 *color12:		#00a0af
@@ -48,8 +48,8 @@ URxvt*scrollBar:	false
 *color6:		#7ee0ce
 *color14:		#7ec0ee
 ! white
-*color7:		#606060
-*color15:		#d0d0a0
+*color7:		#d0d0a0
+*color15:		#e8b87e
 
 ! Fonts
 URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:size=10.5, xft:IPAGothic:size=10.5
