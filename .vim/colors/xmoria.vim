@@ -206,8 +206,8 @@ if &background == "dark"
         Hi SignColumn ctermbg=bg guibg=bg guifg=#a0a0a0 gui=none
         Hi StatusLine ctermbg=7 ctermfg=0 guibg=#4c4c4c guifg=fg gui=bold
         Hi StatusLineNC ctermbg=8 ctermfg=0 guibg=#404040 guifg=fg gui=none
-        Hi TabLine guibg=#6e6e6e guifg=fg gui=underline
-        Hi TabLineFill guibg=#6e6e6e guifg=fg gui=underline
+        Hi TabLine guibg=#6e6e6e guifg=fg gui=none
+        Hi TabLineFill guibg=#6e6e6e guifg=fg gui=none
         Hi VertSplit ctermbg=7 ctermfg=0 guibg=#404040 guifg=fg gui=none
         if s:xmoria_fontface == "mixed"
             Hi Folded guibg=#4e4e4e guifg=#c0c0c0 gui=bold
@@ -225,8 +225,8 @@ if &background == "dark"
         Hi SignColumn ctermbg=bg guibg=bg guifg=#8fa5d1 gui=none
         Hi StatusLine ctermbg=7 ctermfg=0 guibg=#334b7d guifg=fg gui=bold
         Hi StatusLineNC ctermbg=8 ctermfg=0 guibg=#25365a guifg=fg gui=none
-        Hi TabLine guibg=#41609e guifg=fg gui=underline
-        Hi TabLineFill guibg=#41609e guifg=fg gui=underline
+        Hi TabLine guibg=#334b7d guifg=fg gui=none
+        Hi TabLineFill guibg=#334b7d guifg=fg gui=none
         Hi VertSplit ctermbg=7 ctermfg=0 guibg=#25365a guifg=fg gui=none
         if s:xmoria_fontface == "mixed"
             Hi Folded guibg=#4e4e4e guifg=#bdcae3 gui=bold
@@ -309,8 +309,8 @@ elseif &background == "light"
         Hi SignColumn ctermbg=bg guibg=bg guifg=#7a7a7a gui=none
         Hi StatusLine ctermbg=0 ctermfg=15 guibg=#a0a0a0 guifg=fg gui=bold
         Hi StatusLineNC ctermbg=7 ctermfg=0 guibg=#b0b0b0 guifg=fg gui=none
-        Hi TabLine guibg=#cdcdcd guifg=fg gui=underline
-        Hi TabLineFill guibg=#cdcdcd guifg=fg gui=underline
+        Hi TabLine guibg=#cdcdcd guifg=fg gui=none
+        Hi TabLineFill guibg=#cdcdcd guifg=fg gui=none
         Hi VertSplit ctermbg=7 ctermfg=0 guibg=#b0b0b0 guifg=fg gui=none
     else
         Hi FoldColumn ctermbg=bg guibg=bg guifg=#375288 gui=none
@@ -324,8 +324,8 @@ elseif &background == "light"
         Hi SignColumn ctermbg=bg guibg=bg guifg=#375288 gui=none
         Hi StatusLine ctermbg=0 ctermfg=15 guibg=#8fa5d1 guifg=fg gui=bold
         Hi StatusLineNC ctermbg=7 ctermfg=0 guibg=#a6b7db guifg=fg gui=none
-        Hi TabLine guibg=#b8c6e2 guifg=fg gui=underline
-        Hi TabLineFill guibg=#b8c6e2 guifg=fg gui=underline
+        Hi TabLine guibg=#b8c6e2 guifg=fg gui=none
+        Hi TabLineFill guibg=#b8c6e2 guifg=fg gui=none
         Hi VertSplit ctermbg=7 ctermfg=0 guibg=#a6b7db guifg=fg gui=none
     endif
     Hi Cursor guibg=#883400 guifg=bg gui=none
