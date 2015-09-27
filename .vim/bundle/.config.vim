@@ -34,7 +34,9 @@ try
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
     NeoBundle 'https://github.com/Shougo/vimproc.git',
-    NeoBundle 'https://github.com/anyakichi/csapprox.git', 'performance-tuning'
+    NeoBundleLazy 'https://github.com/anyakichi/csapprox.git',
+    \             'performance-tuning',
+    \             {'autoload': {'commands': ['CSApprox']}}
     NeoBundle 'https://github.com/anyakichi/ocp-indent-vim.git'
     NeoBundle 'https://github.com/anyakichi/taskpaper.vim.git'
     NeoBundle 'https://github.com/anyakichi/vim-surround.git'

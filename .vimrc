@@ -113,20 +113,33 @@ syntax on
 if has('gui_macvim')
     set background=light
 elseif (has('gui') || v:version >= 703) && &t_Co == 256
-    if !has('gui_running')
-        let g:CSApprox_hook_pre = [
-        \   'highlight TabLine gui=none guifg=fg guibg=#334b7d',
-        \   'highlight TabLineFill gui=none guifg=fg guibg=#334d7d',
-        \   'highlight TabLineSel gui=bold guifg=fg guibg=bg',
-        \   'highlight ColorColumn guibg=#242424',
-        \   'highlight AnnoyingSpace guibg=#303030']
-    endif
+    let g:xmoria_terminal_foreground = '#d0d0d0'
+    let g:xmoria_terminal_background = '#202020'
+    let g:xmoria_terminal_colors = [
+    \   '#404040',
+    \   '#ee2c2c',
+    \   '#90e090',
+    \   '#e0e000',
+    \   '#334b7d',
+    \   '#d7a0d7',
+    \   '#7ee0ce',
+    \   '#d0d0a0',
+    \   '#606060',
+    \   '#f09479',
+    \   '#87df71',
+    \   '#e8b87e',
+    \   '#00a0af',
+    \   '#6381be',
+    \   '#7ec0ee',
+    \   '#e8b87e',
+    \]
 
-    silent! colorscheme moria
+    colorscheme xmoria
 else
-    silent! colorscheme nya
+    colorscheme nya
 endif
 
+highlight AnnoyingSpace ctermbg=236 guibg=#303030
 highlight link IdeographicSpace AnnoyingSpace
 highlight link RedundantSpace AnnoyingSpace
 highlight link UnexpandedTab AnnoyingSpace
@@ -472,6 +485,12 @@ nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
 " mark.vim
+highlight MarkWord1 ctermfg=16 ctermbg=116
+highlight MarkWord2 ctermfg=16 ctermbg=150
+highlight MarkWord3 ctermfg=16 ctermbg=221
+highlight MarkWord4 ctermfg=16 ctermbg=203
+highlight MarkWord5 ctermfg=16 ctermbg=219
+highlight MarkWord6 ctermfg=16 ctermbg=105
 nmap [Space]m <Plug>MarkSet
 xmap [Space]m <Plug>MarkSet
 nmap [Space]M <Plug>MarkRegex
