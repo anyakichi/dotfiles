@@ -4,6 +4,19 @@
 !
 
 !
+! Xft
+!
+Xft.antialias:		1
+Xft.autohint:		0
+Xft.hinting:		0
+Xft.hintstyle:		hintnone
+! These should be set by system Xresources.
+!Xft.dpi:		96
+!Xft.lcdfilter:		lcddefault
+!Xft.rgba:		rgb
+
+
+!
 ! URxvt
 !
 URxvt*termName:		xterm-256color
