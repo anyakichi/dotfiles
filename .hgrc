@@ -7,6 +7,23 @@
 vd = vimdiff
 show = log -pr
 
+[color]
+mode = terminfo
+color.green = 40
+color.color8 = 8
+color.color9 = 9
+color.color10 = 10
+color.color11 = 11
+color.color12 = 12
+color.color13 = 13
+color.color14 = 14
+color.color15 = 15
+
+diff.diffline = color13 bold
+diff.hunk = color14
+diff.file_a = none
+diff.file_b = none
+
 [diff]
 git = True
 showfunc = True
@@ -29,7 +46,7 @@ cmd.vimdiff = vim
 opts.vimdiff = -f '+next' '+execute "DirDiff" argv(0) argv(1)'
 
 [pager]
-pager = LESS='FMRX' less
+pager = LESS='FMXr' less
 quiet = True
 attend = annotate, cat, diff, export, help, glog, log, qdiff, qseries, \
          show, status
