@@ -30,4 +30,6 @@ export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
 export PERL_BADLANG=0
 
+export ENV=${HOME}/.shrc
+
 [ -f ~/.profile_local ] && . ~/.profile_local
