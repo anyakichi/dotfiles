@@ -21,7 +21,7 @@ Xft.hintstyle:		hintnone
 !
 URxvt*termName:		xterm-256color
 URxvt*scrollBar:	false
-URxvt*fading:		20
+!URxvt*fading:		20
 
 ! Colors (moria theme)
 *background:		#202020
