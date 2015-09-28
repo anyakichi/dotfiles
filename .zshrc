@@ -260,13 +260,11 @@ pgrep() {
 }
 
 ssh-screen() {
-    screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
-        -c "gpg-wrapper ssh $(printf "%q " "${@}")"
+    screen -t "${(@)argv[$#]/.*/}" "${SHELL}" -c "ssh $(printf "%q " "${@}")"
 }
 
 ssh-tmux() {
-    tmux new-window -n "${(@)argv[$#]/.*/}" \
-        "gpg-wrapper ssh $(printf "%q " "${@}")"
+    tmux new-window -n "${(@)argv[$#]/.*/}" "ssh $(printf "%q " "${@}")"
 }
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
