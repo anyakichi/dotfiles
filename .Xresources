@@ -30,26 +30,26 @@ URxvt*scrollBar:	false
 *color0:		#404040
 *color8:		#606060
 ! red
-*color1:		#ee2c2c
-*color9:		#f09479
+*color1:		#cd0000
+*color9:		#ee2c2c
 ! green
-*color2:		#90e090
+*color2:		#00cd00
 *color10:		#87df71
 ! yellow
-*color3:		#e0cd78
-*color11:		#e0e000
+*color3:		#f09479
+*color11:		#e8b87e
 ! blue
 *color4:		#334b7d
-*color12:		#00a0af
+*color12:		#7ec0ee
 ! magenta
 *color5:		#d7a0d7
-*color13:		#6381be
+*color13:		#97abd5
 ! cyan
 *color6:		#7ee0ce
-*color14:		#7ec0ee
+*color14:		#6381be
 ! white
-*color7:		#d0d0a0
-*color15:		#e8b87e
+*color7:		#b5b5b5
+*color15:		#d0d0a0
 
 ! Fonts
 URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:size=10.5, xft:IPAGothic:size=10.5
