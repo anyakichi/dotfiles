@@ -134,11 +134,11 @@ endif
 if exists("g:xmoria_terminal_colors")
     let s:i = 0
     while s:i < len(g:xmoria_terminal_colors)
-        let s:color = g:xmoria_terminal_colors[s:i]
-        if s:i < 8
-            let s:color_map[tolower(s:color)][0] = s:i
+        let s:color = tolower(g:xmoria_terminal_colors[s:i])
+        if has_key(s:color_map, s:color) && s:i < 8
+            let s:color_map[s:color][0] = s:i
         else
-            let s:color_map[tolower(s:color)] = [s:i, s:i]
+            let s:color_map[s:color] = [s:i, s:i]
         endif
         let s:i += 1
     endwhile
