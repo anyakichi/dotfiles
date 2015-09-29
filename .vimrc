@@ -113,26 +113,38 @@ syntax on
 if has('gui_macvim')
     set background=light
 elseif (has('gui') || v:version >= 703) && &t_Co == 256
-    let g:xmoria_terminal_foreground = '#d0d0d0'
-    let g:xmoria_terminal_background = '#202020'
+    " Get terminal color info from .Xresources.
+    let s:xresources = readfile(expand("~/.Xresources"))
+    let s:xresources = filter(s:xresources,
+    \                         'v:val !~# "^\s+$" && v:val !~# "^\s*!"')
+    let s:rdb = {}
+    for s:line in s:xresources
+        let s:ml = matchlist(s:line, '\v^([^:]*)\s*:\s*(.*)$')
+        if !empty(s:ml)
+            let s:rdb[s:ml[1]] = s:ml[2]
+        endif
+    endfor
+    let g:xmoria_terminal_foreground = get(s:rdb, '*foreground', '')
+    let g:xmoria_terminal_background = get(s:rdb, '*background', '')
     let g:xmoria_terminal_colors = [
-    \   '#404040',
-    \   '#ee2c2c',
-    \   '#90e090',
-    \   '#e0e000',
-    \   '#334b7d',
-    \   '#d7a0d7',
-    \   '#7ee0ce',
-    \   '#d0d0a0',
-    \   '#606060',
-    \   '#f09479',
-    \   '#87df71',
-    \   '#e8b87e',
-    \   '#00a0af',
-    \   '#6381be',
-    \   '#7ec0ee',
-    \   '#e8b87e',
+    \   get(s:rdb, '*color0', ''),
+    \   get(s:rdb, '*color1', ''),
+    \   get(s:rdb, '*color2', ''),
+    \   get(s:rdb, '*color3', ''),
+    \   get(s:rdb, '*color4', ''),
+    \   get(s:rdb, '*color5', ''),
+    \   get(s:rdb, '*color6', ''),
+    \   get(s:rdb, '*color7', ''),
+    \   get(s:rdb, '*color8', ''),
+    \   get(s:rdb, '*color9', ''),
+    \   get(s:rdb, '*color10', ''),
+    \   get(s:rdb, '*color11', ''),
+    \   get(s:rdb, '*color12', ''),
+    \   get(s:rdb, '*color13', ''),
+    \   get(s:rdb, '*color14', ''),
+    \   get(s:rdb, '*color15', ''),
     \]
+    unlet s:xresources s:line s:ml s:rdb
 
     colorscheme xmoria
 else
