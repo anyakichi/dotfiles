@@ -10,9 +10,10 @@ color quoted color116 default
 color quoted1 color113 default
 color quoted2 color182 default
 color signature color182 default
-color indicator color116 blue
-color error white red
-color status color252 color60
+color indicator default brightwhite
+#color indicator color116 color20
+color error brightcolor255 red
+color status default blue
 #color tree magenta default
 #color tilde magenta default
 #color message brightyellow default

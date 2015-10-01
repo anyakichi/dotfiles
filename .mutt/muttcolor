@@ -1,11 +1,11 @@
 #!/bin/sh
 
-file=color.rc
+file=colors/color.rc
 
 case "$TERM" in
-	*-256color)
-		file=color256.rc
-		;;
+    *-256color)
+        file=colors/xmoria
+        ;;
 esac
 
 echo ~/.mutt/$file
