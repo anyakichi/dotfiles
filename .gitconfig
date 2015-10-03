@@ -1,0 +1,8 @@
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+[push]
+	default = simple
+[include]
+	path = ~/.gitconfig.user
