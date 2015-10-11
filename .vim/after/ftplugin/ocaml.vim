@@ -6,7 +6,7 @@ let b:did_ftplugin_after = 1
 call ocpindex#init()
 
 setlocal shiftwidth=2
-setlocal comments=s1:(*,mb:*,ex:*)
+setlocal comments=fb:(**,fb:(*
 setlocal commentstring=(*%s*)
 
 nmap <buffer> K         <Plug>(ocpindex-echo-type)
