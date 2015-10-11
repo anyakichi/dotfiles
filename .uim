@@ -44,10 +44,10 @@
 (define mozc-keyboard-type-for-kana-input-method 'us-keyboard)
 
 ;; custom-mozc-keys.scm
-(define mozc-on-key '("<IgnoreCase><Control>j"))
-(define mozc-on-key? (make-key-predicate '("<IgnoreCase><Control>j")))
-(define mozc-off-key '("<IgnoreCase>l"))
-(define mozc-off-key? (make-key-predicate '("<IgnoreCase>l")))
+(define mozc-on-key '("zenkaku-hankaku" "<IgnoreCase><Control>j" "Private2"))
+(define mozc-on-key? (make-key-predicate '("zenkaku-hankaku" "<IgnoreCase><Control>j" "Private2")))
+(define mozc-off-key '("zenkaku-hankaku" "<IgnoreCase>l" "Private1"))
+(define mozc-off-key? (make-key-predicate '("zenkaku-hankaku" "<IgnoreCase>l" "Private1")))
 
 ;; custom-skk.scm
 (define skk-widgets '(widget_skk_input_mode))
