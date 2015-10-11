@@ -11,6 +11,9 @@ case $(uname) in
         PATH=${PATH}:/bin:/sbin:/usr/bin:/usr/sbin
         PATH=${PATH}:/usr/X11R7/bin:/usr/games
         ;;
+    Darwin)
+        PATH=/opt/pkg/bin:/opt/pkg/sbin:${PATH}
+        ;;
     *)
         # /usr/pkg/sbin is required because pkg_install is there.
         PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
