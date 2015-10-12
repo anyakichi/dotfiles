@@ -37,6 +37,7 @@ try
     NeoBundleLazy 'https://github.com/anyakichi/csapprox.git',
     \             'performance-tuning',
     \             {'autoload': {'commands': ['CSApprox']}}
+    NeoBundle 'https://github.com/cohama/agit.vim'
     NeoBundle 'https://github.com/anyakichi/ocp-indent-vim.git'
     NeoBundle 'https://github.com/anyakichi/taskpaper.vim.git'
     NeoBundle 'https://github.com/anyakichi/vim-autoclose'
