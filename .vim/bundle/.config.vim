@@ -23,7 +23,8 @@ try
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
     NeoBundle 'FromtonRouge/OmniCppComplete'
-    NeoBundle 'Shougo/vimproc', {'build': 'make'}
+    NeoBundle 'Shougo/unite-outline'
+    NeoBundle 'Shougo/vimproc', {'build': 'make || gmake'}
     NeoBundle 'SirVer/ultisnips'
     NeoBundle 'anyakichi/ocp-indent-vim'
     NeoBundle 'anyakichi/taskpaper.vim'
@@ -42,7 +43,6 @@ try
     NeoBundle 'benmills/vimux'
     NeoBundle 'chriskempson/vim-tomorrow-theme'
     NeoBundle 'cohama/agit.vim'
-    NeoBundle 'h1mesuke/unite-outline'
     NeoBundle 'h1mesuke/vim-alignta'
     NeoBundle 'honza/vim-snippets'
     NeoBundle 'jamessan/vim-gnupg'
