@@ -3,10 +3,18 @@
 /.*_history
 /.ICEauthority
 /.Xauthority
+/.adobe/*
 /.cache/*
+/.chpwd-recent-dirs
 /.dbus/*
 /.dmrc
+/.dropbox-dist/*
+/.dropbox/*
+/.dvdcss/*
+/.gstreamer-*/*
 /.local/*
+/.macromedia/*
+/.mono/*
 /.mozc/*
 /.mozilla/*
 /.mutt/cache/*
@@ -21,4 +29,5 @@
 /.xfce4-session.verbose-log*
 /.xsession-errors*
 /.zcompdump
+*.local
 *_local
