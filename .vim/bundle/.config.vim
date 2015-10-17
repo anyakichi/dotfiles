@@ -51,6 +51,7 @@ try
     NeoBundle 'kana/vim-operator-user'
     NeoBundle 'kana/vim-textobj-indent'
     NeoBundle 'kana/vim-textobj-user'
+    NeoBundle 'lambdalisue/vim-unified-diff'
     NeoBundle 'leafgarland/typescript-vim'
     NeoBundle 'ludovicchabant/vim-lawrencium'
     NeoBundle 'mattn/calendar-vim'

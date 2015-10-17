@@ -959,6 +959,11 @@ function! s:vim_enter_hook()
 
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
+
+    " unified_diff.vim
+    if exists('g:unified_diff#executable')
+        set diffexpr=unified_diff#diffexpr()
+    endif
 endfunction
 
 function! s:buffer_hook()
