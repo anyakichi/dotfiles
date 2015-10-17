@@ -1,0 +1,46 @@
+snippet main "main() (main)" t
+int
+main(int argc, char *argv[])
+{
+	${VISUAL}${0}
+	return 0;
+}
+endsnippet
+
+snippet for "for loop (for)" t
+for (${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet fori "for int loop (fori)" t
+for (${4:int} ${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet eli "else if .. (eli)" t
+else if (${1:/* condition */}) {
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet st "struct" t
+struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`} {
+	${0:/* data */}
+};
+endsnippet
+
+snippet fun "function" bt
+${1:void}
+${2:function_name}(${3})
+{
+	${VISUAL}${0}
+}
+endsnippet
+
+snippet fund "function declaration" bt
+${1:void} ${2:function_name}(${3});
+endsnippet
+
+# vim:ft=snippets:
