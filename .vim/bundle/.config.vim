@@ -23,8 +23,8 @@ try
 
     NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
     NeoBundle 'FromtonRouge/OmniCppComplete'
-    NeoBundle 'MarcWeber/vim-addon-mw-utils'
     NeoBundle 'Shougo/vimproc', {'build': 'make'}
+    NeoBundle 'SirVer/ultisnips'
     NeoBundle 'anyakichi/ocp-indent-vim'
     NeoBundle 'anyakichi/taskpaper.vim'
     NeoBundle 'anyakichi/vim-autoclose'
@@ -42,9 +42,9 @@ try
     NeoBundle 'benmills/vimux'
     NeoBundle 'chriskempson/vim-tomorrow-theme'
     NeoBundle 'cohama/agit.vim'
-    NeoBundle 'garbas/vim-snipmate'
     NeoBundle 'h1mesuke/unite-outline'
     NeoBundle 'h1mesuke/vim-alignta'
+    NeoBundle 'honza/vim-snippets'
     NeoBundle 'jamessan/vim-gnupg'
     NeoBundle 'jason0x43/vim-js-indent'
     NeoBundle 'kana/vim-fakeclip'
@@ -60,7 +60,6 @@ try
     NeoBundle 'thinca/vim-ref'
     NeoBundle 'thinca/vim-textobj-comment'
     NeoBundle 'thinca/vim-visualstar'
-    NeoBundle 'tomtom/tlib_vim'
     NeoBundle 'tpope/vim-capslock'
     NeoBundle 'tpope/vim-fugitive'
     NeoBundle 'tpope/vim-repeat'

@@ -570,9 +570,6 @@ let g:skk_kata_mode_string = 'ア'
 let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
-" snipmate.vim
-let g:snips_author = 'INAJIMA Daisuke'
-
 " surround.vim
 nmap s <Plug>Ysurround
 nmap ss <Plug>Yssurround
@@ -589,6 +586,11 @@ let g:use_xhtml = 1
 " twitvim.vim
 let g:twitvim_enable_python = 1
 nmap [Space]t :PosttoTwitter<CR>
+
+" ultisnips
+let g:UltiSnipsExpandTrigger = "<C-]>"
+let g:UltiSnipsJumpForwardTrigger = "<C-i>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-o>"
 
 " unite.vim
 let g:unite_source_outline_cache_limit = 1000000
@@ -957,20 +959,6 @@ function! s:vim_enter_hook()
 
     " skk.vim
     inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
-
-    " snipmate.vim
-    inoremap <silent> <expr> <C-]> pumvisible() ?
-    \                   "\<C-]>" :
-    \                   "\<C-r>=TriggerSnippet(" .
-    \                       "<SID>compkey(\"\\<lt>C-x>\\<lt>C-]>\"), 1)\<CR>"
-    inoremap <silent> <expr> <Tab> pumvisible() ?
-    \                   circomp#next() :
-    \                   "\<C-r>=TriggerSnippet(\"\\<Tab>\", 0)\<CR>"
-    snoremap <silent> <C-]> <Esc>i<Right><C-r>=TriggerSnippet("\<C-]>", 1)<CR>
-    snoremap <silent> <Tab> <Esc>i<Right><C-r>=TriggerSnippet("\<Tab>", 0)<CR>
-    inoremap <silent> <S-Tab> <c-r>=BackwardsSnippet("\<S-Tab>")<CR>
-    snoremap <silent> <S-Tab>
-    \        <Esc>i<Right><C-r>=BackwardsSnippet("\<S-Tab>")<CR>
 endfunction
 
 function! s:buffer_hook()
