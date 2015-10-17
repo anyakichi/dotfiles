@@ -1,8 +1,37 @@
 [alias]
-	co = checkout
+	ba = branch -a
+	br = branch
 	ci = commit
-	st = status
+	co = checkout
+	d = diff
+	dc = diff --cached
+	dd = diff --cached
+	di = diff
+	dic = diff --cached
+	diffc = diff --cached
+	diffs = diff --stat
+	dl = difftool
+	ds = diff --stat
+	dv = difftool
+	dw = diff --word-diff
+	fp = fetch --prune
+	sh = show
+	showw = show --word-diff
+	shw = show --word-diff
+	st = status -sb
+[core]
+	quotepath = false
+[diff]
+	algorithm = histogram
+	tool = vimdiff
+[pull]
+	rebase = true
 [push]
 	default = simple
+[rebase]
+	autosquash = true
+	autostash = true
+[tag]
+	sort = version:refname
 [include]
 	path = ~/.gitconfig.local
