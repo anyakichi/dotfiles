@@ -579,6 +579,15 @@ nmap gsgs <Plug>Ygssurround
 nmap gss <Plug>Ygssurround
 nmap gS <Plug>Ygsurround$
 
+" taskpaper.vim
+nnoremap <buffer> <Leader>tn :call taskpaper#toggle_tag('next', '')<CR>
+nnoremap <buffer> <Leader>tw :call taskpaper#toggle_tag('wait')<CR>
+nnoremap <buffer> <Leader>tq :call taskpaper#update_tag('priority')<CR>
+nnoremap <buffer> <Leader>tN
+\       :<C-u>call taskpaper#search('\<@next\>')<CR>
+nnoremap <buffer> <Leader>tW
+\       :<C-u>call taskpaper#search('\<@wait\>')<CR>
+
 " tohtml.vim
 let g:html_use_css = 1
 let g:use_xhtml = 1
