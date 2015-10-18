@@ -538,6 +538,7 @@ nmap <Leader>e <Plug>(quickrun-op)
 nmap <silent> <Leader>ee :QuickRun1<CR>
 
 " ref.vim
+let g:ref_man_cmd = 'man'
 let g:ref_detect_filetype = {'_': 'man'}
 let g:ref_no_default_key_mappings = 1
 
