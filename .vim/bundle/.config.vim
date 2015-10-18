@@ -73,6 +73,8 @@ try
     NeoBundleLazy 'anyakichi/skk.vim',{'autoload': {'functions': ['SkkToggle']}}
     NeoBundleLazy 'Shougo/unite.vim', {'autoload': {'commands': ['Unite']}}
 
+    NeoBundleLocal ~/src/vim-plugins
+
     call neobundle#end()
 catch
     " echo 'Install neobundle.vim to get plugins'
