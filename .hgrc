@@ -29,7 +29,7 @@ cmd.vimdiff = vim
 opts.vimdiff = -f '+next' '+execute "DirDiff" argv(0) argv(1)'
 
 [pager]
-pager = LESS='FMXR' less
+pager = LESS='FMRX' less
 quiet = True
 attend = annotate, cat, diff, export, help, glog, log, qdiff, qseries, \
          show, status
