@@ -2,23 +2,23 @@
 	ba = branch -a
 	br = branch
 	ci = commit
+	cia = commit --amend
+	ciaa = commit --amend --reset-author
 	co = checkout
-	d = diff
-	dc = diff --cached
-	dd = diff --cached
 	di = diff
 	dic = diff --cached
 	diffc = diff --cached
 	diffs = diff --stat
-	dl = difftool
-	ds = diff --stat
-	dv = difftool
-	dw = diff --word-diff
+	difft = difftool
+	diffw = diff --word-diff
+	dis = diff --stat
+	dit = difftool
+	diw = diff --word-diff
 	fp = fetch --prune
 	sh = show
 	showw = show --word-diff
 	shw = show --word-diff
-	st = status -sb
+	st = status
 [core]
 	quotepath = false
 [diff]
@@ -33,5 +33,8 @@
 	autostash = true
 [tag]
 	sort = version:refname
+[status]
+	branch = true
+	short = true
 [include]
 	path = ~/.gitconfig.local
