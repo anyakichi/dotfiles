@@ -5,6 +5,7 @@
 	cia = commit --amend
 	ciaa = commit --amend --reset-author
 	co = checkout
+	com = checkout master
 	di = diff
 	dic = diff --cached
 	diffc = diff --cached
@@ -15,6 +16,7 @@
 	dit = difftool
 	diw = diff --word-diff
 	fp = fetch --prune
+	glog = log --graph --oneline --decorate
 	sh = show
 	showw = show --word-diff
 	shw = show --word-diff
