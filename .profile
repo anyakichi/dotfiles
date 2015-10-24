@@ -33,4 +33,7 @@ export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
 export PERL_BADLANG=0
 
+# Non-standard options
+export TMUX_NO_UTF8_ACS=1
+
 [ -f ~/.profile_local ] && . ~/.profile_local
