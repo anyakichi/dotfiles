@@ -9,7 +9,7 @@ start_gpgagent()
 
     which gpg-agent >/dev/null 2>&1 || return
 
-    _info="${HOME}/.config/gpg-agent-info"
+    _info="${HOME}/.cache/gpg-agent-info"
 
     if ! gpg-connect-agent /bye >/dev/null 2>&1; then
         # gnupg 2.0 does not start gpg-agent at gpg-connect-agent.
