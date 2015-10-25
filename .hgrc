@@ -17,6 +17,7 @@ color =
 convert =
 extdiff =
 graphlog =
+histedit =
 mq =
 pager =
 progress =
