@@ -92,6 +92,9 @@ set pastetoggle=<C-q>
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 set tags=./tags;/
 
+" Spell checking
+set spelllang=en,cjk
+
 " Cscope
 set cscopetag
 set cscopetagorder=1
@@ -332,7 +335,7 @@ map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
-nnoremap <silent> [Space]z :<C-u>set spell! spell?<CR>
+nnoremap <silent> [Space]z :<C-u>setlocal spell! spell?<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]c :<C-u>call <SID>toggle_cc()<CR>
@@ -406,8 +409,9 @@ augroup MyAutoCmd
     \   setlocal et
     autocmd FileType docbk,eruby,html,markdown,ocaml,ruby,scheme,tex,xhtml,xml
     \   setlocal sw=2
+    autocmd FileType gitcommit,mail,rst,text
+    \   setlocal spell tw=72
     autocmd FileType python             setlocal fo-=t sts=0
-    autocmd FileType mail               setlocal tw=72
     autocmd FileType taskpaper          setlocal sw=2 ts=2
     autocmd FileType typescript         setlocal sw=4
     autocmd FileType vimwiki            setlocal fo+=mB
