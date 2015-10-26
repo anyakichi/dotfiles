@@ -53,6 +53,7 @@ alias grep='egrep'
 which vim > /dev/null 2>&1 && alias vi=vim
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
+which open >/dev/null 2>&1 || alias open=xdg-open
 
 if [[ -n "${STY}" ]] then
     alias ssh=ssh-screen
