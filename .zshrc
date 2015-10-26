@@ -142,6 +142,7 @@ bindkey '^]' insert-last-word
 bindkey '^[u' undo
 bindkey '^[r' redo
 
+
 #
 # Plugins
 #
@@ -149,8 +150,7 @@ autoload -Uz add-zsh-hook colors compinit is-at-least zmv
 compinit
 colors
 
-
-# cdr: it must be loaded before zaw to use zaw-cdr
+## cdr: it must be loaded before zaw to use zaw-cdr
 autoload -Uz cdr chpwd_recent_dirs
 
 zstyle ':chpwd:*' recent-dirs-default true
@@ -160,8 +160,7 @@ zstyle ':completion:*' recent-dirs-insert always
 
 add-zsh-hook chpwd chpwd_recent_dirs
 
-
-# antigen
+## antigen
 if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
     ADOTDIR=$HOME/.zsh/antigen
     source $ADOTDIR/antigen.zsh
@@ -171,22 +170,19 @@ if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
     antigen apply
 fi
 
-
-# edit-command-line
+## edit-command-line
 autoload -Uz edit-command-line
 zle -N edit-command-line
 
 bindkey '^Xe' edit-command-line
 bindkey '^X^E' edit-command-line
 
-
-# factorize-last-two-args
+## factorize-last-two-args
 autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
 
-
-# modify-current-argument
+## modify-current-argument
 autoload -Uz modify-current-argument
 
 quote-current-word-in-single() { modify-current-argument '${(qq)${(Q)ARG}}' }
@@ -198,15 +194,13 @@ zle -N quote-current-word-in-double
 bindkey "^S'" quote-current-word-in-single
 bindkey '^S"' quote-current-word-in-double
 
-
-# select-word-style
+## select-word-style
 autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars " /:@+|"
 zstyle ':zle:*' word-style unspecified
 
-
-# vcs_info
+## vcs_info
 autoload -Uz vcs_info
 
 zstyle ':vcs_info:*' max-exports 4
@@ -215,8 +209,7 @@ zstyle ':vcs_info:*' actionformats '%s' '%b|%a' '%R'
 
 add-zsh-hook precmd vcs_info
 
-
-# zaw
+## zaw
 autoload -Uz filter-select
 filter-select -i
 
