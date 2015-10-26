@@ -8,10 +8,6 @@
 	com = checkout master
 	di = diff
 	dic = diff --cached
-	diffc = diff --cached
-	diffs = diff --stat
-	difft = difftool
-	diffw = diff --word-diff
 	dis = diff --stat
 	dit = difftool
 	diw = diff --word-diff
@@ -20,6 +16,8 @@
 	sh = show
 	showw = show --word-diff
 	shw = show --word-diff
+	sp = stash pop
+	ss = stash
 	st = status
 [core]
 	quotepath = false
