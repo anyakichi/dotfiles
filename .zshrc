@@ -71,7 +71,7 @@ alias -g S='|sort'
 alias -g T='|tail'
 alias -g W='|wc'
 alias -g X='|xargs'
-alias -g X='|xargs'
+alias -g X0='|xargs -0'
 alias -g N='>/dev/null'
 alias -g NN='>/dev/null 2>&1'
 
