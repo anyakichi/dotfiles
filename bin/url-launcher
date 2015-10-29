@@ -1,0 +1,4 @@
+#!/bin/sh
+
+which open >/dev/null 2>&1 && open "$@"
+which xdg-open >/dev/null 2>&1 && xdg-open "$@"
