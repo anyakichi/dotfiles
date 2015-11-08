@@ -75,11 +75,13 @@ bind index,pager B bounce-message
 bind index,pager F forward-message
 bind index,pager \c] next-unread-mailbox
 bind index,pager R group-reply
+bind index,pager E resend-message
 bind index,pager N search-opposite
 bind index,pager q quit
 
 bind index g first-entry
 bind index G last-entry
+bind index X decode-save
 
 bind pager g top
 bind pager G bottom
@@ -89,6 +91,9 @@ bind pager l next-undeleted
 bind pager h previous-undeleted
 bind pager <BackSpace> search-toggle
 
+bind attach i exit
+
+macro attach	  V "<pipe-entry>cat > ~/.cache/mutt/mail.html && url-launcher ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
 macro index,pager Y "<change-folder>?"	"show folder list"
 macro browser	  Y "<exit>"		"exit this menu"
