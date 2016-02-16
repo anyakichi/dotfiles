@@ -55,6 +55,7 @@ set ambiwidth=double
 set background=dark
 set cursorline
 set display=lastline
+set lazyredraw
 set notitle
 
 " Folding
