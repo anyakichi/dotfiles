@@ -42,6 +42,7 @@ set smartcase
 
 " Formatting
 set formatoptions=tcroqlmB
+let &formatoptions .= 'j'
 set textwidth=78
 
 " Completion
