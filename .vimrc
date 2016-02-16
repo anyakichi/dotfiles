@@ -158,7 +158,7 @@ endif
 highlight AnnoyingSpace ctermbg=236 guibg=#303030
 highlight link IdeographicSpace AnnoyingSpace
 highlight link RedundantSpace AnnoyingSpace
-highlight link UnexpandedTab AnnoyingSpace
+highlight link TabSpace AnnoyingSpace
 match IdeographicSpace /　/
 
 
@@ -422,11 +422,11 @@ augroup MyAutoCmd
     \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)')
     autocmd InsertEnter *
     \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)\%#\@!')
-    autocmd WinEnter,User *
+    autocmd BufEnter,User *
     \   if &expandtab
-    \|      call s:matchupdate_as('UnexpandedTab', '\t')
+    \|      call s:matchupdate_as('TabSpace', '\t')
     \|  else
-    \|      call s:matchdelete('UnexpandedTab')
+    \|      call s:matchupdate_as('TabSpace', '        ')
     \|  endif
 
     " View PDF in Vim.
