@@ -74,6 +74,11 @@ bind generic l next-page
 bind generic h previous-page
 bind generic N search-opposite
 
+bind attach i exit
+
+bind browser,index g first-entry
+bind browser,index G last-entry
+
 bind index,pager f next-page
 bind index,pager b previous-page
 bind index,pager H display-toggle-weed
@@ -84,11 +89,8 @@ bind index,pager \c] next-unread-mailbox
 bind index,pager R group-reply
 bind index,pager E resend-message
 bind index,pager N search-opposite
+bind index,pager X decode-save
 bind index,pager q quit
-
-bind index g first-entry
-bind index G last-entry
-bind index X decode-save
 
 bind pager g top
 bind pager G bottom
@@ -97,8 +99,6 @@ bind pager k previous-line
 bind pager l next-undeleted
 bind pager h previous-undeleted
 bind pager <BackSpace> search-toggle
-
-bind attach i exit
 
 macro attach	  V "<pipe-entry>cat > ~/.cache/mutt/mail.html && url-launcher ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
