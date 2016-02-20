@@ -1,81 +1,62 @@
 "
-" dot.config.vim:
-"       Configuration for vim bundle directory
+" .config.vim:
+"       Configuration for vim plugins
 "
 
-if has('vim_starting')
-    set runtimepath+=~/.vim/bundle/neobundle.vim
-endif
+call plug#begin(expand('~/.vim/bundle'))
 
-map [Space]<Space> [Load]
-nnoremap [Load] <Nop>
+Plug 'FromtonRouge/OmniCppComplete'
+Plug 'Shougo/unite-outline'
+Plug 'Shougo/unite.vim', {'on': 'Unite'}
+Plug 'SirVer/ultisnips'
+Plug 'anyakichi/csapprox', {'branch': 'performance-tuning', 'on': 'CSApprox'}
+Plug 'anyakichi/ocp-indent-vim'
+Plug 'anyakichi/skk.vim', {'on': '<Plug>(skk-toggle-im)'}
+Plug 'anyakichi/taskpaper.vim'
+Plug 'anyakichi/vim-autoclose'
+Plug 'anyakichi/vim-circomp'
+Plug 'anyakichi/vim-csutil'
+Plug 'anyakichi/vim-histsearch'
+Plug 'anyakichi/vim-ocp-index'
+Plug 'anyakichi/vim-qfutil'
+Plug 'anyakichi/vim-surround'
+Plug 'anyakichi/vim-tabutil'
+Plug 'anyakichi/vim-textobj-ifdef'
+Plug 'anyakichi/vim-textobj-kakko'
+Plug 'anyakichi/vim-textobj-subword'
+Plug 'anyakichi/vim-textobj-xbrackets'
+Plug 'benmills/vimux'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'cohama/agit.vim'
+Plug 'h1mesuke/vim-alignta'
+Plug 'honza/vim-snippets'
+Plug 'jamessan/vim-gnupg'
+Plug 'jason0x43/vim-js-indent'
+Plug 'kana/vim-fakeclip'
+Plug 'kana/vim-operator-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-user'
+Plug 'lambdalisue/vim-unified-diff'
+Plug 'leafgarland/typescript-vim'
+Plug 'ludovicchabant/vim-lawrencium'
+Plug 'mattn/calendar-vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'sjl/gundo.vim'
+Plug 'thinca/vim-quickrun'
+Plug 'thinca/vim-ref'
+Plug 'thinca/vim-textobj-comment'
+Plug 'thinca/vim-visualstar'
+Plug 'tpope/vim-capslock'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'vim-jp/autofmt'
+Plug 'vim-scripts/DrawIt'
+Plug 'vim-scripts/Mark--Karkat'
+Plug 'vim-scripts/a.vim'
+Plug 'vim-scripts/moria'
+Plug 'vim-scripts/utl.vim', {'on': 'Utl'}
+Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
+Plug 'w0ng/vim-hybrid'
+Plug 'will133/vim-dirdiff'
 
-try
-    call neobundle#begin(expand('~/.vim/bundle'))
-
-    NeoBundleFetch 'Shougo/neobundle.vim'
-
-    NeoBundle 'DrawIt'
-    NeoBundle 'Mark--Karkat'
-    NeoBundle 'a.vim'
-    NeoBundle 'moria'
-    NeoBundle 'utl.vim'
-
-    NeoBundle 'http://repo.or.cz/r/vcscommand.git', '', 'http'
-    NeoBundle 'FromtonRouge/OmniCppComplete'
-    NeoBundle 'Shougo/unite-outline'
-    NeoBundle 'Shougo/vimproc', {'build': 'make || gmake'}
-    NeoBundle 'SirVer/ultisnips'
-    NeoBundle 'anyakichi/ocp-indent-vim'
-    NeoBundle 'anyakichi/taskpaper.vim'
-    NeoBundle 'anyakichi/vim-autoclose'
-    NeoBundle 'anyakichi/vim-circomp'
-    NeoBundle 'anyakichi/vim-csutil'
-    NeoBundle 'anyakichi/vim-histsearch'
-    NeoBundle 'anyakichi/vim-ocp-index'
-    NeoBundle 'anyakichi/vim-qfutil'
-    NeoBundle 'anyakichi/vim-surround'
-    NeoBundle 'anyakichi/vim-tabutil'
-    NeoBundle 'anyakichi/vim-textobj-ifdef'
-    NeoBundle 'anyakichi/vim-textobj-kakko'
-    NeoBundle 'anyakichi/vim-textobj-subword'
-    NeoBundle 'anyakichi/vim-textobj-xbrackets'
-    NeoBundle 'benmills/vimux'
-    NeoBundle 'chriskempson/vim-tomorrow-theme'
-    NeoBundle 'cohama/agit.vim'
-    NeoBundle 'h1mesuke/vim-alignta'
-    NeoBundle 'honza/vim-snippets'
-    NeoBundle 'jamessan/vim-gnupg'
-    NeoBundle 'jason0x43/vim-js-indent'
-    NeoBundle 'kana/vim-fakeclip'
-    NeoBundle 'kana/vim-operator-user'
-    NeoBundle 'kana/vim-textobj-indent'
-    NeoBundle 'kana/vim-textobj-user'
-    NeoBundle 'lambdalisue/vim-unified-diff'
-    NeoBundle 'leafgarland/typescript-vim'
-    NeoBundle 'ludovicchabant/vim-lawrencium'
-    NeoBundle 'mattn/calendar-vim'
-    NeoBundle 'scrooloose/nerdcommenter'
-    NeoBundle 'sjl/gundo.vim'
-    NeoBundle 'thinca/vim-quickrun'
-    NeoBundle 'thinca/vim-ref'
-    NeoBundle 'thinca/vim-textobj-comment'
-    NeoBundle 'thinca/vim-visualstar'
-    NeoBundle 'tpope/vim-capslock'
-    NeoBundle 'tpope/vim-fugitive'
-    NeoBundle 'tpope/vim-repeat'
-    NeoBundle 'vim-jp/autofmt'
-    NeoBundle 'w0ng/vim-hybrid'
-    NeoBundle 'will133/vim-dirdiff'
-
-    NeoBundleLazy 'anyakichi/csapprox', 'performance-tuning',
-    \             {'autoload': {'commands': ['CSApprox']}}
-    NeoBundleLazy 'anyakichi/skk.vim',{'autoload': {'functions': ['SkkToggle']}}
-    NeoBundleLazy 'Shougo/unite.vim', {'autoload': {'commands': ['Unite']}}
-
-    NeoBundleLocal ~/src/vim-plugins
-
-    call neobundle#end()
-catch
-    " echo 'Install neobundle.vim to get plugins'
-endtry
+call plug#end()
