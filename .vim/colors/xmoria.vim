@@ -161,7 +161,7 @@ function! s:highlight(name, ...)
     endif
     let hi['ctermbg'] = s:color_map[bg][0]
 
-    let fg = get(hi, 'guifg', get(hi, 'guisp', 'NONE'))
+    let fg = get(hi, 'guifg', 'NONE')
     let fg = get(s:fgbg_map, fg, fg)
     if fg ==? g:xmoria_terminal_foreground && a:name !~# '^Diff.*'
         " Don't transparent Diff syntax that is apparently layered
