@@ -98,7 +98,7 @@ set path=.,/usr/include,/usr/pkg/include,/usr/local/include
 set tags=./tags;/
 
 " Spell checking
-set spelllang=en,cjk
+set spelllang=en_us,cjk
 
 " Cscope
 set cscopetag
@@ -340,7 +340,8 @@ map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
-nnoremap <silent> [Space]z :<C-u>setlocal spell! spell?<CR>
+nnoremap <silent> [Space]z :<C-u>call <SID>toggle_spell()<CR>
+nnoremap <silent> [Space]Z :<C-u>let b:spell = -1<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]c :<C-u>call <SID>toggle_cc()<CR>
@@ -415,11 +416,15 @@ augroup MyAutoCmd
     autocmd FileType docbk,eruby,html,markdown,ocaml,ruby,scheme,tex,xhtml,xml
     \   setlocal sw=2
     autocmd FileType gitcommit,mail,rst,text
-    \   setlocal spell tw=72
+    \   setlocal tw=72 | let b:spell = -1
     autocmd FileType python             setlocal fo-=t sts=0
     autocmd FileType taskpaper          setlocal sw=2 ts=2
     autocmd FileType typescript         setlocal sw=4
     autocmd FileType vimwiki            setlocal fo+=mB
+
+    " Spell checking
+    autocmd InsertEnter * let &l:spell = !!get(b:, 'spell', 0)
+    autocmd InsertLeave * let &l:spell = !(get(b:, 'spell', 0) - 1)
 
     " Syntax setup
     autocmd VimEnter,InsertLeave,User *
@@ -870,6 +875,12 @@ function! s:newxmlline()
     endif
     normal! dit
     return ''
+endfunction
+
+function! s:toggle_spell()
+    setlocal spell!
+    let b:spell = &l:spell
+    setlocal spell?
 endfunction
 
 function! s:toggle_fttag()
