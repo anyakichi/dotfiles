@@ -58,6 +58,9 @@ set display=lastline
 set lazyredraw
 set notitle
 
+" Diff
+set diffopt+=vertical
+
 " Folding
 set nofoldenable
 
