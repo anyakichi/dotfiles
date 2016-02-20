@@ -279,8 +279,8 @@ nnoremap q? q?
 " Quickfix
 nnoremap <silent> q\ :<C-u>call qfutil#toggle()<CR>
 
-nnoremap <silent> <C-j> :<C-u>call qfutil#next(v:count)<CR>
-nnoremap <silent> <C-k> :<C-u>call qfutil#previous(v:count)<CR>
+nnoremap <silent> <C-j> :<C-u>call <SID>c_j(v:count)<CR>
+nnoremap <silent> <C-k> :<C-u>call <SID>c_k(v:count)<CR>
 nnoremap <silent> g<C-j> :<C-u>call qfutil#last(v:count)<CR>
 nnoremap <silent> g<C-k> :<C-u>call qfutil#first(v:count)<CR>
 nmap <C-g><C-j> g<C-j>
@@ -827,6 +827,22 @@ endfunction
 
 function! s:insert_word_from_line(lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
+endfunction
+
+function! s:c_j(count)
+    if getqflist() == []
+        execute 'normal! ' . a:count . ']c'
+    else
+        call qfutil#next(a:count)
+    endif
+endfunction
+
+function! s:c_k(count)
+    if getqflist() == []
+        execute 'normal! ' . a:count . '[c'
+    else
+        call qfutil#previous(a:count)
+    endif
 endfunction
 
 function! s:p_ctrl_w()
