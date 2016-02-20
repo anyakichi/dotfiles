@@ -391,8 +391,12 @@ inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
 augroup MyAutoCmd
     autocmd!
 
+    " Cursor line
     autocmd WinLeave *                  setlocal nocursorline
     autocmd WinEnter,BufRead *          setlocal cursorline
+
+    " Window resize
+    autocmd VimResized *                wincmd =
 
     " Fix up settings after loading all plugins
     autocmd VimEnter *                  call s:vim_enter_hook()
