@@ -966,11 +966,10 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>ihn
 
     " capslock.vim
-    execute 'inoremap <expr> <C-l> pumvisible() ? "\<C-l>" : "' .
-    \                                  maparg("<Plug>CapsLockToggle", 'i') . '"'
+    imap <expr> <C-l> pumvisible() ? "\<C-l>" : "\<Plug>CapsLockToggle"
 
     " skk.vim
-    inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-r>=SkkToggle()\<CR>"
+    imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
 
     " unified_diff.vim
     if exists('g:unified_diff#executable')
