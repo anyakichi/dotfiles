@@ -3,7 +3,11 @@
 #       sh configuration
 #
 
-umask 022
+if [ $(id -u) = $(id -g) -a $(id -un) = $(id -gn) ]; then
+    umask 002
+else
+    umask 022
+fi
 
 case $(uname) in
     NetBSD)
