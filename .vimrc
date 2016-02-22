@@ -829,19 +829,23 @@ function! s:insert_word_from_line(lnum)
     return matchstr(getline(a:lnum), '\%' . virtcol('.') . 'v\%(\k\+\|.\)')
 endfunction
 
+function! s:qfmode_p()
+    return getqflist() != [] || getloclist(0) != []
+endfunction
+
 function! s:c_j(count)
-    if getqflist() == []
-        execute 'normal! ' . a:count . ']c'
-    else
+    if s:qfmode_p()
         call qfutil#next(a:count)
+    else
+        execute 'normal! ' . a:count . ']c'
     endif
 endfunction
 
 function! s:c_k(count)
-    if getqflist() == []
-        execute 'normal! ' . a:count . '[c'
-    else
+    if s:qfmode_p()
         call qfutil#previous(a:count)
+    else
+        execute 'normal! ' . a:count . '[c'
     endif
 endfunction
 
