@@ -67,7 +67,7 @@ set nofoldenable
 " Command line
 set history=1000
 set wildmenu
-set wildmode=list:longest,full
+set wildmode=longest,list,full
 
 " Visual mode
 set virtualedit=block
