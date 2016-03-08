@@ -247,6 +247,37 @@ my_rprompt()
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
+din()
+{
+    local workdir=/build
+    local e opts=()
+
+    for e in http_proxy https_proxy ftp_proxy no_proxy; do
+        if [[ -n ${(P)e} ]]; then
+            opts+=(-e ${e}=${(P)e})
+        fi
+    done
+
+    if [[ -d /srv/mirrors ]]; then
+        opts+=(-v /srv/mirrors:/srv/mirrors:ro)
+    fi
+
+    if [[ -d ~/.cache/buildenv ]]; then
+        opts+=(-v ~/.cache/buildenv:/cache)
+        opts+=(-e USE_CCACHE=yes)
+        opts+=(-e CCACHE_DIR=/cache/ccache)
+    fi
+
+    docker run -it --rm \
+        -v "$(pwd):${workdir}" \
+        -w "${workdir}" \
+        -h $(basename "$(pwd)") \
+        -e TZ=Asia/Tokyo \
+        -e BASH_ENV="${workdir}/.bashrc" \
+        ${opts} \
+        "$@"
+}
+
 ssh-screen() {
     screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
         -c "GPG_TTY=\$(tty) ssh $(printf "%q " "${@}")"
