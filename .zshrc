@@ -192,8 +192,8 @@ zle -N quote-current-word-in-single
 quote-current-word-in-double() { modify-current-argument '${(qqq)${(Q)ARG}}' }
 zle -N quote-current-word-in-double
 
-bindkey "^S'" quote-current-word-in-single
-bindkey '^S"' quote-current-word-in-double
+bindkey "^X'" quote-current-word-in-single
+bindkey '^X"' quote-current-word-in-double
 
 ## select-word-style
 autoload -Uz select-word-style
