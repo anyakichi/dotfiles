@@ -520,6 +520,12 @@ imap <C-l> <Plug>CapsLockToggle
 nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
+" fzf
+nnoremap <silent> ,, :<C-u>FZF<CR>
+nnoremap <silent> ,. :<C-u>FZF -q <C-r>=expand('%:t:r')<CR><CR>
+nnoremap <silent> ,t :<C-u>Tags<CR>
+nnoremap <silent> ,; :<C-u>History:<CR>
+
 " mark.vim
 highlight MarkWord1 ctermfg=16 ctermbg=116
 highlight MarkWord2 ctermfg=16 ctermbg=150

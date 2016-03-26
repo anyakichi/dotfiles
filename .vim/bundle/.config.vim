@@ -32,6 +32,8 @@ Plug 'h1mesuke/vim-alignta'
 Plug 'honza/vim-snippets'
 Plug 'jamessan/vim-gnupg'
 Plug 'jason0x43/vim-js-indent'
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'GOPATH=`pwd` go get github.com/junegunn/fzf/...'}
+Plug 'junegunn/fzf.vim'
 Plug 'kana/vim-fakeclip'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'
