@@ -95,7 +95,7 @@ set pastetoggle=<C-q>
 
 " File searching
 set path=.,/usr/include,/usr/pkg/include,/usr/local/include
-set tags=./tags;/
+set tags=./tags;/,~/.vim/tags/empty
 
 " Spell checking
 set spelllang=en_us,cjk
