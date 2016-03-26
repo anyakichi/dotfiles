@@ -100,6 +100,12 @@ set tags=./tags;/
 " Spell checking
 set spelllang=en_us,cjk
 
+" Grep
+if executable('ag')
+    set grepprg=ag\ --vimgrep\ --hidden\ $*
+    set grepformat=%f:%l:%c:%m
+endif
+
 " Cscope
 set cscopetag
 set cscopetagorder=1
