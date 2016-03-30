@@ -251,7 +251,8 @@ freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 din()
 {
     local workdir=/build
-    local e opts=()
+    local e opts
+    opts=()
 
     for e in http_proxy https_proxy ftp_proxy no_proxy; do
         if [[ -n ${(P)e} ]]; then
@@ -274,6 +275,7 @@ din()
         -w "${workdir}" \
         -h $(basename "$(pwd)") \
         -e TZ=Asia/Tokyo \
+        -e TERM=${TERM} \
         -e BASH_ENV="${workdir}/.bashrc" \
         ${opts} \
         "$@"
