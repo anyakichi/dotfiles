@@ -494,12 +494,6 @@ let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
 let g:alternateExtensions_M = "H"
 let g:alternateExtensions_m = "h"
 
-" alignta.vim
-nnoremap <silent> <Leader>as :Alignta! \S\+<CR>
-xnoremap <silent> <Leader>as :Alignta! \S\+<CR>
-nnoremap <Leader>al :Alignta!<Space>
-xnoremap <Leader>al :Alignta!<Space>
-
 " autofmt.vim
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
@@ -525,6 +519,10 @@ nnoremap <silent> ,, :<C-u>FZF<CR>
 nnoremap <silent> ,. :<C-u>FZF -q <C-r>=expand('%:t:r')<CR><CR>
 nnoremap <silent> ,t :<C-u>Tags<CR>
 nnoremap <silent> ,; :<C-u>History:<CR>
+
+" easy-align.vim
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " mark.vim
 highlight MarkWord1 ctermfg=16 ctermbg=116
