@@ -21,6 +21,7 @@
 	ss = stash
 	st = status
 [core]
+	pager = less -FRX
 	quotepath = false
 [diff]
 	algorithm = histogram
