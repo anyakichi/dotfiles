@@ -53,6 +53,7 @@ alias grep='egrep'
 which vim > /dev/null 2>&1 && alias vi=vim
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
+alias ag='ag --pager "less -FRX"'
 which open >/dev/null 2>&1 || alias open=xdg-open
 
 if [[ -n "${STY}" ]] then
