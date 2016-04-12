@@ -152,7 +152,7 @@ autoload -Uz add-zsh-hook colors compinit is-at-least zmv
 compinit
 colors
 
-## cdr: it must be loaded before zaw to use zaw-cdr
+## cdr
 autoload -Uz cdr chpwd_recent_dirs
 
 zstyle ':chpwd:*' recent-dirs-default true
@@ -166,8 +166,6 @@ add-zsh-hook chpwd chpwd_recent_dirs
 if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
     ADOTDIR=$HOME/.zsh/antigen
     source $ADOTDIR/antigen.zsh
-
-    antigen bundle anyakichi/zaw --branch=filter-fix
 
     antigen apply
 fi
@@ -210,27 +208,6 @@ zstyle ':vcs_info:*' formats '%s' '%b' '%R'
 zstyle ':vcs_info:*' actionformats '%s' '%b|%a' '%R'
 
 add-zsh-hook precmd vcs_info
-
-## zaw
-autoload -Uz filter-select
-filter-select -i
-
-bindkey -M filterselect '^V' quoted-insert
-bindkey -M filterselect '^Y' accept-search
-
-zstyle ':filter-select:highlight' error fg=196,bold
-zstyle ':filter-select:highlight' marked fg=111
-zstyle ':filter-select:highlight' matched underline
-zstyle ':filter-select:highlight' selected bg=238
-zstyle ':filter-select:highlight' title fg=110,bold
-zstyle ':filter-select' max-lines 3
-zstyle ':filter-select' case-insensitive yes
-zstyle ':filter-select' extended-search yes
-zstyle ':filter-select' rotate-list yes
-zstyle ':filter-select' use-cursor-line yes
-
-bindkey '^X^H' zaw-history
-bindkey '^_' zaw-cdr
 
 
 #
