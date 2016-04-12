@@ -293,6 +293,51 @@ ssh-tmux() {
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
+## fzf
+
+__fzf-quoted()
+{
+    local item
+
+    fzf-tmux -m | while read item; do
+        printf '%q ' "$item"
+    done
+    echo
+}
+
+fzf-file-widget()
+{
+    LBUFFER="${LBUFFER}$(__fzf-quoted)"
+    zle redisplay
+}
+zle -N fzf-file-widget
+
+fzf-cdr-widget()
+{
+    local dir
+
+    dir=$(cdr -l | sed 's/^[[:digit:]]*[[:space:]]*//' | fzf-tmux +m)
+    if [ -n "${dir}" ]; then
+        BUFFER="cd ${dir}"
+        zle accept-line
+    else
+        zle reset-prompt
+    fi
+}
+zle -N fzf-cdr-widget
+
+fzf-f-widget()
+{
+    if [[ -n "${BUFFER}" ]]; then
+        fzf-file-widget
+    else
+        fzf-cdr-widget
+    fi
+}
+zle -N fzf-f-widget
+
+bindkey '^_' fzf-f-widget
+
 
 #
 # Local configuration
