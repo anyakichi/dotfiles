@@ -23,7 +23,7 @@ case $(uname) in
         PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
         ;;
 esac
-export PATH=${HOME}/bin:${PATH}
+export PATH=${HOME}/bin:${HOME}/.fzf/bin:${PATH}
 
 export BLOCKSIZE=1k
 export COLORFGBG="default;default"
