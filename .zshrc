@@ -276,7 +276,7 @@ __fzf-quoted()
 {
     local item
 
-    find . -xdev 2>/dev/null | sed 1d | cut -b 3- | fzf-tmux -m | \
+    find . -mindepth 1 -xdev 2>/dev/null | cut -b 3- | fzf-tmux -m | \
     while read item; do
         printf '%q ' "$item"
     done
