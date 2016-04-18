@@ -3,7 +3,8 @@
 #       sh configuration
 #
 
-if [ $(id -u) = $(id -g) -a $(id -un) = $(id -gn) ]; then
+if [ $(id -u) = $(id -g) -a $(id -un) = $(id -gn) -a \
+     $(id -gn) = $(ls -ld ${HOME} | awk '{print $4}') ]; then
     umask 002
 else
     umask 022
