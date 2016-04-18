@@ -237,6 +237,10 @@ din()
         fi
     done
 
+    if [[ -f /etc/localtime ]]; then
+        opts+=(-v /etc/localtime:/etc/localtime:ro)
+    fi
+
     if [[ -d /srv/mirrors ]]; then
         opts+=(-v /srv/mirrors:/srv/mirrors:ro)
     fi
@@ -251,7 +255,6 @@ din()
         -v "$(pwd):${workdir}" \
         -w "${workdir}" \
         -h $(basename "$(pwd)") \
-        -e TZ=Asia/Tokyo \
         -e TERM=${TERM} \
         -e BASH_ENV="${workdir}/.bashrc" \
         ${opts} \
