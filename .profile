@@ -42,5 +42,7 @@ export QUOTING_STYLE=literal
 export FZF_DEFAULT_COMMAND="find . -xdev -type f 2>/dev/null | cut -b 3-"
 export FZF_DEFAULT_OPTS="--exact"
 
+export TMUX_NO_UTF8_ACS=1
+
 
 [ -f ~/.profile_local ] && . ~/.profile_local
