@@ -257,6 +257,7 @@ din()
         -h $(basename "$(pwd)") \
         -e TERM=${TERM} \
         -e BASH_ENV="${workdir}/.bashrc" \
+        ${DIN_OPTS} \
         ${opts} \
         "$@"
 }
