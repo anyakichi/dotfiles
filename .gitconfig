@@ -25,6 +25,7 @@
 	quotepath = false
 [diff]
 	algorithm = histogram
+	compactionHuristic = true
 	tool = vimdiff
 [push]
 	default = current
