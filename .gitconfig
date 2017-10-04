@@ -4,6 +4,7 @@
 	ci = commit
 	cia = commit --amend
 	ciaa = commit --amend --reset-author
+	cif = commit --fixup HEAD
 	co = checkout
 	com = checkout master
 	di = diff
