@@ -423,7 +423,7 @@ augroup MyAutoCmd
     " Additional settings for each file type
     autocmd FileType haskell,ocaml,python,ruby,sh,typescript,vim,zsh
     \   setlocal et
-    autocmd FileType docbk,eruby,html,markdown,ocaml,ruby,scheme,tex,xhtml,xml
+    autocmd FileType docbk,eruby,html,markdown,ocaml,rst,ruby,scheme,tex,xhtml,xml,yaml
     \   setlocal sw=2
     autocmd FileType gitcommit,mail,rst,text
     \   setlocal tw=72 | let b:spell = -1
