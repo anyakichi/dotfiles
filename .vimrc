@@ -83,6 +83,8 @@ set winminheight=0
 " Backup and swap
 set nobackup
 set directory=~/.vim/swap
+set undodir=~/.vim/undo
+set undofile
 
 " Timeouts
 set timeout
