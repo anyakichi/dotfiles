@@ -52,10 +52,12 @@ URxvt*fading:		15
 *color15:		#d0d0a0
 
 ! Fonts
-URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:size=10.5, xft:IPAGothic:size=10.5
+URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:pixelsize=14, xft:IPAGothic:pixelsize=14, xft:DejaVu Sans Mono:pixelsize=14, xft:Symbola:pixelsize=14
 URxvt*imFont:		-*-r-*-14-*
 URxvt*lineSpace:	2
 URxvt*letterSpace:	-1
+
+! Extensions
 URxvt*perl-ext-common:	default,clipboard,matcher,selection-to-clipboard
 URxvt*matcher.button:	1
 URxvt*url-launcher:	url-launcher
