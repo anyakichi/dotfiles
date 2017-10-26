@@ -228,22 +228,20 @@ freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 din()
 {
     local workdir=/build
-    local e opts
+    local i opts
     opts=()
 
-    for e in http_proxy https_proxy ftp_proxy no_proxy; do
-        if [[ -n ${(P)e} ]]; then
-            opts+=(-e ${e}=${(P)e})
+    for i in TERM http_proxy https_proxy ftp_proxy no_proxy; do
+        if [[ "${(P)i}" ]]; then
+            opts+=(-e "${i}=${(P)i}")
         fi
     done
 
-    if [[ -f /etc/localtime ]]; then
-        opts+=(-v /etc/localtime:/etc/localtime:ro)
-    fi
-
-    if [[ -d /srv/mirrors ]]; then
-        opts+=(-v /srv/mirrors:/srv/mirrors:ro)
-    fi
+    for i in /etc/localtime /etc/ssl/certs/ca-certificates.crt /srv/mirrors; do
+        if [[ -f "${i}" ]]; then
+            opts+=(-v "${i}:${i}:ro")
+        fi
+    done
 
     if [[ -d ~/.cache/buildenv ]]; then
         opts+=(-v ~/.cache/buildenv:/cache)
@@ -251,14 +249,16 @@ din()
         opts+=(-e CCACHE_DIR=/cache/ccache)
     fi
 
+    if [[ "${DIN_OPTS}" ]]; then
+        opts=("${opts[@]}" "${DIN_OPTS[@]}")
+    fi
+
     docker run -it --rm \
         -v "$(pwd):${workdir}" \
         -w "${workdir}" \
         -h $(basename "$(pwd)") \
-        -e TERM=${TERM} \
         -e BASH_ENV="${workdir}/.bashrc" \
-        ${DIN_OPTS} \
-        ${opts} \
+        "${opts[@]}" \
         "$@"
 }
 
