@@ -31,7 +31,7 @@ Plug 'cohama/agit.vim'
 Plug 'honza/vim-snippets'
 Plug 'jamessan/vim-gnupg'
 Plug 'jason0x43/vim-js-indent'
-Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'GOPATH=`pwd` go get -u github.com/junegunn/fzf/src/fzf'}
+Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': 'GOPATH=`pwd` go get -u github.com/junegunn/fzf'}
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-fakeclip'
