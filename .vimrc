@@ -181,6 +181,8 @@ command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
 
 command! -nargs=1 RegCopy call s:regcopy(<q-args>)
 
+command! -nargs=* -bang W call s:sudowrite(<bang>0, <f-args>)
+
 
 "
 " Mappings
@@ -781,6 +783,25 @@ function! s:regcopy(reg)
     else
         execute 'let' '@'.a:reg '= @@'
     endif
+endfunction
+
+function! s:sudowrite(bang, ...)
+    if a:0 == 0
+        let file = expand("%")
+    elseif a:0 == 1
+        let file = a:1
+    else
+        echohl ErrorMsg
+        echo 'Only one file name allowed'
+        echohl None
+        return
+    endif
+
+    if !a:bang && confirm("Write with sudo?", "&Yes\n&No") == 2
+        return
+    endif
+
+    execute 'w !sudo tee "' . file . '" >/dev/null'
 endfunction
 
 function! s:compkey(key)
