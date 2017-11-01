@@ -53,6 +53,7 @@ set pumheight=10
 " Appearance
 set ambiwidth=double
 set background=dark
+set colorcolumn=81
 set cursorline
 set display=lastline
 set lazyredraw
