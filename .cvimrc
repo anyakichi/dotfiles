@@ -1,0 +1,26 @@
+set noautofocus
+
+let barposition = "bottom"
+
+map <C-A-M-p> previousTab
+map <C-A-M-n> nextTab
+map a previousTab
+map s nextTab
+
+map z goBack
+map x goForward
+
+map d closeTab
+map u lastClosedTab
+
+map <C-f> scrollFullPageDown
+map <C-b> scrollFullPageUp
+
+map gr :source settings.configpath<CR>
+
+imap <C-h> deleteChar
+imap <C-o> editWithVim
+
+let homedirectory = "/home/inajima"
+let configpath = "~/.cvimrc"
+set localconfig
