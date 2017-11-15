@@ -18,6 +18,8 @@ map <C-b> scrollFullPageUp
 
 map gr :source settings.configpath<CR>
 
+map R reloadTabUncached
+
 imap <C-h> deleteChar
 imap <C-o> editWithVim
 
