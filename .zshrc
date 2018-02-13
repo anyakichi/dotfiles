@@ -238,7 +238,7 @@ din()
     done
 
     for i in /etc/localtime /etc/ssl/certs/ca-certificates.crt /srv/mirrors; do
-        if [[ -f "${i}" ]]; then
+        if [[ -e "${i}" ]]; then
             opts+=(-v "${i}:${i}:ro")
         fi
     done
