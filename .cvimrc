@@ -2,10 +2,10 @@ set noautofocus
 
 let barposition = "bottom"
 
-map <C-A-M-p> previousTab
-map <C-A-M-n> nextTab
 map a previousTab
 map s nextTab
+map <C-p> previousTab
+map <C-n> nextTab
 
 map z goBack
 map x goForward
