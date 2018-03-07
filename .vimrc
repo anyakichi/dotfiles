@@ -520,6 +520,7 @@ nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
 " fzf
+nnoremap <silent> <C-_> :<C-u>FZF<CR>
 nnoremap <silent> ,, :<C-u>FZF<CR>
 nnoremap <silent> ,. :<C-u>FZF -q <C-r>=expand('%:t:r')<CR><CR>
 nnoremap <silent> ,t :<C-u>Tags<CR>
