@@ -59,6 +59,7 @@ let s:color_map = map({
 \   '#1f3f81':  24,
 \   '#202020': 234,
 \   '#25365a':  23,
+\   '#262626': 235,
 \   '#2c2cee':  21,
 \   '#2ceeee':  51,
 \   '#2f4471':  23,
@@ -186,13 +187,13 @@ if &background == "dark"
     if s:xmoria_style == "dark"
         Hi Normal ctermbg=0 ctermfg=7 guibg=#202020 guifg=#d0d0d0 gui=none
 
-        Hi ColorColumn ctermbg=8 ctermfg=15 guibg=#494949 gui=none
+        Hi ColorColumn ctermbg=8 ctermfg=15 guibg=#262626 gui=none
         Hi CursorColumn ctermbg=8 ctermfg=15 guibg=#404040 gui=none
         Hi CursorLine ctermbg=8 ctermfg=15 guibg=#404040 gui=none
     elseif s:xmoria_style == "black"
         Hi Normal ctermbg=0 ctermfg=7 guibg=#000000 guifg=#d0d0d0 gui=none
 
-        Hi ColorColumn ctermbg=8 ctermfg=15 guibg=#444444 gui=none
+        Hi ColorColumn ctermbg=8 ctermfg=15 guibg=#202020 gui=none
         Hi CursorColumn ctermbg=8 ctermfg=15 guibg=#3a3a3a gui=none
         Hi CursorLine ctermbg=8 ctermfg=15 guibg=#3a3a3a gui=none
     endif
