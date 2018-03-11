@@ -430,7 +430,7 @@ augroup MyAutoCmd
     \   setlocal et
     autocmd FileType docbk,eruby,html,markdown,ocaml,rst,ruby,scheme,tex,xhtml,xml,yaml
     \   setlocal sw=2
-    autocmd FileType gitcommit,mail,rst,text
+    autocmd FileType asciidoc,gitcommit,mail,markdown,rst,tex,text
     \   setlocal tw=72 | let b:spell = -1
     autocmd FileType python             setlocal fo-=t sts=0
     autocmd FileType taskpaper          setlocal sw=2 ts=2
