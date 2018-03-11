@@ -1045,11 +1045,6 @@ function! s:vim_enter_hook()
 
     " skk.vim
     imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
-
-    " unified_diff.vim
-    if exists('g:unified_diff#executable')
-        set diffexpr=unified_diff#diffexpr()
-    endif
 endfunction
 
 function! s:buffer_hook()
