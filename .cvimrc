@@ -20,6 +20,10 @@ map gr :source settings.configpath<CR>
 
 map R reloadTabUncached
 
+map gz centerMatchH
+map gt centerMatchT
+map gb centerMatchB
+
 imap <C-h> deleteChar
 imap <C-o> editWithVim
 
