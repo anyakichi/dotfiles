@@ -1,0 +1,21 @@
+{
+    "name": "Chromium",
+    "percent": 0.62,
+    "type": "con",
+    "swallows": [
+	{
+	    "class": "^Chromium$"
+	}
+    ]
+}
+
+{
+    "name": "urxvt",
+    "percent": 0.38,
+    "type": "con",
+    "swallows": [
+	{
+	    "class": "^URxvt$"
+	}
+    ]
+}
