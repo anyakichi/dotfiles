@@ -33,6 +33,7 @@ start_gpgagent()
     fi
 
     export GPG_TTY=$(tty)
+    export PINENTRY_USER_DATA='USE_CURSES=1'
     gpg-connect-agent updatestartuptty /bye >/dev/null
 }
 
