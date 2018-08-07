@@ -1,6 +1,7 @@
 set noautofocus
 
 let barposition = "bottom"
+let fullpagescrollpercent = 95
 
 map a previousTab
 map s nextTab
