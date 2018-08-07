@@ -13,8 +13,8 @@ bind generic <C-f> scroll-page-down
 
 bind generic i view-close
 
-bind main R !git rebase -i %(commit)
-bind diff R !git rebase -i %(commit)
+bind main R !git rebase -i %(commit)^
+bind diff R !git rebase -i %(commit)^
 
 color cursor color234 color136
 color title-focus default color4 bold
