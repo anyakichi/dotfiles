@@ -283,6 +283,14 @@ ssh-tmux() {
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
+rg() {
+    if [[ -t 1 ]]; then
+        command rg -p "$@" | less -RMFXK
+    else
+        command rg "$@"
+    fi
+}
+
 ## fzf
 
 __fzf-quoted()
