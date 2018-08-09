@@ -1,8 +1,3 @@
-"
-" dot.vimrc:
-"       Vim configuration
-"
-
 scriptencoding utf-8
 
 source ~/.vim/bundle/.config.vim

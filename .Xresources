@@ -1,9 +1,4 @@
 !
-! .Xresources:
-!	X resources
-!
-
-!
 ! Xft
 !
 Xft.antialias:		1

@@ -1,9 +1,4 @@
 #
-# .zshrc:
-#       Zsh configuration
-#
-
-#
 # Include common settings
 #
 if [ -f ${HOME}/.shrc ]; then

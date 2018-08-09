@@ -1,8 +1,3 @@
-#
-# .shrc:
-#       Common part of .bashrc, .zshrc, etc.
-#
-
 stty -ixon
 stty status '^T' 2>/dev/null
 

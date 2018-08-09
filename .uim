@@ -1,8 +1,3 @@
-;;
-;; .uim:
-;;	uim configuration
-;;
-
 (require "japanese.scm")
 (require-module "mozc")
 (require-module "skk")
