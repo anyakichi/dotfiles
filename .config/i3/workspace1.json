@@ -4,7 +4,7 @@
     "type": "con",
     "swallows": [
 	{
-	    "class": "^Chromium$"
+	    "window_role": "^browser$"
 	}
     ]
 }
