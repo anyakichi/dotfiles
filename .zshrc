@@ -363,12 +363,6 @@ bindkey '^_' fzf-f-widget
 
 
 #
-# Local configuration
-#
-[ -f ~/.zshrc_local ] && source ~/.zshrc_local
-
-
-#
 # Completion
 #
 
@@ -405,3 +399,11 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # Misc completions
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:manuals' separate-sections true
+
+
+#
+# Local configuration
+#
+if [ -f ~/.zshrc_local ]; then
+    source ~/.zshrc_local
+fi
