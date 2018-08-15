@@ -198,6 +198,8 @@ zstyle ':zle:*' word-style unspecified
 ## vcs_info
 autoload -Uz vcs_info
 
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:git:*' formats '%b' '%m'
 zstyle ':vcs_info:git:*' actionformats '%b|%a' '%m'
 zstyle ':vcs_info:*' formats '%s:%b' '%m'
@@ -219,8 +221,9 @@ zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m'
 
 +vi-git-stash-count() {
     local count
-    count=$(command git stash list 2>/dev/null | wc -l)
-    if [[ ${count} -gt 0 ]]; then
+
+    if [[ -s $(command git rev-parse --git-dir)/refs/stash ]]; then
+        count=$(command git stash list 2>/dev/null | wc -l)
         hook_com[misc]+="%K{242}↶${count}%k"
     fi
 }
@@ -239,7 +242,7 @@ my_rprompt()
     local msg="%F{green}${vcs_info_msg_0_}%f" len=${#vcs_info_msg_0_}
     if [[ ${vcs_info_msg_1_} ]]; then
         msg="${msg} ${vcs_info_msg_1_}"
-        len=$((${len} + 1 + ${#vcs_info_msg_1_}))
+        len=$((${len} + 1 + ${#${vcs_info_msg_1_//(%K{*\}|%k)/}}))
     fi
     echo -n "${msg} %$(($COLUMNS - 16 - ${len}))<...<%~"
 }
