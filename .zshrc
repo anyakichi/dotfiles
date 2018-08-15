@@ -198,9 +198,10 @@ zstyle ':zle:*' word-style unspecified
 ## vcs_info
 autoload -Uz vcs_info
 
-zstyle ':vcs_info:*' max-exports 4
-zstyle ':vcs_info:*' formats '%s' '%b' '%R'
-zstyle ':vcs_info:*' actionformats '%s' '%b|%a' '%R'
+zstyle ':vcs_info:git:*' formats '%b'
+zstyle ':vcs_info:git:*' actionformats '%b|%a'
+zstyle ':vcs_info:*' formats '%s:%b'
+zstyle ':vcs_info:*' actionformats '%s:%b|%a'
 
 add-zsh-hook precmd vcs_info
 
@@ -211,11 +212,8 @@ add-zsh-hook precmd vcs_info
 
 my_rprompt()
 {
-    if [[ "$vcs_info_msg_2_" = "$HOME" || -z "$vcs_info_msg_2_" ]]; then
-        echo -n "%$(($COLUMNS - 15))<...<%~"
-    else
-        echo -n "%F{green}$vcs_info_msg_0_:$vcs_info_msg_1_%f %$(($COLUMNS - 25))<...<%~"
-    fi
+    local msg="${vcs_info_msg_0_}"
+    echo -n "%F{green}${msg}%f %$(($COLUMNS - 16 - ${#msg}))<...<%~"
 }
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
