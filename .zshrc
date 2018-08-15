@@ -198,10 +198,34 @@ zstyle ':zle:*' word-style unspecified
 ## vcs_info
 autoload -Uz vcs_info
 
-zstyle ':vcs_info:git:*' formats '%b'
-zstyle ':vcs_info:git:*' actionformats '%b|%a'
-zstyle ':vcs_info:*' formats '%s:%b'
-zstyle ':vcs_info:*' actionformats '%s:%b|%a'
+zstyle ':vcs_info:git:*' formats '%b' '%m'
+zstyle ':vcs_info:git:*' actionformats '%b|%a' '%m'
+zstyle ':vcs_info:*' formats '%s:%b' '%m'
+zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m'
+
++vi-git-left-right-count() {
+    local output left right
+    output=$(command git rev-list --left-right --count HEAD...@'{u}')
+    output=${(ps:\t:)output}
+    left=$output[0]
+    right=$output[1]
+    if [[ ${right} -gt 0 ]]; then
+        hook_com[misc]+="%K{28}⇡${right}%k"
+    fi
+    if [[ ${left} -gt 0 ]]; then
+        hook_com[misc]+="%K{88}⇣${left}%k"
+    fi
+}
+
++vi-git-stash-count() {
+    local count
+    count=$(command git stash list 2>/dev/null | wc -l)
+    if [[ ${count} -gt 0 ]]; then
+        hook_com[misc]+="%K{242}↶${count}%k"
+    fi
+}
+
+zstyle ':vcs_info:git+post-backend:*' hooks git-left-right-count git-stash-count
 
 add-zsh-hook precmd vcs_info
 
@@ -212,8 +236,12 @@ add-zsh-hook precmd vcs_info
 
 my_rprompt()
 {
-    local msg="${vcs_info_msg_0_}"
-    echo -n "%F{green}${msg}%f %$(($COLUMNS - 16 - ${#msg}))<...<%~"
+    local msg="%F{green}${vcs_info_msg_0_}%f" len=${#vcs_info_msg_0_}
+    if [[ ${vcs_info_msg_1_} ]]; then
+        msg="${msg} ${vcs_info_msg_1_}"
+        len=$((${len} + 1 + ${#vcs_info_msg_1_}))
+    fi
+    echo -n "${msg} %$(($COLUMNS - 16 - ${len}))<...<%~"
 }
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
