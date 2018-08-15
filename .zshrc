@@ -216,7 +216,7 @@ zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m'
 
     if [[ -s $(command git rev-parse --git-dir)/refs/stash ]]; then
         count=$(command git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+="%K{242}↶${count}%k"
+        hook_com[misc]+="%K{242}↶${count// /}%k"
     fi
 }
 
