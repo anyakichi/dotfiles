@@ -9,7 +9,7 @@ fi
 #
 # Parameters
 #
-PROMPT='%m%# '
+PROMPT='%m%(?..%F{red})%#%f '
 RPROMPT='$(my_rprompt)'
 
 DIRSTACKSIZE=20
