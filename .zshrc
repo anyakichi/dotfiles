@@ -157,14 +157,6 @@ zstyle ':completion:*' recent-dirs-insert always
 
 add-zsh-hook chpwd chpwd_recent_dirs
 
-## antigen
-if [[ -f $HOME/.zsh/antigen/antigen.zsh ]]; then
-    ADOTDIR=$HOME/.zsh/antigen
-    source $ADOTDIR/antigen.zsh
-
-    antigen apply
-fi
-
 ## edit-command-line
 autoload -Uz edit-command-line
 zle -N edit-command-line
@@ -231,6 +223,51 @@ zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m'
 zstyle ':vcs_info:git+post-backend:*' hooks git-left-right-count git-stash-count
 
 add-zsh-hook precmd vcs_info
+
+## antigen
+install_antigen()
+{
+    curl -L git.io/antigen > $HOME/.zsh/antigen.zsh
+}
+
+if [[ -f $HOME/.zsh/antigen.zsh ]]; then
+    source $HOME/.zsh/antigen.zsh
+
+    antigen bundle zsh-users/zsh-autosuggestions
+    antigen bundle zsh-users/zsh-completions
+    antigen bundle zsh-users/zsh-history-substring-search
+
+    # zsh-syntax-highlighting must be sourced after all ZLE widget created
+    antigen bundle zsh-users/zsh-syntax-highlighting
+
+    ZSH_AUTOSUGGEST_USE_ASYNC=1
+
+    typeset -A ZSH_HIGHLIGHT_STYLES
+    ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=9'
+    ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=12'
+    ZSH_HIGHLIGHT_STYLES[builtin]='fg=12'
+    ZSH_HIGHLIGHT_STYLES[function]='fg=6'
+    ZSH_HIGHLIGHT_STYLES[precommand]='fg=11'
+    ZSH_HIGHLIGHT_STYLES[path]='fg=10'
+    ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=10,underline'
+    ZSH_HIGHLIGHT_STYLES[globbing]='fg=none'
+    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=3'
+    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=10'
+    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=10'
+    ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=10'
+    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=5'
+    ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=11'
+    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=11'
+    ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=11'
+    ZSH_HIGHLIGHT_STYLES[arg0]='fg=default,bold'
+
+    bindkey -M emacs '^P' history-substring-search-up
+    bindkey -M emacs '^N' history-substring-search-down
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-down
+
+    antigen apply
+fi
 
 
 #
