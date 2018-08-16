@@ -201,14 +201,14 @@ zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m' '%R' '%S'
 +vi-git-left-right-count() {
     local output left right
     output=$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)
-    output=${(ps:\t:)output}
-    left=$output[0]
-    right=$output[1]
-    if [[ ${right} -gt 0 ]]; then
-        hook_com[misc]+="%K{28}⇡${right}%k"
-    fi
+    output=(${(ps:\t:)output})
+    left=$output[1]
+    right=$output[2]
     if [[ ${left} -gt 0 ]]; then
-        hook_com[misc]+="%K{88}⇣${left}%k"
+        hook_com[misc]+="%K{28}⇡${left}%k"
+    fi
+    if [[ ${right} -gt 0 ]]; then
+        hook_com[misc]+="%K{88}⇣${right}%k"
     fi
 }
 
