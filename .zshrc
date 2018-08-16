@@ -199,7 +199,7 @@ zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m'
 
 +vi-git-left-right-count() {
     local output left right
-    output=$(command git rev-list --left-right --count HEAD...@'{u}')
+    output=$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)
     output=${(ps:\t:)output}
     left=$output[0]
     right=$output[1]
