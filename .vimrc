@@ -638,6 +638,10 @@ function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
+function! EnableSkk()
+    imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
+endfunction
+
 function! MakeStatusLine()
     let s  = '%<%f %y'
     let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
@@ -995,9 +999,6 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>ih
     silent! iunmap <Leader>is
     silent! iunmap <Leader>ihn
-
-    " skk.vim
-    imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
 endfunction
 
 function! s:buffer_hook()
