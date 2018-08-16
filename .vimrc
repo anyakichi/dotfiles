@@ -376,6 +376,10 @@ inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
 inoremap <C-g><CR> <C-o>o
 inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 
+inoremap <C-g><C-l> <C-o>b<C-o>g~w<C-o>w<Right>
+inoremap <C-g>L <C-o>b<C-o>gUw<C-o>w<Right>
+inoremap <C-g>l <C-o>b<C-o>guw<C-o>w<Right>
+
 inoremap <expr> <C-g>= <SID>border_line('=')
 inoremap <expr> <C-g>- <SID>border_line('-')
 inoremap <expr> <C-g>~ <SID>border_line('~')
