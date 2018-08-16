@@ -5,9 +5,6 @@
 
 call plug#begin(expand('~/.vim/bundle'))
 
-Plug 'FromtonRouge/OmniCppComplete'
-Plug 'Shougo/unite-outline'
-Plug 'Shougo/unite.vim', {'on': 'Unite'}
 Plug 'SirVer/ultisnips'
 Plug 'anyakichi/csapprox', {'branch': 'performance-tuning', 'on': 'CSApprox'}
 Plug 'anyakichi/ocp-indent-vim'
@@ -26,7 +23,6 @@ Plug 'anyakichi/vim-textobj-kakko'
 Plug 'anyakichi/vim-textobj-subword'
 Plug 'anyakichi/vim-textobj-xbrackets'
 Plug 'benmills/vimux'
-Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'cohama/agit.vim'
 Plug 'eiiches/vim-ref-info'
 Plug 'hashivim/vim-vagrant'
@@ -43,16 +39,13 @@ Plug 'kana/vim-textobj-user'
 Plug 'lambdalisue/vim-unified-diff'
 Plug 'leafgarland/typescript-vim'
 Plug 'ludovicchabant/vim-lawrencium'
-Plug 'mattn/calendar-vim'
 Plug 'racer-rust/vim-racer'
 Plug 'rust-lang/rust.vim'
-Plug 'scrooloose/nerdcommenter'
 Plug 'sjl/gundo.vim'
 Plug 'thinca/vim-quickrun'
 Plug 'thinca/vim-ref'
 Plug 'thinca/vim-textobj-comment'
 Plug 'thinca/vim-visualstar'
-Plug 'tpope/vim-capslock'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'vim-jp/autofmt'
@@ -61,9 +54,7 @@ Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/Mark--Karkat'
 Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/moria'
-Plug 'vim-scripts/utl.vim', {'on': 'Utl'}
 Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
-Plug 'w0ng/vim-hybrid'
 Plug 'will133/vim-dirdiff'
 
 call plug#end()

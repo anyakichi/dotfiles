@@ -476,22 +476,6 @@ let g:CSApprox_approximator_cache_xterm = {
 \   'd0d0a0': 187, 'a4e57e': 150, '606060':  59, 'ffa500': 214, '00a0ff':  39,
 \   '494949': 238}
 
-" NERD_commenter
-let g:NERDCreateDefaultMappings = 0
-let g:NERDSpaceDelims = 1
-
-nmap <Leader>cc <Plug>NERDCommenterAlignLeft
-vmap <Leader>c  <Plug>NERDCommenterComment
-nmap <Leader>C  <Plug>NERDCommenterToEOL
-vmap <Leader>C  <Plug>NERDCommenterAlignLeft
-nmap <Leader>xm <Plug>NERDCommenterMinimal
-nmap <Leader>xs <Plug>NERDCommenterSexy
-vmap <Leader>xm <Plug>NERDCommenterMinimal
-vmap <Leader>xs <Plug>NERDCommenterSexy
-nmap <Leader>xa <Plug>NERDCommenterAltDelims
-nmap <Leader>u  <Plug>NERDCommenterUncomment
-vmap <Leader>u  <Plug>NERDCommenterUncomment
-
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
 let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
@@ -501,18 +485,6 @@ let g:alternateExtensions_m = "h"
 " autofmt.vim
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
-
-" calendar.vim
-let g:calendar_keys = {
-\   'close': '<Esc><Esc>',
-\   'goto_next_month': 'n',
-\   'goto_prev_month': 'p',
-\   'goto_next_year': 'N',
-\   'goto_prev_year': 'P'
-\}
-
-" capslock.vim
-imap <C-l> <Plug>CapsLockToggle
 
 " cecutil.vim
 nmap [Tab]= <Plug>SaveWinPosn
@@ -633,11 +605,6 @@ let g:UltiSnipsExpandTrigger = "<C-]>"
 let g:UltiSnipsJumpForwardTrigger = "<C-i>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-o>"
 
-" unite.vim
-let g:unite_source_outline_cache_limit = 1000000
-
-nnoremap [Space]uo :<C-u>Unite outline<CR>
-
 " vcscommand.vim
 let g:VCSCommandMapPrefix = '<Leader>v'
 let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
@@ -656,13 +623,6 @@ xmap <silent> [Space]R  :<C-u>call <SID>vimux_send('V')<CR>
 function! s:vimux_send(type)
     call s:do_opfunc(a:type, 'VimuxRunCommand', 0)
 endfunction
-
-" vimwiki.vim
-let g:vimwiki_list = [
-\   { 'path': '~/vimwiki', 'path_html': '~/Web/wiki', 'auto_export': 1 }
-\]
-let g:vimwiki_badsyms = ' '
-let g:vimwiki_hl_headers = 1
 
 " visualstar.vim
 xmap <silent> *  <Plug>(visualstar-*):set hlsearch<CR>
@@ -692,9 +652,6 @@ function! MakeStatusLine()
     let extra = ''
     if exists("*SkkGetModeStr")
         let extra .= SkkGetModeStr()
-    endif
-    if exists("*CapsLockStatusline")
-        let extra .= CapsLockStatusline()
     endif
     if extra !~ '^\s*$'
         let s .= extra . ' '
@@ -1038,9 +995,6 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>ih
     silent! iunmap <Leader>is
     silent! iunmap <Leader>ihn
-
-    " capslock.vim
-    imap <expr> <C-l> pumvisible() ? "\<C-l>" : "\<Plug>CapsLockToggle"
 
     " skk.vim
     imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
