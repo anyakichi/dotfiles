@@ -283,7 +283,7 @@ my_rprompt()
         len=$((${len} + 1 + ${#${vcs_info_msg_1_//(%K{*\}|%k)/}}))
     fi
     if [[ ${vcs_info_msg_2_} ]]; then
-        path="${vcs_info_msg_2_/#${HOME}/~}"
+        path="${vcs_info_msg_2_/#${HOME:A}/~}"
         if [[ ${vcs_info_msg_3_} && ${vcs_info_msg_3_} != "." ]]; then
             path="%F{green}${path}/%f${vcs_info_msg_3_}"
         else
