@@ -19,25 +19,20 @@ case $(uname) in
         PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
         ;;
 esac
-export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${HOME}/.fzf/bin:${PATH}
+export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH}
 
 export BLOCKSIZE=1k
-export COLORFGBG="default;default"
 export CVS_RSH=ssh
 export EDITOR=vim
 export LANG=en_US.UTF-8
 export LC_COLLATE=C
 export LESS=-cMR
-export MAIL=${HOME}/Mail
 export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
-export PERL_BADLANG=0
 export QUOTING_STYLE=literal
 
 export FZF_DEFAULT_COMMAND="find . -xdev -type f 2>/dev/null | cut -b 3-"
 export FZF_DEFAULT_OPTS="--exact"
-
-export TMUX_NO_UTF8_ACS=1
 
 
 [ -f ~/.profile_local ] && . ~/.profile_local
