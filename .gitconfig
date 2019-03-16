@@ -44,7 +44,6 @@
 	quotepath = false
 [diff]
 	algorithm = histogram
-	compactionHuristic = true
 	tool = vimdiff
 [pager]
 	status = true
