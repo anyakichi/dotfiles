@@ -525,14 +525,6 @@ nmap <silent> <Esc><Esc> <Plug>MarkAllClear:set nohlsearch<CR>
 " matchit.vim
 source $VIMRUNTIME/macros/matchit.vim
 
-" omnicppcomplete.vim
-let g:OmniCpp_ShowPrototypeInAbbr = 1
-let g:OmniCpp_MayCompleteArrow = 0
-let g:OmniCpp_MayCompleteDot = 0
-let g:OmniCpp_MayCompleteNamespace = 0
-let g:OmniCpp_MayCompleteScope = 0
-let g:OmniCpp_SelectFirstItem = 2
-
 " qfutil.vim
 let g:qfutil_default_grep_file = '%:h'
 
