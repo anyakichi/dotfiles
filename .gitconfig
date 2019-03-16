@@ -28,6 +28,11 @@
 	qrm = !guilt rm
 	qseries = !guilt series
 	qstatus = !guilt status
+	rb = rebase
+	rbi = rebase -i
+	rbim = rebase -i origin/master
+	rbiu = rebase -i @{u}
+	rbm = rebase master
 	sh = show
 	showw = show --word-diff
 	shw = show --word-diff
