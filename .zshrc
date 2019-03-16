@@ -52,6 +52,8 @@ alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
 which open >/dev/null 2>&1 || alias open=xdg-open
 
+alias din='din ${DIN_OPTS[@]}'
+
 if [[ -n "${STY}" ]] then
     alias ssh=ssh-screen
 elif [[ -n "${TMUX}" ]] then
@@ -295,43 +297,6 @@ my_rprompt()
 }
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
-
-din()
-{
-    local workdir=/build
-    local i opts
-    opts=()
-
-    for i in TERM http_proxy https_proxy ftp_proxy no_proxy; do
-        if [[ "${(P)i}" ]]; then
-            opts+=(-e "${i}=${(P)i}")
-        fi
-    done
-
-    for i in /etc/localtime /etc/ssl/certs/ca-certificates.crt /srv/mirrors; do
-        if [[ -e "${i}" ]]; then
-            opts+=(-v "${i}:${i}:ro")
-        fi
-    done
-
-    if [[ -d ~/.cache/buildenv ]]; then
-        opts+=(-v ~/.cache/buildenv:/cache)
-        opts+=(-e USE_CCACHE=yes)
-        opts+=(-e CCACHE_DIR=/cache/ccache)
-    fi
-
-    if [[ "${DIN_OPTS}" ]]; then
-        opts=("${opts[@]}" "${DIN_OPTS[@]}")
-    fi
-
-    docker run -it --rm \
-        -v "$(pwd):${workdir}" \
-        -w "${workdir}" \
-        -h $(basename "$(pwd)") \
-        -e BASH_ENV="${workdir}/.bashrc" \
-        "${opts[@]}" \
-        "$@"
-}
 
 docker-gc()
 {
