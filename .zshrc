@@ -336,6 +336,10 @@ rg() {
     fi
 }
 
+gi() {
+    curl -sL https://www.gitignore.io/api/${@}
+}
+
 ## fzf
 
 __fzf-quoted()
