@@ -27,6 +27,7 @@ map gb centerMatchB
 
 imap <C-h> deleteChar
 imap <C-o> editWithVim
+imap <C-p> backwardLine
 
 let homedirectory = "/home/inajima"
 let configpath = "~/.cvimrc"
