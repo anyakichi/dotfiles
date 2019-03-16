@@ -105,9 +105,12 @@ if executable('ag')
 endif
 
 " Cscope
+if executable('gtags-cscope')
+    set cscopeprg=gtags-cscope
+endif
 set cscopetag
-set cscopetagorder=1
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+set cscopetagorder=0
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 if has("mouse")
     set mouse=a
