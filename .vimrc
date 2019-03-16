@@ -56,6 +56,7 @@ set notitle
 
 " Diff
 set diffopt+=vertical
+let &diffopt .= ',indent-heuristic,algorithm:histogram'
 
 " Folding
 set nofoldenable

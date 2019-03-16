@@ -36,7 +36,6 @@ Plug 'kana/vim-fakeclip'
 Plug 'kana/vim-operator-user'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
-Plug 'lambdalisue/vim-unified-diff'
 Plug 'leafgarland/typescript-vim'
 Plug 'ludovicchabant/vim-lawrencium'
 Plug 'racer-rust/vim-racer'
@@ -56,5 +55,9 @@ Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/moria'
 Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
 Plug 'will133/vim-dirdiff'
+
+if !has('patch-8.1.360')
+    Plug 'lambdalisue/vim-unified-diff'
+endif
 
 call plug#end()
