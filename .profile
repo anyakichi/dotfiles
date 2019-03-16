@@ -19,11 +19,11 @@ case $(uname) in
         PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
         ;;
 esac
-export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${PATH}
 
 export BLOCKSIZE=1k
 export CVS_RSH=ssh
 export EDITOR=vim
+export GOPATH=${HOME}/.go
 export LANG=en_US.UTF-8
 export LC_COLLATE=C
 export LESS=-cMR
@@ -33,6 +33,8 @@ export QUOTING_STYLE=literal
 
 export FZF_DEFAULT_COMMAND="find . -xdev -type f 2>/dev/null | cut -b 3-"
 export FZF_DEFAULT_OPTS="--exact"
+
+export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
 
 [ -f ~/.profile_local ] && . ~/.profile_local
