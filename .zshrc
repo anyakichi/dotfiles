@@ -344,33 +344,41 @@ gi() {
 
 __fzf-quoted()
 {
+    setopt localoptions pipefail
     local item
 
-    find . -mindepth 1 -xdev 2>/dev/null | cut -b 3- | fzf-tmux -m | \
+    command find . -mindepth 1 -xdev 2>/dev/null | cut -b 3- | fzf-tmux -m | \
     while read item; do
-        printf '%q ' "$item"
+        echo -n "${(q)item} "
     done
+    local ret=$?
     echo
+    return $ret
 }
 
 fzf-file-widget()
 {
     LBUFFER="${LBUFFER}$(__fzf-quoted)"
-    zle redisplay
+    local ret=$?
+    zle reset-prompt
+    return $ret
 }
 zle -N fzf-file-widget
 
 fzf-cdr-widget()
 {
+    setopt localoptions pipefail
     local dir
 
     dir=$(cdr -l | sed 's/^[[:digit:]]*[[:space:]]*//' | fzf-tmux +m)
+    local ret=$?
     if [ -n "${dir}" ]; then
         BUFFER="cd ${dir}"
         zle accept-line
     else
         zle reset-prompt
     fi
+    return $ret
 }
 zle -N fzf-cdr-widget
 
