@@ -46,6 +46,8 @@
 	algorithm = histogram
 	compactionHuristic = true
 	tool = vimdiff
+[pager]
+	status = true
 [push]
 	default = current
 [rebase]
