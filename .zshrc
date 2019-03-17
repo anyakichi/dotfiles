@@ -195,11 +195,11 @@ autoload -Uz vcs_info
 
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:*' max-exports 4
+zstyle ':vcs_info:*' max-exports 5
 zstyle ':vcs_info:git:*' formats '%b' '%m' '%R' '%S'
-zstyle ':vcs_info:git:*' actionformats '%b|%a' '%m' '%R' '%S'
+zstyle ':vcs_info:git:*' actionformats '%b' '%m' '%R' '%S' '%a'
 zstyle ':vcs_info:*' formats '%s:%b' '%m' '%R' '%S'
-zstyle ':vcs_info:*' actionformats '%s:%b|%a' '%m' '%R' '%S'
+zstyle ':vcs_info:*' actionformats '%s:%b' '%m' '%R' '%S' '%a'
 
 +vi-git-left-right-count() {
     local output left right
@@ -280,10 +280,15 @@ fi
 
 my_rprompt()
 {
-    local msg="%F{green}${vcs_info_msg_0_}%f" len=${#vcs_info_msg_0_} path="%~"
-    if [[ ${vcs_info_msg_1_} ]]; then
-        msg="${msg} ${vcs_info_msg_1_}"
-        len=$((${len} + 1 + ${#${vcs_info_msg_1_//(%K{*\}|%k)/}}))
+    local msg path="%~"
+    if [[ ${vcs_info_msg_4_} ]]; then
+        msg="${msg:- }%F{231}%K{9}${vcs_info_msg_4_}%k%f"
+    fi
+    if [[ ${vcs_info_msg_0_} ]]; then
+        msg="${msg:- }%K{4}${vcs_info_msg_0_}%k"
+    fi
+    if [[ ${vcs_info_msg_1_} == *"%k"* ]]; then
+        msg="${msg:- }${vcs_info_msg_1_%\%k*}%k"
     fi
     if [[ ${vcs_info_msg_2_} ]]; then
         path="${vcs_info_msg_2_/#${HOME:A}/~}"
@@ -293,7 +298,7 @@ my_rprompt()
             path="%F{green}${path}%f"
         fi
     fi
-    echo -n "${msg} %$(($COLUMNS - 16 - ${len} - 2))<...<${path}"
+    echo -n "%$(($COLUMNS - 16))<..<${path}${msg}"
 }
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
