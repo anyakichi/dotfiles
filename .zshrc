@@ -352,7 +352,8 @@ __fzf-quoted()
     setopt localoptions pipefail
     local item
 
-    command find . -mindepth 1 -xdev 2>/dev/null | cut -b 3- | fzf-tmux -m | \
+    command find ${1:-.} -mindepth 1 -xdev 2>/dev/null \
+        | command sed 's#^\./##' | fzf-tmux -m | \
     while read item; do
         echo -n "${(q)item} "
     done
@@ -363,7 +364,7 @@ __fzf-quoted()
 
 fzf-file-widget()
 {
-    LBUFFER="${LBUFFER}$(__fzf-quoted)"
+    LBUFFER="${LBUFFER%%[^[:space:]]##}$(__fzf-quoted ${LBUFFER##*[[:space:]]##})"
     local ret=$?
     zle reset-prompt
     return $ret
