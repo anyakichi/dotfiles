@@ -129,38 +129,38 @@ syntax on
 if has('gui_macvim')
     set background=light
 elseif (has('gui') || v:version >= 703) && &t_Co == 256
-    " Get terminal color info from .Xresources.
-    let s:xresources = readfile(expand("~/.Xresources"))
-    let s:xresources = filter(s:xresources,
-    \                         'v:val !~# "^\s+$" && v:val !~# "^\s*!"')
-    let s:rdb = {}
-    for s:line in s:xresources
-        let s:ml = matchlist(s:line, '\v^([^:]*)\s*:\s*(.*)$')
-        if !empty(s:ml)
-            let s:rdb[s:ml[1]] = s:ml[2]
-        endif
-    endfor
-    let g:xmoria_terminal_foreground = get(s:rdb, '*foreground', '')
-    let g:xmoria_terminal_background = get(s:rdb, '*background', '')
-    let g:xmoria_terminal_colors = [
-    \   get(s:rdb, '*color0', ''),
-    \   get(s:rdb, '*color1', ''),
-    \   get(s:rdb, '*color2', ''),
-    \   get(s:rdb, '*color3', ''),
-    \   get(s:rdb, '*color4', ''),
-    \   get(s:rdb, '*color5', ''),
-    \   get(s:rdb, '*color6', ''),
-    \   get(s:rdb, '*color7', ''),
-    \   get(s:rdb, '*color8', ''),
-    \   get(s:rdb, '*color9', ''),
-    \   get(s:rdb, '*color10', ''),
-    \   get(s:rdb, '*color11', ''),
-    \   get(s:rdb, '*color12', ''),
-    \   get(s:rdb, '*color13', ''),
-    \   get(s:rdb, '*color14', ''),
-    \   get(s:rdb, '*color15', ''),
-    \]
-    unlet s:xresources s:line s:ml s:rdb
+    if executable('xrdb')
+        " Get terminal color info from xrdb
+        let s:xresources = systemlist("xrdb -query -all")
+        let s:rdb = {}
+        for s:line in s:xresources
+            let s:ml = matchlist(s:line, '\v^([^:]*)\s*:\s*(.*)$')
+            if !empty(s:ml)
+                let s:rdb[s:ml[1]] = s:ml[2]
+            endif
+        endfor
+        let g:xmoria_terminal_foreground = get(s:rdb, '*foreground', '')
+        let g:xmoria_terminal_background = get(s:rdb, '*background', '')
+        let g:xmoria_terminal_colors = [
+        \   get(s:rdb, '*color0', ''),
+        \   get(s:rdb, '*color1', ''),
+        \   get(s:rdb, '*color2', ''),
+        \   get(s:rdb, '*color3', ''),
+        \   get(s:rdb, '*color4', ''),
+        \   get(s:rdb, '*color5', ''),
+        \   get(s:rdb, '*color6', ''),
+        \   get(s:rdb, '*color7', ''),
+        \   get(s:rdb, '*color8', ''),
+        \   get(s:rdb, '*color9', ''),
+        \   get(s:rdb, '*color10', ''),
+        \   get(s:rdb, '*color11', ''),
+        \   get(s:rdb, '*color12', ''),
+        \   get(s:rdb, '*color13', ''),
+        \   get(s:rdb, '*color14', ''),
+        \   get(s:rdb, '*color15', ''),
+        \]
+        unlet s:xresources s:line s:ml s:rdb
+    endif
 
     colorscheme xmoria
 else
