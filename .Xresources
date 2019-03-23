@@ -30,26 +30,3 @@ URxvt*letterSpace:	-1
 URxvt*perl-ext-common:	default,clipboard,matcher,selection-to-clipboard
 URxvt*matcher.button:	1
 URxvt*url-launcher:	url-launcher
-
-
-!
-! xscreensaver
-!
-xscreensaver.mode:		blank
-xscreensaver.timeout:		0:10:00
-xscreensaver.cycle:		0:00:00
-xscreensaver.lock:		True
-xscreensaver.lockTimeout:	0:00:30
-xscreensaver.passwdTimeout:	0:01:00
-xscreensaver.dpmsEnabled:	True
-xscreensaver.dpmsStandby:	0:10:00
-xscreensaver.dpmsSuspend:	0:15:00
-xscreensaver.dpmsOff:		0:20:00
-
-xscreensaver.Dialog.headingFont:	-*-dejavu sans-bold-r-*--12-*-*-*-*-*-*-*
-xscreensaver.Dialog.bodyFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.labelFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.unameFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.buttonFont:		-*-dejavu sans-bold-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.Dialog.dateFont:		-*-dejavu sans-medium-r-*-*-12-*-*-*-*-*-*-*
-xscreensaver.passwd.passwdFont:		-*-dejavu sans-bold-r-*-*-12-*-*-*-*-*-*-*
