@@ -301,6 +301,15 @@ my_rprompt()
     echo -n "%$(($COLUMNS - 16))<..<${path}${msg}"
 }
 
+preexec_tmux()
+{
+    eval $(tmux show-environment -s)
+}
+
+if [[ -n "${TMUX}" ]]; then
+    add-zsh-hook preexec preexec_tmux
+fi
+
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
 docker-gc()
