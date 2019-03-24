@@ -50,6 +50,7 @@ alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
+alias r=rifle
 which open >/dev/null 2>&1 || alias open=xdg-open
 
 alias din='din ${DIN_OPTS[@]}'
@@ -309,6 +310,11 @@ preexec_tmux()
 if [[ -n "${TMUX}" ]]; then
     add-zsh-hook preexec preexec_tmux
 fi
+
+rifle()
+{
+    command rifle "${@:-.}"
+}
 
 freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
 
