@@ -1,6 +1,6 @@
 {
     "name": "Chromium",
-    "percent": 0.62,
+    "percent": 0.629166666666667,
     "type": "con",
     "swallows": [
 	{
@@ -11,7 +11,7 @@
 
 {
     "name": "urxvt",
-    "percent": 0.38,
+    "percent": 0.370833333333333,
     "type": "con",
     "swallows": [
 	{
