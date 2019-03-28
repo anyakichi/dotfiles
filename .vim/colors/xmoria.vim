@@ -147,28 +147,34 @@ if exists("g:xmoria_terminal_colors")
 endif
 
 function! s:highlight(name, ...)
-    let hi = {'cterm': 'NONE', 'ctermfg': 'NONE', 'ctermbg': 'NONE'}
-    for i in filter(copy(a:000), 'v:val !~ "^cterm"')
+    let hi = {}
+    for i in a:000
         let [k, v] = split(i, '=')
         let hi[k] = v
     endfor
 
-    let hi['cterm'] = get(hi, 'gui', 'NONE')
-
-    let bg = get(hi, 'guibg', 'NONE')
-    let bg = get(s:fgbg_map, bg, bg)
-    if bg ==? g:xmoria_terminal_background
-        let bg = 'NONE'
+    if !has_key(hi, 'cterm')
+        let hi['cterm'] = get(hi, 'gui', 'NONE')
     endif
-    let hi['ctermbg'] = s:color_map[bg][0]
 
-    let fg = get(hi, 'guifg', 'NONE')
-    let fg = get(s:fgbg_map, fg, fg)
-    if fg ==? g:xmoria_terminal_foreground && a:name !~# '^Diff.*'
-        " Don't transparent Diff syntax that is apparently layered
-        let fg = 'NONE'
+    if !has_key(hi, 'ctermbg')
+        let bg = get(hi, 'guibg', 'NONE')
+        let bg = get(s:fgbg_map, bg, bg)
+        if bg ==? g:xmoria_terminal_background
+            let bg = 'NONE'
+        endif
+        let hi['ctermbg'] = s:color_map[bg][0]
     endif
-    let hi['ctermfg'] = s:color_map[fg][hi['cterm'] =~ 'bold']
+
+    if !has_key(hi, 'ctermfg')
+        let fg = get(hi, 'guifg', 'NONE')
+        let fg = get(s:fgbg_map, fg, fg)
+        if fg ==? g:xmoria_terminal_foreground && a:name !~# '^Diff.*'
+            " Don't transparent Diff syntax that is apparently layered
+            let fg = 'NONE'
+        endif
+        let hi['ctermfg'] = s:color_map[fg][hi['cterm'] =~ 'bold']
+    endif
 
     execute 'hi' a:name join(map(items(hi), 'join(v:val, "=")') , ' ')
 endfunction
