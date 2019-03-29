@@ -55,9 +55,9 @@ which open >/dev/null 2>&1 || alias open=xdg-open
 
 alias din='din ${DIN_OPTS[@]}'
 
-if [[ -n "${STY}" ]] then
+if [[ -n "${STY}" ]]; then
     alias ssh=ssh-screen
-elif [[ -n "${TMUX}" ]] then
+elif [[ -n "${TMUX}" ]]; then
     alias ssh=ssh-tmux
 fi
 
