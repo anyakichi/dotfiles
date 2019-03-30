@@ -23,7 +23,7 @@ set pager_stop=yes
 set quote_regexp="^([ \t]*[|>])+"
 
 set send_charset="us-ascii:iso-2022-jp:utf-8"
-set assumed_charset="cp932:iso-2022-jp:euc-jp:utf-8"
+set assumed_charset="utf-8:cp932:iso-2022-jp:euc-jp"
 set attach_charset="euc-jp:utf-8"
 
 set thorough_search=yes
