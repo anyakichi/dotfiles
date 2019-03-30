@@ -379,6 +379,7 @@ __fzf-quoted()
 
 fzf-file-widget()
 {
+    setopt localoptions extended_glob
     LBUFFER="${LBUFFER%%[^[:space:]]##}$(__fzf-quoted ${LBUFFER##*[[:space:]]##})"
     local ret=$?
     zle reset-prompt
