@@ -6,6 +6,7 @@ set mbox=+
 set record=+Sent
 set postponed=+Drafts
 
+set nohelp
 set nomove
 set sort=threads
 set include
