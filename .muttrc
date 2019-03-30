@@ -67,25 +67,29 @@ charset-hook shift-jis cp932
 alternative_order text/plain text
 auto_view text/html
 
-bind generic l next-page
-bind generic h previous-page
+bind generic g first-entry
+bind generic G last-entry
+bind generic f next-page
+bind generic b previous-page
 bind generic N search-opposite
 
 bind attach i exit
 
-bind browser,index g first-entry
-bind browser,index G last-entry
+bind attach,index g first-entry
+bind attach,index G last-entry
 
-bind index,pager f next-page
-bind index,pager b previous-page
-bind index,pager H display-toggle-weed
+bind attach,index,pager f next-page
+bind attach,index,pager b previous-page
+bind attach,index,pager H display-toggle-weed
+bind attach,index,pager B bounce-message
+bind attach,index,pager F forward-message
+bind attach,index,pager R group-reply
+bind attach,index,pager E resend-message
+
+bind browser,index,pager N search-opposite
+
 bind index,pager ! flag-message
-bind index,pager B bounce-message
-bind index,pager F forward-message
 bind index,pager \c] next-unread-mailbox
-bind index,pager R group-reply
-bind index,pager E resend-message
-bind index,pager N search-opposite
 bind index,pager X decode-save
 bind index,pager q quit
 
@@ -97,16 +101,11 @@ bind pager l next-undeleted
 bind pager h previous-undeleted
 bind pager <BackSpace> search-toggle
 
-macro attach	  V "<pipe-entry>cat > ~/.cache/mutt/mail.html && url-launcher ~/.cache/mutt/mail.html && rm ~/.cache/mutt/mail.html<enter>"
 macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
 macro index,pager Y "<change-folder>?"	"show folder list"
 macro browser	  Y "<exit>"		"exit this menu"
 macro index	  i "<change-folder>?<toggle-mailboxes>"	\
 					"show incoming mailboxes list"
-macro index,pager . "<shell-escape>fetchmail<Enter>"		\
-					"retrieve mail with fetchmail"
-macro index,pager \cf "<shell-escape>estmail<Enter><change-folder>=.Search<Enter>" \
-					"search with Hyper Estraier"
 
 source `~/.mutt/muttcolor`
 
