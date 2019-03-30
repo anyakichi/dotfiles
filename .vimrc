@@ -304,11 +304,18 @@ nnoremap <silent> qa :<C-u>call qfutil#list()<CR>
 nnoremap <silent> qo :<C-u>call qfutil#older(v:count)<CR>
 nnoremap <silent> qi :<C-u>call qfutil#newer(v:count)<CR>
 
-nnoremap <silent> <expr> qm qfutil#make()
-nnoremap qM :<C-u>QFMake<Space>
-nnoremap q<Space> :<C-u>QFMake<Space>
+nnoremap <silent> <expr> qM qfutil#make()
+nnoremap qm :<C-u>QFMake<Space>
 nnoremap qg :<C-u>QFGrep<Space>
-nnoremap qG :<C-u>QFGrep <C-r><C-w><Space>
+nnoremap qcs :<C-u>QFCscope find s<Space>
+nnoremap qcg :<C-u>QFCscope find g<Space>
+nnoremap qcd :<C-u>QFCscope find d<Space>
+nnoremap qcc :<C-u>QFCscope find c<Space>
+nnoremap qct :<C-u>QFCscope find t<Space>
+nnoremap qce :<C-u>QFCscope find e<Space>
+nnoremap qcf :<C-u>QFCscope find f<Space>
+nnoremap qci :<C-u>QFCscope find i<Space>
+nnoremap qca :<C-u>QFCscope find a<Space>
 
 nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
 
