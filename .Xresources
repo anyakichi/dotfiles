@@ -1,5 +1,7 @@
 #include ".Xresources.d/colors/moria"
 
+#define FONT_SIZE	14
+
 !
 ! Xft
 !
@@ -21,11 +23,11 @@ URxvt*scrollBar:	false
 URxvt*fading:		15
 
 ! Fonts
-URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:pixelsize=14,\
-			xft:IPAGothic:pixelsize=14,\
-			xft:DejaVu Sans Mono:pixelsize=14,\
-			xft:Symbola:pixelsize=14
-URxvt*imFont:		-*-*-*-R-*-*-14-*-*-*-*-*-*
+URxvt*font:		[codeset=USASCII]xft:DejaVu Sans Mono:pixelsize=FONT_SIZE,\
+			xft:IPAGothic:pixelsize=FONT_SIZE,\
+			xft:DejaVu Sans Mono:pixelsize=FONT_SIZE,\
+			xft:Symbola:pixelsize=FONT_SIZE
+URxvt*imFont:		-*-*-*-R-*-*-FONT_SIZE-*-*-*-*-*-*
 URxvt*lineSpace:	2
 URxvt*letterSpace:	-1
 
