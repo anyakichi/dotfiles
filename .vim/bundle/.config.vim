@@ -6,7 +6,6 @@
 call plug#begin(expand('~/.vim/bundle'))
 
 Plug 'SirVer/ultisnips'
-Plug 'anyakichi/csapprox', {'branch': 'performance-tuning', 'on': 'CSApprox'}
 Plug 'anyakichi/ocp-indent-vim'
 Plug 'anyakichi/skk.vim', {'on': '<Plug>(skk-toggle-im)'}
 Plug 'anyakichi/taskpaper.vim'
