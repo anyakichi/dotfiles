@@ -59,8 +59,9 @@ ignore *
 unignore from: date subject to cc
 hdr_order Date: From: To: Cc: Subject:
 
-iconv-hook Windows-31J cp932
-iconv-hook shift-jis cp932
+charset-hook Windows-31J cp932
+charset-hook shift-jis cp932
+#charset-hook iso-2022-jp cp50221
 
 alternative_order text/plain text
 auto_view text/html
