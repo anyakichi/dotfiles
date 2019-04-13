@@ -32,7 +32,7 @@ export PAGER=less
 export QUOTING_STYLE=literal
 
 export FZF_DEFAULT_COMMAND="find . -xdev -type f 2>/dev/null | cut -b 3-"
-export FZF_DEFAULT_OPTS="--exact"
+export FZF_DEFAULT_OPTS="--exact --reverse"
 
 export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
