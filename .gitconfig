@@ -57,5 +57,7 @@
 	short = true
 [tag]
 	sort = version:refname
+[ghq]
+	root = ~/src
 [include]
 	path = ~/.gitconfig.local
