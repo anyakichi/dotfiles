@@ -54,6 +54,7 @@ alias r=rifle
 which open >/dev/null 2>&1 || alias open=xdg-open
 
 alias din='din ${DIN_OPTS[@]}'
+alias gg='fghq'
 
 if [[ -n "${STY}" ]]; then
     alias ssh=ssh-screen
@@ -362,28 +363,116 @@ gi() {
 
 ## fzf
 
-__fzf-quoted()
+__fzf-find()
 {
     setopt localoptions pipefail
-    local item
+    local dir="${1:-.}"
+    shift
 
-    command find ${1:-.} -mindepth 1 -xdev 2>/dev/null \
-        | command sed 's#^\./##' | fzf-tmux -m | \
-    while read item; do
-        echo -n "${(q)item} "
-    done
-    local ret=$?
-    echo
-    return $ret
+    command find "${dir}" "${@}" -mindepth 1 -xdev 2>/dev/null \
+        | command sed 's#^\./##' | command fzf -m -0 --print-query --expect=ctrl-o
+}
+
+__fzf-ghq()
+{
+    setopt localoptions pipefail
+
+    command ghq list | command fzf -q "$1" +m -0 -1
+}
+
+__fzf-history()
+{
+    setopt localoptions pipefail
+
+    fc -rln 1 | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-o --preview "echo {}" --preview-window bottom:3:wrap:hidden --bind 'ctrl-v:toggle-preview' --bind 'ctrl-r:down'
+}
+
+__fzf-pass()
+{
+    setopt localoptions pipefail
+
+    (cd ${PASSWORD_STORE_DIR:-~/.password-store} &&
+        command find . -name '*.gpg' 2>/dev/null |
+        command sed -e 's#^\./##' -e 's/.gpg$//' |
+        command fzf +m -0 --expect=ctrl-o)
+}
+
+__fzf-ps()
+{
+    setopt localoptions pipefail
+    local ps_cmd
+
+    ps_cmd=(command ps -f)
+    if [[ ${UID} -eq 0 ]]; then
+        ps_cmd+=(-e)
+    else
+        ps_cmd+=(-u "${UID}")
+    fi
+
+    "${ps_cmd[@]}" | command sed 1d | command fzf -m | command awk '{print $2}'
+}
+
+fcd()
+{
+    local dir
+
+    res=("${(@f)"$(__fzf-find "${1:-.}" -type d)"}")
+
+    if [[ ${#res} -ge 3 ]]; then
+        cd ${res[3]}
+    fi
+}
+
+fghq()
+{
+    local dir
+    dir=$(__fzf-ghq) && cd $(command ghq root)/${dir}
+}
+
+fkill()
+{
+    local pids
+
+    pids=("${(@f)"$(__fzf-ps)"}")
+
+    if [[ ${pids} ]]; then
+        kill ${1:+-${1}} "${pids[@]}"
+    fi
+}
+
+fpass()
+{
+    pass $(__fzf-pass)
 }
 
 fzf-file-widget()
 {
-    setopt localoptions extended_glob
-    LBUFFER="${LBUFFER%%[^[:space:]]##}$(__fzf-quoted ${LBUFFER##*[[:space:]]##})"
-    local ret=$?
+    setopt localoptions extended_glob pipefail
+    local key i res ret
+
+    res=("${(@f)"$(__fzf-find "${LBUFFER##*[[:space:]]##}")"}")
+    ret=$?
+
+    if [[ ${#res} -ge 3 ]]; then
+        key="$res[2]"
+        shift 2 res
+
+        LBUFFER="${LBUFFER%%[^[:space:]]##}"
+        for i in "${res[@]}"; do
+            LBUFFER+="${(q)i} "
+        done
+    elif [[ ${#res} -ge 1 ]]; then
+        LBUFFER="${LBUFFER%%[^[:space:]]##}"
+        LBUFFER+=${(q)res[1]}
+    fi
+
     zle reset-prompt
-    return $ret
+
+    if [[ "${key}" == "ctrl-o" ]]; then
+        zle accept-line
+    fi
+
+    return ${ret}
 }
 zle -N fzf-file-widget
 
@@ -392,7 +481,7 @@ fzf-cdr-widget()
     setopt localoptions pipefail
     local dir
 
-    dir=$(cdr -l | sed 's/^[[:digit:]]*[[:space:]]*//' | fzf-tmux +m)
+    dir=$(cdr -l | sed 's/^[[:digit:]]*[[:space:]]*//' | fzf +m)
     local ret=$?
     if [ -n "${dir}" ]; then
         BUFFER="cd ${dir}"
@@ -414,7 +503,35 @@ fzf-f-widget()
 }
 zle -N fzf-f-widget
 
+fzf-history-widget()
+{
+    setopt localoptions pipefail
+    local key res ret
+
+    res=("${(@f)"$(__fzf-history "${LBUFFER}")"}")
+    ret=$?
+
+    if [[ ${#res} -ge 3 ]]; then
+        key="$res[2]"
+        BUFFER="$res[3]"
+        CURSOR=$#BUFFER
+    elif [[ ${#res} -ge 1 ]]; then
+        BUFFER="$res[1]"
+        CURSOR=$#BUFFER
+    fi
+
+    zle reset-prompt
+
+    if [[ "${key}" == "ctrl-o" ]]; then
+        zle accept-line
+    fi
+
+    return ${ret}
+}
+zle -N fzf-history-widget
+
 bindkey '^_' fzf-f-widget
+bindkey '^R' fzf-history-widget
 
 
 #
