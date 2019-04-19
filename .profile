@@ -31,8 +31,8 @@ export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
 export QUOTING_STYLE=literal
 
-export FZF_DEFAULT_COMMAND="find . -xdev -type f 2>/dev/null | cut -b 3-"
-export FZF_DEFAULT_OPTS="--exact --reverse"
+export FZF_DEFAULT_COMMAND="find . -mindepth 1 -xdev -type f 2>/dev/null | cut -b 3-"
+export FZF_DEFAULT_OPTS="--exact --height 40% --layout=reverse --inline-info"
 
 export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
