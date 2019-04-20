@@ -461,7 +461,7 @@ fzf-file-widget()
         for i in "${res[@]}"; do
             LBUFFER+="${(q)i} "
         done
-    elif [[ ${#res} -ge 1 ]]; then
+    elif [[ ${#res} -ge 2 ]]; then
         LBUFFER="${LBUFFER%%[^[:space:]]##}"
         LBUFFER+=${(q)res[1]}
     fi
@@ -515,7 +515,7 @@ fzf-history-widget()
         key="$res[2]"
         BUFFER="$res[3]"
         CURSOR=$#BUFFER
-    elif [[ ${#res} -ge 1 ]]; then
+    elif [[ ${#res} -ge 2 ]]; then
         BUFFER="$res[1]"
         CURSOR=$#BUFFER
     fi
