@@ -12,7 +12,7 @@ case $(uname) in
         PATH=${PATH}:/usr/X11R7/bin:/usr/games
         ;;
     Darwin)
-        PATH=/opt/pkg/bin:/opt/pkg/sbin:${PATH}
+        PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
         ;;
     *)
         # /usr/pkg/sbin is required because pkg_install is there.
