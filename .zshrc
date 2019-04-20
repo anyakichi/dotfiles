@@ -317,17 +317,6 @@ rifle()
     command rifle "${@:-.}"
 }
 
-freload() { while (( $# )); do; unfunction $1; autoload -U $1; shift; done }
-
-docker-gc()
-{
-    local images=$(docker images -qf dangling=true)
-    local volumes=$(docker volume ls -qf dangling=true)
-
-    [[ ${images} ]] && docker rmi ${=images}
-    [[ ${volumes} ]] && docker volume rm ${=volumes}
-}
-
 ssh-screen() {
     screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
         -c "GPG_TTY=\$(tty) ssh $(printf "%q " "${@}")"
