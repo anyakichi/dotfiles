@@ -1,8 +1,8 @@
 #!/bin/sh
 
 if [ -n "${TMUX}" ]; then
-    eval $(tmux show-environment -s)
+    eval "$(tmux show-environment -s)"
 fi
 
-PATH=$(echo $PATH | sed "s,$(cd $(dirname $0); pwd):,,")
-exec $(basename $0) "$@"
+PATH=$(echo "$PATH" | sed "s,$(cd "$(dirname "$0")" && pwd):,,")
+exec "$(basename "$0")" "$@"
