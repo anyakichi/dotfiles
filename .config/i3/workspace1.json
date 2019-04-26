@@ -1,21 +1,34 @@
 {
-    "name": "Chromium",
+    "layout": "tabbed",
     "percent": 0.629166666666667,
+    "marks": ["M"],
     "type": "con",
-    "swallows": [
+    "nodes": [
 	{
-	    "window_role": "^browser$"
+	    "name": "Chromium",
+	    "type": "con",
+	    "swallows": [
+		{
+		    "window_role": "^browser$"
+		}
+	    ]
 	}
     ]
 }
 
 {
-    "name": "urxvt",
+    "layout": "tabbed",
     "percent": 0.370833333333333,
     "type": "con",
-    "swallows": [
+    "nodes": [
 	{
-	    "class": "^URxvt$"
+	    "name": "urxvt",
+	    "type": "con",
+	    "swallows": [
+		{
+		    "class": "^URxvt$"
+		}
+	    ]
 	}
     ]
 }
