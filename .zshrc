@@ -369,7 +369,7 @@ __fzf-history()
 {
     setopt localoptions pipefail
 
-    fc -rln 1 | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-o --preview "echo {}" --preview-window bottom:3:wrap:hidden --bind 'ctrl-v:toggle-preview' --bind 'ctrl-r:down'
+    fc -rln 1 | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-y --preview "echo {}" --preview-window bottom:3:wrap:hidden --bind 'ctrl-v:toggle-preview' --bind 'ctrl-r:down'
 }
 
 __fzf-pass()
@@ -411,7 +411,7 @@ fcd()
 fghq()
 {
     local dir
-    dir=$(__fzf-ghq) && cd $(command ghq root)/${dir}
+    dir=$(__fzf-ghq "$1") && cd $(command ghq root)/${dir}
 }
 
 fkill()
@@ -507,7 +507,7 @@ fzf-history-widget()
 
     zle reset-prompt
 
-    if [[ "${key}" == "ctrl-o" ]]; then
+    if [[ "${key}" != "ctrl-y" ]]; then
         zle accept-line
     fi
 
