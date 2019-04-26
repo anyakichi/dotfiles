@@ -1,8 +1,8 @@
 #
 # Include common settings
 #
-if [ -f ${HOME}/.shrc ]; then
-    . ${HOME}/.shrc
+if [ -f "${HOME}/.shrc" ]; then
+    . "${HOME}/.shrc"
 fi
 
 
@@ -21,7 +21,7 @@ SAVEHIST=100000
 MAILCHECK=0
 
 cdpath=(~ ~/src ~/Documents)
-fpath=(~/.zsh/functions $fpath)
+fpath=(~/.zsh/functions "${fpath[@]}")
 
 typeset -U cdpath fpath hosts mailpath manpath path
 
@@ -45,13 +45,13 @@ alias rm='nocorrect rm'
 alias man='LANG=C man'
 
 alias grep='egrep'
-which vim > /dev/null 2>&1 && alias vi=vim
+command -v vim > /dev/null 2>&1 && alias vi=vim
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
 alias r=rifle
-which open >/dev/null 2>&1 || alias open=xdg-open
+command -v open >/dev/null 2>&1 || alias open=xdg-open
 
 alias din='din ${DIN_OPTS[@]}'
 alias gg='fghq'
@@ -206,9 +206,9 @@ zstyle ':vcs_info:*' actionformats '%s:%b' '%m' '%R' '%S' '%a'
 +vi-git-left-right-count() {
     local output left right
     output=$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)
-    output=(${(ps:\t:)output})
-    left=$output[1]
-    right=$output[2]
+    output=("${(ps:\t:)output}")
+    left=${output[1]}
+    right=${output[2]}
     if [[ ${left} -gt 0 ]]; then
         hook_com[misc]+="%K{28}⇡${left}%k"
     fi
@@ -233,11 +233,11 @@ add-zsh-hook precmd vcs_info
 ## antigen
 install_antigen()
 {
-    curl -L git.io/antigen > $HOME/.zsh/antigen.zsh
+    curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh"
 }
 
 if [[ -f $HOME/.zsh/antigen.zsh ]]; then
-    source $HOME/.zsh/antigen.zsh
+    source "$HOME/.zsh/antigen.zsh"
 
     antigen bundle zsh-users/zsh-autosuggestions
     antigen bundle zsh-users/zsh-completions
@@ -283,29 +283,29 @@ fi
 my_rprompt()
 {
     local msg path="%~"
-    if [[ ${vcs_info_msg_4_} ]]; then
+    if [[ -n "${vcs_info_msg_4_}" ]]; then
         msg="${msg:- }%F{231}%K{9}${vcs_info_msg_4_}%k%f"
     fi
-    if [[ ${vcs_info_msg_0_} ]]; then
+    if [[ -n "${vcs_info_msg_0_}" ]]; then
         msg="${msg:- }%K{4}${vcs_info_msg_0_}%k"
     fi
-    if [[ ${vcs_info_msg_1_} == *"%k"* ]]; then
+    if [[ "${vcs_info_msg_1_}" == *"%k"* ]]; then
         msg="${msg:- }${vcs_info_msg_1_%\%k*}%k"
     fi
-    if [[ ${vcs_info_msg_2_} ]]; then
+    if [[ -n "${vcs_info_msg_2_}" ]]; then
         path="${vcs_info_msg_2_/#${HOME:A}/~}"
-        if [[ ${vcs_info_msg_3_} && ${vcs_info_msg_3_} != "." ]]; then
+        if [[ -n "${vcs_info_msg_3_}" && ${vcs_info_msg_3_} != "." ]]; then
             path="%F{green}${path}/%f${vcs_info_msg_3_}"
         else
             path="%F{green}${path}%f"
         fi
     fi
-    echo -n "%$(($COLUMNS - 16))<..<${path}${msg}"
+    echo -n "%$((COLUMNS - 16))<..<${path}${msg}"
 }
 
 preexec_tmux()
 {
-    eval $(tmux show-environment -s)
+    eval "$(tmux show-environment -s)"
 }
 
 if [[ -n "${TMUX}" ]]; then
@@ -333,9 +333,9 @@ rg() {
     local opts
     opts=()
 
-    if [[ ${@[-1]} == '.' ]]; then
+    if [[ "${@[-1]}" == '.' ]]; then
         opts+=(-uu)
-    elif [[ $(command git rev-parse --show-toplevel) == ${HOME} ]]; then
+    elif [[ $(command git rev-parse --show-toplevel) == "${HOME}" ]]; then
         opts+=(-u)
     fi
 
@@ -355,7 +355,8 @@ __fzf-find()
     shift
 
     command find "${dir}" "${@}" -mindepth 1 -xdev 2>/dev/null \
-        | command sed 's#^\./##' | command fzf -m -0 --print-query --expect=ctrl-o
+        | command sed 's#^\./##' \
+        | command fzf -m -0 --print-query --expect=ctrl-o
 }
 
 __fzf-ghq()
@@ -369,17 +370,22 @@ __fzf-history()
 {
     setopt localoptions pipefail
 
-    fc -rln 1 | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-y --preview "echo {}" --preview-window bottom:3:wrap:hidden --bind 'ctrl-v:toggle-preview' --bind 'ctrl-r:down'
+    fc -rln 1 \
+        | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-y \
+            --preview "echo {}" \
+            --preview-window bottom:3:wrap:hidden \
+            --bind 'ctrl-v:toggle-preview' \
+            --bind 'ctrl-r:down'
 }
 
 __fzf-pass()
 {
     setopt localoptions pipefail
 
-    (cd ${PASSWORD_STORE_DIR:-~/.password-store} &&
-        command find . -name '*.gpg' 2>/dev/null |
-        command sed -e 's#^\./##' -e 's/.gpg$//' |
-        command fzf +m -0 --expect=ctrl-o)
+    (cd "${PASSWORD_STORE_DIR:-~/.password-store}" &&
+        command find . -name '*.gpg' 2>/dev/null \
+            | command sed -e 's#^\./##' -e 's/.gpg$//' \
+            | command fzf +m -0 --expect=ctrl-o)
 }
 
 __fzf-ps()
@@ -404,14 +410,14 @@ fcd()
     res=("${(@f)"$(__fzf-find "${1:-.}" -type d)"}")
 
     if [[ ${#res} -ge 3 ]]; then
-        cd ${res[3]}
+        cd "${res[3]}" || return
     fi
 }
 
 fghq()
 {
     local dir
-    dir=$(__fzf-ghq "$1") && cd $(command ghq root)/${dir}
+    dir="$(__fzf-ghq "$1")" && cd "$(command ghq root)/${dir}" || return
 }
 
 fkill()
@@ -420,14 +426,14 @@ fkill()
 
     pids=("${(@f)"$(__fzf-ps)"}")
 
-    if [[ ${pids} ]]; then
+    if [[ ${#pids} -ne 0 ]]; then
         kill ${1:+-${1}} "${pids[@]}"
     fi
 }
 
 fpass()
 {
-    pass $(__fzf-pass)
+    pass "$(__fzf-pass)"
 }
 
 fzf-file-widget()
@@ -439,7 +445,7 @@ fzf-file-widget()
     ret=$?
 
     if [[ ${#res} -ge 3 ]]; then
-        key="$res[2]"
+        key="${res[2]}"
         shift 2 res
 
         LBUFFER="${LBUFFER%%[^[:space:]]##}"
@@ -497,11 +503,11 @@ fzf-history-widget()
     ret=$?
 
     if [[ ${#res} -ge 3 ]]; then
-        key="$res[2]"
-        BUFFER="$res[3]"
+        key="${res[2]}"
+        BUFFER="${res[3]}"
         CURSOR=$#BUFFER
     elif [[ ${#res} -ge 2 ]]; then
-        BUFFER="$res[1]"
+        BUFFER="${res[1]}"
         CURSOR=$#BUFFER
     fi
 
@@ -524,7 +530,7 @@ bindkey '^R' fzf-history-widget
 #
 
 zstyle ':completion:*' use-cache true
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:default' menu select=2
 
 # Completers to use
