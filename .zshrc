@@ -371,7 +371,9 @@ __fzf-history()
     setopt localoptions pipefail
 
     fc -rln 1 \
-        | command fzf -q "$1" +m +s -0 --print-query --expect=ctrl-y \
+        | command fzf -q "$1" +m +s -0 --print-query \
+            --expect=ctrl-q \
+            --expect=ctrl-y \
             --preview "echo {}" \
             --preview-window bottom:3:wrap:hidden \
             --bind 'ctrl-v:toggle-preview' \
@@ -502,18 +504,19 @@ fzf-history-widget()
     res=("${(@f)"$(__fzf-history "${LBUFFER}")"}")
     ret=$?
 
-    if [[ ${#res} -ge 3 ]]; then
+    if [[ ${#res} -ge 3 && ${res[2]} != "ctrl-q" ]]; then
         key="${res[2]}"
         BUFFER="${res[3]}"
         CURSOR=$#BUFFER
     elif [[ ${#res} -ge 2 ]]; then
+        key="${res[2]}"
         BUFFER="${res[1]}"
         CURSOR=$#BUFFER
     fi
 
     zle reset-prompt
 
-    if [[ "${key}" != "ctrl-y" ]]; then
+    if [[ -z "${key}" ]]; then
         zle accept-line
     fi
 
