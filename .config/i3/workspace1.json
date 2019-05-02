@@ -4,15 +4,15 @@
     "marks": ["M"],
     "type": "con",
     "nodes": [
-	{
-	    "name": "Chromium",
-	    "type": "con",
-	    "swallows": [
-		{
-		    "window_role": "^browser$"
-		}
-	    ]
-	}
+        {
+            "name": "Chromium",
+            "swallows": [
+                {
+                    "window_role": "^browser$"
+                }
+            ],
+            "type": "con"
+        }
     ]
 }
 
@@ -21,14 +21,14 @@
     "percent": 0.370833333333333,
     "type": "con",
     "nodes": [
-	{
-	    "name": "urxvt",
-	    "type": "con",
-	    "swallows": [
-		{
-		    "class": "^URxvt$"
-		}
-	    ]
+        {
+            "name": "urxvt",
+            "swallows": [
+                {
+                    "class": "^URxvt$"
+                }
+            ],
+            "type": "con"
 	}
     ]
 }
