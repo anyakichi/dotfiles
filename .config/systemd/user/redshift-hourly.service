@@ -1,0 +1,8 @@
+[Unit]
+Description=redshift
+RefuseManualStart=no
+RefuseManualStop=yes
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/pm redshift
