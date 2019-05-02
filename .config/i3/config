@@ -206,6 +206,9 @@ workspace $ws10 output $out2
 focus_on_window_activation urgent
 workspace_auto_back_and_forth yes
 
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+
 set $sink "0"
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-mute $sink false; pactl set-sink-volume $sink +5%"
