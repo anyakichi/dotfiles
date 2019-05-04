@@ -1,0 +1,16 @@
+xset b off
+xset dpms 600 600 600
+xset r rate 225 35
+
+fc-match -v \
+    | awk '/antialias|autohint|hinting|hintstyle|lcdfilter|rgba/ {sub(/\(.*/, "", $2); printf "Xft.%s %s\n",$1,$2}' \
+    | xrdb -merge
+
+[ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
+
+export GTK_IM_MODULE=uim
+export QT_IM_MODULE=uim
+export XMODIFIERS="@im=uim"
+uim-xim &
+
+unclutter &
