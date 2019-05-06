@@ -1,17 +1,27 @@
 #!/bin/bash
 
+PM_SLEEP_MODE="${PM_SLEEP_MODE:-suspend-then-hibernate}"
+PM_POWER_SUPPLY_AC="${PM_POWER_SUPPLY_AC:-/sys/class/power_supply/AC0/online}"
+
 XIDLEHOOK_SOCKET=${XDG_RUNTIME_DIR}/xidlehook.sock
 
 service_start()
 {
     local name="$1"
     shift
-    ( exec -a "${name}" bash "$0" "$@" ) & disown
+    exec -a "${name}" bash "$0" "$@"
+}
+
+service_kill()
+{
+    local name="$1"
+    shift
+    pkill "$@" -f "^${name}" &>/dev/null
 }
 
 service_stop()
 {
-    pkill -f "^$1" &>/dev/null
+    service_kill "$1"
 }
 
 service_restart()
@@ -51,33 +61,68 @@ dim()
     fi
 }
 
+is_battery_powered()
+{
+    [[ $(cat "${PM_POWER_SUPPLY_AC}" 2>/dev/null) -eq 0 ]]
+}
+
+sleep_loop()
+{
+    local loadavg1
+
+    while true; do
+        sleep 30 &
+        wait $! || continue
+
+        loadavg1="$(head -c 4 /proc/loadavg)"
+        if xset q | grep 'Monitor is Off' &>/dev/null \
+            && ! pacmd list-sink-inputs | grep 'state: RUNNING' &>/dev/null \
+            && (( ${loadavg1%.*} < 1 ));
+        then
+            if systemctl "${PM_SLEEP_MODE}" --dry-run &>/dev/null; then
+                systemctl "${PM_SLEEP_MODE}"
+            elif pgrep -U "${USER}" light-locker &>/dev/null; then
+                light-locker-command --lock
+            fi
+        fi
+    done
+}
+
 main()
 {
-    local path main_argv0 sleep_argv0
+    local path main_argv0
 
     path="$(realpath "$0")"
     main_argv0="${path}: main service"
-    sleep_argv0="${path}: sleep service"
 
     case "$1" in
         start)
+            service_stop "$main_argv0" && sleep 0.5
+            rm -f "${XIDLEHOOK_SOCKET}"
             service_start "$main_argv0" __start
             ;;
         __start)
-            trap "kill 0" SIGINT SIGTERM EXIT
+            trap "exit" INT TERM
+            trap "kill 0" EXIT
+            trap " " USR1
 
-            xset s off -dpms &>/dev/null
+            xset s off dpms 0 0 0 &>/dev/null
             dim off
 
             xidlehook \
                 --socket "${XIDLEHOOK_SOCKET}" \
                 --timer normal 10 "$0 try-blank" "" \
-                --timer normal 170 "$0 dim" "$0 undim" \
-                --timer primary 30 "$0 blank" "" \
-                --timer normal 30 "$0 sleep" "$0 wakeup" &
+                --timer normal 170 "$0 battery-dim" "$0 undim" \
+                --timer normal 30 "$0 battery-blank" "" \
+                --timer normal 360 "$0 dim" "$0 undim" \
+                --timer primary 30 "$0 blank" "" &
             xss-lock -l -- \
                 ~/.local/sbin/i3lock.sh -k -B 10 --indicator \
                     --insidecolor ffffff88 &
+
+            if [[ "${PM_ALLOW_SLEEP:-1}" -ne 0 ]]; then
+                sleep_loop
+            fi
 
             wait
             ;;
@@ -96,9 +141,20 @@ main()
         try-blank)
             pgrep -U "${USER}" i3lock &>/dev/null && main blank
             ;;
+        battery-blank)
+            if is_battery_powered; then
+                main blank
+            else
+                dim off
+            fi
+            ;;
         blank)
             dim off
             xset dpms force off &>/dev/null
+            service_kill "$main_argv0" -USR1
+            ;;
+        battery-dim)
+            is_battery_powered && main dim
             ;;
         dim)
             dim on
@@ -108,27 +164,6 @@ main()
             ;;
         redshift)
             dim reset
-            ;;
-        sleep)
-            service_start "$sleep_argv0" __sleep
-            ;;
-        __sleep)
-            while true; do
-                local loadavg1
-
-                loadavg1="$(head -c 4 /proc/loadavg)"
-                if pgrep -U "${USER}" i3lock &>/dev/null \
-                    && ! pacmd list-sink-inputs | grep 'state: RUNNING' &>/dev/null \
-                    && (( ${loadavg1%.*} < 1 ));
-                then
-                    systemctl suspend || light-locker-command --lock
-                    break
-                fi
-                sleep 10
-            done
-            ;;
-        wakeup)
-            service_stop "$sleep_argv0"
             ;;
     esac
 }
