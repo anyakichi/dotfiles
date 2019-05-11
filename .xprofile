@@ -16,3 +16,9 @@ export XMODIFIERS="@im=uim"
 uim-xim &
 
 unclutter &
+
+for p in 'pointer:Logitech MX Ergo' 'pointer:Logitech M570'; do
+    xinput list "$p" >/dev/null 2>&1 || continue
+    xinput --set-prop "$p" 'libinput Scroll Method Enabled' 0 0 1
+    xinput --set-prop "$p" 'libinput Middle Emulation Enabled' 1
+done
