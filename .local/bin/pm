@@ -63,7 +63,7 @@ dim()
 
 is_battery_powered()
 {
-    [[ $(cat "${PM_POWER_SUPPLY_AC}" 2>/dev/null) -eq 0 ]]
+    [[ "$(cat "${PM_POWER_SUPPLY_AC}" 2>/dev/null)" == "0" ]]
 }
 
 sleep_loop()
@@ -124,7 +124,9 @@ main()
                 sleep_loop
             fi
 
-            wait
+            while true; do
+                wait && break
+            done
             ;;
         stop)
             service_stop "$main_argv0"
