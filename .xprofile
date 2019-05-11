@@ -2,6 +2,8 @@ xset b off
 xset dpms 600 600 600
 xset r rate 225 35
 
+hsetroot -solid black
+
 fc-match -v \
     | awk '/antialias|autohint|hinting|hintstyle|lcdfilter|rgba/ {sub(/\(.*/, "", $2); printf "Xft.%s %s\n",$1,$2}' \
     | xrdb -merge
