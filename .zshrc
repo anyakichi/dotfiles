@@ -339,7 +339,7 @@ rg() {
         opts+=(-u)
     fi
 
-    if [[ -t 1 ]]; then
+    if command -v rg &>/dev/null && [[ -t 1 ]]; then
         command rg -p "${opts[@]}" "$@" | less -RMFXK
     else
         command rg "$@"
