@@ -525,7 +525,7 @@ fzf-history-widget()
 zle -N fzf-history-widget
 
 bindkey '^_' fzf-f-widget
-bindkey '^R' fzf-history-widget
+command -v fzf &>/dev/null && bindkey '^R' fzf-history-widget
 
 
 #
