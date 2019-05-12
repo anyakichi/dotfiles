@@ -76,7 +76,7 @@ sleep_loop()
 
         loadavg1="$(head -c 4 /proc/loadavg)"
         if xset q | grep 'Monitor is Off' &>/dev/null \
-            && ! pacmd list-sink-inputs | grep 'state: RUNNING' &>/dev/null \
+            && ! pactl list | grep 'State: RUNNING' &>/dev/null \
             && (( ${loadavg1%.*} < 1 ));
         then
             if systemctl "${PM_SLEEP_MODE}" --dry-run &>/dev/null; then
