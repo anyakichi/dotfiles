@@ -1,0 +1,8 @@
+# :installnative is required before using this
+
+bind gd tabdetach
+
+bind a tabprev
+bind s tabnext
+bind z back
+bind x forward
