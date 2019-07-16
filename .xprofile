@@ -13,9 +13,9 @@ fc-match -v \
 export GTK_IM_MODULE=uim
 export QT_IM_MODULE=uim
 export XMODIFIERS="@im=uim"
-uim-xim &
+which uim-xim >/dev/null 2>&1 && uim-xim &
 
-unclutter &
+which unclutter >/dev/null 2>&1 && unclutter &
 
 for p in 'pointer:Logitech MX Ergo' 'pointer:Logitech M570'; do
     xinput list "$p" >/dev/null 2>&1 || continue
