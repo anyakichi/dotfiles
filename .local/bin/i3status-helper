@@ -1,0 +1,31 @@
+#!/bin/bash
+
+BACKLIGHT=/sys/class/backlight/intel_backlight
+
+I3STATUS_RUNTIME_DIR=${XDG_RUNTIME_DIR}/i3status
+I3STATUS_BACKLIGHT=${I3STATUS_RUNTIME_DIR}/backlight
+
+ACTUAL_BRIGHTNESS=${BACKLIGHT}/actual_brightness
+MAX_BRIGHTNESS=${BACKLIGHT}/max_brightness
+
+update_backlight()
+{
+    local brightness max_brightness
+
+    brightness=$(<$ACTUAL_BRIGHTNESS)
+    if ((BRIGHTNESS_CACHE != brightness)); then
+        max_brightness=$(<$MAX_BRIGHTNESS)
+        echo $((brightness * 100 / max_brightness)) > "${I3STATUS_BACKLIGHT}"
+        pkill -U "${USER}" -USR1 "^i3status$"
+        BRIGHTNESS_CACHE="${brightness}"
+    fi
+}
+
+mkdir -p "${I3STATUS_RUNTIME_DIR}"
+update_backlight
+
+inotifywait -e MODIFY -m "${ACTUAL_BRIGHTNESS}" 2>/dev/null | while read -r; do
+    # Wait some time to get backlight stable
+    sleep 0.2
+    update_backlight
+done
