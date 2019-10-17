@@ -5,3 +5,4 @@ rofi.show-icons: true
 rofi.sidebar-mode: true
 rofi.terminal: urxvt
 rofi.theme: /usr/share/rofi/themes/Arc-Dark.rasi
+rofi.dpi: 0
