@@ -1,5 +1,7 @@
 # :installnative is required before using this
 
+colors dark
+
 bind gd tabdetach
 
 bind a tabprev
