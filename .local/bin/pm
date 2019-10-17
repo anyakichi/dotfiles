@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PM_SLEEP_MODE="${PM_SLEEP_MODE:-suspend-then-hibernate}"
-PM_POWER_SUPPLY_AC="${PM_POWER_SUPPLY_AC:-/sys/class/power_supply/AC0/online}"
+PM_SLEEP_MODE="${PM_SLEEP_MODE:-suspend}"
+PM_POWER_SUPPLY_AC="${PM_POWER_SUPPLY_AC:-/sys/class/power_supply/AC/online}"
 
 XIDLEHOOK_SOCKET=${XDG_RUNTIME_DIR}/xidlehook.sock
 
