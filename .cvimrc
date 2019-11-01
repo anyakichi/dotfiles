@@ -10,6 +10,7 @@ map <C-n> nextTab
 
 map z goBack
 map x goForward
+map c :buffer<Space>
 
 map d closeTab
 map u lastClosedTab
