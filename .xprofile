@@ -15,6 +15,8 @@ export QT_IM_MODULE=uim
 export XMODIFIERS="@im=uim"
 which uim-xim >/dev/null 2>&1 && uim-xim &
 
+export MOZ_USE_XINPUT2=1
+
 which unclutter >/dev/null 2>&1 && unclutter &
 
 for p in 'pointer:Logitech MX Ergo' 'pointer:Logitech M570'; do
