@@ -357,6 +357,7 @@ map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
+nnoremap <silent> [Space]] :<C-u>call <SID>toggle_nmap_ctrl_right_bracket()<CR>
 nnoremap <silent> [Space]z :<C-u>call <SID>toggle_spell()<CR>
 nnoremap <silent> [Space]Z :<C-u>let b:spell = -1<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
@@ -465,6 +466,54 @@ augroup MyAutoCmd
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
+
+    " LSP
+    autocmd CompleteChanged *
+    \   if (type(v:event) == v:t_string && v:event == '') ||
+    \      (type(v:event) == v:t_dict && get(v:event['completed_item'], 'word', '') == '')
+    \|      inoremap <buffer> <expr> <CR> "\<C-e>\<CR>"
+    \|  else
+    \|      silent! iunmap <buffer> <CR>
+    \|  endif
+
+    autocmd CompleteDone * silent! iunmap <buffer> <CR>
+
+    if executable('clangd')
+        autocmd User lsp_setup call lsp#register_server({
+        \   'name': 'clangd',
+        \   'cmd': {server_info->['clangd', '-background-index']},
+        \   'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        \})
+        autocmd FileType c,cpp,obj,objcpp       call s:lsp_setup('clangd')
+    endif
+
+    if executable('gopls')
+        autocmd User lsp_setup call lsp#register_server({
+        \   'name': 'gopls',
+        \   'cmd': {server_info->['gopls', 'mode', 'stdio']},
+        \   'whitelist': ['go'],
+        \})
+        autocmd FileType go                     call s:lsp_setup('gopls')
+    endif
+
+    if executable('pyls')
+        autocmd User lsp_setup call lsp#register_server({
+        \   'name': 'pyls',
+        \   'cmd': {server_info->['pyls']},
+        \   'whitelist': ['python'],
+        \})
+        autocmd FileType python                 call s:lsp_setup('pyls')
+    endif
+
+    if executable('rls')
+        autocmd User lsp_setup call lsp#register_server({
+        \   'name': 'rls',
+        \   'cmd': {server_info->['rls']},
+        \   'workspace_config': {'rust': {'clippy_preference': 'on'}},
+        \   'whitelist': ['rust'],
+        \})
+        autocmd FileType rust                   call s:lsp_setup('rls')
+    endif
 augroup END
 
 
@@ -496,6 +545,11 @@ nnoremap <silent> ,; :<C-u>History:<CR>
 " easy-align.vim
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
+
+" lsp
+let g:lsp_diagnostics_echo_cursor = 1
+
+highlight link LspErrorText ErrorMsg
 
 " mark.vim
 highlight MarkWord1 ctermfg=16 ctermbg=116
@@ -645,6 +699,21 @@ function! MakeStatusLine()
     if exists("*SkkGetModeStr")
         let extra .= SkkGetModeStr()
     endif
+    if exists("*lsp#get_buffer_diagnostics_counts") &&
+    \  g:statusline_winid == win_getid()
+        let lsp_counts = lsp#get_buffer_diagnostics_counts()
+        let lsp_status = []
+        for i in ['error', 'warning', 'hint', 'information']
+            let c = lsp_counts[i]
+            if c != 0
+                call add(lsp_status,
+                \   printf("%%#lsp%stext#%s%d%%*", i, toupper(i[0]), c))
+            endif
+        endfo
+        if !empty(lsp_status)
+            let extra .= '[' . join(lsp_status, ',') . ']'
+        endif
+    endif
     if extra !~ '^\s*$'
         let s .= extra . ' '
     endif
@@ -689,6 +758,19 @@ function! MakeTabLabel(n)
 
     let s = no . mod . sp . bufname
     return s
+endfunction
+
+function! s:toggle_nmap_ctrl_right_bracket()
+    if mapcheck('<C-]>', 'n') == ""
+        nmap <buffer> <C-]> <Plug>(lsp-definition)
+    else
+        silent! nunmap <buffer> <C-]>
+    endif
+endfunction
+
+function! s:lsp_setup(server)
+    setlocal signcolumn=yes
+    nmap <buffer> <C-]> <Plug>(lsp-definition)
 endfunction
 
 function! s:do_opfunc(type, func, ...)
