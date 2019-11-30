@@ -12,7 +12,7 @@ set sort=threads
 set include
 
 set date_format="%Y/%m/%d %H:%M:%S"
-set folder_format="%2C %t %N %F %2l %-8.8u %-8.8g %5s %d %f"
+set folder_format="%2C %5n%t %f"
 set index_format="%4C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
 set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
 set forward_format="Fw: %s"
@@ -25,6 +25,9 @@ set quote_regexp="^([ \t]*[|>])+"
 set send_charset="us-ascii:iso-2022-jp:utf-8"
 set assumed_charset="utf-8:cp932:iso-2022-jp:euc-jp"
 set attach_charset="euc-jp:utf-8"
+
+set mail_check=60
+set mail_check_stats
 
 set thorough_search=yes
 set rfc2047_parameters=yes
@@ -44,6 +47,10 @@ set noreverse_realname
 set editor="vim '+/^$'"
 
 set read_inc=100
+
+set imap_check_subscribed
+set imap_idle
+set imap_passive=no
 
 set header_cache="~/.cache/mutt"
 set message_cachedir="~/.cache/mutt"
@@ -66,6 +73,8 @@ charset-hook shift-jis cp932
 
 alternative_order text/plain text
 auto_view text/html
+
+bind generic,pager ':' noop
 
 bind generic g first-entry
 bind generic G last-entry
