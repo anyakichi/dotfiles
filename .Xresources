@@ -5,7 +5,6 @@
 !
 ! URxvt
 !
-URxvt*termName:		xterm-256color
 URxvt*scrollBar:	false
 URxvt*fading:		15
 
