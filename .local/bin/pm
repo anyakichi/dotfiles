@@ -30,11 +30,6 @@ service_restart()
     service_start "$@"
 }
 
-xidlehook_send()
-{
-    echo -ne "$1" | socat - "UNIX-CONNECT:${XIDLEHOOK_SOCKET}"
-}
-
 dim()
 {
     local brightness display
@@ -111,11 +106,11 @@ main()
 
             xidlehook \
                 --socket "${XIDLEHOOK_SOCKET}" \
-                --timer normal 10 "$0 try-blank" "" \
-                --timer normal 170 "$0 battery-dim" "$0 undim" \
-                --timer normal 30 "$0 battery-blank" "" \
-                --timer normal 360 "$0 dim" "$0 undim" \
-                --timer primary 30 "$0 blank" "" &
+                --timer 10 "$0 try-blank" "" \
+                --timer 170 "$0 battery-dim" "$0 undim" \
+                --timer 30 "$0 battery-blank" "" \
+                --timer 360 "$0 dim" "$0 undim" \
+                --timer 30 "$0 blank" "" &
             xss-lock -l -- \
                 ~/.local/sbin/i3lock.sh -k -B 10 --indicator \
                     --insidecolor ffffff88 &
@@ -132,10 +127,12 @@ main()
             service_stop "$main_argv0"
             ;;
         enable)
-            xidlehook_send "\x1"
+            xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
+                control --action enable >/dev/null
             ;;
         disable)
-            xidlehook_send "\x0"
+            xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
+                control --action disable >/dev/null
             ;;
         lock)
             xset s activate &>/dev/null
