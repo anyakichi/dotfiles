@@ -5,27 +5,34 @@ BACKLIGHT=/sys/class/backlight/intel_backlight
 I3STATUS_RUNTIME_DIR=${XDG_RUNTIME_DIR}/i3status
 I3STATUS_BACKLIGHT=${I3STATUS_RUNTIME_DIR}/backlight
 
-ACTUAL_BRIGHTNESS=${BACKLIGHT}/actual_brightness
-MAX_BRIGHTNESS=${BACKLIGHT}/max_brightness
+BL_ACTUAL_BRIGHTNESS=${BACKLIGHT}/actual_brightness
+BL_MAX_BRIGHTNESS=${BACKLIGHT}/max_brightness
 
 update_backlight()
 {
-    local brightness max_brightness
+    local brightness
 
-    brightness=$(<$ACTUAL_BRIGHTNESS)
-    if ((BRIGHTNESS_CACHE != brightness)); then
-        max_brightness=$(<$MAX_BRIGHTNESS)
-        echo $((brightness * 100 / max_brightness)) > "${I3STATUS_BACKLIGHT}"
-        pkill -U "${USER}" -USR1 "^i3status$"
-        BRIGHTNESS_CACHE="${brightness}"
-    fi
+    brightness=$(<$BL_ACTUAL_BRIGHTNESS)
+    echo $((brightness * 100 / MAX_BRIGHTNESS)) > "${I3STATUS_BACKLIGHT}"
+    pkill -U "${USER}" -USR1 "^i3status$"
 }
 
-mkdir -p "${I3STATUS_RUNTIME_DIR}"
-update_backlight
+trap "exit" HUP INT TERM
+trap "kill 0" EXIT
 
-inotifywait -e MODIFY -m "${ACTUAL_BRIGHTNESS}" 2>/dev/null | while read -r; do
-    # Wait some time to get backlight stable
-    sleep 0.2
+mkdir -p "${I3STATUS_RUNTIME_DIR}"
+
+if [[ -d ${BACKLIGHT} ]]; then
+    MAX_BRIGHTNESS=$(<$BL_MAX_BRIGHTNESS)
+
     update_backlight
-done
+
+    inotifywait -e MODIFY -m "${BL_ACTUAL_BRIGHTNESS}" 2>/dev/null | \
+    while read -r; do
+        # Wait some time to get backlight stable
+        sleep 0.5
+        update_backlight
+    done &
+fi
+
+wait
