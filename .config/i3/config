@@ -233,6 +233,7 @@ exec --no-startup-id easystroke
 #exec --no-startup-id light-locker --lock-after-screensaver=0
 exec --no-startup-id systemd-inhibit --what=idle pm start
 exec --no-startup-id i3status-helper
+exec --no-startup-id rotate
 exec --no-startup-id xrdb -merge ~/.Xresources
 
 exec --no-startup-id i3-msg 'workspace --no-auto-back-and-forth 1; append_layout ~/.config/i3/workspace1.json'
