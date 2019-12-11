@@ -3,6 +3,7 @@ Description=Tmux terminal multiplexer
 
 [Service]
 Type=forking
+Environment=PINENTRY_USER_DATA="USE_CURSES=1"
 ExecStart=/usr/bin/tmux new-session -s 0 -d
 ExecStop=/usr/bin/tmux kill-session -t 0
 Restart=always
