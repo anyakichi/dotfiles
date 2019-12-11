@@ -189,19 +189,11 @@ bar {
         font pango:DejaVu Sans,IPAGothic,Font Awesome 5 Free 10
 }
 
-set $out1 "HDMI1"
-set $out2 "HDMI2"
-
-workspace $ws1 output $out1
-workspace $ws2 output $out1
-workspace $ws3 output $out1
-workspace $ws4 output $out1
-workspace $ws5 output $out1
-workspace $ws6 output $out2
-workspace $ws7 output $out2
-workspace $ws8 output $out2
-workspace $ws9 output $out2
-workspace $ws10 output $out2
+workspace $ws1 output primary
+workspace $ws2 output primary
+workspace $ws3 output primary
+workspace $ws4 output primary
+workspace $ws5 output primary
 
 focus_on_window_activation urgent
 workspace_auto_back_and_forth yes
@@ -230,7 +222,10 @@ bindsym $mod+bracketright focus output right
 bindsym $mod+Shift+bracketleft move workspace to output left
 bindsym $mod+Shift+bracketright move workspace to output right
 
-#exec --no-startup-id xrandr --output $out1 --auto --primary --output $out2 --auto --right-of $out1
+#set $out0 "HDMI1"
+#set $out1 "HDMI2"
+
+#exec --no-startup-id xrandr --output $out0 --auto --primary --output $out1 --auto --right-of $out0
 
 exec --no-startup-id compton
 exec --no-startup-id dunst
