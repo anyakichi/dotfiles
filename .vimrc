@@ -443,6 +443,7 @@ augroup MyAutoCmd
     \   setlocal sw=2
     autocmd FileType asciidoc,gitcommit,mail,markdown,rst,tex,text
     \   setlocal tw=72 | let b:spell = -1
+    autocmd FileType go                 setlocal ts=4
     autocmd FileType python             setlocal fo-=t sts=0
     autocmd FileType taskpaper          setlocal sw=2 ts=2
     autocmd FileType typescript         setlocal sw=4
