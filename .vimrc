@@ -479,42 +479,7 @@ augroup MyAutoCmd
 
     autocmd CompleteDone * silent! iunmap <buffer> <CR>
 
-    if executable('clangd')
-        autocmd User lsp_setup call lsp#register_server({
-        \   'name': 'clangd',
-        \   'cmd': {server_info->['clangd', '-background-index']},
-        \   'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
-        \})
-        autocmd FileType c,cpp,obj,objcpp       call s:lsp_setup('clangd')
-    endif
-
-    if executable('gopls')
-        autocmd User lsp_setup call lsp#register_server({
-        \   'name': 'gopls',
-        \   'cmd': {server_info->['gopls', 'mode', 'stdio']},
-        \   'whitelist': ['go'],
-        \})
-        autocmd FileType go                     call s:lsp_setup('gopls')
-    endif
-
-    if executable('pyls')
-        autocmd User lsp_setup call lsp#register_server({
-        \   'name': 'pyls',
-        \   'cmd': {server_info->['pyls']},
-        \   'whitelist': ['python'],
-        \})
-        autocmd FileType python                 call s:lsp_setup('pyls')
-    endif
-
-    if executable('rls')
-        autocmd User lsp_setup call lsp#register_server({
-        \   'name': 'rls',
-        \   'cmd': {server_info->['rls']},
-        \   'workspace_config': {'rust': {'clippy_preference': 'on'}},
-        \   'whitelist': ['rust'],
-        \})
-        autocmd FileType rust                   call s:lsp_setup('rls')
-    endif
+    autocmd User lsp_buffer_enabled call s:lsp_setup()
 augroup END
 
 
@@ -769,7 +734,8 @@ function! s:toggle_nmap_ctrl_right_bracket()
     endif
 endfunction
 
-function! s:lsp_setup(server)
+function! s:lsp_setup()
+    setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     nmap <buffer> <C-]> <Plug>(lsp-definition)
 endfunction
