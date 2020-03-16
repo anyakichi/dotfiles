@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import json
+import os
 import socket
 import sys
 
@@ -26,6 +27,8 @@ def read_line():
 
 
 if __name__ == "__main__":
+    path = os.path.expandvars("${XDG_RUNTIME_DIR}/toggdoro.sock")
+
     # Skip the first line which contains the version header.
     print_line(read_line())
 
@@ -42,7 +45,7 @@ if __name__ == "__main__":
 
         try:
             s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-            s.connect("/run/user/1000/toggdoro.sock")
+            s.connect(path)
             toggdoro_output = s.recv(1024).decode().strip()
         except:
             toggdoro_output = ""
