@@ -5,7 +5,7 @@
     "type": "con",
     "nodes": [
         {
-            "name": "Chromium",
+            "name": "Browser",
             "swallows": [
                 {
                     "window_role": "^browser$"
@@ -22,10 +22,10 @@
     "type": "con",
     "nodes": [
         {
-            "name": "urxvt",
+            "name": "Terminal",
             "swallows": [
                 {
-                    "class": "^URxvt$"
+                    "class": "^Termite|URxvt$"
                 }
             ],
             "type": "con"
