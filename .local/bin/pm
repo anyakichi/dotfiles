@@ -48,7 +48,7 @@ dim()
 
     if [[ -n "${brightness}" ]]; then
         if command -v redshift &>/dev/null; then
-            redshift -o -P -b "${brightness}:${brightness}" &>/dev/null
+            redshift -o -P -b "${brightness}:${brightness}" -m randr:crtc=0 &>/dev/null
         else
             display="$(xrandr | awk '/ primary/ {print $1}')" 2>/dev/null
             xrandr --output "${display}" --brightness "${brightness}"
