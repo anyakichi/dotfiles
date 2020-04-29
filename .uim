@@ -42,3 +42,14 @@
 
 ;; custom-skk-keys1.scm
 (define skk-sticky-key? (make-key-predicate '(";")))
+
+;; other
+(require "util.scm")
+(define uim-color-arc-dark
+  '((reversed-preedit-foreground   . "#f9f9f9")
+    (reversed-preedit-background   . "#4491ed")
+    (separator-foreground          . "#c4cbd4")
+    (separator-background          . "#2d303b")
+    (reversed-separator-foreground . "white")
+    (reversed-separator-background . "black")))
+(define uim-color 'uim-color-arc-dark)
