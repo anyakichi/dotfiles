@@ -23,7 +23,7 @@
 
 ;; custom-xim.scm
 (define uim-xim-use-xft-font? #t)
-(define uim-xim-xft-font-name "IPAGothic")
+(define uim-xim-xft-font-name "IPAexGothic")
 
 ;; custom-mozc.scm
 (define mozc-widgets '(widget_mozc_input_mode))
