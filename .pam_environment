@@ -1,0 +1,7 @@
+TERMINAL=termite
+
+GTK_IM_MODULE=uim
+QT_IM_MODULE=uim
+XMODIFIERS=@im=uim
+
+MOZ_USE_XINPUT2=1

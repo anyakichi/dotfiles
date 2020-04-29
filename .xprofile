@@ -10,12 +10,7 @@ fc-match -v \
 
 [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 
-export GTK_IM_MODULE=uim
-export QT_IM_MODULE=uim
-export XMODIFIERS="@im=uim"
 which uim-xim >/dev/null 2>&1 && uim-xim &
-
-export MOZ_USE_XINPUT2=1
 
 which unclutter >/dev/null 2>&1 && unclutter &
 
