@@ -673,7 +673,7 @@ function! MakeStatusLine()
         let extra .= SkkGetModeStr()
     endif
     if exists("*lsp#get_buffer_diagnostics_counts") &&
-    \  g:statusline_winid == win_getid()
+    \  exists('g:statusline_winid') && g:statusline_winid == win_getid()
         let lsp_counts = lsp#get_buffer_diagnostics_counts()
         let lsp_status = []
         for i in ['error', 'warning', 'hint', 'information']
