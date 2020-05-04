@@ -592,6 +592,14 @@ let g:skk_kata_mode_string = 'ア'
 let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
+" smartinput.vim
+for s:x in ['''''''\%#''''''', '"""\%#"""', '```\%#```']
+    call smartinput#define_rule(
+    \   {'at': s:x, 'char': '<Enter>', 'input': '<Enter><Enter><Up><Esc>"_S'},
+    \)
+endfor
+unlet s:x
+
 " surround.vim
 nmap s <Plug>Ysurround
 nmap ss <Plug>Yssurround
