@@ -30,9 +30,25 @@ service_restart()
     service_start "$@"
 }
 
+_dim()
+{
+    local brightness="$1"
+    shift
+
+    if [[ $# == 0 ]]; then
+        return
+    fi
+
+    args=()
+    for i in "$@"; do
+        args+=(--output "$i" --brightness "${brightness}")
+    done
+    xrandr "${args[@]}"
+}
+
 dim()
 {
-    local brightness display
+    local brightness displays
 
     case "$1" in
         on)
@@ -49,10 +65,11 @@ dim()
     if [[ -n "${brightness}" ]]; then
         if command -v redshift &>/dev/null; then
             redshift -o -P -b "${brightness}:${brightness}" -m randr:crtc=0 &>/dev/null
+            mapfile -t displays < <(xrandr -q | awk '/\<connected\>/ && !/primary/ {print $1}' 2>/dev/null)
         else
-            display="$(xrandr | awk '/ primary/ {print $1}')" 2>/dev/null
-            xrandr --output "${display}" --brightness "${brightness}"
+            mapfile -t displays < <(xrandr -q | awk '/\<connected\>/ {print $1}' 2>/dev/null)
         fi
+        _dim "${brightness}" "${displays[@]}"
     fi
 }
 
