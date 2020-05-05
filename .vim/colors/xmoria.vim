@@ -60,6 +60,7 @@ let s:color_map = map({
 \   '#202020': 234,
 \   '#25365a':  23,
 \   '#262626': 235,
+\   '#2a2a2a': 236,
 \   '#2c2cee':  21,
 \   '#2ceeee':  51,
 \   '#2f4471':  23,
@@ -79,6 +80,7 @@ let s:color_map = map({
 \   '#6e6e6e': 242,
 \   '#707070': 242,
 \   '#708bc5':  68,
+\   '#7284a7': 110,
 \   '#786000':  94,
 \   '#7a7a7a': 243,
 \   '#7ec0ee': 111,
@@ -225,8 +227,8 @@ if &background == "dark"
         endif
     else
         Hi FoldColumn guibg=bg guifg=#8fa5d1 gui=none
-        Hi CursorLineNr guifg=#8fa5d1 gui=bold
-        Hi LineNr guifg=#8fa5d1 gui=none
+        Hi CursorLineNr guifg=#8fa5d1 guibg=#404040 gui=bold
+        Hi LineNr guifg=#7284a7 guibg=#2a2a2a gui=none
         Hi MoreMsg guibg=bg guifg=#97abd5 gui=bold
         Hi NonText guibg=bg guifg=#8fa5d1 gui=bold
         Hi Pmenu guibg=#6381be guifg=#000000 gui=none
