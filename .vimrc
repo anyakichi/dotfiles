@@ -520,8 +520,6 @@ nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
 " lsp
-let g:lsp_diagnostics_echo_cursor = 1
-
 highlight link LspErrorText ErrorMsg
 
 " mark.vim
