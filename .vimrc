@@ -362,6 +362,7 @@ catch
 endtry
 map [Space]s <Plug>(operator-sort)
 
+nnoremap <silent> [Space]<C-]> <C-]>
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
 nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]] :<C-u>call <SID>toggle_nmap_ctrl_right_bracket()<CR>
