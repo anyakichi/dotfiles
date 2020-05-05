@@ -1,3 +1,9 @@
+launch_once() {
+    pgrep -U "${USER}" "$1" >/dev/null 2>&1 && return
+    which "$1" >/dev/null 2>&1 || return
+    "$@" &
+}
+
 xset b off
 xset dpms 600 600 600
 xset r rate 225 35
@@ -10,9 +16,8 @@ fc-match -v \
 
 [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 
-which uim-xim >/dev/null 2>&1 && uim-xim &
-
-which unclutter >/dev/null 2>&1 && unclutter &
+launch_once uim-xim
+launch_once unclutter
 
 for p in 'pointer:Logitech MX Ergo' 'pointer:Logitech M570'; do
     xinput list "$p" >/dev/null 2>&1 || continue
