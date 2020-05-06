@@ -330,14 +330,12 @@ rg() {
 
     if [[ "${@[-1]}" == '.' ]]; then
         opts+=(-uu)
-    elif [[ $(command git rev-parse --show-toplevel) == "${HOME}" ]]; then
-        opts+=(-u)
     fi
 
     if command -v rg &>/dev/null && [[ -t 1 ]]; then
-        command rg -p "${opts[@]}" "$@" | less -RMFXK
+        command rg "${opts[@]}" -p "$@" | less -RMFXK
     else
-        command rg "$@"
+        command rg "${opts[@]}" "$@"
     fi
 }
 
