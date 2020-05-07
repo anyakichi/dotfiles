@@ -510,11 +510,20 @@ nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
 " fzf
-nnoremap <silent> <C-_> :<C-u>FZF<CR>
-nnoremap <silent> ,, :<C-u>FZF<CR>
-nnoremap <silent> ,. :<C-u>FZF -q <C-r>=expand('%:t:r')<CR><CR>
+nnoremap <C-_> :<C-u>Files<Space>
+nnoremap ,, :<C-u>GFiles<Space>
+nnoremap <silent> ,b :<C-u>Buffers<CR>
+nnoremap ,g :<C-u>Rg<Space>
+nnoremap ,G :<C-u>Rg<Space><C-r><C-w>
+nnoremap <silent> ,L :<C-u>Lines<CR>
+nnoremap <silent> ,l :<C-u>BLines<CR>
 nnoremap <silent> ,t :<C-u>Tags<CR>
+nnoremap <silent> ,m :<C-u>Marks<CR>
+nnoremap <silent> ,w :<C-u>Windows<CR>
 nnoremap <silent> ,; :<C-u>History:<CR>
+nnoremap <silent> ,/ :<C-u>History/<CR>
+nnoremap <silent> ,C :<C-u>Commits<CR>
+nnoremap <silent> ,c :<C-u>BCommits<CR>
 
 " easy-align.vim
 nmap ga <Plug>(EasyAlign)
