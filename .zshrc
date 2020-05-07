@@ -50,6 +50,7 @@ alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias mz='mutt -Z'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
+alias d=fcd
 alias o=rifle
 alias r=rifle
 command -v open >/dev/null 2>&1 || alias open=xdg-open
@@ -154,14 +155,7 @@ compinit
 colors
 
 ## cdr
-autoload -Uz cdr chpwd_recent_dirs
-
-zstyle ':chpwd:*' recent-dirs-default true
-zstyle ':chpwd:*' recent-dirs-max 1000
-zstyle ':chpwd:*' recent-dirs-prune "pattern:^${HOME}$"
-zstyle ':completion:*' recent-dirs-insert always
-
-add-zsh-hook chpwd chpwd_recent_dirs
+source ~/.zsh/cdr.zsh
 
 ## edit-command-line
 autoload -Uz edit-command-line
@@ -349,15 +343,58 @@ rg() {
 
 ## fzf
 
+__longest_dir()
+{
+    local dir="$1"
+
+    while true; do
+        if [[ -d ${dir} ]]; then
+            echo "${dir}"
+            break
+        fi
+        if [[ ! ${dir} =~ / ]]; then
+            break
+        fi
+        dir=${dir%/*}
+    done
+}
+
 __fzf-find()
 {
     setopt localoptions pipefail
-    local dir="${1:-.}"
+    local dir opts
+
+    dir="$(__longest_dir "$1")"
+
+    if [[ -n "${dir}" ]]; then
+        opts=(-q "${1:(($#dir + 1))}")
+        if [[ ${dir} =~ /$ ]]; then
+            opts+=(--prompt "${dir}> " )
+        else
+            opts+=(--prompt "${dir}/> " )
+        fi
+    else
+        opts=(-q "$1")
+    fi
+
     shift
 
-    command find "${dir}" "${@}" -mindepth 1 -xdev 2>/dev/null \
-        | command sed 's#^\./##' \
-        | command fzf -m -0 --print-query --expect=ctrl-o
+    (
+        cd "${dir:-.}" &&
+        "$@" \
+            | command fzf -m -0 --print-query --expect=ctrl-o "${opts[@]}" \
+            | command sed -e "3,\$s|^|${dir}|"
+    )
+}
+
+__fzf-f()
+{
+    __fzf-find "$1" fzf-find
+}
+
+__fzf-d()
+{
+    __fzf-find "$1" fzf-find d
 }
 
 __fzf-ghq()
@@ -410,7 +447,7 @@ fcd()
 {
     local dir
 
-    res=("${(@f)"$(__fzf-find "${1:-.}" -type d)"}")
+    res=("${(@f)"$(__fzf-d "$1")"}")
 
     if [[ ${#res} -ge 3 ]]; then
         cd "${res[3]}" || return
@@ -444,7 +481,7 @@ fzf-file-widget()
     setopt localoptions extended_glob pipefail
     local key i res ret
 
-    res=("${(@f)"$(__fzf-find "${LBUFFER##*[[:space:]]##}")"}")
+    res=("${(@f)"$(__fzf-f "${LBUFFER##*[[:space:]]##}")"}")
     ret=$?
 
     if [[ ${#res} -ge 3 ]]; then
@@ -475,7 +512,10 @@ fzf-cdr-widget()
     setopt localoptions pipefail
     local dir
 
-    dir=$(cdr -l | sed 's/^[[:digit:]]*[[:space:]]*//' | fzf +m)
+    dir=$(__fzf-cdr \
+            | fzf +m \
+                --bind 'esc:reload:zsh -c "source ~/.zsh/cdr.zsh; __fzf-cdr"' \
+                --bind 'ctrl-/:reload:fzf-find d')
     local ret=$?
     if [ -n "${dir}" ]; then
         BUFFER="cd ${dir}"
