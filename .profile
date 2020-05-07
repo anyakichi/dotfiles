@@ -33,7 +33,7 @@ export QUOTING_STYLE=literal
 
 export PIPENV_VENV_IN_PROJECT=1
 
-export FZF_DEFAULT_COMMAND="find . -mindepth 1 -xdev -type f 2>/dev/null | cut -b 3-"
+export FZF_DEFAULT_COMMAND="fzf-find"
 export FZF_DEFAULT_OPTS="--exact --height 40% --layout=reverse --inline-info"
 
 export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}

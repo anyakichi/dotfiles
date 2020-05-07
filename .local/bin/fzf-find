@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -o pipefail
+
+do_find()
+{
+    local opts
+
+    opts=()
+
+    if [[ "$1" == "d" ]]; then
+        opts+=(-type d -print)
+    else
+        opts+=(-type f -print -o -type l -print)
+    fi
+
+    find -L . -mindepth 1 -xdev -path '*/\.*' -prune -o "${opts[@]}" 2>/dev/null \
+        | cut -b3-
+}
+
+do_fd()
+{
+    local opts
+
+    opts=()
+
+    if [[ "$1" == "d" ]]; then
+        opts+=(--type d)
+    else
+        opts+=(--type f --type l)
+    fi
+
+    fd -L --one-file-system "${opts[@]}" 2>/dev/null
+}
+
+if command -v fd >/dev/null 2>&1; then
+    do_fd "$@"
+else
+    do_find "$@"
+fi
