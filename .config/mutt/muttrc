@@ -116,6 +116,6 @@ macro browser	  Y "<exit>"		"exit this menu"
 macro index	  i "<change-folder>?<toggle-mailboxes>"	\
 					"show incoming mailboxes list"
 
-source `~/.mutt/muttcolor`
+source `~/.config/mutt/muttcolor`
 
-source ~/.mutt/muttrc_local
+source ~/.config/mutt/muttrc_local

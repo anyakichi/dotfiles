@@ -8,4 +8,4 @@ case "$TERM" in
         ;;
 esac
 
-echo ~/.mutt/$file
+echo ~/.config/mutt/$file
