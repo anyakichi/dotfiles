@@ -1,3 +1,5 @@
+#text/plain; nkf -w %s; test=echo "%{charset}" | grep -qic "iso-2022-jp"; copiousoutput;
+
 text/html;	RIFLE_WAIT=1 rifle %s; nametemplate=%s.html
 text/html;	w3m -I %{charset} -T text/html -o display_link_number=1; copiousoutput;
 
