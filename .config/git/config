@@ -66,4 +66,4 @@
 [ghq]
 	root = ~/src
 [include]
-	path = ~/.gitconfig.local
+	path = ~/.config/git/local
