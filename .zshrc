@@ -366,11 +366,10 @@ __fzf-find()
 
     if [[ -n "${dir}" ]]; then
         opts=(-q "${1:(($#dir + 1))}")
-        if [[ ${dir} =~ /$ ]]; then
-            opts+=(--prompt "${dir}> " )
-        else
-            opts+=(--prompt "${dir}/> " )
+        if [[ ! ${dir} =~ /$ ]]; then
+            dir="${dir}/"
         fi
+        opts+=(--prompt "${dir}> " )
     else
         opts=(-q "$1")
     fi
