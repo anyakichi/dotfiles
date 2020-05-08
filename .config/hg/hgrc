@@ -30,4 +30,4 @@ quiet = True
 attend = annotate, cat, diff, export, help, glog, log, qdiff, qseries, \
          show, status
 
-%include ~/.hgrc.local
+%include ~/.config/hg/hgrc_local
