@@ -326,7 +326,7 @@ compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
 rg() {
     local opts
-    opts=()
+    opts=(-S)
 
     if [[ "${@[-1]}" == '.' ]]; then
         opts+=(-uu)
