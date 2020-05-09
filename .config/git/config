@@ -40,6 +40,8 @@
 	sp = stash pop
 	ss = stash
 	st = status
+	t = rev-parse --show-cdup
+	top = rev-parse --show-toplevel
 [core]
 	pager = less -FRX
 	quotepath = false
