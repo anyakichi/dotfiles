@@ -42,18 +42,13 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-alias man='LANG=C man'
-
 alias grep='egrep'
 command -v vim > /dev/null 2>&1 && alias vi=vim
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
-alias mz='mutt -Z'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
 alias d=fcd
 alias o=rifle
-alias r=rifle
-command -v open >/dev/null 2>&1 || alias open=xdg-open
 
 alias din='din ${DIN_OPTS[@]}'
 alias gg='fghq'
