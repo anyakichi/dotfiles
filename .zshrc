@@ -50,6 +50,8 @@ alias picocom='picocom -e \\'
 alias d=fcd
 alias o=rifle
 
+command -v rg &>/dev/null && alias rg='rg-wrapper -S'
+
 alias din='din ${DIN_OPTS[@]}'
 alias gg='fghq'
 
@@ -319,18 +321,11 @@ ssh-tmux() {
 
 compdef _ssh ssh-screen=ssh ssh-tmux=ssh
 
-rg() {
-    local opts
-    opts=(-S)
-
-    if [[ "${@[-1]}" == '.' ]]; then
-        opts+=(-uu)
-    fi
-
-    if command -v rg &>/dev/null && [[ -t 1 ]]; then
-        command rg "${opts[@]}" -p "$@" | less -RMFXK
+rg-wrapper() {
+    if [[ -t 1 ]]; then
+        command rg -p "$@" | less -RMFXK
     else
-        command rg "${opts[@]}" "$@"
+        command rg "$@"
     fi
 }
 
