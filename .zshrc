@@ -332,6 +332,17 @@ rg-wrapper() {
     fi
 }
 
+command-substitution-widget()
+{
+    setopt localoptions pipefail
+    local dir
+
+    LBUFFER+='${(f)"$('
+    RBUFFER+=')"}'
+}
+zle -N command-substitution-widget
+bindkey '^S' command-substitution-widget
+
 ## fzf
 
 __longest_dir()
