@@ -181,6 +181,12 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+set_from_resource $term_width i3wm.terminalWidth 992
+set_from_resource $term_width_wide i3wm.terminalWidthWide 1232
+
+bindsym $mod+period resize set $term_width px
+bindsym $mod+comma resize set $term_width_wide px
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
@@ -236,7 +242,9 @@ exec --no-startup-id i3status-helper
 exec --no-startup-id rotate
 exec --no-startup-id xrdb -merge ~/.Xresources
 
-exec --no-startup-id i3-msg 'workspace --no-auto-back-and-forth 1; append_layout ~/.config/i3/workspace1.json'
+set_from_resource $layout i3wm.layout workspace1
+
+exec --no-startup-id i3-msg "workspace --no-auto-back-and-forth 1; append_layout ~/.config/i3/$layout.json"
 exec --no-startup-id chromium
 exec --no-startup-id i3-sensible-terminal
 
