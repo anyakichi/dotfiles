@@ -53,15 +53,34 @@ alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
 alias_alt vi vim
 alias_alt top htop
 
-command -v rg &>/dev/null && alias rg='rg-wrapper -S'
-
 alias din='din ${DIN_OPTS[@]}'
 alias gg='fghq'
 
+command -v rg &>/dev/null &&
+rg() {
+    if [[ -t 1 ]]; then
+        command rg -S -p "$@" | less -RMFXK
+    else
+        command rg -S "$@"
+    fi
+}
+
+command -v rifle &>/dev/null &&
+rifle()
+{
+    command rifle "${@:-.}"
+}
+
 if [[ -n "${STY}" ]]; then
-    alias ssh=ssh-screen
+    ssh() {
+        screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
+            -c "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
+    }
 elif [[ -n "${TMUX}" ]]; then
-    alias ssh=ssh-tmux
+    ssh() {
+        tmux new-window -n "${(@)argv[$#]/.*/}" \
+            "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
+    }
 fi
 
 # Global aliases
@@ -306,31 +325,6 @@ preexec_tmux()
 if [[ -n "${TMUX}" ]]; then
     add-zsh-hook preexec preexec_tmux
 fi
-
-rifle()
-{
-    command rifle "${@:-.}"
-}
-
-ssh-screen() {
-    screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
-        -c "GPG_TTY=\$(tty) ssh $(printf "%q " "${@}")"
-}
-
-ssh-tmux() {
-    tmux new-window -n "${(@)argv[$#]/.*/}" \
-        "GPG_TTY=\$(tty) ssh $(printf "%q " "${@}")"
-}
-
-compdef _ssh ssh-screen=ssh ssh-tmux=ssh
-
-rg-wrapper() {
-    if [[ -t 1 ]]; then
-        command rg -p "$@" | less -RMFXK
-    else
-        command rg "$@"
-    fi
-}
 
 command-substitution-widget()
 {
