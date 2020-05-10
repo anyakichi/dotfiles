@@ -1,5 +1,6 @@
 set autohidecursor
 set noautofocus
+set cncpcompletion
 
 let barposition = "bottom"
 let fullpagescrollpercent = 95
