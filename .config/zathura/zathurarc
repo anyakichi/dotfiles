@@ -1,0 +1,28 @@
+set window-title-basename true
+set window-height 997
+set window-width 705
+set recolor-keephue
+
+map [normal]     F toggle_fullscreen
+map [fullscreen] F toggle_fullscreen
+
+map [normal]     g goto top
+map [fullscreen] g goto top
+map [normal]     G goto bottom
+map [fullscreen] G goto bottom
+
+map [normal]     f scroll full-down
+map [fullscreen] f scroll full-down
+map [normal]     b scroll full-up
+map [fullscreen] b scroll full-up
+
+map [normal]     <C-f> navigate next
+map [fullscreen] <C-f> navigate next
+map [normal]     <C-b> navigate previous
+map [fullscreen] <C-b> navigate previous
+
+map [normal]     r reload
+map [fullscreen] r reload
+
+map [normal]     R rotate
+map [fullscreen] R rotate
