@@ -1,11 +1,7 @@
 #!/bin/sh
 
-file=colors/color.rc
-
-case "$TERM" in
-    *-256color)
-        file=colors/xmoria
-        ;;
-esac
-
-echo ~/.config/mutt/$file
+if [ $(tput colors) = 8 ]; then
+    echo ~/.config/mutt/colors/color.rc
+else
+    echo ~/.config/mutt/colors/xmoria
+fi
