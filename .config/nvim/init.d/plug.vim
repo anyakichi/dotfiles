@@ -1,7 +1,9 @@
 if has('nvim')
     let s:plug_vim_path = stdpath('data') . '/site/autoload/plug.vim'
+    let s:plug_dir = stdpath('data') . '/plugged'
 else
     let s:plug_vim_path = expand('~/.vim/autoload/plug.vim')
+    let s:plug_dir = expand('~/.vim/bundle')
 endif
 
 function s:bootstrap()
@@ -16,7 +18,7 @@ if !filereadable(s:plug_vim_path)
     finish
 endif
 
-call plug#begin(expand('~/.vim/bundle'))
+call plug#begin(s:plug_dir)
 
 Plug 'SirVer/ultisnips'
 Plug 'anyakichi/ocp-indent-vim'

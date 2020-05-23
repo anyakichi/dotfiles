@@ -1,6 +1,6 @@
 scriptencoding utf-8
 
-source ~/.vim/bundle/.config.vim
+source ~/.config/nvim/init.d/plug.vim
 
 
 "
