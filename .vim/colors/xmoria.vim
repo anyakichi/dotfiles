@@ -259,7 +259,12 @@ if &background == "dark"
     Hi Question guibg=bg guifg=#e8b87e gui=bold
     Hi Search guibg=#90e090 guifg=#000000 gui=none
     Hi SpecialKey guibg=bg guifg=#e8b87e gui=none
-    if has("spell")
+    if has("nvim")
+        Hi SpellBad guisp=#ee2c2c gui=undercurl
+        Hi SpellCap guisp=#2c2cee gui=undercurl
+        Hi SpellLocal guisp=#2ceeee gui=undercurl
+        Hi SpellRare guisp=#ee2cee gui=undercurl
+    else
         Hi SpellBad guisp=#ee2c2c gui=undercurl ctermfg=9
         Hi SpellCap guisp=#2c2cee gui=undercurl ctermfg=33
         Hi SpellLocal guisp=#2ceeee gui=undercurl ctermfg=33
