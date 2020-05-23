@@ -1,7 +1,20 @@
-"
-" .config.vim:
-"       Configuration for vim plugins
-"
+if has('nvim')
+    let s:plug_vim_path = stdpath('data') . '/site/autoload/plug.vim'
+else
+    let s:plug_vim_path = expand('~/.vim/autoload/plug.vim')
+endif
+
+function s:bootstrap()
+    silent execute '!curl -fLo ' . s:plug_vim_path . ' --create-dirs
+    \   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    echo 'vim-plug has been installed'
+endfunction
+
+command! -nargs=0 -bar PlugBootstap call s:bootstrap()
+
+if !filereadable(s:plug_vim_path)
+    finish
+endif
 
 call plug#begin(expand('~/.vim/bundle'))
 
@@ -64,7 +77,7 @@ Plug 'vim-scripts/moria'
 Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
 Plug 'will133/vim-dirdiff'
 
-if !has('patch-8.1.360')
+if !has('nvim') && !has('patch-8.1.360')
     Plug 'lambdalisue/vim-unified-diff'
 endif
 
