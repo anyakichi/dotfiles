@@ -234,7 +234,7 @@ if &background == "dark"
         Hi Pmenu guibg=#6381be guifg=#000000 gui=none
         Hi PmenuSbar guibg=#41609e guifg=fg gui=none
         Hi PmenuThumb guibg=#bdcae3 guifg=bg gui=none
-        Hi SignColumn guibg=bg guifg=#8fa5d1 gui=none
+        Hi SignColumn guibg=#2a2a2a guifg=#8fa5d1 gui=none
         Hi StatusLine guibg=#334b7d guifg=fg gui=bold
         Hi StatusLineNC guibg=#25365a guifg=fg gui=none
         Hi TabLine guibg=#334b7d guifg=fg gui=none
