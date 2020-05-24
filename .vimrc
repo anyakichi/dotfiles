@@ -476,11 +476,15 @@ augroup MyAutoCmd
     \   if (type(v:event) == v:t_string && v:event == '') ||
     \      (type(v:event) == v:t_dict && get(v:event['completed_item'], 'word', '') == '')
     \|      inoremap <buffer> <expr> <CR> "\<C-e>\<CR>"
+    \|      inoremap <buffer> <expr> <C-e> "\<End>"
     \|  else
     \|      silent! iunmap <buffer> <CR>
+    \|      silent! iunmap <buffer> <C-e>
     \|  endif
 
-    autocmd CompleteDone * silent! iunmap <buffer> <CR>
+    autocmd CompleteDone *
+    \   silent! iunmap <buffer> <CR>
+    \|  silent! iunmap <buffer> <C-e>
 
     autocmd User lsp_buffer_enabled call s:lsp_setup()
 augroup END
