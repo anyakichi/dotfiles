@@ -601,7 +601,7 @@ let g:skk_abbrev_mode_string = 'aあ'
 
 " smartinput.vim
 for s:x in ['''''''\%#''''''', '"""\%#"""', '```\%#```']
-    call smartinput#define_rule(
+    silent! call smartinput#define_rule(
     \   {'at': s:x, 'char': '<Enter>', 'input': '<Enter><Enter><Up><Esc>"_S'},
     \)
 endfor
