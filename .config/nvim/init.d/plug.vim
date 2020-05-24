@@ -21,12 +21,10 @@ endif
 call plug#begin(s:plug_dir)
 
 Plug 'SirVer/ultisnips'
-Plug 'anyakichi/ocp-indent-vim'
 Plug 'anyakichi/skk.vim', {'on': '<Plug>(skk-toggle-im)'}
 Plug 'anyakichi/vim-circomp'
 Plug 'anyakichi/vim-csutil'
 Plug 'anyakichi/vim-histsearch'
-Plug 'anyakichi/vim-ocp-index'
 Plug 'anyakichi/vim-qfutil'
 Plug 'anyakichi/vim-surround'
 Plug 'anyakichi/vim-tabutil'
