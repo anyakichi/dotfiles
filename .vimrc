@@ -364,7 +364,6 @@ map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]<C-]> <C-]>
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
-nnoremap <silent> [Space][ :<C-u>call <SID>toggle_fttag()<CR>
 nnoremap <silent> [Space]] :<C-u>call <SID>toggle_nmap_ctrl_right_bracket()<CR>
 nnoremap <silent> [Space]z :<C-u>call <SID>toggle_spell()<CR>
 nnoremap <silent> [Space]Z :<C-u>let b:spell = -1<CR>
@@ -430,9 +429,6 @@ augroup MyAutoCmd
 
     " Fix up settings after loading all plugins
     autocmd VimEnter *                  call s:vim_enter_hook()
-
-    " Hook function for buffer
-    autocmd BufNewFile,BufReadPost *    call s:buffer_hook()
 
     " Open the quickfix window automatically
     autocmd QuickFixCmdPost [^l]*       cwindow
@@ -964,16 +960,6 @@ function! s:toggle_spell()
     setlocal spell?
 endfunction
 
-function! s:toggle_fttag()
-    let tags_file = '~/.vim/tags/' . &filetype . '.tags'
-    let tags_save = &l:tags
-    execute 'setl tags+=' . tags_file
-    if tags_save == &l:tags
-        execute 'setl tags-=' . tags_file
-    endif
-    setl tags?
-endfunction
-
 function! s:toggle_cc()
     if &l:cc != 0
         let &l:cc = 0
@@ -1059,20 +1045,6 @@ function! s:vim_enter_hook()
     silent! iunmap <Leader>ih
     silent! iunmap <Leader>is
     silent! iunmap <Leader>ihn
-endfunction
-
-function! s:buffer_hook()
-    if findfile('build.sh', '.;') != ''
-        " NetBSD source tree
-        return
-    elseif findfile('conf.py', '.;') != ''
-        " Shpinx document
-        if executable('gmake')
-            set makeprg=gmake
-        endif
-    endif
-
-    silent call s:toggle_fttag()
 endfunction
 
 
