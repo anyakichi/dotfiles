@@ -6,11 +6,46 @@ source ~/.config/nvim/init.d/plug.vim
 "
 " Options
 "
-set backspace=indent,eol,start
+if !has('nvim')
+    set backspace=indent,eol,start
+    set tabpagemax=50
+
+    set laststatus=2
+    set showcmd
+
+    set display=lastline
+    set lazyredraw
+    set notitle
+
+    set tags=./tags;,tags
+
+    if $COLORTERM ==# "truecolor"
+        let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+        let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+
+        " Undercurl should be supported on modern terminals which support true
+        " colors.
+        let &t_Cs = "\e[4:3m\e[58;5;9m"
+        let &t_Ce = "\e[4:0m\e[59m"
+    endif
+
+    set history=10000
+    set wildmenu
+
+    set directory=~/.vim/swap//
+    set undodir=~/.vim/undo//
+
+    set timeout
+    set ttimeoutlen=50
+
+    silent! set formatoptions+=j
+
+    source $VIMRUNTIME/macros/matchit.vim
+endif
 
 " Encodings
 set fileencoding=utf-8
-set fileencodings=utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
+set fileencodings=ucs-bom,utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 
 " Indentation
 set autoindent
@@ -24,8 +59,6 @@ set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
               \i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
 
 " Status information
-set laststatus=2
-set showcmd
 set statusline=%!MakeStatusLine()
 set tabline=%!MakeTabLine()
 
@@ -36,8 +69,7 @@ set incsearch
 set smartcase
 
 " Formatting
-set formatoptions=tcroqlmB
-let &formatoptions .= 'j'
+set formatoptions+=rolmB
 set textwidth=78
 
 " Completion
@@ -50,15 +82,14 @@ set ambiwidth=double
 set background=dark
 set colorcolumn=81
 set cursorline
-set display=lastline
-set lazyredraw
-set notitle
+if has('nvim')
+    set pumblend=10
+    set winblend=10
+endif
 
 " True colors
 if $COLORTERM ==# "truecolor"
     set termguicolors
-    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 endif
 
 " Diff
@@ -69,8 +100,6 @@ let &diffopt .= ',indent-heuristic,algorithm:histogram'
 set nofoldenable
 
 " Command line
-set history=1000
-set wildmenu
 set wildmode=longest,list,full
 
 " Visual mode
@@ -86,14 +115,7 @@ set winminheight=0
 
 " Backup and swap
 set nobackup
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
 set undofile
-
-" Timeouts
-set timeout
-set timeoutlen=3000
-set ttimeoutlen=50
 
 " Mappings
 set cedit=<C-x>
@@ -114,7 +136,7 @@ if executable('gtags-cscope')
 endif
 set cscopetag
 set cscopetagorder=0
-set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+silent! set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 if has("mouse")
     set mouse=a
@@ -518,9 +540,6 @@ nmap [Space]N <Plug>MarkAllClear
 nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
 nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
 nmap <silent> <Esc><Esc> <Plug>MarkAllClear:set nohlsearch<CR>
-
-" matchit.vim
-source $VIMRUNTIME/macros/matchit.vim
 
 " qfutil.vim
 let g:qfutil_default_grep_file = '%:h'
