@@ -23,6 +23,7 @@ esac
 export BLOCKSIZE=1k
 export CVS_RSH=ssh
 export EDITOR=vim
+command -v nvim >/dev/null 2>&1 && EDITOR=nvim
 export GOPATH=${HOME}/.go
 export LANG=en_US.UTF-8
 export LC_COLLATE=C

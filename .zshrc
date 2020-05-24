@@ -50,6 +50,7 @@ alias d=fcd
 alias o=rifle
 
 alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
+alias_alt vim nvim
 alias_alt vi vim
 alias_alt top htop
 
