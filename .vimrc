@@ -168,21 +168,11 @@ else
     colorscheme nya
 endif
 
-highlight AnnoyingSpace ctermbg=236 guibg=#303030
-highlight link IdeographicSpace AnnoyingSpace
-highlight link RedundantSpace AnnoyingSpace
-highlight link TabSpace AnnoyingSpace
-match IdeographicSpace /　/
-
 
 "
 " Commands
 "
 command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
-
-command! -nargs=1 RegCopy call s:regcopy(<q-args>)
-
-command! -nargs=* -bang W call s:sudowrite(<bang>0, <f-args>)
 
 
 "
@@ -364,7 +354,7 @@ nnoremap <silent> [Space]Z :<C-u>let b:spell = -1<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
 nnoremap <silent> [Space]v :<C-u>source $HOME/.vimrc<CR>
 nnoremap <silent> [Space]c :<C-u>call <SID>toggle_cc()<CR>
-nnoremap <silent> [Space]<Tab> :<C-u>call <SID>toggle_hi_annoying_space()<CR>
+nnoremap <silent> [Space]<Tab> :<C-u>HlAnnoyingSpaceToggle<CR>
 nnoremap [Space]= `[=`]
 
 " Insert and command mode mappings
@@ -448,18 +438,6 @@ augroup MyAutoCmd
     " Spell checking
     autocmd InsertEnter * let &l:spell = !!get(b:, 'spell', 0)
     autocmd InsertLeave * let &l:spell = !(get(b:, 'spell', 0) - 1)
-
-    " Syntax setup
-    autocmd VimEnter,InsertLeave,User *
-    \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)')
-    autocmd InsertEnter *
-    \   call s:matchupdate_as('RedundantSpace', '\(\s\+$\| \+\ze\t\)\%#\@!')
-    autocmd BufEnter,User *
-    \   if &expandtab
-    \|      call s:matchupdate_as('TabSpace', '\t')
-    \|  else
-    \|      call s:matchupdate_as('TabSpace', '        ')
-    \|  endif
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
@@ -782,33 +760,6 @@ function! s:do_opfunc(type, func, ...)
     call setreg('a', reg_save[0], reg_save[1])
 endfunction
 
-function! s:regcopy(reg)
-    if a:reg ==# '&'
-        call {fakeclip#_sid_prefix()}write_pastebuffer(@@)
-    else
-        execute 'let' '@'.a:reg '= @@'
-    endif
-endfunction
-
-function! s:sudowrite(bang, ...)
-    if a:0 == 0
-        let file = expand("%")
-    elseif a:0 == 1
-        let file = a:1
-    else
-        echohl ErrorMsg
-        echo 'Only one file name allowed'
-        echohl None
-        return
-    endif
-
-    if !a:bang && confirm("Write with sudo?", "&Yes\n&No") == 2
-        return
-    endif
-
-    execute 'w !sudo tee "' . file . '" >/dev/null'
-endfunction
-
 function! s:compkey(key)
     let pre = "\<C-r>=pumvisible() ? \"\\<C-y>\": ''\<CR>"
     let down = "\<C-r>=pumvisible() ? \"\\<Down>\" : ''\<CR>"
@@ -836,33 +787,6 @@ function! s:tabclose()
         endfor
         call tabutil#close()
     endif
-endfunction
-
-function! s:matchdelete(group)
-    for match in getmatches()
-        if match['group'] ==# a:group
-            call matchdelete(match['id'])
-            return 1
-        endif
-    endfor
-    return 0
-endfunction
-
-function! s:matchupdate(group, pattern)
-    call s:matchdelete(a:group)
-    call matchadd(a:group, a:pattern)
-endfunction
-
-function! s:matchupdate_as(group, pattern)
-    call s:matchdelete(a:group)
-    if get(b:, 'hi_annoying_space', 1)
-        call matchadd(a:group, a:pattern)
-    endif
-endfunction
-
-function! s:toggle_hi_annoying_space()
-    let b:hi_annoying_space = !get(b:, 'hi_annoying_space', 1)
-    doautocmd MyAutoCmd User
 endfunction
 
 function! s:insert_word_from_line(lnum)
