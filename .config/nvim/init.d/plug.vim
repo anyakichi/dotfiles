@@ -23,7 +23,6 @@ call plug#begin(s:plug_dir)
 Plug 'SirVer/ultisnips'
 Plug 'anyakichi/ocp-indent-vim'
 Plug 'anyakichi/skk.vim', {'on': '<Plug>(skk-toggle-im)'}
-Plug 'anyakichi/taskpaper.vim'
 Plug 'anyakichi/vim-circomp'
 Plug 'anyakichi/vim-csutil'
 Plug 'anyakichi/vim-histsearch'

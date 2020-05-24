@@ -449,7 +449,6 @@ augroup MyAutoCmd
     \   setlocal tw=72 | let b:spell = -1
     autocmd FileType go                 setlocal ts=4
     autocmd FileType python             setlocal fo-=t sts=0
-    autocmd FileType taskpaper          setlocal sw=2 ts=2
     autocmd FileType typescript         setlocal sw=4
     autocmd FileType vimwiki            setlocal fo+=mB
 
@@ -612,15 +611,6 @@ nmap gs <Plug>Ygsurround
 nmap gsgs <Plug>Ygssurround
 nmap gss <Plug>Ygssurround
 nmap gS <Plug>Ygsurround$
-
-" taskpaper.vim
-nnoremap <buffer> <Leader>tn :call taskpaper#toggle_tag('next', '')<CR>
-nnoremap <buffer> <Leader>tw :call taskpaper#toggle_tag('wait')<CR>
-nnoremap <buffer> <Leader>tq :call taskpaper#update_tag('priority')<CR>
-nnoremap <buffer> <Leader>tN
-\       :<C-u>call taskpaper#search('\<@next\>')<CR>
-nnoremap <buffer> <Leader>tW
-\       :<C-u>call taskpaper#search('\<@wait\>')<CR>
 
 " tohtml.vim
 let g:html_use_css = 1
