@@ -99,10 +99,6 @@ set ttimeoutlen=50
 set cedit=<C-x>
 set pastetoggle=<C-q>
 
-" File searching
-set path=.,/usr/include,/usr/pkg/include,/usr/local/include
-set tags=./tags;/,~/.vim/tags/empty
-
 " Spell checking
 set spelllang=en_us,cjk
 
@@ -123,8 +119,6 @@ set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 if has("mouse")
     set mouse=a
 endif
-
-let g:filetype_m = 'objc'
 
 filetype plugin indent on
 
@@ -450,7 +444,6 @@ augroup MyAutoCmd
     autocmd FileType go                 setlocal ts=4
     autocmd FileType python             setlocal fo-=t sts=0
     autocmd FileType typescript         setlocal sw=4
-    autocmd FileType vimwiki            setlocal fo+=mB
 
     " Spell checking
     autocmd InsertEnter * let &l:spell = !!get(b:, 'spell', 0)
