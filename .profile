@@ -39,7 +39,7 @@ export XAPIAN_CJK_NGRAM=1
 export FZF_DEFAULT_COMMAND="fzf-find"
 export FZF_DEFAULT_OPTS="--exact --height 40% --layout=reverse --inline-info --bind ctrl-g:top"
 
-export PATH=${HOME}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
+export PATH=${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
 
 [ -f ~/.profile_local ] && . ~/.profile_local
