@@ -82,10 +82,6 @@ set ambiwidth=double
 set background=dark
 set colorcolumn=81
 set cursorline
-if has('nvim')
-    set pumblend=10
-    set winblend=10
-endif
 
 " True colors
 if $COLORTERM ==# "truecolor"
