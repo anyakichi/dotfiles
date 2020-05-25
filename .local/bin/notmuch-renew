@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+
+from pathlib import Path
+import argparse
+import time
+
+import notmuch
+
+
+def renew(msg):
+    msg.freeze()
+    msg.remove_all_tags(False)
+    msg.maildir_flags_to_tags()
+    msg.add_tag('new')
+    msg.thaw()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("search_terms", metavar="<search-term>", nargs='*')
+    args = parser.parse_args()
+
+    if args.search_terms:
+        with notmuch.Database(mode=notmuch.Database.MODE.READ_WRITE) as db:
+            # Use db instance to avoid crash notmuch
+            db.get_version()
+
+            for msg in db.create_query(" ".join(args.search_terms)).search_messages():
+                renew(msg)
+    else:
+        with open(notmuch.Database().get_path() + "/.notmuch-renew", mode='a+') as f:
+            f.seek(0)
+            try:
+                time_last_new = float(f.read())
+            except:
+                time_last_new = 0.0
+            f.truncate(0)
+            f.write("{}".format(time.time()))
+
+        with notmuch.Database(mode=notmuch.Database.MODE.READ_WRITE) as db:
+            # Use db to avoid crash notmuch
+            db.get_version()
+
+            for msg in notmuch.Query(db, 'not tag:new').search_messages():
+                if Path(msg.get_filename()).stat().st_mtime > time_last_new:
+                    renew(msg)
+
+
+if __name__ == "__main__":
+    main()

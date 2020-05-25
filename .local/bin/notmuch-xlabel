@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+
+import re
+
+import notmuch
+
+
+def imap_utf7_decode(s: str) -> str:
+    if s == '&-':
+        return '&'
+    if s.startswith('&') and s.endswith('-'):
+        return s.replace('&', '+', 1).replace(',', '/').encode().decode('utf-7')
+    return s
+
+
+def tag(msg, labels):
+    msg.freeze()
+    for label in labels:
+        if label != '':
+            msg.add_tag(label)
+    msg.remove_tag('new')
+    msg.thaw()
+
+
+def main():
+    with notmuch.Database(mode=notmuch.Database.MODE.READ_WRITE) as db:
+        # Use db to avoid crash notmuch
+        db.get_version()
+
+        for msg in notmuch.Query(db, 'tag:new').search_messages():
+            labels = re.sub(r"&.*?-", lambda m: imap_utf7_decode(m.group(0)),
+                            msg.get_header('X-Label')).split(' ')
+            tag(msg, labels)
+
+
+if __name__ == "__main__":
+    main()
