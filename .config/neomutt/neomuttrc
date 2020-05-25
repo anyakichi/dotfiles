@@ -1,0 +1,114 @@
+set nohelp
+set nomove
+set sleep_time=0
+set sort=threads
+set sort_browser=unsorted
+set include
+
+set date_format="%Y/%m/%d %H:%M:%S"
+set folder_format="%2C %5n%t %i"
+set index_format="%4C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
+set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
+set forward_format="Fw: %s"
+
+set pager_index_lines=7
+set pager_stop=yes
+
+set quote_regex="^([ \t]*[|>])+"
+
+set send_charset="us-ascii:iso-2022-jp:utf-8"
+set assumed_charset="utf-8:cp932:iso-2022-jp:euc-jp"
+set attach_charset="euc-jp:utf-8"
+
+set mail_check=60
+set mail_check_stats
+
+set thorough_search=yes
+set rfc2047_parameters=yes
+set forward_decode=yes
+set mime_forward=yes
+set mime_forward_decode=no
+
+set edit_headers=yes
+set fast_reply=yes
+
+set nomarkers
+
+set reverse_name
+set noreverse_realname
+
+set editor="vim '+/^$'"
+
+set read_inc=100
+
+set imap_check_subscribed
+set imap_idle
+set imap_passive=no
+
+set header_cache="~/.cache/neomutt"
+set message_cachedir="~/.cache/neomutt"
+
+# Cryptographic
+set crypt_use_gpgme
+
+set alias_file=~/.mail_aliases
+source ~/.mail_aliases
+
+ignore *
+unignore from: date subject to cc x-label
+unhdr_order *
+hdr_order Date: From: To: Cc: X-Label: Subject:
+
+charset-hook Windows-31J cp932
+charset-hook shift-jis cp932
+
+alternative_order text/plain text
+auto_view text/html
+
+bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
+
+bind generic g first-entry
+bind generic G last-entry
+bind generic f next-page
+bind generic b previous-page
+bind generic N search-opposite
+
+bind attach i exit
+
+bind attach,index g first-entry
+bind attach,index G last-entry
+
+bind attach,index,pager f next-page
+bind attach,index,pager b previous-page
+bind attach,index,pager H display-toggle-weed
+bind attach,index,pager B bounce-message
+bind attach,index,pager F forward-message
+bind attach,index,pager R group-reply
+bind attach,index,pager E resend-message
+
+bind browser,index,pager N search-opposite
+
+bind index,pager ! flag-message
+bind index,pager \c] next-unread-mailbox
+bind index,pager X decode-save
+bind index,pager q quit
+
+bind pager g top
+bind pager G bottom
+bind pager j next-line
+bind pager k previous-line
+bind pager l next-undeleted
+bind pager h previous-undeleted
+bind pager <BackSpace> search-toggle
+
+macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
+macro index	  i "<sync-mailbox><check-stats><imap-fetch-mail><change-folder>?" \
+					"show incoming mailboxes list"
+macro index	  y "<sync-mailbox><check-stats><imap-fetch-mail><change-folder>?" \
+					"show incoming mailboxes list"
+macro pager	  y "<exit><sync-mailbox><check-stats><imap-fetch-mail><change-vfolder>?" \
+					"show incoming mailboxes list"
+
+source `~/.config/mutt/muttcolor`
+
+source ~/.config/neomutt/neomuttrc_local
