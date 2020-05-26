@@ -9,9 +9,6 @@ fi
 #
 # Parameters
 #
-PROMPT='%m%(?..%F{red})%#%f '
-RPROMPT='$(my_rprompt)'
-
 DIRSTACKSIZE=20
 
 HISTFILE=~/.zsh_history
@@ -134,10 +131,6 @@ setopt inc_append_history
 # Input/Output
 setopt correct list_packed
 
-# Prompt
-setopt prompt_subst
-setopt transient_rprompt
-
 # Zle
 setopt no_beep
 
@@ -210,113 +203,12 @@ zstyle ':zle:*' word-style unspecified
 ## vcs_info
 autoload -Uz vcs_info
 
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:*' max-exports 5
-zstyle ':vcs_info:git:*' formats '%b' '%m' '%R' '%S'
-zstyle ':vcs_info:git:*' actionformats '%b' '%m' '%R' '%S' '%a'
-zstyle ':vcs_info:*' formats '%s:%b' '%m' '%R' '%S'
-zstyle ':vcs_info:*' actionformats '%s:%b' '%m' '%R' '%S' '%a'
-
-+vi-git-left-right-count() {
-    local output left right
-    output=$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)
-    output=("${(ps:\t:)output}")
-    left=${output[1]}
-    right=${output[2]}
-    if [[ ${left} -gt 0 ]]; then
-        hook_com[misc]+="%K{28}⇡${left}%k"
-    fi
-    if [[ ${right} -gt 0 ]]; then
-        hook_com[misc]+="%K{88}⇣${right}%k"
-    fi
-}
-
-+vi-git-stash-count() {
-    local count
-
-    if [[ -s $(command git rev-parse --git-dir)/refs/stash ]]; then
-        count=$(command git stash list 2>/dev/null | wc -l)
-        hook_com[misc]+="%K{242}↶${count// /}%k"
-    fi
-}
-
-zstyle ':vcs_info:git+post-backend:*' hooks git-left-right-count git-stash-count
-
-add-zsh-hook precmd vcs_info
-
-## antigen
-install_antigen()
-{
-    curl -L git.io/antigen > "$HOME/.zsh/antigen.zsh"
-}
-
-if [[ -f $HOME/.zsh/antigen.zsh ]]; then
-    source "$HOME/.zsh/antigen.zsh"
-
-    antigen bundle zsh-users/zsh-autosuggestions
-    antigen bundle zsh-users/zsh-completions
-    antigen bundle zsh-users/zsh-history-substring-search
-
-    # zsh-syntax-highlighting must be sourced after all ZLE widget created
-    antigen bundle zsh-users/zsh-syntax-highlighting
-
-    ZSH_AUTOSUGGEST_USE_ASYNC=1
-
-    typeset -A ZSH_HIGHLIGHT_STYLES
-    ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=9'
-    ZSH_HIGHLIGHT_STYLES[reserved-word]='fg=12'
-    ZSH_HIGHLIGHT_STYLES[builtin]='fg=12'
-    ZSH_HIGHLIGHT_STYLES[function]='fg=6'
-    ZSH_HIGHLIGHT_STYLES[precommand]='fg=11'
-    ZSH_HIGHLIGHT_STYLES[path]='fg=10'
-    ZSH_HIGHLIGHT_STYLES[path_prefix]='fg=10,underline'
-    ZSH_HIGHLIGHT_STYLES[globbing]='fg=none'
-    ZSH_HIGHLIGHT_STYLES[back-quoted-argument]='fg=3'
-    ZSH_HIGHLIGHT_STYLES[single-quoted-argument]='fg=10'
-    ZSH_HIGHLIGHT_STYLES[double-quoted-argument]='fg=10'
-    ZSH_HIGHLIGHT_STYLES[dollar-quoted-argument]='fg=10'
-    ZSH_HIGHLIGHT_STYLES[dollar-double-quoted-argument]='fg=5'
-    ZSH_HIGHLIGHT_STYLES[rc-quote]='fg=11'
-    ZSH_HIGHLIGHT_STYLES[back-double-quoted-argument]='fg=11'
-    ZSH_HIGHLIGHT_STYLES[back-dollar-quoted-argument]='fg=11'
-    ZSH_HIGHLIGHT_STYLES[arg0]='fg=default,bold'
-
-    bindkey -M emacs '^P' history-substring-search-up
-    bindkey -M emacs '^N' history-substring-search-down
-    bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-
-    antigen apply
-fi
+zstyle ':vcs_info:*' disable-patterns "${(b)HOME}(|/*)"
 
 
 #
 # Functions
 #
-
-my_rprompt()
-{
-    local msg path="%~"
-    if [[ -n "${vcs_info_msg_4_}" ]]; then
-        msg="${msg:- }%F{231}%K{9}${vcs_info_msg_4_}%k%f"
-    fi
-    if [[ -n "${vcs_info_msg_0_}" ]]; then
-        msg="${msg:- }%K{4}${vcs_info_msg_0_}%k"
-    fi
-    if [[ "${vcs_info_msg_1_}" == *"%k"* ]]; then
-        msg="${msg:- }${vcs_info_msg_1_%\%k*}%k"
-    fi
-    if [[ -n "${vcs_info_msg_2_}" ]]; then
-        path="${vcs_info_msg_2_/#${HOME:A}/~}"
-        if [[ -n "${vcs_info_msg_3_}" && ${vcs_info_msg_3_} != "." ]]; then
-            path="%F{green}${path}/%f${vcs_info_msg_3_}"
-        else
-            path="%F{green}${path}%f"
-        fi
-    fi
-    echo -n "%$((COLUMNS - 16))<..<${path}${msg}"
-}
 
 preexec_tmux()
 {
@@ -602,6 +494,39 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # Misc completions
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:manuals' separate-sections true
+
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
+    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
+        print -P "%F{160}▓▒░ The clone has failed.%f%b"
+fi
+
+source "$HOME/.zinit/bin/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zinit-zsh/z-a-as-monitor \
+    zinit-zsh/z-a-patch-dl \
+    zinit-zsh/z-a-bin-gem-node
+
+### End of Zinit's installer chunk
+
+zinit light-mode for \
+    romkatv/powerlevel10k \
+    zdharma/fast-syntax-highlighting \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-completions \
+    zsh-users/zsh-history-substring-search
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
 #
