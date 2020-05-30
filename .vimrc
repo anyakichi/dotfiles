@@ -144,47 +144,51 @@ filetype plugin indent on
 "
 " Syntax coloring
 "
-syntax on
-if has('gui_macvim')
-    set background=light
-elseif (has('gui') || v:version >= 703) && &t_Co == 256
-    " Get terminal color info from .Xresources.
-    let s:xresources = readfile(expand("~/.Xresources.d/colors/moria"))
-    let s:xresources = filter(s:xresources,
-    \                         'v:val !~# "^\s+$" && v:val !~# "^\s*!"')
-    let s:rdb = {}
-    for s:line in s:xresources
-        let s:ml = matchlist(s:line, '\v^([^:]*)\s*:\s*(.*)$')
-        if !empty(s:ml)
-            let s:rdb[s:ml[1]] = s:ml[2]
-        endif
-    endfor
-    let g:xmoria_terminal_foreground = get(s:rdb, '*foreground', '')
-    let g:xmoria_terminal_background = get(s:rdb, '*background', '')
-    let g:xmoria_terminal_colors = [
-    \   get(s:rdb, '*color0', ''),
-    \   get(s:rdb, '*color1', ''),
-    \   get(s:rdb, '*color2', ''),
-    \   get(s:rdb, '*color3', ''),
-    \   get(s:rdb, '*color4', ''),
-    \   get(s:rdb, '*color5', ''),
-    \   get(s:rdb, '*color6', ''),
-    \   get(s:rdb, '*color7', ''),
-    \   get(s:rdb, '*color8', ''),
-    \   get(s:rdb, '*color9', ''),
-    \   get(s:rdb, '*color10', ''),
-    \   get(s:rdb, '*color11', ''),
-    \   get(s:rdb, '*color12', ''),
-    \   get(s:rdb, '*color13', ''),
-    \   get(s:rdb, '*color14', ''),
-    \   get(s:rdb, '*color15', ''),
-    \]
-    unlet s:xresources s:line s:ml s:rdb
+augroup MyColorScheme
+    autocmd!
 
-    colorscheme xmoria
-else
-    colorscheme nya
-endif
+    autocmd ColorScheme OceanicNext
+    \   highlight! Statement gui=NONE
+    \|  highlight! link Conditional Statement
+    \|  highlight! link Repeat Statement
+    \|  highlight! link Label Statement
+    \|  highlight! link Keyword Statement
+    \|  highlight! link Exception Statement
+    \|  highlight! PreProc guifg=#c594c5
+    \|  highlight! link Include PreProc
+    \|  highlight! link Define PreProc
+    \|  highlight! link Macro PreProc
+    \|  highlight! link PreCondit PreProc
+    \|  highlight! Error guifg=bg guibg=#ec5f67
+    \|  highlight! Todo guifg=bg guibg=#fac863
+    \|  highlight! LspInformationText gui=inverse
+    \|  highlight! SpellBad guisp=#ec5f67
+    \|  highlight! Spelllocal guisp=#5fb3b3
+    \|  highlight! SpellCap guisp=#6699cc
+    \|  highlight! SpellRare guisp=#c594c5
+
+    autocmd ColorScheme base16-*
+    \   highlight! Statement gui=NONE
+    \|  highlight! link Conditional Statement
+    \|  highlight! link Repeat Statement
+    \|  highlight! link Label Statement
+    \|  highlight! link Keyword Statement
+    \|  highlight! link Exception Statement
+    \|  highlight! Folded gui=italic
+    \|  highlight! Comment gui=italic
+    \|  execute 'highlight! Identifier guifg=#' . g:base16_gui0C
+    \|  execute 'highlight! PreProc guifg=#' . g:base16_gui0E
+    \|  highlight! link Include PreProc
+    \|  highlight! link Macro PreProc
+    \|  highlight! link Structure Type
+augroup END
+
+syntax on
+
+let g:lightline.colorscheme = 'oceanicnext'
+let g:oceanic_next_terminal_bold = 1
+let g:oceanic_next_terminal_italic = 1
+colorscheme OceanicNext
 
 
 "
