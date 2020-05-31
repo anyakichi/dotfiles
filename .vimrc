@@ -49,7 +49,7 @@ set fileencodings=ucs-bom,utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2
 
 " Indentation
 set autoindent
-set noexpandtab
+set expandtab
 set shiftround
 set shiftwidth=4
 set smartindent
@@ -479,8 +479,7 @@ augroup MyAutoCmd
     \|  endif
 
     " Additional settings for each file type
-    autocmd FileType haskell,ocaml,python,ruby,sh,typescript,vim,zsh
-    \   setlocal et
+    autocmd FileType c,go,help          setlocal noet
     autocmd FileType docbk,eruby,html,markdown,ocaml,rst,ruby,scheme,tex,xhtml,xml,yaml
     \   setlocal sw=2
     autocmd FileType asciidoc,gitcommit,mail,markdown,rst,tex,text
