@@ -58,10 +58,6 @@ set tabstop=8
 set cinoptions=>2s,e0,n0,f0,{0,}0,^0,:0,=2s,l1,b0,g2s,h2s,p2s,t0,
               \i2s,+1s,c1s,C0,/0,(0,u0,U0,w1,W0,m1,j1,)20,*30
 
-" Status information
-set statusline=%!MakeStatusLine()
-set tabline=%!MakeTabLine()
-
 " Searching
 set nohlsearch
 set ignorecase
@@ -139,6 +135,42 @@ if has("mouse")
 endif
 
 filetype plugin indent on
+
+
+let g:lightline = {
+\   'active': {
+\       'left': [
+\           ['mode', 'paste'],
+\           ['readonly', 'relativepath', 'modified']
+\       ],
+\       'right': [
+\           ['lineinfo'],
+\           ['percent'],
+\           ['fileformat', 'fileencoding', 'filetype', 'lspinfo']
+\       ]
+\   },
+\   'inactive': {
+\       'left': [['readonly', 'relativepath', 'modified']],
+\       'right': [['lineinfo'], ['percent']]
+\   },
+\   'component': {
+\       'fileencoding': '%{substitute(&fenc, "^utf-8$", "", "")}',
+\       'fileformat': '%{&ff ==# "unix" ? "" : &ff}',
+\       'filetype': '%{&ft}',
+\   },
+\   'component_visible_condition': {
+\       'fileencoding': '&fenc != "utf-8"',
+\       'fileformat': '&ff != "unix"',
+\       'filetype': '&ft != ""',
+\   },
+\   'component_expand': {
+\       'lspinfo': 'MyLspInfo',
+\   },
+\   'tabline': {
+\       'left': [['tabs']],
+\       'right': []
+\   },
+\}
 
 
 "
@@ -480,6 +512,7 @@ augroup MyAutoCmd
     \|  silent! iunmap <buffer> <C-e>
 
     autocmd User lsp_buffer_enabled call s:lsp_setup()
+    autocmd User lsp_diagnostics_updated call lightline#update()
 augroup END
 
 
@@ -520,9 +553,6 @@ nnoremap <silent> ,c :<C-u>BCommits<CR>
 " easy-align.vim
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
-
-" lsp
-highlight link LspErrorText ErrorMsg
 
 " mark.vim
 highlight MarkWord1 ctermfg=16 ctermbg=116
@@ -649,84 +679,9 @@ function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
-function! EnableSkk()
-    imap <expr> <C-j> pumvisible() ? "\<Down>" : "\<Plug>(skk-toggle-im)"
-endfunction
-
-function! MakeStatusLine()
-    let s  = '%<%f %y'
-    let s .= '[' . (&fenc != '' ? &fenc : &enc) . ']'
-    if &ff != 'unix'
-        let s .= '[' . &ff . ']'
-    endif
-    if &bin
-        let s .= '[bin]'
-    endif
-    let s .= '%m%r'
-    let s .= '%='
-    let extra = ''
-    if exists("*SkkGetModeStr")
-        let extra .= SkkGetModeStr()
-    endif
-    if exists("*lsp#get_buffer_diagnostics_counts") &&
-    \  exists('g:statusline_winid') && g:statusline_winid == win_getid()
-        let lsp_counts = lsp#get_buffer_diagnostics_counts()
-        let lsp_status = []
-        for i in ['error', 'warning', 'hint', 'information']
-            let c = lsp_counts[i]
-            if c != 0
-                call add(lsp_status,
-                \   printf("%%#lsp%stext#%s%d%%*", i, toupper(i[0]), c))
-            endif
-        endfo
-        if !empty(lsp_status)
-            let extra .= '[' . join(lsp_status, ',') . ']'
-        endif
-    endif
-    if extra !~ '^\s*$'
-        let s .= extra . ' '
-    endif
-    let s .= winwidth('%') >= 80 ? '%-14.' : '%-8.'
-    let s .= '(%l,%c%V%) %P'
-    return s
-endfunction
-
-function! MakeTabLine()
-    let s = ''
-
-    for n in range(1, tabpagenr('$'))
-        let s .= printf('%s%%%dT %s %%#TabLineFill#|',
-        \               n == tabpagenr() ? '%#TabLineSel#' : '%#TabLine#',
-        \               n, MakeTabLabel(n))
-    endfor
-
-    let s .= '%#TabLineFill#%T'
-    let s .= '%=%#TabLine#'
-    let s .= '%{fnamemodify(getcwd(), ":~:h")}%<'
-    return s
-endfunction
-
-function! MakeTabLabel(n)
-    let bufnrs = tabpagebuflist(a:n)
-    let bufnr = bufnrs[tabpagewinnr(a:n) - 1]
-
-    let bufname = bufname(bufnr)
-    if bufname == ''
-        let bufname = '[No Name]'
-    else
-        let bufname = fnamemodify(bufname, ":t")
-    endif
-
-    let no = len(bufnrs)
-    if no == 1
-        let no = ''
-    endif
-
-    let mod = len(filter(bufnrs, 'getbufvar(v:val, "&modified")')) ? '+' : ''
-    let sp = (no . mod) == '' ? '' : ' '
-
-    let s = no . mod . sp . bufname
-    return s
+function! MyLspInfo() abort
+    let lsp_counts = lsp#get_buffer_diagnostics_counts()
+    return printf("E%d W%d", lsp_counts['error'], lsp_counts['warning'])
 endfunction
 
 function! s:toggle_nmap_ctrl_right_bracket()
