@@ -552,25 +552,16 @@ nnoremap <silent> ,c :<C-u>BCommits<CR>
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
-" mark.vim
-highlight MarkWord1 ctermfg=16 ctermbg=116
-highlight MarkWord2 ctermfg=16 ctermbg=150
-highlight MarkWord3 ctermfg=16 ctermbg=221
-highlight MarkWord4 ctermfg=16 ctermbg=203
-highlight MarkWord5 ctermfg=16 ctermbg=219
-highlight MarkWord6 ctermfg=16 ctermbg=105
-nmap [Space]m <Plug>MarkSet
-xmap [Space]m <Plug>MarkSet
-nmap [Space]M <Plug>MarkRegex
-xmap [Space]M <Plug>MarkRegex
-nmap [Space]n <Plug>MarkToggle
-nmap [Space]N <Plug>MarkAllClear
-nmap <Plug>IgnoreMarkSearchNext <Plug>MarkSearchNext
-nmap <Plug>IgnoreMarkSearchPrev <Plug>MarkSearchPrev
-nmap <silent> <Esc><Esc> <Plug>MarkAllClear:set nohlsearch<CR>
-
 " qfutil.vim
 let g:qfutil_default_grep_file = '%:h'
+
+" quickhl.vim
+nmap [Space]m <Plug>(quickhl-manual-this)
+xmap [Space]m <Plug>(quickhl-manual-this)
+nmap [Space]M :<C-u>QuickhlManualAdd!<Space>
+nmap [Space]n <Plug>(quickhl-manual-toggle)
+nmap [Space]N <Plug>(quickhl-manual-reset)
+nmap <silent> <Esc><Esc> <Plug>(quickhl-manual-reset):set nohlsearch<CR>
 
 " quickrun.vim
 let g:quickrun_config = {}
