@@ -130,9 +130,8 @@ set cscopetag
 set cscopetagorder=0
 silent! set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
-if has("mouse")
-    set mouse=a
-endif
+set guicursor=i-ci-ve:ver25,r-cr-o:hor20
+set mouse=a
 
 filetype plugin indent on
 
