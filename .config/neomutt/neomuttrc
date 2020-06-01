@@ -109,6 +109,5 @@ macro index	  y "<sync-mailbox><check-stats><imap-fetch-mail><change-folder>?" \
 macro pager	  y "<exit><sync-mailbox><check-stats><imap-fetch-mail><change-vfolder>?" \
 					"show incoming mailboxes list"
 
-source `~/.config/mutt/muttcolor`
-
+source ~/.config/neomutt/colors/oceanic-next
 source ~/.config/neomutt/neomuttrc_local
