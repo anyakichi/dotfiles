@@ -197,6 +197,7 @@ augroup MyColorScheme
     \|  highlight! Spelllocal guisp=#5fb3b3
     \|  highlight! SpellCap guisp=#6699cc
     \|  highlight! SpellRare guisp=#c594c5
+    \|  highlight! link mailHeaderKey Constant
 
     autocmd ColorScheme base16-*
     \   highlight! Statement gui=NONE
