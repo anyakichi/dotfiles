@@ -44,7 +44,7 @@ set nomarkers
 set reverse_name
 set noreverse_realname
 
-set editor="vim '+/^$'"
+set editor="$EDITOR '+/^$'"
 
 set read_inc=100
 
