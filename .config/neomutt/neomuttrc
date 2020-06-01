@@ -7,7 +7,7 @@ set include
 
 set date_format="%Y/%m/%d %H:%M:%S"
 set folder_format="%2C %5n%t %i"
-set index_format="%4C %Z %[%b %d] %-15.15L (%?l?%4l&%4c?) %s"
+set index_format='%Z %<[12m?%<[d?%[%H:%M]&%[%m/%d]>&%[%Y/%m/%d]> %-15.15L %s'
 set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
 set forward_format="Fw: %s"
 
