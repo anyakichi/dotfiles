@@ -48,7 +48,7 @@ alias d=fcd
 alias o=rifle
 
 alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
-alias_alt mutt neomutt
+alias_alt mutt neomutt -y
 alias_alt top htop
 alias_alt vi vim
 alias_alt vi nvim
