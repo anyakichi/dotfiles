@@ -522,6 +522,7 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit light-mode for \
+    reegnz/jq-zsh-plugin \
     romkatv/powerlevel10k \
     zdharma/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
