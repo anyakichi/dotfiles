@@ -37,7 +37,10 @@ export PIPENV_VENV_IN_PROJECT=1
 export XAPIAN_CJK_NGRAM=1
 
 export FZF_DEFAULT_COMMAND="fzf-find"
-export FZF_DEFAULT_OPTS="--exact --height 40% --layout=reverse --inline-info --bind ctrl-g:top"
+export FZF_DEFAULT_OPTS="
+ --exact --height 40% --layout=reverse --inline-info --bind ctrl-g:top
+ --color=hl:6,fg+:253,bg+:237,hl+:6,info:2,pointer:209
+"
 
 export PATH=${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
