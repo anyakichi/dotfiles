@@ -2,7 +2,6 @@
 
 from pathlib import Path
 import argparse
-import time
 
 import notmuch
 
@@ -25,25 +24,25 @@ def main():
             # Use db instance to avoid crash notmuch
             db.get_version()
 
-            for msg in db.create_query(" ".join(args.search_terms)).search_messages():
+            query = " ".join(args.search_terms)
+            for msg in db.create_query(query).search_messages():
                 renew(msg)
     else:
-        with open(notmuch.Database().get_path() + "/.notmuch-renew", mode='a+') as f:
-            f.seek(0)
-            try:
-                time_last_new = float(f.read())
-            except:
-                time_last_new = 0.0
-            f.truncate(0)
-            f.write("{}".format(time.time()))
+        path = Path(notmuch.Database().get_path() + "/.notmuch-renew")
+        if not path.exists():
+            path.touch()
+        time_last_new = path.stat().st_mtime
+        path.touch()
 
         with notmuch.Database(mode=notmuch.Database.MODE.READ_WRITE) as db:
             # Use db to avoid crash notmuch
             db.get_version()
 
             for msg in notmuch.Query(db, 'not tag:new').search_messages():
-                if Path(msg.get_filename()).stat().st_mtime > time_last_new:
-                    renew(msg)
+                for filename in msg.get_filenames():
+                    if Path(filename).stat().st_mtime > time_last_new:
+                        renew(msg)
+                        break
 
 
 if __name__ == "__main__":
