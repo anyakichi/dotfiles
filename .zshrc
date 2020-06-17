@@ -40,7 +40,6 @@ alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
 alias grep='egrep'
-alias mutt='mutt -y'
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
@@ -48,7 +47,7 @@ alias d=fcd
 alias o=rifle
 
 alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
-alias_alt mutt neomutt -y
+alias_alt mutt neomutt
 alias_alt top htop
 alias_alt vi vim
 alias_alt vi nvim
