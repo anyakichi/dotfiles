@@ -50,6 +50,8 @@
 	tool = vimdiff
 [pager]
 	status = true
+[pull]
+	rebase = true
 [push]
 	default = current
 [rebase]
