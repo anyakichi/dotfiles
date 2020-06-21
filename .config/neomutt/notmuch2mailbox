@@ -15,7 +15,7 @@ while read -r line; do
         # ignore gmail system labels
         continue
     fi
-    if [[ ${line} =~ ^attachment|draft|flagged|passed|replied|signed|unread$ ]]; then
+    if [[ ${line} =~ ^attachment|draft|encrypted|flagged|passed|replied|signed|unread$ ]]; then
         # ignore maildir flags
         continue
     fi
