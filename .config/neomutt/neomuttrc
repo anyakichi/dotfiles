@@ -50,6 +50,8 @@ set imap_passive=no
 
 set header_cache="~/.cache/neomutt"
 set message_cachedir="~/.cache/neomutt"
+set header_cache_compress_method=lz4
+set header_cache_compress_level=1
 
 # Cryptographic
 set crypt_use_gpgme
