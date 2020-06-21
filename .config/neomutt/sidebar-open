@@ -1,0 +1,6 @@
+set sidebar_visible=yes
+
+bind index k sidebar-prev
+bind index j sidebar-next
+macro index <Return> "<sidebar-open>i" "open mailbox and close sidebar"
+macro index i        "<enter-command>source ~/.config/neomutt/sidebar-close<enter>" "close sidebar"

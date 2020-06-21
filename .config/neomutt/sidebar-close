@@ -1,0 +1,6 @@
+set sidebar_visible=no
+
+bind index k previous-entry
+bind index j next-entry
+bind index <Return> display-message
+macro index i "<enter-command>source ~/.config/neomutt/sidebar-open<enter><sync-mailbox><check-stats>" "open sidebar"
