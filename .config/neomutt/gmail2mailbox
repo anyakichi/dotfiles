@@ -4,12 +4,12 @@ export NOTMUCH_CONFIG="${HOME}/.config/notmuch/${1}"
 
 nm_path="$(notmuch config get database.path)"
 
-echo "virtual-mailboxes '$1' 'notmuch://${nm_path}?query=*'"
-echo "virtual-mailboxes '  Inbox' 'notmuch://${nm_path}?query=tag:\\Inbox'"
+echo "virtual-mailboxes '$1' 'notmuch://${nm_path}?query=tag:\\Inbox'"
+echo "virtual-mailboxes '  Unread' 'notmuch://${nm_path}?query=tag:unread'"
 echo "virtual-mailboxes '  Flagged' 'notmuch://${nm_path}?query=tag:flagged'"
 echo "virtual-mailboxes '  Important' 'notmuch://${nm_path}?query=tag:\\Important'"
 echo "virtual-mailboxes '  Sent' 'notmuch://${nm_path}?query=tag:\\Sent'"
 echo "virtual-mailboxes '  Draft' 'notmuch://${nm_path}?query=tag:\\Draft'"
-echo "virtual-mailboxes '  Trash' 'notmuch://${nm_path}?query=folder:Trash'"
+echo "virtual-mailboxes '  Trash' 'notmuch://${nm_path}?query=tag:\\Trash or folder:Trash'"
 
-~/.config/neomutt/notmuch2mailbox "$1" '  '
+~/.config/neomutt/notmuch2mailbox "$1" "$2" '  '

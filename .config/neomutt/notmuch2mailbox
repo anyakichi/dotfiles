@@ -4,6 +4,8 @@ if [[ -n "$1" ]]; then
     export NOTMUCH_CONFIG="${HOME}/.config/notmuch/${1}"
 fi
 
+ALL_TAGS=${2:-1}
+
 nm_path="$(notmuch config get database.path)"
 
 notmuch search --output=tags '*' |
@@ -19,5 +21,8 @@ while read -r line; do
         # ignore maildir flags
         continue
     fi
-    echo "virtual-mailboxes '$2$line' 'notmuch://${nm_path}?query=tag:$line'"
+    if [[ $ALL_TAGS != 1 && ${line} =~ ^[a-z] ]]; then
+        continue
+    fi
+    echo "virtual-mailboxes '$3$line' 'notmuch://${nm_path}?query=tag:$line'"
 done

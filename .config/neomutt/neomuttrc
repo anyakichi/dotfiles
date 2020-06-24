@@ -53,6 +53,8 @@ set message_cachedir="~/.cache/neomutt"
 set header_cache_compress_method=lz4
 set header_cache_compress_level=1
 
+set nm_exclude_tags=\\Trash
+
 # Cryptographic
 set crypt_use_gpgme
 
