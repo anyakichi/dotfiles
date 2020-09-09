@@ -41,7 +41,7 @@ set editor="$EDITOR '+/^$'"
 
 set read_inc=100
 
-set sidebar_format="%B%?F? [%F]?%* %N"
+set sidebar_format="%D%?F? [%F]?%* %N"
 set sidebar_next_new_wrap
 
 set imap_check_subscribed
