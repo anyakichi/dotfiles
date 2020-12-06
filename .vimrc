@@ -179,7 +179,8 @@ augroup MyColorScheme
     autocmd!
 
     autocmd ColorScheme OceanicNext
-    \   highlight! Statement gui=NONE
+    \   highlight! Normal guifg=#c0c5ce guibg=#1b2b34
+    \|  highlight! Statement gui=NONE
     \|  highlight! link Conditional Statement
     \|  highlight! link Repeat Statement
     \|  highlight! link Label Statement
