@@ -481,13 +481,14 @@ augroup MyAutoCmd
 
     " Additional settings for each file type
     autocmd FileType c,go,help          setlocal noet
-    autocmd FileType docbk,eruby,html,markdown,ocaml,rst,ruby,scheme,tex,xhtml,xml,yaml
+    autocmd FileType css,docbk,eruby,html,javascript,javascriptreact,json,
+                    \markdown,ocaml,reason,rescript,rst,ruby,scheme,scss,
+                    \tex,typescript,typescriptreact,xhtml,xml,yaml
     \   setlocal sw=2
     autocmd FileType asciidoc,gitcommit,mail,markdown,rst,tex,text
     \   setlocal tw=72 | let b:spell = -1
     autocmd FileType go                 setlocal ts=4
     autocmd FileType python             setlocal fo-=t sts=0
-    autocmd FileType typescript         setlocal sw=4
 
     " Spell checking
     autocmd InsertEnter * let &l:spell = !!get(b:, 'spell', 0)
