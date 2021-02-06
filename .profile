@@ -32,15 +32,14 @@ export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
 export QUOTING_STYLE=literal
 
-export PIPENV_VENV_IN_PROJECT=1
-
-export XAPIAN_CJK_NGRAM=1
-
+export FORGIT_LOG_GRAPH_ENABLE=false
 export FZF_DEFAULT_COMMAND="fzf-find"
 export FZF_DEFAULT_OPTS="
  --exact --height 40% --layout=reverse --inline-info --bind ctrl-g:top
  --color=hl:6,fg+:253,bg+:237,hl+:6,info:2,pointer:209
 "
+export PIPENV_VENV_IN_PROJECT=1
+export XAPIAN_CJK_NGRAM=1
 
 export PATH=${HOME}/.local/bin:${HOME}/.cargo/bin:${GOPATH}/bin:${PATH}
 
