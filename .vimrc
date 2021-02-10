@@ -538,8 +538,10 @@ nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
 " fzf
+let g:fzf_buffers_jump = 1
 nnoremap <C-_> :<C-u>Files<Space>
 nnoremap ,, :<C-u>GFiles<Space>
+nnoremap <silent> <C-s> :<C-u>Buffers<CR>
 nnoremap <silent> ,b :<C-u>Buffers<CR>
 nnoremap ,g :<C-u>Rg<Space>
 nnoremap ,G :<C-u>Rg<Space><C-r><C-w>
