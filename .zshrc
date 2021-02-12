@@ -300,6 +300,7 @@ __fzf-history()
 
     fc -rln 1 \
         | command fzf -q "$1" +m +s -0 --print-query \
+            --expect=ctrl-o \
             --expect=ctrl-q \
             --expect=ctrl-y \
             --preview "echo {}" \
@@ -521,6 +522,7 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit light-mode for \
+    Aloxaf/fzf-tab \
     reegnz/jq-zsh-plugin \
     romkatv/powerlevel10k \
     wfxr/forgit \
@@ -528,6 +530,12 @@ zinit light-mode for \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
     zsh-users/zsh-history-substring-search
+
+zstyle ':fzf-tab:*' fzf-bindings 'ctrl-o:accept'
+zstyle ':fzf-tab:*' accept-line ctrl-o
+zstyle ':fzf-tab:*' continuous-trigger 'ctrl-l'
+zstyle ':fzf-tab:*' print-query ctrl-q
+zstyle ':fzf-tab:*' switch-group alt-p alt-n
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
