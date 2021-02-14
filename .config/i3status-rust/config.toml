@@ -1,0 +1,47 @@
+icons = "awesome5"
+
+[theme]
+name = "plain"
+
+[theme.overrides]
+separator = "|"
+
+[[block]]
+block = "net"
+ssid = true
+signal_strength = true
+bitrate = true
+speed_up = false
+speed_down = false
+
+[[block]]
+block = "disk_space"
+alias = ""
+
+[[block]]
+block = "cpu"
+format = "{utilization} {frequency}"
+
+[[block]]
+block = "load"
+
+[[block]]
+block = "backlight"
+
+[[block]]
+block = "sound"
+
+[[block]]
+block = "battery"
+driver = "upower"
+format = "{percentage}% {time}"
+
+[[block]]
+block = "custom"
+command = '''socat -u unix-connect:${XDG_RUNTIME_DIR}/toggdoro.sock -'''
+interval = 1
+
+[[block]]
+block = "time"
+format = "%Y-%m-%d %H:%M:%S"
+interval = 1
