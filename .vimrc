@@ -74,9 +74,6 @@ set completeopt=menuone
 set pumheight=10
 
 " Appearance
-if strwidth("★") == 1
-    set ambiwidth=double
-endif
 set background=dark
 set colorcolumn=81
 set cursorline
