@@ -239,7 +239,7 @@ __longest_dir()
     local dir="$1"
 
     while true; do
-        if [[ -d ${dir} ]]; then
+        if [[ -d "${dir/#\~/$HOME}" ]]; then
             echo "${dir}"
             break
         fi
@@ -262,7 +262,7 @@ __fzf-find()
         if [[ ! ${dir} =~ /$ ]]; then
             dir="${dir}/"
         fi
-        opts+=(--prompt "${dir}> " )
+        opts+=(--prompt "${dir}> ")
     else
         opts=(-q "$1")
     fi
@@ -270,10 +270,18 @@ __fzf-find()
     shift
 
     (
-        cd "${dir:-.}" &&
+        local count=0
+        cd "${${dir/#\~/$HOME}:-.}" &&
         "$@" \
-            | command fzf -m -0 --print-query --expect=ctrl-o "${opts[@]}" \
-            | command sed -e "3,\$s|^|${dir}|"
+            | fzf -m -0 --print-query --expect=ctrl-o "${opts[@]}" \
+            | while read line; do
+                if (( count < 2 )); then
+                    echo "$line"
+                else
+                    echo "${dir}${(q)line}"
+                fi
+                (( count++ ))
+            done
     )
 }
 
@@ -370,22 +378,26 @@ fpass()
 fzf-file-widget()
 {
     setopt localoptions extended_glob pipefail
-    local key i res ret
+    local args key i res ret
 
-    res=("${(@f)"$(__fzf-f "${LBUFFER##*[[:space:]]##}")"}")
+    args=(${(z)LBUFFER})
+    if [[ ${LBUFFER} =~ [^\\][[:space:]]$ ]]; then
+        args+=("")
+    fi
+    res=("${(@f)"$(__fzf-f "${(Q)args[-1]}")"}")
     ret=$?
 
     if [[ ${#res} -ge 3 ]]; then
         key="${res[2]}"
         shift 2 res
 
-        LBUFFER="${LBUFFER%%[^[:space:]]##}"
+        [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
         for i in "${res[@]}"; do
-            LBUFFER+="${(q)i} "
+            LBUFFER+="${i} "
         done
     elif [[ ${#res} -ge 2 ]]; then
-        LBUFFER="${LBUFFER%%[^[:space:]]##}"
-        LBUFFER+=${(q)res[1]}
+        [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
+        LBUFFER+=${res[1]}
     fi
 
     zle reset-prompt
