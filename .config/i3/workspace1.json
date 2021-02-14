@@ -9,6 +9,9 @@
             "swallows": [
                 {
                     "window_role": "^browser$"
+                },
+                {
+                    "class": "^qutebrowser$"
                 }
             ],
             "type": "con"

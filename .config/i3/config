@@ -242,7 +242,7 @@ exec --no-startup-id xrdb -merge ~/.Xresources
 set_from_resource $layout i3wm.layout workspace1
 
 exec --no-startup-id i3-msg "workspace --no-auto-back-and-forth 1; append_layout ~/.config/i3/$layout.json"
-exec --no-startup-id chromium
+exec --no-startup-id qutebrowser
 exec --no-startup-id i3-sensible-terminal
 
 for_window [class="Thunar"] floating enable
