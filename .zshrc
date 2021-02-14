@@ -299,7 +299,7 @@ __fzf-ghq()
 {
     setopt localoptions pipefail
 
-    command ghq list | command fzf -q "$1" +m -0 -1
+    command ghq list | fzf -q "$1" --no-multi -0 -1
 }
 
 __fzf-history()
@@ -307,7 +307,7 @@ __fzf-history()
     setopt localoptions pipefail
 
     fc -rln 1 \
-        | command fzf -q "$1" +m +s -0 --print-query \
+        | fzf -q "$1" --no-multi --no-sort -0 --print-query \
             --expect=ctrl-o \
             --expect=ctrl-q \
             --expect=ctrl-y \
@@ -324,7 +324,7 @@ __fzf-pass()
     (cd "${PASSWORD_STORE_DIR:-~/.password-store}" &&
         command find . -name '*.gpg' 2>/dev/null \
             | command sed -e 's#^\./##' -e 's/.gpg$//' \
-            | command fzf +m -0 --expect=ctrl-o)
+            | fzf --no-multi -0 --expect=ctrl-o)
 }
 
 __fzf-ps()
@@ -339,7 +339,7 @@ __fzf-ps()
         ps_cmd+=(-u "${UID}")
     fi
 
-    "${ps_cmd[@]}" | command sed 1d | command fzf -m | command awk '{print $2}'
+    "${ps_cmd[@]}" | command sed 1d | fzf -m | command awk '{print $2}'
 }
 
 fcd()
@@ -416,7 +416,7 @@ fzf-cdr-widget()
     local dir
 
     dir=$(__fzf-cdr \
-            | fzf +m \
+            | fzf --no-multi \
                 --bind 'esc:reload:zsh -c "source ~/.zsh/cdr.zsh; __fzf-cdr"' \
                 --bind 'ctrl-/:reload:fzf-find d')
     local ret=$?
