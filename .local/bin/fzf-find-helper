@@ -1,0 +1,39 @@
+#!/bin/bash
+
+STATE="${XDG_RUNTIME_DIR}/fzf-find-helper"
+
+args=(a 0)
+if [[ -e "${STATE}" ]]; then
+    read -ra args <"${STATE}"
+fi
+
+if [[ $1 == "init" ]]; then
+    rm -r "${STATE}"
+    exit 0
+elif [[ $1 == "start" ]]; then
+    args=(a 0)
+elif [[ $1 == "restart" ]]; then
+    :
+    # nothing to do
+elif [[ $1 == "type" ]]; then
+    if [[ "${args[0]}" == "a" ]]; then
+        args[0]=d
+    elif [[ "${args[0]}" == "d" ]]; then
+        args[0]=f
+    else
+        args[0]=a
+    fi
+elif [[ $1 == "depth" ]]; then
+    if (( args[1] > 0 )); then
+        args[1]=0
+    else
+        args[1]=1
+    fi
+else
+    echo Invalid option
+    exit 1
+fi
+
+echo "${args[@]}" > "$STATE"
+
+fzf-find "${args[@]}"

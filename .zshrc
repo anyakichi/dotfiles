@@ -273,7 +273,13 @@ __fzf-find()
         local count=0
         cd "${${dir/#\~/$HOME}:-.}" &&
         "$@" \
-            | fzf -m -0 --print-query --expect=ctrl-o "${opts[@]}" \
+            | fzf -m -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
+                --ansi \
+                --bind 'ctrl-d:reload(fzf-find-helper depth)' \
+                --bind 'ctrl-t:reload(fzf-find-helper type)' \
+                --preview 'fzf-find-preview {}' \
+                --preview-window hidden \
+                "${opts[@]}" \
             | while read line; do
                 if (( count < 2 )); then
                     echo "$line"
@@ -287,12 +293,12 @@ __fzf-find()
 
 __fzf-f()
 {
-    __fzf-find "$1" fzf-find
+    __fzf-find "$1" fzf-find-helper restart
 }
 
 __fzf-d()
 {
-    __fzf-find "$1" fzf-find d
+    __fzf-find "$1" fzf-find-helper restart d
 }
 
 __fzf-ghq()
@@ -380,31 +386,42 @@ fzf-file-widget()
     setopt localoptions extended_glob pipefail
     local args key i res ret
 
-    args=(${(z)LBUFFER})
-    if [[ ${LBUFFER} =~ [^\\][[:space:]]$ ]]; then
-        args+=("")
-    fi
-    res=("${(@f)"$(__fzf-f "${(Q)args[-1]}")"}")
-    ret=$?
+    fzf-find-helper init
 
-    if [[ ${#res} -ge 3 ]]; then
-        key="${res[2]}"
-        shift 2 res
+    while true; do
+        args=(${(z)LBUFFER})
+        if [[ ${LBUFFER} =~ [^\\][[:space:]]$ ]]; then
+            args+=("")
+        fi
+        i="${(Q)args[-1]}"
 
-        [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
-        for i in "${res[@]}"; do
-            LBUFFER+="${i} "
-        done
-    elif [[ ${#res} -ge 2 ]]; then
-        [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
-        LBUFFER+=${res[1]}
-    fi
+        res=("${(@f)"$(__fzf-f "$i")"}")
+        ret=$?
 
-    zle reset-prompt
+        if [[ ${#res} -ge 3 && ${res[2]} != "ctrl-q" ]]; then
+            key="${res[2]}"
+            shift 2 res
 
-    if [[ "${key}" == "ctrl-o" ]]; then
-        zle accept-line
-    fi
+            [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
+            for i in "${res[@]}"; do
+                LBUFFER+="${i} "
+            done
+        elif [[ ${#res} -ge 2 ]]; then
+            [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
+            LBUFFER+=${res[1]}
+        fi
+
+        zle reset-prompt
+
+        if [[ "${key}" == "ctrl-l" ]]; then
+            LBUFFER="${LBUFFER%%?}"
+            key=
+            continue
+        elif [[ "${key}" == "ctrl-o" ]]; then
+            zle accept-line
+        fi
+        break
+    done
 
     return ${ret}
 }
