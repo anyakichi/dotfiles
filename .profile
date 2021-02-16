@@ -35,7 +35,7 @@ export QUOTING_STYLE=literal
 export FORGIT_LOG_GRAPH_ENABLE=false
 export FZF_DEFAULT_COMMAND="fzf-find"
 export FZF_DEFAULT_OPTS="\
- --height 40% --layout=reverse --inline-info \
+ --ansi --height 40% --layout=reverse --inline-info \
  --bind ctrl-g:top --bind ctrl-/:toggle-preview \
  --bind alt-j:preview-down --bind alt-k:preview-up \
  --bind alt-f:preview-page-down --bind alt-b:preview-page-up \
