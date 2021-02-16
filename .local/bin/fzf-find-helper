@@ -10,11 +10,9 @@ fi
 if [[ $1 == "init" ]]; then
     rm -r "${STATE}"
     exit 0
-elif [[ $1 == "start" ]]; then
-    args=(a 0)
-elif [[ $1 == "restart" ]]; then
-    :
-    # nothing to do
+elif [[ $1 == "run" ]]; then
+    [[ $2 ]] && args[0]=$2
+    [[ $3 ]] && args[1]=$3
 elif [[ $1 == "type" ]]; then
     if [[ "${args[0]}" == "a" ]]; then
         args[0]=d

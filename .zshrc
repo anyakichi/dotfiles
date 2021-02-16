@@ -296,12 +296,12 @@ __fzf-find()
 
 __fzf-f()
 {
-    __fzf-find "$1" fzf-find-helper restart
+    __fzf-find "$1" fzf-find-helper run
 }
 
 __fzf-d()
 {
-    __fzf-find "$1" fzf-find-helper restart d
+    __fzf-find "$1" fzf-find-helper run d
 }
 
 __fzf-ghq()
