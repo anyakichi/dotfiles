@@ -1,7 +1,15 @@
 #!/bin/bash
 
 if [[ -f "$1" ]]; then
-    bat --style=plain --color=always --line-range :500 "$1"
+    if command -v bat &>/dev/null; then
+        bat --plain --color=always --line-range :500 "$1"
+    else
+        head -n 500 "$1"
+    fi
 else [[ -d "$1" ]]
-    exa -1 --color=always "$1"
+    if command -v exa &>/dev/null; then
+        exa -T -L3 --color=always "$1"
+    else
+        ls --color "$1"
+    fi
 fi

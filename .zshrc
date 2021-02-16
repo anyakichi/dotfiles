@@ -184,6 +184,9 @@ autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
 
+## fzf
+source ~/.zsh/fzf.zsh
+
 ## modify-current-argument
 autoload -Uz modify-current-argument
 

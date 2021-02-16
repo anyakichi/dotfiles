@@ -1,0 +1,28 @@
+#!/bin/bash
+
+STATE="${XDG_RUNTIME_DIR}/fzf-git-log"
+
+args=()
+if [[ -e "${STATE}" ]]; then
+    read -ra args <"${STATE}"
+fi
+
+case "$1" in
+    init)
+        rm -f "${STATE}"
+        exit 0
+        ;;
+    toggle-graph)
+        if [[ -n "${args[@]}" ]]; then
+            echo > "${STATE}"
+        else
+            echo --graph > "${STATE}"
+        fi
+        ;;
+    run)
+        shift
+        git log --date=short --color=always \
+            --format="%C(blue)%C(bold)%cd %C(cyan)%<(8,trunc)%aL %C(auto)%d %s %C(240)%h" \
+            "${args[@]}" "$@"
+        ;;
+esac
