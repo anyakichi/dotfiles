@@ -316,13 +316,15 @@ __fzf-history()
     setopt localoptions pipefail
 
     fc -rln 1 \
-        | fzf -q "$1" --no-multi --no-sort -0 --print-query \
+        | fzf -q "$1" --no-multi -0 --print-query \
             --expect=ctrl-o \
             --expect=ctrl-q \
             --expect=ctrl-y \
+            --tiebreak=index \
             --preview "echo {}" \
             --preview-window bottom:3:wrap:hidden \
             --bind 'ctrl-v:toggle-preview' \
+            --bind 'ctrl-s:toggle-sort' \
             --bind 'ctrl-r:down'
 }
 
