@@ -49,6 +49,13 @@ _gr() {
         | command cut -d$'\t' -f1
 }
 
+_gs() {
+    git stash list \
+        | fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
+            --preview 'cut -d ":" -f1 <<< {} | xargs git stash show --color=always | head -500' \
+        | command cut -d ':' -f1
+}
+
 _gt() {
     git tag --sort -version:refname \
         | fzf-down --multi --preview-window right:70% \
@@ -70,5 +77,5 @@ bind-helper() {
         eval "bindkey '^g^$c' fzf-g$c-widget"
     done
 }
-bind-helper b f g h r t
+bind-helper b f g h r s t
 unset -f bind-helper
