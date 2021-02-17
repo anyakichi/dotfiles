@@ -279,8 +279,9 @@ __fzf-find()
             | fzf -m -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
                 --ansi \
                 --bind 'ctrl-d:reload(fzf-find-helper depth)' \
-                --bind 'ctrl-t:reload(fzf-find-helper type)' \
-                --preview 'fzf-find-preview {}' \
+                --bind 'ctrl-r:reload(fzf-find-helper type)' \
+                --bind 'ctrl-t:execute(fzf-view fzf-view-file {})' \
+                --preview 'fzf-view-file {} | head -500' \
                 --preview-window hidden \
                 "${opts[@]}" \
             | while read line; do

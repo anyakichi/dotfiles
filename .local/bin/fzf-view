@@ -1,0 +1,7 @@
+#!/bin/bash
+
+if [[ -t 1 ]]; then
+    "$@"
+elif [[ $TMUX ]]; then
+    tmux new-window "$@"
+fi

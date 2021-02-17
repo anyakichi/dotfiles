@@ -21,7 +21,7 @@ case "$1" in
         ;;
     run)
         shift
-        git log --date=short --color=always \
+        git -c core.pager="less -+F -KMc" log --date=short --color=always \
             --format="%C(blue)%C(bold)%cd %C(cyan)%<(8,trunc)%aL %C(auto)%d %s %C(240)%h" \
             "${args[@]}" "$@"
         ;;

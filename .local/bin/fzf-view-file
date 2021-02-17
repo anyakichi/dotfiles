@@ -1,15 +1,17 @@
 #!/bin/bash
 
+export LESS=-KMRc
+
 if [[ -f "$1" ]]; then
     if command -v bat &>/dev/null; then
-        bat --plain --color=always --line-range :500 "$1"
+        bat --plain --color=always --paging=always "$1"
     else
-        head -n 500 "$1"
+        less "$1"
     fi
 else [[ -d "$1" ]]
     if command -v exa &>/dev/null; then
-        exa -T -L3 --color=always "$1"
+        exa -T -L3 --color=always "$1" | less
     else
-        ls --color "$1"
+        ls --color "$1" | less
     fi
 fi
