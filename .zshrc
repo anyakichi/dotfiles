@@ -444,6 +444,7 @@ fzf-cdr-widget()
     local ret=$?
     if [ -n "${dir}" ]; then
         BUFFER="cd ${dir}"
+        zle reset-prompt
         zle accept-line
     else
         zle reset-prompt
