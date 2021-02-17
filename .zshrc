@@ -400,7 +400,11 @@ fzf-file-widget()
         fi
         i="${(Q)args[-1]}"
 
-        res=("${(@f)"$(__fzf-f "$i")"}")
+        if [[ ${args[1]} == cd ]]; then
+            res=("${(@f)"$(__fzf-d "$i")"}")
+        else
+            res=("${(@f)"$(__fzf-f "$i")"}")
+        fi
         ret=$?
 
         if [[ ${#res} -ge 3 && ${res[2]} != "ctrl-q" ]]; then
