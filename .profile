@@ -36,10 +36,16 @@ export FORGIT_LOG_GRAPH_ENABLE=false
 export FZF_DEFAULT_COMMAND="fzf-find"
 export FZF_DEFAULT_OPTS="\
  --ansi --height 40% --layout=reverse --inline-info \
- --bind ctrl-g:top --bind ctrl-/:toggle-preview \
- --bind alt-j:preview-down --bind alt-k:preview-up \
- --bind alt-f:preview-page-down --bind alt-b:preview-page-up \
- --bind alt-g:preview-top --bind alt-G:preview-bottom \
+ --bind ctrl-g:top,ctrl-alt-g:top \
+ --bind ctrl-/:toggle-preview \
+ --bind alt-j:preview-down \
+ --bind alt-k:preview-up \
+ --bind ctrl-alt-j:down \
+ --bind ctrl-alt-k:up \
+ --bind alt-f:preview-page-down,ctrl-alt-f:preview-page-down \
+ --bind alt-b:preview-page-up,ctrl-alt-b:preview-page-up \
+ --bind alt-g:preview-top,ctrl-alt-g:preview-top \
+ --bind alt-G:preview-bottom \
  --color=hl:6,fg+:253,bg+:237,hl+:6,info:2,pointer:209"
 export PIPENV_VENV_IN_PROJECT=1
 export XAPIAN_CJK_NGRAM=1
