@@ -273,13 +273,14 @@ __fzf-find()
     shift
 
     (
-        local count=0
+        local count=0 state
+        state=$(mktemp)
         cd "${${dir/#\~/$HOME}:-.}" &&
-        "$@" \
+        fzf-find-helper "$state" "$@" \
             | fzf -m -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
                 --ansi \
-                --bind 'ctrl-d:reload(fzf-find-helper depth)' \
-                --bind 'ctrl-r:reload(fzf-find-helper type)' \
+                --bind "ctrl-d:reload(fzf-find-helper $state toggle-depth)" \
+                --bind "ctrl-r:reload(fzf-find-helper $state cycle-type)" \
                 --bind 'ctrl-t:execute(fzf-view fzf-view-file {})' \
                 --preview 'fzf-view-file {} | head -500' \
                 --preview-window hidden \
@@ -292,17 +293,18 @@ __fzf-find()
                 fi
                 (( count++ ))
             done
+        rm -f "$state"
     )
 }
 
 __fzf-f()
 {
-    __fzf-find "$1" fzf-find-helper run
+    __fzf-find "$1" run
 }
 
 __fzf-d()
 {
-    __fzf-find "$1" fzf-find-helper run d
+    __fzf-find "$1" run d
 }
 
 __fzf-ghq()
@@ -391,8 +393,6 @@ fzf-file-widget()
 {
     setopt localoptions extended_glob pipefail
     local args key i res ret
-
-    fzf-find-helper init
 
     while true; do
         args=(${(z)LBUFFER})

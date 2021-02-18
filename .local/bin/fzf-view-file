@@ -12,6 +12,6 @@ else [[ -d "$1" ]]
     if command -v exa &>/dev/null; then
         exa -T -L3 --color=always "$1" | less
     else
-        ls --color "$1" | less
+        /bin/ls --color "$1" | less
     fi
 fi

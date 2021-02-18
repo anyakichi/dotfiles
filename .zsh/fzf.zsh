@@ -1,43 +1,13 @@
-fzf-down() {
-    fzf --height 50% "$@" --border
-}
-
 _gb() {
-    local view
-    view="fzf-git-log run \$(sed s/^..// <<< {} | cut -d' ' -f1)"
-
-    fzf-git-log init
-    git branch -a --color=always | command grep -v '/HEAD\s' \
-        | fzf-down --ansi --multi --preview-window right:70% \
-            --bind 'ctrl-g:execute-silent(fzf-git-log toggle-graph)+refresh-preview' \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500" \
-        | sed 's/^..//' | cut -d' ' -f1 \
-        | sed 's#^remotes/##'
+    fzf-git branch "$@"
 }
 
 _gf() {
-    local view
-    view="git -c core.pager='less -+F -KMc' diff --color=always -- {-1} | sed 1,4d"
-
-    git -c color.status=always status --short --no-branch \
-        | fzf-down -m --ansi --nth 2..,.. \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500" \
-        | cut -c4- | sed 's/.* -> //'
+    fzf-git file "$@"
 }
 
 gh() {
-    local view
-    view="git -c core.pager='less -+F -KMc' show --color=always \$(grep -o '[a-f0-9]\{7,\}' <<< {})"
-
-    fzf-git-log init
-    fzf-git-log run "$@" \
-        | fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-            --bind 'ctrl-g:execute-silent(fzf-git-log toggle-graph)+reload(fzf-git-log run)' \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500" \
-        | command grep -o "[a-f0-9]\{7,\}"
+    fzf-git hash "$@"
 }
 
 alias _gh=gh
@@ -56,37 +26,15 @@ _gg() {
 }
 
 _gr() {
-    local view
-    view="fzf-git-log run {1}"
-
-    fzf-git-log init
-    git remote -v | awk '{print $1 "\t" $2}' | uniq \
-        | fzf-down --tac \
-            --bind 'ctrl-g:execute-silent(fzf-git-log toggle-graph)+refresh-preview' \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500" \
-        | command cut -d$'\t' -f1
+    fzf-git remote "$@"
 }
 
 _gs() {
-    local view
-    view="git -c core.pager='less -+F -KMc' stash show -p --stat --color=always \$(cut -d: -f1 <<< {})"
-
-    git stash list \
-        | fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500" \
-        | command cut -d ':' -f1
+    fzf-git stash "$@"
 }
 
 _gt() {
-    local view
-    view="git -c core.pager='less -+F -KMc' show --color=always {}"
-
-    git tag --sort -version:refname \
-        | fzf-down --multi --preview-window right:70% \
-            --bind "ctrl-t:execute:fzf-view $view" \
-            --preview "$view | head -500"
+    fzf-git tag "$@"
 }
 
 join-lines() {
