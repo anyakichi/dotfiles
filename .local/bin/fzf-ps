@@ -14,14 +14,22 @@ case "$CMD" in
         FZF_PS_STATE=$(mktemp)
         export FZF_PS_STATE
 
-        if [[ "${#@}" != 0 ]]; then
-            printf "%q " "$@" > "$FZF_PS_STATE"
-        fi
+        fzf_args=()
+        while (( ${#@} > 0 )); do
+            if [[ "$1" == "--" ]]; then
+                shift
+                printf "%q " "$@" > "$FZF_PS_STATE"
+                break
+            fi
+            fzf_args+=("$1")
+            shift
+        done
 
         "$0" list \
             | fzf -m --header-lines=1 \
                 --bind "ctrl-r:reload('$0' list)" \
                 --bind "ctrl-d:reload('$0' toggle-all && '$0' list)" \
+                "${fzf_args[@]}" \
             | awk '{print $2}'
 
         rm -f "$FZF_PS_STATE"
