@@ -237,74 +237,42 @@ bindkey '^S' command-substitution-widget
 
 ## fzf
 
-__longest_dir()
-{
-    local dir="$1"
-
-    while true; do
-        if [[ -d "${dir/#\~/$HOME}" ]]; then
-            echo "${dir}"
-            break
-        fi
-        if [[ ! ${dir} =~ / ]]; then
-            break
-        fi
-        dir=${dir%/*}
-    done
-}
-
 __fzf-find()
 {
     setopt localoptions pipefail
-    local dir opts
+    local base dir raw_dir
 
-    dir="$(__longest_dir "$1")"
-
-    if [[ -n "${dir}" ]]; then
-        opts=(-q "${1:(($#dir + 1))}")
-        if [[ ! ${dir} =~ /$ ]]; then
-            dir="${dir}/"
-        fi
-        opts+=(--prompt "${dir}> ")
+    eval "dir=$1"
+    if [[ -d "$dir" ]]; then
+        base=
+        raw_dir="$1"
     else
-        opts=(-q "$1")
+        base=$(basename "$dir")
+        dir=$(dirname "$dir")
+        raw_dir=${1%"${(q)base}"}
+    fi
+
+    if [[ -n "$raw_dir" ]]; then
+        raw_dir="${raw_dir%%/##}/"
     fi
 
     shift
 
     (
-        local count=0 state
-        state=$(mktemp)
-        cd "${${dir/#\~/$HOME}:-.}" &&
-        fzf-find-helper "$state" "$@" \
-            | fzf -m -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
-                --ansi \
-                --bind "ctrl-d:reload(fzf-find-helper $state toggle-depth)" \
-                --bind "ctrl-r:reload(fzf-find-helper $state cycle-type)" \
-                --bind 'ctrl-t:execute(fzf-view fzf-view-file {})' \
-                --preview 'fzf-view-file {} | head -500' \
-                --preview-window hidden \
-                "${opts[@]}" \
+        local count=0
+
+        cd "${dir:-.}" &&
+        fzf-file run -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
+            -q "$base" --prompt "${(Q)raw_dir}> " -- "$@" \
             | while read line; do
                 if (( count < 2 )); then
                     echo "$line"
                 else
-                    echo "${dir}${(q)line}"
+                    echo "${raw_dir}${(q)line}"
                 fi
                 (( count++ ))
             done
-        rm -f "$state"
     )
-}
-
-__fzf-f()
-{
-    __fzf-find "$1" run
-}
-
-__fzf-d()
-{
-    __fzf-find "$1" run d
 }
 
 __fzf-ghq()
@@ -345,7 +313,7 @@ fcd()
 {
     local dir
 
-    res=("${(@f)"$(__fzf-d "$1")"}")
+    res=("${(@f)"$(__fzf-find "$1" d)"}")
 
     if [[ ${#res} -ge 3 ]]; then
         cd "${res[3]}" || return
@@ -377,19 +345,18 @@ fpass()
 fzf-file-widget()
 {
     setopt localoptions extended_glob pipefail
-    local args key i res ret
+    local args key res ret
 
     while true; do
         args=(${(z)LBUFFER})
         if [[ ${LBUFFER} =~ [^\\][[:space:]]$ ]]; then
             args+=("")
         fi
-        i="${(Q)args[-1]}"
 
         if [[ ${args[1]} == cd ]]; then
-            res=("${(@f)"$(__fzf-d "$i")"}")
+            res=("${(@f)"$(__fzf-find "${args[-1]}" d)"}")
         else
-            res=("${(@f)"$(__fzf-f "$i")"}")
+            res=("${(@f)"$(__fzf-find "${args[-1]}")"}")
         fi
         ret=$?
 
@@ -398,9 +365,7 @@ fzf-file-widget()
             shift 2 res
 
             [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
-            for i in "${res[@]}"; do
-                LBUFFER+="${i} "
-            done
+            LBUFFER+="${res[*]} "
         elif [[ ${#res} -ge 2 ]]; then
             [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
             LBUFFER+=${res[1]}
