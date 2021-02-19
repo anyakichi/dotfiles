@@ -25,6 +25,10 @@ _gg() {
         | command cut -d ':' -f1
 }
 
+_gp() {
+    fzf-ps run
+}
+
 _gr() {
     fzf-git remote "$@"
 }
@@ -52,5 +56,5 @@ bind-helper() {
         eval "bindkey '^g^$c' fzf-g$c-widget"
     done
 }
-bind-helper b f g h r s t
+bind-helper b f g h p r s t
 unset -f bind-helper

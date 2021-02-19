@@ -341,21 +341,6 @@ __fzf-pass()
             | fzf --no-multi -0 --expect=ctrl-o)
 }
 
-__fzf-ps()
-{
-    setopt localoptions pipefail
-    local ps_cmd
-
-    ps_cmd=(command ps -f)
-    if [[ ${UID} -eq 0 ]]; then
-        ps_cmd+=(-e)
-    else
-        ps_cmd+=(-u "${UID}")
-    fi
-
-    "${ps_cmd[@]}" | command sed 1d | fzf -m | command awk '{print $2}'
-}
-
 fcd()
 {
     local dir
@@ -377,7 +362,7 @@ fkill()
 {
     local pids
 
-    pids=("${(@f)"$(__fzf-ps)"}")
+    pids=("${(@f)"$(fzf-ps run)"}")
 
     if [[ ${#pids} -ne 0 ]]; then
         kill ${1:+-${1}} "${pids[@]}"

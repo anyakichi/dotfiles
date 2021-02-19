@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -o pipefail
+
+CMD="$1"
+shift
+
+case "$CMD" in
+    list)
+        read -ra args <"$FZF_PS_STATE"
+        ps ux "${args[@]}"
+        ;;
+    run)
+        FZF_PS_STATE=$(mktemp)
+        export FZF_PS_STATE
+
+        if [[ "${#@}" != 0 ]]; then
+            printf "%q " "$@" > "$FZF_PS_STATE"
+        fi
+
+        "$0" list \
+            | fzf -m --header-lines=1 \
+                --bind "ctrl-r:reload('$0' list)" \
+                --bind "ctrl-d:reload('$0' toggle-all && '$0' list)" \
+            | awk '{print $2}'
+
+        rm -f "$FZF_PS_STATE"
+        ;;
+    toggle-all)
+        read -ra args <"$FZF_PS_STATE"
+
+        if [[ " ${args[0]} " == *" a "* ]]; then
+            # inexact conversion
+            read -ra args <<<"${args[@]/a/}"
+        else
+            args+=(a)
+        fi
+
+        echo "${args[@]}" > "$FZF_PS_STATE"
+        ;;
+    *)
+        exit 1
+        ;;
+esac
