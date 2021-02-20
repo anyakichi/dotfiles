@@ -514,7 +514,6 @@ zinit light-mode for \
 zinit light-mode for \
     reegnz/jq-zsh-plugin \
     romkatv/powerlevel10k \
-    wfxr/forgit \
     zdharma/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
