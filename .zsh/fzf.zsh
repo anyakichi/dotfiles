@@ -14,7 +14,8 @@ alias _gh=gh
 
 _gg() {
     local rg view
-    view="fzf-view-file \$(cut -d ':' -f1 <<< {})"
+    view="bat --plain --color=always --pager='less -KMRc' \
+            \$(cut -d ':' -f1 <<< {})"
     rg="rg --column --line-number --no-heading --color=always --smart-case "
 
     fzf --ansi --disabled \

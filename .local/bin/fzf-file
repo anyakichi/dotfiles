@@ -46,11 +46,33 @@ shift
 
 case "$CMD" in
     list)
-        read -ra args <"$FZF_FILE_STATE"
+        if [[ -r "$FZF_FILE_STATE" ]]; then
+            read -ra args <"$FZF_FILE_STATE"
+        else
+            args=()
+        fi
+
         if command -v fd >/dev/null 2>&1; then
             do_fd "${args[@]}"
         else
             do_find "${args[@]}"
+        fi
+        ;;
+    view)
+        export LESS=-KMRc
+
+        if [[ -f "$1" ]]; then
+            if command -v bat &>/dev/null; then
+                bat --plain --color=always --paging=always "$1"
+            else
+                less "$1"
+            fi
+        else [[ -d "$1" ]]
+            if command -v exa &>/dev/null; then
+                exa -T -L3 --color=always "$1" | less
+            else
+                /bin/ls --color "$1" | less
+            fi
         fi
         ;;
     run)
@@ -80,14 +102,15 @@ case "$CMD" in
                 --bind "ctrl-r:reload('$0' list)" \
                 --bind "ctrl-d:reload('$0' toggle-depth && '$0' list)" \
                 --bind "ctrl-r:reload('$0' cycle-type && '$0' list)" \
-                --bind 'ctrl-t:execute(fzf-view fzf-view-file {})' \
-                --preview 'fzf-view-file {} | head -500' \
+                --bind 'ctrl-t:execute(fzf-view fzf-file view {})' \
+                --preview 'fzf-file view {} | head -500' \
                 --preview-window hidden \
                 "${fzf_args[@]}"
 
-        rm -r "$FZF_FILE_STATE"
+        rm -f "$FZF_FILE_STATE"
         ;;
     cycle-type)
+        [[ -r "$FZF_FILE_STATE" ]] || exit 1
         read -ra args <"$FZF_FILE_STATE"
 
         if [[ "${args[0]}" == "a" ]]; then
@@ -101,6 +124,7 @@ case "$CMD" in
         echo "${args[@]}" > "$FZF_FILE_STATE"
         ;;
     toggle-depth)
+        [[ -r "$FZF_FILE_STATE" ]] || exit 1
         read -ra args <"$FZF_FILE_STATE"
 
         if (( args[1] > 0 )); then
