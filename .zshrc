@@ -224,17 +224,6 @@ if [[ -n "${TMUX}" ]]; then
     add-zsh-hook preexec preexec_tmux
 fi
 
-command-substitution-widget()
-{
-    setopt localoptions pipefail
-    local dir
-
-    LBUFFER+='${(f)"$('
-    RBUFFER+=')"}'
-}
-zle -N command-substitution-widget
-bindkey '^S' command-substitution-widget
-
 ## fzf
 
 __fzf-find()
