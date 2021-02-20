@@ -9,6 +9,6 @@ elif [[ $TMUX ]]; then
     done
 
     tmux new-window "${args[@]}" \
-        "trap 'tmux wait-for -S fzf-view-$$' 0; $(printf "%q " "$@")" \
-        \; wait-for "fzf-view-$$"
+        "trap 'tmux wait-for -S tview-$$' 0; $(printf "%q " "$@")" \
+        \; wait-for "tview-$$"
 fi

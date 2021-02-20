@@ -20,7 +20,7 @@ _gg() {
 
     fzf --ansi --disabled \
         --bind "change:reload:$rg {q} || true" \
-        --bind "ctrl-t:execute:fzf-view $view" \
+        --bind "ctrl-t:execute:tview $view" \
         --preview "$view | head -500" \
         --preview-window hidden \
         | command cut -d ':' -f1
