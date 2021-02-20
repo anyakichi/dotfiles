@@ -22,8 +22,8 @@ _gg() {
         --bind "change:reload:$rg {q} || true" \
         --bind "ctrl-t:execute:tview $view" \
         --preview "$view | head -500" \
-        --preview-window hidden \
-        | command cut -d ':' -f1
+        --preview-window hidden |
+        command cut -d ':' -f1
 }
 
 _gp() {
