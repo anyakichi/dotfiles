@@ -3,7 +3,7 @@
 set -o pipefail
 
 fzf-down() {
-    fzf --height 50% "$@" --border
+    fzf --height 50% "$@"
 }
 
 init_state() {
@@ -28,7 +28,11 @@ load_state() {
 
 save_state() {
     if has_state; then
-        echo "$@" >"$FZF_GIT_STATE"
+        if ((${#@} > 0)); then
+            printf "%q " "$@" >"$FZF_GIT_STATE"
+        else
+            echo >"$FZF_GIT_STATE"
+        fi
     fi
 }
 

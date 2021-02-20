@@ -98,7 +98,6 @@ run)
 
     "$0" list |
         fzf --ansi -m \
-            --bind "ctrl-r:reload('$0' list)" \
             --bind "ctrl-d:reload('$0' toggle-depth && '$0' list)" \
             --bind "ctrl-r:reload('$0' cycle-type && '$0' list)" \
             --bind 'ctrl-t:execute(tview fzf-file view {})' \

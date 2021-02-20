@@ -277,13 +277,10 @@ __fzf-history()
 
     fc -rln 1 \
         | fzf -q "$1" --no-multi -0 --print-query \
-            --expect=ctrl-o \
-            --expect=ctrl-q \
-            --expect=ctrl-y \
+            --expect=ctrl-o,ctrl-q,ctrl-y \
             --tiebreak=index \
             --preview "echo {}" \
             --preview-window bottom:3:wrap:hidden \
-            --bind 'ctrl-v:toggle-preview' \
             --bind 'ctrl-s:toggle-sort' \
             --bind 'ctrl-r:down'
 }
@@ -383,8 +380,7 @@ fzf-cdr-widget()
 
     dir=$(__fzf-cdr \
             | fzf --no-multi \
-                --bind 'esc:reload:zsh -c "source ~/.zsh/cdr.zsh; __fzf-cdr"' \
-                --bind 'ctrl-/:reload:fzf-find d')
+                --bind 'esc:reload:zsh -c "source ~/.zsh/cdr.zsh; __fzf-cdr"')
     local ret=$?
     if [ -n "${dir}" ]; then
         BUFFER="cd ${dir}"
