@@ -3,10 +3,12 @@
 if [[ -t 1 ]]; then
     "$@"
 elif [[ $TMUX ]]; then
-    cmd=""
-    for i in "$@"; do
-        cmd+=$(printf "%q " "$i")
+    args=()
+    for i in $TVIEW_ENV_VARS; do
+        args+=(-e "${i}=${!i}")
     done
-    tmux new-window "trap 'tmux wait-for -S fzf-view-$$' 0; $cmd"\
+
+    tmux new-window "${args[@]}" \
+        "trap 'tmux wait-for -S fzf-view-$$' 0; $(printf "%q " "$@")" \
         \; wait-for "fzf-view-$$"
 fi

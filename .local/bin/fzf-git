@@ -1,71 +1,164 @@
 #!/bin/bash
 
+set -o pipefail
+
 fzf-down() {
     fzf --height 50% "$@" --border
 }
 
+init_state() {
+    FZF_GIT_STATE=$(mktemp)
+    export FZF_GIT_STATE
+
+    # shellcheck disable=SC2064
+    trap "rm -f '$FZF_GIT_STATE'" 0
+}
+
+has_state() {
+    [[ -e "$FZF_GIT_STATE" ]]
+}
+
+load_state() {
+    if has_state; then
+        cat "$FZF_GIT_STATE"
+    else
+        echo
+    fi
+}
+
+save_state() {
+    if has_state; then
+        echo "$@" > "$FZF_GIT_STATE"
+    fi
+}
+
+git_diff() {
+    case "$1" in
+        view)
+            read -ra args <<<"$(load_state)"
+
+            echo git diff "${args[@]}" "${@:2}"
+            git diff --color=always "${args[@]}" "${@:2}" \
+                | sed 1,4d | less -KMRc
+            ;;
+        toggle-cached)
+            has_state || exit 1
+            read -ra args <<<"$(load_state)"
+
+            if [[ " ${args[*]} " == *" --cached "* ]]; then
+                read -ra args <<<"${args[@]/--cached/}"
+            else
+                args=(--cached "${args[@]}")
+            fi
+
+            save_state "${args[@]}"
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+}
+
+git_log() {
+    case "$1" in
+        view)
+            read -ra args <<<"$(load_state)"
+
+            git -c core.pager="less -+F -KMc" log --date=short --color=always \
+                --format="%C(blue)%C(bold)%cd %C(cyan)%<(8,trunc)%aL %C(auto)%d %s %C(240)%h" \
+                "${args[@]}" "${@:2}"
+            ;;
+        switch)
+            has_state || exit 1
+            TVIEW_ENV_VARS=FZF_GIT_STATE fzf-view fzf-git log _switch
+            ;;
+        _switch)
+            has_state || exit 1
+            read -ra args <<<"$(load_state)"
+
+            res=$(fzf-git branch --height 100%)
+            if [[ $res ]]; then
+                args=("${args[@]/#[^-]*/}" "$res")
+            fi
+
+            save_state "${args[@]}"
+            ;;
+        toggle-graph)
+            has_state || exit 1
+            read -ra args <<<"$(load_state)"
+
+            if [[ " ${args[*]} " == *" --graph "* ]]; then
+                read -ra args <<<"${args[@]/--graph/}"
+            else
+                args=(--graph "${args[@]}")
+            fi
+
+            save_state "${args[@]}"
+            ;;
+        *)
+            exit 1
+            ;;
+    esac
+}
+
 gb() {
-    local state view
-    state=$(mktemp)
-    view="fzf-git-log $state run \$(sed s/^..// <<< {} | cut -d' ' -f1)"
+    init_state
+
+    local view
+    view="fzf-git log view \$(sed s/^..// <<< {} | cut -d' ' -f1)"
 
     git branch -a --color=always | command grep -v '/HEAD\s' \
         | fzf-down --ansi --multi --preview-window right:70% \
-            --bind "ctrl-r:execute-silent(fzf-git-log $state toggle-graph)+refresh-preview" \
+            --bind "ctrl-r:execute-silent(fzf-git log toggle-graph)+refresh-preview" \
             --bind "ctrl-t:execute:fzf-view $view" \
             --preview "$view | head -500" \
             "$@" \
         | sed 's/^..//' | cut -d' ' -f1 \
         | sed 's#^remotes/##'
-
-    rm -f "$state"
 }
 
 gf() {
-    local state view
-    state=$(mktemp)
-    view="fzf-git-diff $state run -- {-1}"
+    init_state
+
+    local view
+    view="fzf-git diff view -- {-1}"
 
     git -c color.status=always status --short --no-branch \
         | fzf-down -m --ansi --nth 2..,.. \
-            --bind "ctrl-r:execute-silent(fzf-git-diff $state toggle-cached)+refresh-preview" \
+            --bind "ctrl-r:execute-silent(fzf-git diff toggle-cached)+refresh-preview" \
             --bind "ctrl-t:execute:fzf-view $view" \
             --preview "$view | head -500" \
             "$@" \
         | cut -c4- | sed 's/.* -> //'
-
-    rm -f "$state"
 }
 
 gh() {
-    local state view
-    state=$(mktemp)
+    init_state
+
+    local view
     view="git -c core.pager='less -+F -KMc' show --color=always \$(grep -o '[a-f0-9]\{7,\}' <<< {})"
 
-    fzf-git-log "$state" run "$@" \
+    fzf-git log view "$@" \
         | fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
-            --bind "ctrl-r:execute(fzf-git-log $state toggle-graph)+reload(fzf-git-log $state run)" \
+            --bind "ctrl-r:execute(fzf-git log toggle-graph)+reload(fzf-git log view)" \
             --bind "ctrl-t:execute:fzf-view $view" \
-            --bind "ctrl-x:execute(fzf-git-log $state switch)+reload(fzf-git-log $state run)" \
+            --bind "ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)" \
             --preview "$view | head -500" \
         | command grep -o "[a-f0-9]\{7,\}"
-
-    rm -f "$state"
 }
 
 gr() {
+    init_state
+
     local view
-    state=$(mktemp)
-    view="fzf-git-log $state run {1}"
+    view="fzf-git log view {1}"
 
     git remote -v | awk '{print $1 "\t" $2}' | uniq \
         | fzf-down --tac \
-            --bind "ctrl-r:execute-silent(fzf-git-log $state toggle-graph)+refresh-preview" \
+            --bind "ctrl-r:execute-silent(fzf-git log toggle-graph)+refresh-preview" \
             --bind "ctrl-t:execute:fzf-view $view" \
             --preview "$view | head -500" \
         | command cut -d$'\t' -f1
-
-    rm -f "$state"
 }
 
 gs() {
@@ -93,11 +186,17 @@ case "$1" in
     branch)
         gb "${@:2}"
         ;;
+    diff)
+        git_diff "${@:2}"
+        ;;
     file)
         gf "${@:2}"
         ;;
     hash)
         gh "${@:2}"
+        ;;
+    log)
+        git_log "${@:2}"
         ;;
     remote)
         gr "${@:2}"
