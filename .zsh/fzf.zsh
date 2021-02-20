@@ -49,6 +49,13 @@ join-lines() {
     done
 }
 
+fzf-s-widget() {
+    local result=$(fzf-tmux-pane run --border)
+    zle reset-prompt
+    tmux switch-client -t "${result}"
+}
+zle -N fzf-s-widget
+
 bind-helper() {
     local c
     for c in "$@"; do
@@ -59,3 +66,5 @@ bind-helper() {
 }
 bind-helper b f g h p r s t
 unset -f bind-helper
+
+bindkey '^s' fzf-s-widget
