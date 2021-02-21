@@ -2,35 +2,8 @@
 
 set -o pipefail
 
-init_state() {
-    FZF_TMUX_PANE_STATE=$(mktemp)
-    export FZF_TMUX_PANE_STATE
-
-    # shellcheck disable=SC2064
-    trap "rm -f '$FZF_TMUX_PANE_STATE'" 0
-}
-
-has_state() {
-    [[ -e $FZF_TMUX_PANE_STATE ]]
-}
-
-load_state() {
-    if has_state; then
-        cat "$FZF_TMUX_PANE_STATE"
-    else
-        echo
-    fi
-}
-
-save_state() {
-    if has_state; then
-        if ((${#@} > 0)); then
-            printf "%q " "$@" >"$FZF_TMUX_PANE_STATE"
-        else
-            echo >"$FZF_TMUX_PANE_STATE"
-        fi
-    fi
-}
+# shellcheck source=./_fzf-state
+. "${0%/*}/_fzf-state"
 
 CMD="$1"
 shift
@@ -45,7 +18,10 @@ list)
         ls_colors[$k]="$v"
     done
 
-    read -ra args <<<"$(load_state)"
+    args=()
+    if [[ "${S[all]}" == true ]]; then
+        args+=(-a)
+    fi
 
     tmux list-panes "${args[@]}" \
         -F '#S:#I.#P \#{pane_current_command}\ \#{pane_current_path}\' |
@@ -57,39 +33,31 @@ view)
     tmux capture-pane -t "$1" -ep | less -KMRc
     ;;
 run)
-    init_state
-
     fzf_args=()
     while ((${#@} > 0)); do
         if [[ $1 == "--" ]]; then
             shift
-            save_state "$@"
             break
         fi
         fzf_args+=("$1")
         shift
     done
 
-    save_state "-a"
+    S[all]=true
 
     "$0" list |
         fzf --ansi --no-multi \
-            --bind "ctrl-t:execute(tview '$0' view {1})" \
             --bind "ctrl-r:reload('$0' toggle-all && '$0' list)" \
+            --bind "ctrl-t:execute(tview '$0' view {1})" \
             --preview "'$0' view {1} | head -500" \
             "${fzf_args[@]}" |
         awk '{print $1}'
     ;;
 toggle-all)
-    read -ra args <<<"$(load_state)"
-
-    if [[ " ${args[*]} " == *" -a "* ]]; then
-        # inexact conversion
-        read -ra args <<<"${args[@]/-a/-s}"
+    if [[ "${S[all]}" == true ]]; then
+        S[all]="false"
     else
-        read -ra args <<<"${args[@]/-s/-a}"
+        S[all]="true"
     fi
-
-    save_state "${args[@]}"
     ;;
 esac

@@ -2,23 +2,25 @@
 
 set -o pipefail
 
+# shellcheck source=./_fzf-state
+. "${0%/*}/_fzf-state"
+
 CMD="$1"
 shift
 
 case "$CMD" in
 list)
-    read -ra args <"$FZF_PS_STATE"
-    ps ux "${args[@]}"
+    if [[ "${S[all]}" == true ]]; then
+        ps aux
+    else
+        ps ux
+    fi
     ;;
 run)
-    FZF_PS_STATE=$(mktemp)
-    export FZF_PS_STATE
-
     fzf_args=()
     while ((${#@} > 0)); do
         if [[ $1 == "--" ]]; then
             shift
-            printf "%q " "$@" >"$FZF_PS_STATE"
             break
         fi
         fzf_args+=("$1")
@@ -31,20 +33,13 @@ run)
             --bind "ctrl-d:reload('$0' toggle-all && '$0' list)" \
             "${fzf_args[@]}" |
         awk '{print $2}'
-
-    rm -f "$FZF_PS_STATE"
     ;;
 toggle-all)
-    read -ra args <"$FZF_PS_STATE"
-
-    if [[ " ${args[0]} " == *" a "* ]]; then
-        # inexact conversion
-        read -ra args <<<"${args[@]/a/}"
+    if [[ "${S[all]}" == true ]]; then
+        S[all]="false"
     else
-        args+=(a)
+        S[all]="true"
     fi
-
-    echo "${args[@]}" >"$FZF_PS_STATE"
     ;;
 *)
     exit 1

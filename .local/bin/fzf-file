@@ -2,6 +2,9 @@
 
 set -o pipefail
 
+# shellcheck source=./_fzf-state
+. "${0%/*}/_fzf-state"
+
 do_find() {
     local opts
     opts=()
@@ -18,7 +21,7 @@ do_find() {
         opts+=(-maxdepth "$2")
     fi
 
-    find -L . -mindepth 1 -xdev -path '*/\.*' -prune -o "${opts[@]}" 2>/dev/null |
+    find -L "${3:-.}" -mindepth 1 -xdev -path '*/\.*' -prune -o "${opts[@]}" 2>/dev/null |
         cut -b3-
 }
 
@@ -36,7 +39,8 @@ do_fd() {
         opts+=(-d "$2")
     fi
 
-    fd -L --one-file-system --color=always "${opts[@]}" 2>/dev/null
+    fd -L --one-file-system --color=always "${opts[@]}" \
+        --search-path "${3:-.}" 2>/dev/null
 }
 
 CMD="$1"
@@ -44,16 +48,10 @@ shift
 
 case "$CMD" in
 list)
-    if [[ -r $FZF_FILE_STATE ]]; then
-        read -ra args <"$FZF_FILE_STATE"
-    else
-        args=()
-    fi
-
     if command -v fd >/dev/null 2>&1; then
-        do_fd "${args[@]}"
+        do_fd "${S[type]}" "${S[depth]}" "${S[path]}"
     else
-        do_find "${args[@]}"
+        do_find "${S[type]}" "${S[depth]}" "${S[path]}"
     fi
     ;;
 view)
@@ -75,62 +73,58 @@ view)
     fi
     ;;
 run)
-    FZF_FILE_STATE=$(mktemp)
-    export FZF_FILE_STATE
-
     fzf_args=()
     while ((${#@} > 0)); do
         if [[ $1 == "--" ]]; then
             shift
-            printf "%q " "$@" >"$FZF_FILE_STATE"
             break
         fi
         fzf_args+=("$1")
         shift
     done
 
-    args=(a 0)
+    S[type]=a
+    S[depth]=0
     if [[ ${#@} != 0 ]]; then
-        [[ $1 ]] && args[0]=$1
-        [[ $2 ]] && args[1]=$2
+        [[ $1 ]] && S[type]=$1
+        [[ $2 ]] && S[depth]=$2
     fi
-    echo "${args[@]}" >"${FZF_FILE_STATE}"
 
     "$0" list |
         fzf --ansi -m \
             --bind "ctrl-d:reload('$0' toggle-depth && '$0' list)" \
             --bind "ctrl-r:reload('$0' cycle-type && '$0' list)" \
             --bind 'ctrl-t:execute(tview fzf-file view {})' \
+            --bind "ctrl-x:reload('$0' go-parent && '$0' list)" \
+            --bind "ctrl-z:reload('$0' reset-parent && '$0' list)" \
             --preview 'fzf-file view {} | head -500' \
             --preview-window hidden \
             "${fzf_args[@]}"
-
-    rm -f "$FZF_FILE_STATE"
     ;;
 cycle-type)
-    [[ -r $FZF_FILE_STATE ]] || exit 1
-    read -ra args <"$FZF_FILE_STATE"
-
-    if [[ ${args[0]} == "a" ]]; then
-        args[0]=d
-    elif [[ ${args[0]} == "d" ]]; then
-        args[0]=f
+    if [[ ${S[type]} == "a" ]]; then
+        S[type]=d
+    elif [[ ${S[type]} == "d" ]]; then
+        S[type]=f
     else
-        args[0]=a
+        S[type]=a
     fi
-
-    echo "${args[@]}" >"$FZF_FILE_STATE"
     ;;
 toggle-depth)
-    [[ -r $FZF_FILE_STATE ]] || exit 1
-    read -ra args <"$FZF_FILE_STATE"
-
-    if ((args[1] > 0)); then
-        args[1]=0
+    if ((S[depth] > 0)); then
+        S[depth]=0
     else
-        args[1]=1
+        S[depth]=1
     fi
-
-    echo "${args[@]}" >"$FZF_FILE_STATE"
+    ;;
+go-parent)
+    if [[ ${S[path]} ]]; then
+        S[path]+="/.."
+    else
+        S[path]=".."
+    fi
+    ;;
+reset-parent)
+    S[path]=""
     ;;
 esac

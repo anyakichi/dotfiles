@@ -2,60 +2,32 @@
 
 set -o pipefail
 
+# shellcheck source=./_fzf-state
+. "${0%/*}/_fzf-state"
+
 fzf-down() {
     fzf --height 50% "$@"
-}
-
-init_state() {
-    FZF_GIT_STATE=$(mktemp)
-    export FZF_GIT_STATE
-
-    # shellcheck disable=SC2064
-    trap "rm -f '$FZF_GIT_STATE'" 0
-}
-
-has_state() {
-    [[ -e $FZF_GIT_STATE ]]
-}
-
-load_state() {
-    if has_state; then
-        cat "$FZF_GIT_STATE"
-    else
-        echo
-    fi
-}
-
-save_state() {
-    if has_state; then
-        if ((${#@} > 0)); then
-            printf "%q " "$@" >"$FZF_GIT_STATE"
-        else
-            echo >"$FZF_GIT_STATE"
-        fi
-    fi
 }
 
 git_diff() {
     case "$1" in
     view)
-        read -ra args <<<"$(load_state)"
+        args=()
+
+        if [[ "${S[cached]}" == true ]]; then
+            args+=(--cached)
+        fi
 
         echo git diff "${args[@]}" "${@:2}"
         git diff --color=always "${args[@]}" "${@:2}" |
             sed 1,4d | less -KMRc
         ;;
     toggle-cached)
-        has_state || exit 1
-        read -ra args <<<"$(load_state)"
-
-        if [[ " ${args[*]} " == *" --cached "* ]]; then
-            read -ra args <<<"${args[@]/--cached/}"
+        if [[ "${S[cached]}" == true ]]; then
+            S[cached]="false"
         else
-            args=(--cached "${args[@]}")
+            S[cached]="true"
         fi
-
-        save_state "${args[@]}"
         ;;
     *)
         exit 1
@@ -66,38 +38,35 @@ git_diff() {
 git_log() {
     case "$1" in
     view)
-        read -ra args <<<"$(load_state)"
+        args=()
+
+        if [[ "${S[graph]}" == true ]]; then
+            args+=(--graph)
+        fi
+
+        if [[ ${S[target]} ]]; then
+            args+=("${S[target]}")
+        fi
 
         git -c core.pager="less -+F -KMc" log --date=short --color=always \
             --format="%C(blue)%C(bold)%cd %C(cyan)%<(8,trunc)%aL %C(auto)%d %s %C(240)%h" \
             "${args[@]}" "${@:2}"
         ;;
     switch)
-        has_state || exit 1
-        TVIEW_ENV_VARS=FZF_GIT_STATE tview fzf-git log _switch
+        TVIEW_ENV_VARS=FZF_STATE tview fzf-git log _switch
         ;;
     _switch)
-        has_state || exit 1
-        read -ra args <<<"$(load_state)"
-
         res=$(fzf-git branch --height 100%)
         if [[ $res ]]; then
-            args=("${args[@]/#[^-]*/}" "$res")
+            S[target]="res"
         fi
-
-        save_state "${args[@]}"
         ;;
     toggle-graph)
-        has_state || exit 1
-        read -ra args <<<"$(load_state)"
-
-        if [[ " ${args[*]} " == *" --graph "* ]]; then
-            read -ra args <<<"${args[@]/--graph/}"
+        if [[ "${S[graph]}" == true ]]; then
+            S[graph]="false"
         else
-            args=(--graph "${args[@]}")
+            S[graph]="true"
         fi
-
-        save_state "${args[@]}"
         ;;
     *)
         exit 1
@@ -106,12 +75,10 @@ git_log() {
 }
 
 gb() {
-    init_state
-
     local view
     view="fzf-git log view \$(sed s/^..// <<< {} | cut -d' ' -f1)"
 
-    git branch -a --color=always | command grep -v '/HEAD\s' |
+    git branch -a --color=always | grep -v '/HEAD\s' |
         fzf-down --ansi --multi --preview-window right:70% \
             --bind "ctrl-r:execute-silent(fzf-git log toggle-graph)+refresh-preview" \
             --bind "ctrl-t:execute:tview $view" \
@@ -122,8 +89,6 @@ gb() {
 }
 
 gf() {
-    init_state
-
     local view
     view="fzf-git diff view -- {-1}"
 
@@ -137,8 +102,6 @@ gf() {
 }
 
 gh() {
-    init_state
-
     local view
     view="git -c core.pager='less -+F -KMc' show --color=always \$(grep -o '[a-f0-9]\{7,\}' <<< {})"
 
@@ -148,12 +111,10 @@ gh() {
             --bind "ctrl-t:execute:tview $view" \
             --bind "ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)" \
             --preview "$view | head -500" |
-        command grep -o "[a-f0-9]\{7,\}"
+        grep -o "[a-f0-9]\{7,\}"
 }
 
 gr() {
-    init_state
-
     local view
     view="fzf-git log view {1}"
 
@@ -162,7 +123,7 @@ gr() {
             --bind "ctrl-r:execute-silent(fzf-git log toggle-graph)+refresh-preview" \
             --bind "ctrl-t:execute:tview $view" \
             --preview "$view | head -500" |
-        command cut -d$'\t' -f1
+        cut -d$'\t' -f1
 }
 
 gs() {
@@ -173,7 +134,7 @@ gs() {
         fzf-down --ansi --no-sort --reverse --multi --bind 'ctrl-s:toggle-sort' \
             --bind "ctrl-t:execute:tview $view" \
             --preview "$view | head -500" |
-        command cut -d ':' -f1
+        cut -d ':' -f1
 }
 
 gt() {
