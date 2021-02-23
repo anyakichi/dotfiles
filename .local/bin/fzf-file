@@ -92,12 +92,13 @@ run)
 
     "$0" list |
         fzf --ansi -m \
-            --bind "ctrl-d:reload('$0' toggle-depth && '$0' list)" \
-            --bind "ctrl-r:reload('$0' cycle-type && '$0' list)" \
-            --bind 'ctrl-t:execute(tview fzf-file view {})' \
-            --bind "ctrl-x:reload('$0' go-parent && '$0' list)" \
-            --bind "ctrl-z:reload('$0' reset-parent && '$0' list)" \
-            --preview 'fzf-file view {} | head -500' \
+            --header ":: C-r: toggle depth; C-d: go parent; C-s: reset parent; C-x: cycle type" \
+            --bind "ctrl-d:reload('$0' go-parent && '$0' list)" \
+            --bind "ctrl-r:reload('$0' toggle-depth && '$0' list)" \
+            --bind "ctrl-s:reload('$0' reset-parent && '$0' list)" \
+            --bind "ctrl-t:execute(tview '$0' view {})" \
+            --bind "ctrl-x:reload('$0' cycle-type && '$0' list)" \
+            --preview "'$0' view {} | head -500" \
             --preview-window hidden \
             "${fzf_args[@]}"
     ;;
