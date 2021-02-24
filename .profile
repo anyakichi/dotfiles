@@ -32,10 +32,9 @@ export NCURSES_NO_UTF8_ACS=0
 export PAGER=less
 export QUOTING_STYLE=literal
 
-export FORGIT_LOG_GRAPH_ENABLE=false
-export FZF_DEFAULT_COMMAND="fzf-find"
+export FZF_DEFAULT_COMMAND="fzf-file list"
 export FZF_DEFAULT_OPTS="\
- --ansi --height 40% --layout=reverse --inline-info \
+ --ansi --height 40% --layout=reverse --inline-info --cycle \
  --bind ctrl-g:top,ctrl-alt-g:top \
  --bind ctrl-/:toggle-preview \
  --bind alt-j:preview-down \
