@@ -513,6 +513,10 @@ augroup END
 " Plugins
 "
 
+" vital.vim
+let s:V = vital#of('vital')
+call s:V.load('Vim.ScriptLocal')
+
 " a.vim
 let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
 let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
@@ -528,32 +532,107 @@ nmap [Tab]= <Plug>SaveWinPosn
 nmap [Tab]- <Plug>RestoreWinPosn
 
 " fzf
-let g:fzf_buffers_jump = 1
-nnoremap <C-_> :<C-u>Files<Space>
-nnoremap ,, :<C-u>GFiles<Space>
-nnoremap <silent> <C-s> :<C-u>Buffers<CR>
-nnoremap <silent> ,b :<C-u>Buffers<CR>
-nnoremap ,g :<C-u>Rg<Space>
-nnoremap ,G :<C-u>Rg<Space><C-r><C-w>
-nnoremap <silent> ,L :<C-u>Lines<CR>
-nnoremap <silent> ,l :<C-u>BLines<CR>
-nnoremap <silent> ,t :<C-u>Tags<CR>
-nnoremap <silent> ,m :<C-u>Marks<CR>
-nnoremap <silent> ,w :<C-u>Windows<CR>
-nnoremap <silent> ,; :<C-u>History:<CR>
-nnoremap <silent> ,/ :<C-u>History/<CR>
-nnoremap <silent> ,C :<C-u>Commits<CR>
-nnoremap <silent> ,c :<C-u>BCommits<CR>
+let s:FZF_SID_PREFIX = "<SNR>".s:V.Vim.ScriptLocal.sid("autoload/fzf/vim.vim")."_"
+let s:fzf_state = tempname()
+let $FZF_STATE = s:fzf_state
 
-function! RipgrepFzf(query, fullscreen)
+let g:fzf_action = {
+\   'ctrl-t': 'tab split',
+\   'ctrl-v': 'vsplit',
+\}
+let g:fzf_buffers_jump = 1
+let g:fzf_files_options = [
+\   '--ansi',
+\   "--bind", "ctrl-d:reload(fzf-file go-parent && fzf-file list)",
+\   "--bind", "ctrl-r:reload(fzf-file toggle-depth && fzf-file list)",
+\   "--bind", "ctrl-s:reload(fzf-file reset-parent && fzf-file list)",
+\   "--bind", "ctrl-/:toggle-preview",
+\   "--preview", 'fzf-file view {} | head -500',
+\   "--preview-window", "hidden"
+\]
+
+command! -bar -bang BCommits call s:fzf_bcommits(<bang>0)
+command! -bar -bang Commits call s:fzf_commits(<bang>0)
+command! -bang -nargs=? -complete=dir Files call s:fzf_files(<q-args>, <bang>0)
+command! -bang -nargs=* History call s:fzf_command_history(<bang>0)
+command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
+
+nnoremap <silent> <C-_> :<C-u>Files<CR>
+nnoremap <silent> <C-g>/ :<C-u>History/<CR>
+nnoremap <silent> <C-g>: :<C-u>History:<CR>
+nnoremap <silent> <C-g>; :<C-u>History:<CR>
+nnoremap <silent> <C-g><C-_> :<C-u>Files <C-r>=<SID>relpath()<CR><CR>
+nnoremap <silent> <C-g><C-g> :<C-u>RG!<CR>
+nnoremap <silent> <C-g><C-l> :<C-u>BLines<CR>
+nnoremap <silent> <C-g><C-m> :<C-u>Marks<CR>
+nnoremap <silent> <C-g><C-t> :<C-u>Tags<CR>
+nnoremap <silent> <C-g><C-w> :<C-u>Windows<CR>
+nnoremap <silent> <C-g>C :<C-u>Commits<CR>
+nnoremap <silent> <C-g>L :<C-u>Lines<CR>
+nnoremap <silent> <C-g>c :<C-u>BCommits<CR>
+nnoremap <silent> <C-s> :<C-u>Buffers<CR>
+
+function! s:fzf_bcommits(fullscreen)
+    call writefile([], s:fzf_state)
+    call fzf#vim#buffer_commits({
+    \   'options': [
+    \       '--bind', 'ctrl-d:execute(fzf-git log files)+reload(fzf-git log view)',
+    \       '--bind', 'ctrl-r:execute-silent(fzf-git log toggle-graph)+reload(fzf-git log view)',
+    \       '--bind', 'ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)',
+    \   ],
+    \   'source': 'fzf-git log view '.fzf#shellescape(expand('%')),
+    \}, a:fullscreen)
+endfunction
+
+function! s:fzf_commits(fullscreen)
+    call writefile([], s:fzf_state)
+    call fzf#vim#commits({
+    \   'options': [
+    \       '--bind', 'ctrl-d:execute(fzf-git log files)+reload(fzf-git log view)',
+    \       '--bind', 'ctrl-r:execute-silent(fzf-git log toggle-graph)+reload(fzf-git log view)',
+    \       '--bind', 'ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)',
+    \   ],
+    \   'source': 'fzf-git log view',
+    \}, a:fullscreen)
+endfunction
+
+function! s:fzf_files(dir, fullscreen)
+    call writefile(["type=f", "depth=0"], s:fzf_state)
+    call fzf#vim#files(a:dir, a:fullscreen)
+endfunction
+
+function! s:fzf_history_source(type)
+    let source = call(s:FZF_SID_PREFIX.'history_source', [a:type])
+    let source[0] = substitute(source[0], "Ctrl-E", "Ctrl-Y", "")
+    return source
+endfunction
+
+function! s:fzf_cmd_history_sink(lines)
+    if a:lines[0] == 'ctrl-y'
+        let a:lines[0] = 'ctrl-e'
+    endif
+    call call(s:FZF_SID_PREFIX.'cmd_history_sink', [a:lines])
+endfunction
+
+function! s:fzf_command_history(fullscreen)
+    call fzf#vim#command_history({
+    \   'options': ['--no-expect', '--expect', 'ctrl-y'],
+    \   'source': s:fzf_history_source(':'),
+    \   'sink*': function('s:fzf_cmd_history_sink'),
+    \}, a:fullscreen)
+endfunction
+
+function! s:fzf_rg(query, fullscreen)
     let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-    let initial_command = printf(command_fmt, shellescape(a:query))
+    if a:query != ""
+        let initial_command = printf(command_fmt, shellescape(a:query))
+    else
+        let initial_command = 'rg || true'
+    endif
     let reload_command = printf(command_fmt, '{q}')
     let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
     call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-nnoremap <silent> <C-g><C-g> :<C-u>RG!<CR>
 
 " easy-align.vim
 nmap ga <Plug>(EasyAlign)
