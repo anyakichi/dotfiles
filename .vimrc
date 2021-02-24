@@ -115,12 +115,6 @@ set pastetoggle=<C-q>
 " Spell checking
 set spelllang=en_us,cjk
 
-" Grep
-if executable('ag')
-    set grepprg=ag\ --vimgrep\ --hidden\ $*
-    set grepformat=%f:%l:%c:%m
-endif
-
 " Cscope
 if executable('gtags-cscope')
     set cscopeprg=gtags-cscope
@@ -444,7 +438,6 @@ inoremap <expr> <C-g>~ <SID>border_line('~')
 cnoremap <C-n> <PageDown>
 cnoremap <C-p> <PageUp>
 cnoremap <C-g> <C-r>=<SID>kill_arg()<CR>
-cnoremap <C-q> <C-r>=<SID>grep_go_to_pattern()<CR>
 cnoremap <expr> <C-_> <SID>relpath()
 
 " Comma separated numbers
@@ -813,15 +806,6 @@ function! s:kill_arg()
 
     let c = strlen(substitute(matchstr(line[:pos], '\S*\s*$'), ".", "x", "g"))
     return repeat("\<C-h>", c)
-endfunction
-
-function! s:grep_go_to_pattern()
-    let cmdline = getcmdline()
-    let index = matchend(cmdline, '\v\C(l?grep|QFGrep)\s+\S+')
-    if index >= 0
-        call setcmdpos(index + 1)
-    endif
-    return ""
 endfunction
 
 function! s:border_line(char)
