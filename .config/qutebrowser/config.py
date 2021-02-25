@@ -74,9 +74,9 @@ config.bind(
     "<ctrl-,>u", f"spawn --userscript {qute_pass} --username-only", mode="insert"
 )
 config.bind(
-    "<ctrl-,>p", "spawn --userscript {qute_pass} --password-only", mode="insert"
+    "<ctrl-,>p", f"spawn --userscript {qute_pass} --password-only", mode="insert"
 )
-config.bind("<ctrl-,>o", "spawn --userscript {qute_pass} --otp-only", mode="insert")
+config.bind("<ctrl-,>o", f"spawn --userscript {qute_pass} --otp-only", mode="insert")
 
 
 #
