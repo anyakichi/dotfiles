@@ -21,13 +21,17 @@ list)
     args=()
     if [[ "${S[all]}" == true ]]; then
         args+=(-a)
+    else
+        args+=(-s)
     fi
 
-    tmux list-panes "${args[@]}" \
-        -F '#S:#I.#P \#{pane_current_command}\ \#{pane_current_path}\' |
+    tmux list-panes "${args[@]}" "$@" \
+        -F "#S:#I.#P \\#{pane_current_command}\\ \\#{pane_current_path}\\" |
+        grep -v "^$(tmux list-panes -t $TMUX_PANE -F '#S:#I.#P')" |
         sed -e "s#$HOME#~#" \
             -e "s/\\\\\\([^\\]*\\)\\\\/\x1b[${ls_colors[ex]}m\\1\x1b[0m/" \
             -e "s/\\\\\\([^\\]*\\)\\\\/\x1b[${ls_colors[di]}m\\1\x1b[0m/"
+    true
     ;;
 view)
     tmux capture-pane -t "$1" -ep | less -KMRc
@@ -47,7 +51,9 @@ run)
 
     "$0" list |
         fzf --ansi --no-multi \
-            --bind "ctrl-r:reload('$0' toggle-all && '$0' list)" \
+            --header ":: C-r: reload; C-d: toggle all" \
+            --bind "ctrl-r:reload('$0' list)" \
+            --bind "ctrl-s:reload('$0' toggle-all && '$0' list)" \
             --bind "ctrl-t:execute(tview '$0' view {1})" \
             --preview "'$0' view {1} | head -500" \
             "${fzf_args[@]}" |
