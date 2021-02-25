@@ -10,7 +10,7 @@ shift
 
 case "$CMD" in
 list)
-    if [[ "${S[all]}" == true ]]; then
+    if [[ ${S[all]} == true ]]; then
         ps aux
     else
         ps ux
@@ -36,7 +36,7 @@ run)
         awk '{print $2}'
     ;;
 toggle-all)
-    if [[ "${S[all]}" == true ]]; then
+    if [[ ${S[all]} == true ]]; then
         S[all]="false"
     else
         S[all]="true"

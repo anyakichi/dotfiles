@@ -4,7 +4,7 @@ declare -A S
 
 load_state() {
     if [[ -e $FZF_STATE ]]; then
-        while IFS="\n" read -r line; do
+        while IFS=$'\n' read -r line; do
             S[${line%%=*}]=${line#*=}
         done <"$FZF_STATE"
     fi

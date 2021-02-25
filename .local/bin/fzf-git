@@ -14,7 +14,7 @@ git_diff() {
     view)
         local args=()
 
-        if [[ "${S[mode]}" == "file" ]]; then
+        if [[ ${S[mode]} == "file" ]]; then
             export LESS=-KMRc
             if command -v bat &>/dev/null; then
                 bat --plain --color=always --paging=always "${@:2}"
@@ -22,7 +22,7 @@ git_diff() {
                 less "${@:2}"
             fi
         else
-            if [[ "${S[mode]}" == "cached" ]]; then
+            if [[ ${S[mode]} == "cached" ]]; then
                 args+=(--cached)
             fi
 
@@ -32,9 +32,9 @@ git_diff() {
         fi
         ;;
     cycle-mode)
-        if [[ "${S[mode]}" == "cached" ]]; then
+        if [[ ${S[mode]} == "cached" ]]; then
             S[mode]="file"
-        elif [[ "${S[mode]}" == "file" ]]; then
+        elif [[ ${S[mode]} == "file" ]]; then
             S[mode]="diff"
         else
             S[mode]="cached"
@@ -55,7 +55,7 @@ git_files() {
     done < <(git -c color.status=always status --short --branch)
 
     while IFS=$'\n' read -r line; do
-        if [[ "${files["$line"]}" != 1 ]]; then
+        if [[ ${files["$line"]} != 1 ]]; then
             echo " H $line"
         fi
     done < <(git ls-files)
@@ -66,12 +66,13 @@ git_log() {
     view)
         args=()
 
-        if [[ "${S[graph]}" == true ]]; then
+        if [[ ${S[graph]} == true ]]; then
             args+=(--graph)
         fi
 
         if [[ ${S[target]} ]]; then
             # S[target] is already escaped
+            # shellcheck disable=SC2206
             args+=(${S[target]})
         fi
 
@@ -83,13 +84,12 @@ git_log() {
         TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _files
         ;;
     _files)
-        res=$("$0" file --no-height)
-        if [[ $? == 0 ]]; then
+        if res=$("$0" file --no-height); then
             S[target]=
             if [[ $res ]]; then
                 while IFS=$'\n' read -r line; do
                     S[target]+="$(printf "%q " "$line")"
-                done <<< "$res"
+                done <<<"$res"
             fi
         fi
         ;;
@@ -97,8 +97,7 @@ git_log() {
         TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _switch
         ;;
     _switch)
-        res=$("$0" branch --no-height)
-        if [[ $? == 0 ]]; then
+        if res=$("$0" branch --no-height); then
             S[target]=
             if [[ $res ]]; then
                 S[target]="$(printf "%q" "$res")"
@@ -106,7 +105,7 @@ git_log() {
         fi
         ;;
     toggle-graph)
-        if [[ "${S[graph]}" == true ]]; then
+        if [[ ${S[graph]} == true ]]; then
             S[graph]="false"
         else
             S[graph]="true"

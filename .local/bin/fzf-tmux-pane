@@ -19,7 +19,7 @@ list)
     done
 
     args=()
-    if [[ "${S[all]}" == true ]]; then
+    if [[ ${S[all]} == true ]]; then
         args+=(-a)
     else
         args+=(-s)
@@ -27,7 +27,7 @@ list)
 
     tmux list-panes "${args[@]}" "$@" \
         -F "#S:#I.#P \\#{pane_current_command}\\ \\#{pane_current_path}\\" |
-        grep -v "^$(tmux list-panes -t $TMUX_PANE -F '#S:#I.#P')" |
+        grep -v "^$(tmux list-panes -t "$TMUX_PANE" -F '#S:#I.#P')" |
         sed -e "s#$HOME#~#" \
             -e "s/\\\\\\([^\\]*\\)\\\\/\x1b[${ls_colors[ex]}m\\1\x1b[0m/" \
             -e "s/\\\\\\([^\\]*\\)\\\\/\x1b[${ls_colors[di]}m\\1\x1b[0m/"
@@ -60,7 +60,7 @@ run)
         awk '{print $1}'
     ;;
 toggle-all)
-    if [[ "${S[all]}" == true ]]; then
+    if [[ ${S[all]} == true ]]; then
         S[all]="false"
     else
         S[all]="true"
