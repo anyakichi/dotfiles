@@ -86,6 +86,14 @@ config.bind("<ctrl-,>o", f"spawn --userscript {qute_pass} --otp-only", mode="ins
 c.auto_save.session = True
 c.content.default_encoding = "utf-8"
 c.content.pdfjs = True
+c.editor.command = [
+    'tmux',
+    'new-window',
+    "trap 'tmux wait-for -S qutebrowser' 0 && nvim -c 'normal {line}G{column0}l' {file}",
+    ";",
+    'wait-for',
+    'qutebrowser'
+]
 c.input.insert_mode.auto_load = True
 
 # Search engines
