@@ -83,7 +83,7 @@ git_log() {
         TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _files
         ;;
     _files)
-        res=$("$0" file --height 100%)
+        res=$("$0" file --no-height)
         if [[ $? == 0 ]]; then
             S[target]=
             if [[ $res ]]; then
@@ -97,7 +97,7 @@ git_log() {
         TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _switch
         ;;
     _switch)
-        res=$("$0" branch --height 100%)
+        res=$("$0" branch --no-height)
         if [[ $? == 0 ]]; then
             S[target]=
             if [[ $res ]]; then
