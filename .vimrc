@@ -514,7 +514,7 @@ augroup END
 "
 
 " vital.vim
-let s:V = vital#of('vital')
+let s:V = vital#vital#new()
 call s:V.load('Vim.ScriptLocal')
 
 " a.vim
