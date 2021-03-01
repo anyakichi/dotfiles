@@ -39,7 +39,7 @@ set noreverse_realname
 
 set editor="$EDITOR '+/^$'"
 
-set read_inc=100
+set read_inc=1000
 
 set sidebar_format="%D%?F? [%F]?%* %N"
 set sidebar_next_new_wrap
@@ -70,7 +70,7 @@ charset-hook Windows-31J cp932
 charset-hook shift-jis cp932
 
 alternative_order text/plain text
-auto_view text/html
+auto_view text/html text/plain
 
 bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
 
