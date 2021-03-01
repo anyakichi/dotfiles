@@ -2,6 +2,10 @@ _gb() {
     fzf-git branch "$@"
 }
 
+_gc() {
+    fzf-docker container "$@"
+}
+
 _gf() {
     fzf-git file "$@"
 }
@@ -11,6 +15,10 @@ gh() {
 }
 
 alias _gh=gh
+
+_gi() {
+    fzf-docker image "$@"
+}
 
 _gg() {
     local rg view
@@ -42,6 +50,10 @@ _gt() {
     fzf-git tag "$@"
 }
 
+_gv() {
+    fzf-docker volume "$@"
+}
+
 join-lines() {
     local item
     while read -r item; do
@@ -62,9 +74,10 @@ bind-helper() {
         eval "fzf-g$c-widget() { local result=\$(_g$c | join-lines); zle reset-prompt; LBUFFER+=\$result }"
         eval "zle -N fzf-g$c-widget"
         eval "bindkey '^g^$c' fzf-g$c-widget"
+        eval "bindkey '^g$c' fzf-g$c-widget"
     done
 }
-bind-helper b f g h p r s t
+bind-helper b c f g h i p r s t v
 unset -f bind-helper
 
 bindkey '^s' fzf-s-widget
