@@ -143,7 +143,7 @@ gf() {
             --bind "ctrl-t:execute:tview $view" \
             --preview "$view | head -n 500" \
             "$@" |
-        sed -e 's/^ [^ ]* //' -e 's/.* -> //'
+        sed -e 's/^...//' -e 's/.* -> //'
 }
 
 gh() {
