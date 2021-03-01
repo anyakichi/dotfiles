@@ -563,6 +563,7 @@ nnoremap <silent> <C-g>: :<C-u>History:<CR>
 nnoremap <silent> <C-g>; :<C-u>History:<CR>
 nnoremap <silent> <C-g><C-_> :<C-u>Files <C-r>=<SID>relpath()<CR><CR>
 nnoremap <silent> <C-g><C-g> :<C-u>RG!<CR>
+nnoremap <C-g>g :<C-u>RG! <C-r>=expand("<cword>")<CR>
 nnoremap <silent> <C-g><C-l> :<C-u>BLines<CR>
 nnoremap <silent> <C-g><C-m> :<C-u>Marks<CR>
 nnoremap <silent> <C-g><C-t> :<C-u>Tags<CR>
