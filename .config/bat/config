@@ -1,0 +1,4 @@
+# $ mkdir -p "$(bat --config-dir)/themes" && cd "$(bat --config-dir)/themes"
+# $ git clone https://github.com/voronianski/oceanic-next-color-scheme.git
+# $ bat cache --build
+--theme="Oceanic Next"
