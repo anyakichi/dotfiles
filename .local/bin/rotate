@@ -3,6 +3,10 @@
 trap "exit" HUP INT TERM
 trap "kill 0" EXIT
 
+MONITORS=(
+    "eDP-1"
+)
+
 IDEVS=(
     "SYNA8004:00 06CB:CD8B Touchpad"
 )
@@ -13,48 +17,70 @@ WDEVS=(
     "Wacom Pen and multitouch sensor Pen eraser"
 )
 
-rotate_input_dev()
-{
+rotate_input_dev() {
     xinput set-prop "$1" "Coordinate Transformation Matrix" ${@:2}
 }
 
-rotate_wacom_dev()
-{
+rotate_wacom_dev() {
     xsetwacom set "$1" rotate "$2"
 }
 
 while read line; do
     if [[ $line =~ normal$ ]]; then
-        xrandr -o normal
-        for dev in "${IDEVS[@]}"; do
-            rotate_input_dev "$dev" 1 0 0 0 1 0 0 0 1
-        done
-        for dev in "${WDEVS[@]}"; do
-            rotate_wacom_dev "$dev" none
-        done
+        if [[ $WAYLAND_DISPLAY ]]; then
+            for i in "${MONITORS[@]}"; do
+                swaymsg "output $i transform 0"
+            done
+        else
+            xrandr -o normal
+            for dev in "${IDEVS[@]}"; do
+                rotate_input_dev "$dev" 1 0 0 0 1 0 0 0 1
+            done
+            for dev in "${WDEVS[@]}"; do
+                rotate_wacom_dev "$dev" none
+            done
+        fi
     elif [[ $line =~ left-up$ ]]; then
-        xrandr -o left
-        for dev in "${IDEVS[@]}"; do
-            rotate_input_dev "$dev" 0 -1 1 1 0 0 0 0 1
-        done
-        for dev in "${WDEVS[@]}"; do
-            rotate_wacom_dev "$dev" ccw
-        done
+        if [[ $WAYLAND_DISPLAY ]]; then
+            for i in "${MONITORS[@]}"; do
+                swaymsg "output $i transform 270"
+            done
+        else
+            xrandr -o left
+            for dev in "${IDEVS[@]}"; do
+                rotate_input_dev "$dev" 0 -1 1 1 0 0 0 0 1
+            done
+            for dev in "${WDEVS[@]}"; do
+                rotate_wacom_dev "$dev" ccw
+            done
+        fi
     elif [[ $line =~ right-up$ ]]; then
-        xrandr -o right
-        for dev in "${IDEVS[@]}"; do
-            rotate_input_dev "$dev" 0 1 0 -1 0 1 0 0 1
-        done
-        for dev in "${WDEVS[@]}"; do
-            rotate_wacom_dev "$dev" cw
-        done
+        if [[ $WAYLAND_DISPLAY ]]; then
+            for i in "${MONITORS[@]}"; do
+                swaymsg "output $i transform 90"
+            done
+        else
+            xrandr -o right
+            for dev in "${IDEVS[@]}"; do
+                rotate_input_dev "$dev" 0 1 0 -1 0 1 0 0 1
+            done
+            for dev in "${WDEVS[@]}"; do
+                rotate_wacom_dev "$dev" cw
+            done
+        fi
     elif [[ $line =~ bottom-up$ ]]; then
-        xrandr -o inverted
-        for dev in "${IDEVS[@]}"; do
-            rotate_input_dev "$dev" -1 0 1 0 -1 1 0 0 1
-        done
-        for dev in "${WDEVS[@]}"; do
-            rotate_wacom_dev "$dev" half
-        done
+        if [[ $WAYLAND_DISPLAY ]]; then
+            for i in "${MONITORS[@]}"; do
+                swaymsg "output $i transform 180"
+            done
+        else
+            xrandr -o inverted
+            for dev in "${IDEVS[@]}"; do
+                rotate_input_dev "$dev" -1 0 1 0 -1 1 0 0 1
+            done
+            for dev in "${WDEVS[@]}"; do
+                rotate_wacom_dev "$dev" half
+            done
+        fi
     fi
 done < <(monitor-sensor)
