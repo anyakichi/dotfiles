@@ -26,6 +26,14 @@ service_restart() {
     service_start "$@"
 }
 
+is_monitor_on() {
+    if [[ $WAYLAND_DISPLAY ]]; then
+        [[ "$(swaymsg -t get_outputs | jq '.[0].dpms')" == true ]]
+    else
+        xset q | grep 'Monitor is On' &>/dev/null
+    fi
+}
+
 _dim() {
     local brightness="$1"
     shift
@@ -41,7 +49,26 @@ _dim() {
     xrandr "${args[@]}"
 }
 
-dim() {
+dim_wl() {
+    case "$1" in
+    on)
+        grep "brightness-day=0.5" ~/.config/gammastep/config.ini &>/dev/null && return
+        sed -i "/^brightness-/ s/=.*/=0.5/" ~/.config/gammastep/config.ini
+        ;;
+    off)
+        grep "brightness-day=1.0" ~/.config/gammastep/config.ini &>/dev/null && return
+        sed -i "/^brightness-/ s/=.*/=1.0/" ~/.config/gammastep/config.ini
+        ;;
+    reset) ;;
+
+    *)
+        return
+        ;;
+    esac
+    systemctl --user restart gammastep
+}
+
+dim_x11() {
     local brightness displays
 
     case "$1" in
@@ -67,6 +94,14 @@ dim() {
     fi
 }
 
+dim() {
+    if [[ $WAYLAND_DISPLAY ]]; then
+        dim_wl "$@"
+    else
+        dim_x11 "$@"
+    fi
+}
+
 is_battery_powered() {
     [[ "$(cat "${PM_POWER_SUPPLY_AC}" 2>/dev/null)" == "0" ]]
 }
@@ -78,15 +113,15 @@ sleep_loop() {
         sleep 30 &
         wait $! || continue
 
+        is_monitor_on && continue
+
+        pactl list | grep 'State: RUNNING' &>/dev/null && continue
+
         loadavg1="$(head -c 4 /proc/loadavg)"
-        if xset q | grep 'Monitor is Off' &>/dev/null &&
-            ! pactl list | grep 'State: RUNNING' &>/dev/null &&
-            ((${loadavg1%.*} < 1)); then
-            if systemctl "${PM_SLEEP_MODE}" --dry-run &>/dev/null; then
-                systemctl "${PM_SLEEP_MODE}"
-            elif pgrep -U "${USER}" light-locker &>/dev/null; then
-                light-locker-command --lock
-            fi
+        ((${loadavg1%.*} >= 1)) && continue
+
+        if systemctl "${PM_SLEEP_MODE}" --dry-run &>/dev/null; then
+            systemctl "${PM_SLEEP_MODE}"
         fi
     done
 }
@@ -108,19 +143,32 @@ main() {
         trap "kill 0" EXIT
         trap " " USR1
 
-        xset s off dpms 0 0 0 &>/dev/null
-        dim off
+        if [[ $WAYLAND_DISPLAY ]]; then
+            swayidle -w \
+                timeout 10 "$0 try-blank" resume "$0 unblank" \
+                timeout 300 "$0 battery-dim" resume "$0 undim" \
+                timeout 330 "$0 battery-blank" resume "$0 unblank" \
+                timeout 600 "$0 dim" resume "$0 undim" \
+                timeout 630 "$0 blank" resume "$0 unblank" \
+                lock "swaylock -f" \
+                before-sleep "$0 lock" \
+                after-resume "$0 unblank; $0 redshift" &
+        else
+            xset s off dpms 0 0 0 &>/dev/null
 
-        xidlehook \
-            --socket "${XIDLEHOOK_SOCKET}" \
-            --timer 10 "$0 try-blank" "" \
-            --timer 170 "$0 battery-dim" "$0 undim" \
-            --timer 30 "$0 battery-blank" "" \
-            --timer 360 "$0 dim" "$0 undim" \
-            --timer 30 "$0 blank" "" &
-        xss-lock -l -- \
-            ~/.local/sbin/i3lock.sh -k -B 10 --indicator \
-            --insidecolor ffffff88 &
+            xidlehook \
+                --socket "${XIDLEHOOK_SOCKET}" \
+                --timer 10 "$0 try-blank" "" \
+                --timer 170 "$0 battery-dim" "$0 undim" \
+                --timer 30 "$0 battery-blank" "" \
+                --timer 360 "$0 dim" "$0 undim" \
+                --timer 30 "$0 blank" "" &
+            xss-lock -l -- \
+                ~/.local/sbin/i3lock.sh -k -B 10 --indicator \
+                --insidecolor ffffff88 &
+        fi
+
+        dim reset
 
         if [[ ${PM_ALLOW_SLEEP:-1} -ne 0 ]]; then
             sleep_loop
@@ -134,18 +182,30 @@ main() {
         service_stop "$main_argv0"
         ;;
     enable)
-        xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
-            control --action enable >/dev/null
+        if [[ ! $WAYLAND_DISPLAY ]]; then
+            xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
+                control --action enable >/dev/null
+        fi
         ;;
     disable)
-        xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
-            control --action disable >/dev/null
+        if [[ ! $WAYLAND_DISPLAY ]]; then
+            xidlehook-client --socket "$XIDLEHOOK_SOCKET" \
+                control --action disable >/dev/null
+        fi
         ;;
     lock)
-        xset s activate &>/dev/null
+        if [[ $WAYLAND_DISPLAY ]]; then
+            loginctl lock-session
+        else
+            xset s activate &>/dev/null
+        fi
         ;;
     try-blank)
-        pgrep -U "${USER}" i3lock &>/dev/null && main blank
+        if [[ $WAYLAND_DISPLAY ]]; then
+            pgrep -U "${USER}" -x swaylock &>/dev/null && main blank
+        else
+            pgrep -U "${USER}" -x i3lock &>/dev/null && main blank
+        fi
         ;;
     battery-blank)
         if is_battery_powered; then
@@ -155,9 +215,21 @@ main() {
         fi
         ;;
     blank)
-        dim off
-        xset dpms force off &>/dev/null
+        if [[ $WAYLAND_DISPLAY ]]; then
+            loginctl lock-session
+            swaymsg "output * dpms off"
+        else
+            dim off
+            xset dpms force off &>/dev/null
+        fi
         service_kill "$main_argv0" -USR1
+        ;;
+    unblank)
+        is_monitor_on && return
+        service_kill "$main_argv0" -USR1
+        if [[ $WAYLAND_DISPLAY ]]; then
+            swaymsg "output * dpms on"
+        fi
         ;;
     battery-dim)
         is_battery_powered && main dim
