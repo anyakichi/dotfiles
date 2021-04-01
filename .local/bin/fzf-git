@@ -148,7 +148,7 @@ gf() {
 
 gh() {
     local view
-    view="git -c core.pager='less -+F -KMc' show --color=always --patch-with-stat \$(grep -o '[a-f0-9]\{7,\}' <<< {})"
+    view="git -c core.pager='less -+F -KMc' show --color=always --patch-with-stat \$(grep -o '[a-f0-9]\{7,\}$' <<< {})"
 
     "$0" log view "$@" |
         fzf-down --ansi --no-sort --reverse --multi --tiebreak=index \
@@ -159,7 +159,7 @@ gh() {
             --bind "ctrl-t:execute:tview $view" \
             --bind "ctrl-x:execute('$0' log switch)+reload('$0' log view)" \
             --preview "$view | head -n 500" |
-        grep -o "[a-f0-9]\{7,\}"
+        grep -o "[a-f0-9]\{7,\}$"
 }
 
 gr() {
