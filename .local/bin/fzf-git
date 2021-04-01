@@ -81,7 +81,7 @@ git_log() {
             "${args[@]}" "${@:2}"
         ;;
     files)
-        TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _files
+        TVIEW_ENV_VARS="FZF_DEFAULT_OPTS FZF_STATE" exec tview "$0" log _files
         ;;
     _files)
         if res=$("$0" file --no-height); then
@@ -94,7 +94,7 @@ git_log() {
         fi
         ;;
     switch)
-        TVIEW_ENV_VARS=FZF_STATE exec tview "$0" log _switch
+        TVIEW_ENV_VARS="FZF_DEFAULT_OPTS FZF_STATE" exec tview "$0" log _switch
         ;;
     _switch)
         if res=$("$0" branch --no-height); then
