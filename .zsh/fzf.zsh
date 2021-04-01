@@ -34,6 +34,14 @@ _gg() {
         command cut -d ':' -f1
 }
 
+_gl() {
+    fzf-glab issue run
+}
+
+_gm() {
+    fzf-glab mr run
+}
+
 _gp() {
     fzf-ps run
 }
@@ -77,7 +85,7 @@ bind-helper() {
         eval "bindkey '^g$c' fzf-g$c-widget"
     done
 }
-bind-helper b c f g h i p r s t v
+bind-helper b c f g h i l m p r s t v
 unset -f bind-helper
 
 bindkey '^s' fzf-s-widget
