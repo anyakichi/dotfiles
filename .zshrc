@@ -74,12 +74,7 @@ rifle()
     command rifle "${@:-.}"
 }
 
-if [[ -n "${STY}" ]]; then
-    ssh() {
-        screen -t "${(@)argv[$#]/.*/}" "${SHELL}" \
-            -c "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
-    }
-elif [[ -n "${TMUX}" ]]; then
+if [[ -n "${TMUX}" ]]; then
     ssh() {
         tmux new-window -n "${(@)argv[$#]/.*/}" \
             "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
@@ -100,18 +95,6 @@ alias -g X='|xargs'
 alias -g X0='|xargs -0'
 alias -g N='>/dev/null'
 alias -g NN='>/dev/null 2>&1'
-
-# OS specific aliases
-case $OSTYPE in
-    darwin*)
-        alias ka='open -a "Keychain Access"'
-        alias ldd='otool -L'
-        ;;
-    netbsd*)
-        ;;
-    solaris*)
-        ;;
-esac
 
 
 #
@@ -207,11 +190,6 @@ autoload -Uz select-word-style
 select-word-style default
 zstyle ':zle:*' word-chars " /:@+|"
 zstyle ':zle:*' word-style unspecified
-
-## vcs_info
-autoload -Uz vcs_info
-
-zstyle ':vcs_info:*' disable-patterns "${(b)HOME}(|/*)"
 
 
 #
