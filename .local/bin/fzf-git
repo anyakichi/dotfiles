@@ -81,7 +81,7 @@ git_log() {
             "${args[@]}" "${@:2}"
         ;;
     files)
-        TVIEW_ENV_VARS="FZF_DEFAULT_OPTS FZF_STATE" exec tview "$0" log _files
+        exec tview "$0" log _files
         ;;
     _files)
         if res=$("$0" file --no-height); then
@@ -94,7 +94,7 @@ git_log() {
         fi
         ;;
     switch)
-        TVIEW_ENV_VARS="FZF_DEFAULT_OPTS FZF_STATE" exec tview "$0" log _switch
+        exec tview "$0" log _switch
         ;;
     _switch)
         if res=$("$0" branch --no-height); then
@@ -138,6 +138,7 @@ gf() {
 
     "$0" files |
         fzf-down -m --ansi --header-lines 1 --nth 2..,.. \
+            --header ":: C-r: cycle format" \
             --bind "ctrl-q:print-query" \
             --bind "ctrl-r:execute-silent('$0' diff cycle-mode)+refresh-preview" \
             --bind "ctrl-t:execute:tview $view" \
@@ -194,6 +195,8 @@ gt() {
             --bind "ctrl-t:execute:tview $view" \
             --preview "$view | head -n 500"
 }
+
+export TVIEW_ENV_VARS="FZF_DEFAULT_OPTS FZF_STATE"
 
 case "$1" in
 branch)
