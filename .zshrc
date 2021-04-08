@@ -27,9 +27,12 @@ typeset -U cdpath fpath hosts mailpath manpath path
 # Aliases
 #
 ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto'
+command -v exa &>/dev/null && \
+    alias ls='exa --sort Filename --group-directories-first'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
+alias llg='ls -lg'
 alias lsd='ls -ld *(-/DN)'
 alias lsa='ls -ld .*'
 
