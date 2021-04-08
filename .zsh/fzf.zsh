@@ -26,7 +26,7 @@ _gg() {
             \$(cut -d ':' -f1 <<< {})"
     rg="rg --column --line-number --no-heading --color=always --smart-case "
 
-    fzf --ansi --disabled \
+    fzf -m --ansi --disabled \
         --bind "change:reload:$rg {q} || true" \
         --bind "ctrl-t:execute:tview $view" \
         --preview "$view | head -500" \
