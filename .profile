@@ -5,21 +5,6 @@ else
     umask 022
 fi
 
-case $(uname) in
-    NetBSD)
-        PATH=/usr/local/bin:/usr/local/sbin:/usr/pkg/bin:/usr/pkg/sbin
-        PATH=${PATH}:/bin:/sbin:/usr/bin:/usr/sbin
-        PATH=${PATH}:/usr/X11R7/bin:/usr/games
-        ;;
-    Darwin)
-        PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-        ;;
-    *)
-        # /usr/pkg/sbin is required because pkg_install is there.
-        PATH=/usr/pkg/bin:/usr/pkg/sbin:${PATH}
-        ;;
-esac
-
 export BLOCKSIZE=1k
 export CVS_RSH=ssh
 export EDITOR=vim
