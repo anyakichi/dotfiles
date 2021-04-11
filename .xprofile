@@ -12,7 +12,6 @@ hsetroot -solid black
 
 [ "$XDG_CURRENT_DESKTOP" = "KDE" ] || [ "$XDG_CURRENT_DESKTOP" = "GNOME" ] || export QT_QPA_PLATFORMTHEME="qt5ct"
 
-launch_once uim-xim
 launch_once unclutter
 
 for p in 'pointer:Logitech MX Ergo' 'pointer:Logitech M570'; do
