@@ -1,0 +1,3 @@
+key_up=Up,Control_L-k,Control_L-p
+key_down=Down,Control_L-j,Control_L-n
+key_exit=Escape,Control_L-bracketleft,Control_L-c
