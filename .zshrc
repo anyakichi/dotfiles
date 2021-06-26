@@ -156,7 +156,14 @@ compinit
 colors
 
 ## cdr
-source ~/.zsh/cdr.zsh
+autoload -Uz cdr chpwd_recent_dirs
+
+add-zsh-hook chpwd chpwd_recent_dirs
+
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-max 1000
+zstyle ':chpwd:*' recent-dirs-prune "pattern:^${HOME}$"
+zstyle ':completion:*' recent-dirs-insert always
 
 ## edit-command-line
 autoload -Uz edit-command-line
@@ -169,9 +176,6 @@ bindkey '^X^E' edit-command-line
 autoload -Uz factorize-last-two-args
 zle -N factorize-last-two-args
 bindkey '^X^F' factorize-last-two-args
-
-## fzf
-source ~/.zsh/fzf.zsh
 
 ## modify-current-argument
 autoload -Uz modify-current-argument
@@ -207,63 +211,11 @@ fi
 
 ## fzf
 
-__fzf-find()
-{
-    setopt localoptions pipefail
-    local base dir raw_dir
-
-    eval "dir=$1"
-    if [[ -d "$dir" ]]; then
-        base=
-        raw_dir="$1"
-    else
-        base=$(basename "$dir")
-        dir=$(dirname "$dir")
-        raw_dir=${1%"${(q)base}"}
-    fi
-
-    if [[ -n "$raw_dir" ]]; then
-        raw_dir="${raw_dir%%/##}/"
-    fi
-
-    shift
-
-    (
-        local count=0
-
-        cd "${dir:-.}" &&
-        fzf-file run -0 --print-query --expect=ctrl-l,ctrl-o,ctrl-q \
-            -q "$base" --prompt "${(Q)raw_dir}> " -- "$@" \
-            | while read line; do
-                if (( count < 2 )); then
-                    echo "$line"
-                else
-                    echo "${raw_dir}${(q)line}"
-                fi
-                (( count++ ))
-            done
-    )
-}
-
 __fzf-ghq()
 {
     setopt localoptions pipefail
 
     command ghq list | fzf -q "$1" --no-multi -0 -1
-}
-
-__fzf-history()
-{
-    setopt localoptions pipefail
-
-    fc -rln 1 \
-        | fzf -q "$1" --no-multi -0 --print-query \
-            --expect=ctrl-o,ctrl-q,ctrl-y \
-            --tiebreak=index \
-            --preview "echo {}" \
-            --preview-window bottom:3:wrap:hidden \
-            --bind 'ctrl-s:toggle-sort' \
-            --bind 'ctrl-r:down'
 }
 
 __fzf-pass()
@@ -280,7 +232,7 @@ fcd()
 {
     local dir
 
-    res=("${(@f)"$(__fzf-find "$1" d)"}")
+    res=("${(@f)"$(fzf-utils::_file "$1" d)"}")
 
     if [[ ${#res} -ge 3 ]]; then
         cd "${res[3]}" || return
@@ -308,112 +260,6 @@ fpass()
 {
     pass "$(__fzf-pass)"
 }
-
-fzf-file-widget()
-{
-    setopt localoptions extended_glob pipefail
-    local args key res ret
-
-    while true; do
-        args=(${(z)LBUFFER})
-        if [[ ${LBUFFER} =~ [^\\][[:space:]]$ ]]; then
-            args+=("")
-        fi
-
-        if [[ ${args[1]} == cd ]]; then
-            res=("${(@f)"$(__fzf-find "${args[-1]}" d)"}")
-        else
-            res=("${(@f)"$(__fzf-find "${args[-1]}")"}")
-        fi
-        ret=$?
-
-        if [[ ${#res} -ge 3 && ${res[2]} != "ctrl-q" ]]; then
-            key="${res[2]}"
-            shift 2 res
-
-            [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
-            LBUFFER+="${res[*]} "
-        elif [[ ${#res} -ge 2 ]]; then
-            [[ ${args[-1]} ]] && LBUFFER="${LBUFFER%%${args[-1]}**}"
-            LBUFFER+=${res[1]}
-        fi
-
-        zle reset-prompt
-
-        if [[ "${key}" == "ctrl-l" ]]; then
-            LBUFFER="${LBUFFER%%?}"
-            key=
-            continue
-        elif [[ "${key}" == "ctrl-o" ]]; then
-            zle accept-line
-        fi
-        break
-    done
-
-    return ${ret}
-}
-zle -N fzf-file-widget
-
-fzf-cdr-widget()
-{
-    setopt localoptions pipefail
-    local dir
-
-    dir=$(__fzf-cdr \
-            | fzf --no-multi \
-                --bind 'esc:reload:zsh -c "source ~/.zsh/cdr.zsh; __fzf-cdr"')
-    local ret=$?
-    if [ -n "${dir}" ]; then
-        BUFFER="cd ${dir}"
-        zle reset-prompt
-        zle accept-line
-    else
-        zle reset-prompt
-    fi
-    return $ret
-}
-zle -N fzf-cdr-widget
-
-fzf-f-widget()
-{
-    if [[ -n "${BUFFER}" ]]; then
-        fzf-file-widget
-    else
-        fzf-cdr-widget
-    fi
-}
-zle -N fzf-f-widget
-
-fzf-history-widget()
-{
-    setopt localoptions pipefail
-    local key res ret
-
-    res=("${(@f)"$(__fzf-history "${LBUFFER}")"}")
-    ret=$?
-
-    if [[ ${#res} -ge 3 && ${res[2]} != "ctrl-q" ]]; then
-        key="${res[2]}"
-        BUFFER="${res[3]}"
-        CURSOR=$#BUFFER
-    elif [[ ${#res} -ge 2 ]]; then
-        key="${res[2]}"
-        BUFFER="${res[1]}"
-        CURSOR=$#BUFFER
-    fi
-
-    zle reset-prompt
-
-    if [[ -z "${key}" ]]; then
-        zle accept-line
-    fi
-
-    return ${ret}
-}
-zle -N fzf-history-widget
-
-bindkey '^_' fzf-f-widget
-command -v fzf &>/dev/null && bindkey '^R' fzf-history-widget
 
 
 #
@@ -478,6 +324,7 @@ zinit light-mode for \
 ### End of Zinit's installer chunk
 
 zinit light-mode for \
+    anyakichi/fzf-utils \
     reegnz/jq-zsh-plugin \
     romkatv/powerlevel10k \
     zdharma/fast-syntax-highlighting \
