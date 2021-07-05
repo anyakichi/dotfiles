@@ -133,7 +133,8 @@ let g:lightline = {
 \   'active': {
 \       'left': [
 \           ['mode', 'paste'],
-\           ['readonly', 'relativepath', 'modified']
+\           ['readonly', 'relativepath', 'modified'],
+\           ['lspstatus']
 \       ],
 \       'right': [
 \           ['lineinfo'],
@@ -149,14 +150,12 @@ let g:lightline = {
 \       'fileencoding': '%{substitute(&fenc, "^utf-8$", "", "")}',
 \       'fileformat': '%{&ff ==# "unix" ? "" : &ff}',
 \       'filetype': '%{&ft}',
+\       'lspstatus': '%<%{LspStatus()}',
 \   },
 \   'component_visible_condition': {
 \       'fileencoding': '&fenc != "utf-8"',
 \       'fileformat': '&ff != "unix"',
 \       'filetype': '&ft != ""',
-\   },
-\   'component_expand': {
-\       'lspinfo': 'MyLspInfo',
 \   },
 \   'tabline': {
 \       'left': [['tabs']],
@@ -755,9 +754,16 @@ function! s:SID_PREFIX()
     return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction
 
-function! MyLspInfo() abort
-    let lsp_counts = lsp#get_buffer_diagnostics_counts()
-    return printf("E%d W%d", lsp_counts['error'], lsp_counts['warning'])
+function! LspStatus() abort
+    if has('nvim-0.5')
+        if luaeval('#vim.lsp.buf_get_clients() > 0')
+            return substitute(luaeval("require('lsp-status').status()"), '%%', '%', 'g')
+        endif
+        return ''
+    else
+        let lsp_counts = lsp#get_buffer_diagnostics_counts()
+        return printf("E%d W%d", lsp_counts['error'], lsp_counts['warning'])
+    endif
 endfunction
 
 function! s:toggle_nmap_ctrl_right_bracket()

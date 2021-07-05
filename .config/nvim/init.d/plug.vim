@@ -49,15 +49,11 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
 Plug 'leafgarland/typescript-vim'
 Plug 'ludovicchabant/vim-lawrencium'
-Plug 'mattn/vim-lsp-settings'
 Plug 'mbbill/undotree'
 Plug 'mhartington/oceanic-next'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'plasticboy/vim-markdown'
 Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/vim-lsp'
 Plug 'previm/previm'
 Plug 'reasonml-editor/vim-reason-plus'
 Plug 'rescript-lang/vim-rescript'
@@ -79,6 +75,18 @@ Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/a.vim'
 Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
 Plug 'will133/vim-dirdiff'
+
+if has('nvim-0.5')
+    Plug 'ckipp01/stylua-nvim'
+    Plug 'hrsh7th/nvim-compe'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'nvim-lua/lsp-status.nvim'
+else
+    Plug 'mattn/vim-lsp-settings'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/vim-lsp'
+endif
 
 if !has('nvim') && !has('patch-8.1.360')
     Plug 'lambdalisue/vim-unified-diff'
