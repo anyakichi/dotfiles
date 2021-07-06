@@ -464,12 +464,6 @@ augroup MyAutoCmd
     autocmd QuickFixCmdPost [^l]*       cwindow
     autocmd QuickFixCmdPost l*          lwindow
 
-    " Use syntax complete
-    autocmd Filetype *
-    \   if &omnifunc == ""
-    \|      setlocal omnifunc=syntaxcomplete#Complete
-    \|  endif
-
     " Additional settings for each file type
     autocmd FileType c,go,help          setlocal noet
     autocmd FileType css,docbk,eruby,html,javascript,javascriptreact,json,
@@ -487,25 +481,35 @@ augroup MyAutoCmd
 
     " View PDF in Vim.
     autocmd BufReadPost *pdf silent %!pdftotext -nopgbrk -layout "%" -
-
-    " LSP
-    autocmd CompleteChanged *
-    \   if (type(v:event) == v:t_string && v:event == '') ||
-    \      (type(v:event) == v:t_dict && get(v:event['completed_item'], 'word', '') == '')
-    \|      inoremap <buffer> <expr> <CR> "\<C-e>\<CR>"
-    \|      inoremap <buffer> <expr> <C-e> "\<End>"
-    \|  else
-    \|      silent! iunmap <buffer> <CR>
-    \|      silent! iunmap <buffer> <C-e>
-    \|  endif
-
-    autocmd CompleteDone *
-    \   silent! iunmap <buffer> <CR>
-    \|  silent! iunmap <buffer> <C-e>
-
-    autocmd User lsp_buffer_enabled call s:lsp_setup()
-    autocmd User lsp_diagnostics_updated call lightline#update()
 augroup END
+
+if !has('nvim-0.5')
+    augroup MyAutoCmd
+        " Use syntax complete
+        autocmd Filetype *
+        \   if &omnifunc == ""
+        \|      setlocal omnifunc=syntaxcomplete#Complete
+        \|  endif
+
+        " LSP
+        autocmd CompleteChanged *
+        \   if (type(v:event) == v:t_string && v:event == '') ||
+        \      (type(v:event) == v:t_dict && get(v:event['completed_item'], 'word', '') == '')
+        \|      inoremap <buffer> <expr> <CR> "\<C-e>\<CR>"
+        \|      inoremap <buffer> <expr> <C-e> "\<End>"
+        \|  else
+        \|      silent! iunmap <buffer> <CR>
+        \|      silent! iunmap <buffer> <C-e>
+        \|  endif
+
+        autocmd CompleteDone *
+        \   silent! iunmap <buffer> <CR>
+        \|  silent! iunmap <buffer> <C-e>
+
+        autocmd User lsp_buffer_enabled call s:lsp_setup()
+        autocmd User lsp_diagnostics_updated call lightline#update()
+    augroup END
+endif
 
 
 "
@@ -695,12 +699,24 @@ let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
 " smartinput.vim
+silent! call smartinput#define_rule({'at': '\%#', 'char': "'", 'input': "'", 'filetype': ['rust']})
+
 for s:x in ['''''''\%#''''''', '"""\%#"""', '```\%#```']
     silent! call smartinput#define_rule(
     \   {'at': s:x, 'char': '<Enter>', 'input': '<Enter><Enter><Up><Esc>"_S'},
     \)
 endfor
 unlet s:x
+
+if has('nvim-0.5')
+    let s:SMARTINPUT_SID_PREFIX = "<SNR>".s:V.Vim.ScriptLocal.sid("autoload/smartinput.vim")."_"
+    function! s:confirm()
+        return compe#confirm(call(s:SMARTINPUT_SID_PREFIX . '_trigger_or_fallback', ["\<CR>", "\<CR>"]))
+    endfunction
+    inoremap <silent><expr> <CR> <SID>confirm()
+    inoremap <silent><expr> <C-e> compe#close('<End>')
+endif
+
 
 " surround.vim
 nmap s <Plug>Ysurround

@@ -4,6 +4,15 @@ local configs = require("lspconfig/configs")
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
+local capabilities = lsp_status.capabilities
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+capabilities.textDocument.completion.completionItem.resolveSupport = {
+  properties = {
+    'documentation',
+    'detail',
+    'additionalTextEdits',
+  }
+}
 local flags = { debounce_text_changes = 150 }
 
 local on_attach = function(client, bufnr)
@@ -22,6 +31,10 @@ local on_attach = function(client, bufnr)
     nmap("K", "<cmd>lua vim.lsp.buf.hover()<CR>")
     nmap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
     nmap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
+    nmap("[d", "<cmd>lua vim.lsp.buf.diagnostics.goto_prev()<CR>")
+    nmap("]d", "<cmd>lua vim.lsp.buf.diagnostics.goto_next()<CR>")
+    nmap("[Space]q", "<cmd>lua vim.lsp.diagnostics.set_loclist()<CR>")
+    nmap("[Space]f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
 
     lsp_status.on_attach(client, bufnr)
 end
@@ -52,7 +65,7 @@ local servers = {
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup({
         on_attach = on_attach,
-        capabilities = lsp_status.capabilities,
+        capabilities = capabilities,
         flags = flags,
     })
 end
@@ -64,7 +77,7 @@ lspconfig.rescriptls.setup({
         "--stdio",
     },
     on_attach = on_attach,
-    capabilities = lsp_status.capabilities,
+    capabilities = capabilities,
     flags = flags,
 })
 
@@ -85,7 +98,7 @@ lspconfig.sumneko_lua.setup({
     end,
     settings = { Lua = { diagnostics = { globals = { "vim" } } } },
     on_attach = on_attach,
-    capabilities = lsp_status.capabilities,
+    capabilities = capabilities,
     flags = flags,
     commands = {
         Format = {
@@ -98,7 +111,10 @@ lspconfig.sumneko_lua.setup({
 
 require("compe").setup({
     source = {
-        nvim_lsp = true,
         buffer = true,
+        calc = true,
+        nvim_lsp = true,
+        nvim_lua = true,
+        spell = true,
     },
 })
