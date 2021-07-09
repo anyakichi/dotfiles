@@ -771,10 +771,6 @@ let g:UltiSnipsExpandTrigger = "<C-]>"
 let g:UltiSnipsJumpForwardTrigger = "<C-i>"
 let g:UltiSnipsJumpBackwardTrigger = "<C-o>"
 
-" vcscommand.vim
-let g:VCSCommandMapPrefix = '<Leader>v'
-let g:VCSCommandVCSTypePreference = ['bzr', 'cvs', 'git', 'svk', 'svn']
-
 " vimux.vim
 let g:VimuxResetSequence = ""
 

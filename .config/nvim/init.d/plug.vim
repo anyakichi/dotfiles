@@ -73,7 +73,6 @@ Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/a.vim'
-Plug 'vim-scripts/vcscommand.vim', {'on': '<Plug>VCSVimDiff'}
 Plug 'will133/vim-dirdiff'
 
 if has('nvim-0.5')
