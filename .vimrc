@@ -699,12 +699,47 @@ let g:skk_zenei_mode_string = 'Ａ'
 let g:skk_abbrev_mode_string = 'aあ'
 
 " smartinput.vim
-silent! call smartinput#define_rule({'at': '\%#', 'char': "'", 'input': "'", 'filetype': ['rust']})
-
+silent! call smartinput#define_rule({
+\   'at': '\%(^\|\s\)then\%#$',
+\   'char': '<Enter>', 'input': '<Enter>fi<Up><End><Enter>',
+\   'filetype': ['sh', 'zsh']
+\})
+silent! call smartinput#define_rule({
+\   'at': '\%(^\|\s\)in\%#$',
+\   'char': '<Enter>', 'input': '<Enter>esac<Up><End><Enter>',
+\   'filetype': ['sh', 'zsh']
+\})
+silent! call smartinput#define_rule({
+\   'at': '\%(^\|\s\)do\%#$',
+\   'char': '<Enter>', 'input': '<Enter>done<Up><End><Enter>',
+\   'filetype': ['sh', 'zsh']
+\})
+silent! call smartinput#define_rule({
+\   'at': '\v%(^|\s)%(do|then|function(\s+[A-Za-z_][A-Za-z_0-9]*)?\([^)]*\))%#$',
+\   'char': '<Enter>', 'input': '<Enter>end<Up><End><Enter>',
+\   'filetype': ['lua']
+\})
+silent! call smartinput#define_rule({
+\   'at': '\%#', 'char': "'", 'input': "'",
+\   'filetype': ['rust']
+\})
+silent! call smartinput#define_rule({
+\   'at': '^\s*augroup\s.*\%#',
+\   'char': '<CR>', 'input': "<Enter>augroup END<Up><End><Enter>",
+\   'filetype': ['vim']
+\})
+for s:x in ['for', 'function', 'if', 'try', 'while']
+    silent! call smartinput#define_rule({
+    \   'at': '^\s*' . s:x . '\>.*\(end' . s:x . '\)\@<!\%#$',
+    \   'char': '<Enter>',
+    \   'input': '<Enter>end' . s:x . '<Up><End><Enter>',
+    \   'filetype': ['vim']
+    \})
+endfor
 for s:x in ['''''''\%#''''''', '"""\%#"""', '```\%#```']
-    silent! call smartinput#define_rule(
-    \   {'at': s:x, 'char': '<Enter>', 'input': '<Enter><Enter><Up><Esc>"_S'},
-    \)
+    silent! call smartinput#define_rule({
+    \   'at': s:x, 'char': '<Enter>', 'input': '<Enter><Enter><Up><Esc>"_S'
+    \})
 endfor
 unlet s:x
 
@@ -716,7 +751,6 @@ if has('nvim-0.5')
     inoremap <silent><expr> <CR> <SID>confirm()
     inoremap <silent><expr> <C-e> compe#close('<End>')
 endif
-
 
 " surround.vim
 nmap s <Plug>Ysurround
