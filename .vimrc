@@ -411,11 +411,10 @@ inoremap <C-u> <C-g>u<C-u>
 inoremap <expr> <C-w> pumvisible() ? <SID>p_ctrl_w() : "\<C-g>u" . <SID>ctrl_w()
 
 inoremap <expr> <C-j> pumvisible() ? "\<Down>" : "\<C-j>"
-inoremap <expr> <C-k> pumvisible() ? "\<Up>" : circomp#start()
+inoremap <expr> <C-k> pumvisible() ? "\<Up>" : "\<C-k>"
 inoremap <expr> <C-f> pumvisible() ? "\<PageDown>" : "\<Right>"
 inoremap <expr> <C-b> pumvisible() ? "\<PageUp>" : "\<Left>"
-inoremap <expr> <C-i> pumvisible() ? circomp#next() : "\<C-i>"
-inoremap <expr> <C-a> pumvisible() ? circomp#prev() : "\<Home>"
+inoremap <expr> <C-a> pumvisible() ? "\<C-a>" : "\<Home>"
 inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \                                  : <SID>insert_word_from_line(line('.') - 1)
@@ -459,8 +458,8 @@ augroup MyAutoCmd
     autocmd VimEnter *                  call s:vim_enter_hook()
 
     " Open the quickfix window automatically
-    autocmd QuickFixCmdPost [^l]*       cwindow
-    autocmd QuickFixCmdPost l*          lwindow
+    autocmd QuickFixCmdPost [^l]*       cwindow | let g:qfutil_mode = 'c'
+    autocmd QuickFixCmdPost l*          lwindow | let g:qfutil_mode = 'l'
 
     " Additional settings for each file type
     autocmd FileType c,go,help          setlocal noet
@@ -567,6 +566,7 @@ nnoremap <silent> <C-g>C :<C-u>Commits<CR>
 nnoremap <silent> <C-g>L :<C-u>Lines<CR>
 nnoremap <silent> <C-g>c :<C-u>BCommits<CR>
 nnoremap <silent> <C-s> :<C-u>Buffers<CR>
+nnoremap <silent> [Tab]/ :<C-u>Buffers<CR>
 
 function! s:fzf_bcommits(fullscreen)
     call writefile([], s:fzf_state)
@@ -716,9 +716,8 @@ endfor
 unlet s:x
 
 if has('nvim-0.5')
-    let s:SMARTINPUT_SID_PREFIX = "<SNR>".s:V.Vim.ScriptLocal.sid("autoload/smartinput.vim")."_"
     function! s:confirm()
-        return compe#confirm(call(s:SMARTINPUT_SID_PREFIX . '_trigger_or_fallback', ["\<CR>", "\<CR>"]))
+        return compe#confirm({smartinput#sid()}_trigger_or_fallback("\<CR>", "\<CR>"))
     endfunction
     inoremap <silent><expr> <CR> <SID>confirm()
     inoremap <silent><expr> <C-e> compe#close('<End>')
