@@ -20,6 +20,7 @@ endif
 
 call plug#begin(s:plug_dir)
 
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'SirVer/ultisnips'
 Plug 'anyakichi/vim-csutil'
 Plug 'anyakichi/vim-qfutil'
@@ -33,6 +34,7 @@ Plug 'benmills/vimux'
 Plug 'glts/vim-textobj-comment'
 Plug 'hashivim/vim-vagrant'
 Plug 'honza/vim-snippets'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'junegunn/fzf.vim'
@@ -42,11 +44,10 @@ Plug 'kana/vim-operator-user'
 Plug 'kana/vim-smartinput'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-user'
-Plug 'leafgarland/typescript-vim'
 Plug 'ludovicchabant/vim-lawrencium'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'mbbill/undotree'
 Plug 'mhartington/oceanic-next'
-Plug 'peitalin/vim-jsx-typescript'
 Plug 'plasticboy/vim-markdown'
 Plug 'previm/previm'
 Plug 'reasonml-editor/vim-reason-plus'
@@ -68,6 +69,7 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'vim-scripts/DrawIt'
 Plug 'vim-scripts/a.vim'
 Plug 'will133/vim-dirdiff'
+Plug 'yuezk/vim-js'
 
 if has('nvim-0.5')
     Plug 'ckipp01/stylua-nvim'
