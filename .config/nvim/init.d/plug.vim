@@ -21,7 +21,6 @@ endif
 call plug#begin(s:plug_dir)
 
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'SirVer/ultisnips'
 Plug 'anyakichi/vim-csutil'
 Plug 'anyakichi/vim-qfutil'
 Plug 'anyakichi/vim-surround'

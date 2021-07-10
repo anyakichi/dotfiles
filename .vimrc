@@ -765,12 +765,6 @@ nmap gS <Plug>Ygsurround$
 let g:html_use_css = 1
 let g:use_xhtml = 1
 
-" ultisnips
-let g:UltiSnipsNoPythonWarning = 1
-let g:UltiSnipsExpandTrigger = "<C-]>"
-let g:UltiSnipsJumpForwardTrigger = "<C-i>"
-let g:UltiSnipsJumpBackwardTrigger = "<C-o>"
-
 " vimux.vim
 let g:VimuxResetSequence = ""
 
