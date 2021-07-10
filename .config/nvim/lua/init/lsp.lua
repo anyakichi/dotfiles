@@ -7,11 +7,11 @@ lsp_status.register_progress()
 local capabilities = lsp_status.capabilities
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
+    properties = {
+        "documentation",
+        "detail",
+        "additionalTextEdits",
+    },
 }
 local flags = { debounce_text_changes = 150 }
 
@@ -57,10 +57,15 @@ end
 local servers = {
     "bashls",
     "clangd",
+    "dockerls",
+    "gopls",
+    "hls",
     "pyright",
     "reason_language_server",
     "rust_analyzer",
+    "sqls",
     "tsserver",
+    "vimls",
 }
 for _, lsp in ipairs(servers) do
     lspconfig[lsp].setup({
