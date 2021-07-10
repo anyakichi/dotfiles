@@ -311,8 +311,6 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-nnoremap <silent> [Tab]. :<C-u>call scratch#toggle('tab')<CR>
-
 nnoremap <expr> [Tab]<C-h> &ft =~ "vim\\<Bar>help"
 \                               ? ":tab help "
 \                               : ":Ref -open=tabnew " . ref#detect() . ' '
@@ -520,12 +518,6 @@ endif
 let s:V = vital#vital#new()
 call s:V.load('Vim.ScriptLocal')
 
-" a.vim
-let g:alternateExtensions_H = "C,M,CPP,CXX,CC"
-let g:alternateExtensions_h = "c,m,cpp,cxx,cc,CC"
-let g:alternateExtensions_M = "H"
-let g:alternateExtensions_m = "h"
-
 " autofmt.vim
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
@@ -678,26 +670,6 @@ cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2)
 cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4)
 \                    ? "Ref man" : "Man"
 
-" scratch.vim
-let g:scratch_filetype = 'ruby'
-
-" skk.vim
-let g:skk_auto_save_jisyo = 1
-let g:skk_egg_like_newline = 1
-let g:skk_sticky_key = ';'
-let g:skk_manual_save_jisyo_keys = "g<C-s>"
-
-let g:skk_user_rom_kana_rules = ""
-    \. "(	（\<NL>"
-    \. ")	）\<NL>"
-let g:skk_special_midasi_keys = "<>"
-
-let g:skk_ascii_mode_string = 'aA'
-let g:skk_hira_mode_string = 'あ'
-let g:skk_kata_mode_string = 'ア'
-let g:skk_zenei_mode_string = 'Ａ'
-let g:skk_abbrev_mode_string = 'aあ'
-
 " smartinput.vim
 silent! call smartinput#define_rule({
 \   'at': '\%(^\|\s\)then\%#$',
@@ -760,10 +732,6 @@ nmap gs <Plug>Ygsurround
 nmap gsgs <Plug>Ygssurround
 nmap gss <Plug>Ygssurround
 nmap gS <Plug>Ygsurround$
-
-" tohtml.vim
-let g:html_use_css = 1
-let g:use_xhtml = 1
 
 " vimux.vim
 let g:VimuxResetSequence = ""
@@ -872,17 +840,13 @@ function! s:relpath()
 endfunction
 
 function! s:tabclose()
-    if scratch#is_visible()
-        call scratch#close()
-    else
-        for bufnr in range(1, winnr('$'))
-            if getwinvar(bufnr, '&buftype') ==# 'quickfix'
-                tabclose
-                return
-            endif
-        endfor
-        call tabutil#close()
-    endif
+    for bufnr in range(1, winnr('$'))
+        if getwinvar(bufnr, '&buftype') ==# 'quickfix'
+            tabclose
+            return
+        endif
+    endfor
+    call tabutil#close()
 endfunction
 
 function! s:insert_word_from_line(lnum)
@@ -1039,10 +1003,6 @@ function! s:separate_number_with_comma_i()
 endfunction
 
 function! s:vim_enter_hook()
-    " a.vim
-    silent! iunmap <Leader>ih
-    silent! iunmap <Leader>is
-    silent! iunmap <Leader>ihn
 endfunction
 
 

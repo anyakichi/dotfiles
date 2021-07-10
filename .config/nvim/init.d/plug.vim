@@ -66,7 +66,6 @@ Plug 'vim-jp/autofmt'
 Plug 'vim-jp/vital.vim'
 Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'vim-scripts/DrawIt'
-Plug 'vim-scripts/a.vim'
 Plug 'will133/vim-dirdiff'
 Plug 'yuezk/vim-js'
 
