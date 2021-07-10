@@ -14,7 +14,9 @@ augroup hl-annoying-space
     autocmd InsertEnter *
     \   call s:matchupdate('_RedundantSpace', '\(\s\+$\| \+\ze\t\)\%#\@!')
     autocmd BufEnter *
-    \   if &expandtab
+    \   if &buftype != ''
+    \|      call s:matchdelete('_TabSpace')
+    \|  elseif &expandtab
     \|      call s:matchupdate('_TabSpace', '\t')
     \|  else
     \|      call s:matchupdate('_TabSpace', '        ')
@@ -47,9 +49,9 @@ endfunction
 function! s:disable()
     let g:hl_annoying_space_enabled = 0
 
-    highlight link _IdeographicSpace Normal
-    highlight link _RedundantSpace Normal
-    highlight link _TabSpace Normal
+    highlight link _IdeographicSpace NONE
+    highlight link _RedundantSpace NONE
+    highlight link _TabSpace NONE
 endfunction
 
 function! s:toggle()
