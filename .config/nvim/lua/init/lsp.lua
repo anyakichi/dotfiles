@@ -141,13 +141,6 @@ lspconfig.sumneko_lua.setup({
     on_attach = on_attach,
     capabilities = capabilities,
     flags = flags,
-    commands = {
-        Format = {
-            function()
-                require("stylua-nvim").format_file()
-            end,
-        },
-    },
 })
 
 require("compe").setup({

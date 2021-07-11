@@ -655,6 +655,14 @@ nmap <Leader>r <Plug>(quickrun)
 nmap <Leader>e <Plug>(quickrun-op)
 nmap <silent> <Leader>ee :QuickRun1<CR>
 
+" neoformat
+let g:neoformat_enabled_lua = ["stylua"]
+let g:neoformat_enabled_python = ["black", "isort"]
+
+let g:shfmt_opt = "-s -i 4"
+
+nnoremap [Space]F :<C-u>Neoformat<CR>
+
 " ref.vim
 let g:ref_man_cmd = 'man'
 let g:ref_man_lang = 'C'
