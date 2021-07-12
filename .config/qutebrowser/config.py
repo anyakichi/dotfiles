@@ -6,6 +6,8 @@ config.load_autoconfig()
 #
 # Command mode
 #
+config.bind("<Ctrl-w>", "rl-backward-kill-word", mode="command")
+
 config.bind("<Ctrl+n>", "completion-item-focus --history next", mode="command")
 config.bind("<Ctrl+p>", "completion-item-focus --history prev", mode="command")
 
@@ -32,6 +34,7 @@ config.bind("tU", "undo -w")
 config.bind("tm", "back ;; forward -t")
 config.bind("<Ctrl-t>", "config-cycle -t tabs.position top left")
 config.bind("<Ctrl-s>", "set-cmd-text -s :tab-select")
+config.bind("t/", "set-cmd-text -s :tab-select")
 
 config.bind("O", "set-cmd-text :open {url:pretty}")
 config.bind("gU", "run-with-count 99 navigate up")
@@ -41,6 +44,8 @@ config.bind("<Ctrl-Shift-p>", "open -p")
 
 config.bind("x", "forward")
 config.bind("z", "back")
+config.bind("<Alt-Right>", "forward")
+config.bind("<Alt-Left>", "back")
 
 config.bind("<Ctrl-Shift-r>", "restart")
 config.bind("<Ctrl-Shift-c>", "config-source")
@@ -78,6 +83,8 @@ config.bind(
 )
 config.bind("<ctrl-,>o", f"spawn --userscript {qute_pass} --otp-only", mode="insert")
 
+config.bind("<ctrl-,>X", f"spawn --userscript translate -t ja --text")
+
 
 #
 # Settings
@@ -87,32 +94,33 @@ c.auto_save.session = True
 c.content.default_encoding = "utf-8"
 c.content.pdfjs = True
 c.editor.command = [
-    'tmux',
-    'new-window',
+    "tmux",
+    "new-window",
     "trap 'tmux wait-for -S qutebrowser' 0 && nvim -c 'normal {line}G{column0}l' {file}",
     ";",
-    'wait-for',
-    'qutebrowser'
+    "wait-for",
+    "qutebrowser",
 ]
 c.input.insert_mode.auto_load = True
 
 # Search engines
+c.url.searchengines["DEFAULT"] = "https://www.google.com/search?q={}&hl=en"
 c.url.searchengines["g"] = "https://www.google.com/search?q={}&hl=en"
 c.url.searchengines["ge"] = "https://www.google.com/search?q={}&hl=en"
 c.url.searchengines["gj"] = "https://www.google.com/search?q={}&hl=ja"
 
-c.tabs.min_width = 140
-c.tabs.padding = {"bottom": 2, "left": 2, "right": 2, "top": 2}
+c.tabs.min_width = 100
+c.tabs.padding = {"bottom": 1, "left": 1, "right": 1, "top": 1}
 c.tabs.pinned.shrink = False
 c.tabs.position = "top"
 c.tabs.select_on_remove = "prev"
 c.tabs.show = "always"
 c.tabs.title.format_pinned = c.tabs.title.format
-c.tabs.width = 140
+c.tabs.width = 100
+
+c.window.hide_decoration = True
 
 c.fonts.web.family.standard = "sans-serif"
-
-c.zoom.default = "100%"
 
 
 # base16-qutebrowser (https://github.com/theova/base16-qutebrowser)
