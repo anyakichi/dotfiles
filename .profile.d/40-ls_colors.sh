@@ -1,5 +1,4 @@
-stty -ixon
-stty status '^T' 2>/dev/null
+#!/bin/sh
 
 if which vivid >/dev/null 2>&1; then
     LS_COLORS=$(vivid generate "$HOME/.config/vivid/oceanic-next.yml")
@@ -7,5 +6,3 @@ if which vivid >/dev/null 2>&1; then
 elif which dircolors >/dev/null 2>&1 && [ -f "${HOME}/.dircolors" ]; then
     eval "$(dircolors -b "${HOME}/.dircolors")"
 fi
-
-. "${HOME}/.gnupg/gpg-agent.sh"
