@@ -1,9 +1,10 @@
 #
 # Include common settings
 #
-if [ -f "${HOME}/.shrc" ]; then
-    . "${HOME}/.shrc"
-fi
+local profile
+for profile in ~/.config/sh/shrc.d/*.sh; do
+    . "$profile"
+done
 
 
 #
