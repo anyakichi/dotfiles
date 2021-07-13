@@ -81,6 +81,10 @@ rifle()
     command rifle "${@:-.}"
 }
 
+if [ "$(tmux -V | awk 'NR==1 {print ($2+0 < 3.1)}')" = 1 ]; then
+    alias tmux="tmux -f ~/.config/tmux/tmux.conf"
+fi
+
 if [[ -n "${TMUX}" ]]; then
     ssh() {
         tmux new-window -n "${(@)argv[$#]/.*/}" \
