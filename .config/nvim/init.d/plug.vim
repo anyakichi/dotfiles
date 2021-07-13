@@ -3,7 +3,7 @@ if has('nvim')
     let s:plug_dir = stdpath('data') . '/plugged'
 else
     let s:plug_vim_path = expand('~/.vim/autoload/plug.vim')
-    let s:plug_dir = expand('~/.vim/bundle')
+    let s:plug_dir = expand('~/.local/share/vim/plugged')
 endif
 
 function s:bootstrap()

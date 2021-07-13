@@ -32,8 +32,9 @@ if !has('nvim')
     set history=10000
     set wildmenu
 
-    set directory=~/.vim/swap//
-    set undodir=~/.vim/undo//
+    set directory=~/.local/share/vim/swap//
+    set undodir=~/.local/share/vim/undo//
+    silent !mkdir -p ~/.local/share/vim/swap ~/.local/share/vim/undo
 
     set timeout
     set ttimeoutlen=50
