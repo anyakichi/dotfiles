@@ -8,18 +8,24 @@ done
 
 
 #
+# Create XDG directories
+#
+mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_DATA_HOME/zsh" "$XDG_STATE_HOME/zsh"
+
+
+#
 # Parameters
 #
 DIRSTACKSIZE=20
 
-HISTFILE=~/.zsh_history
+HISTFILE="$XDG_STATE_HOME/zsh/history"
 HISTSIZE=20000
 SAVEHIST=100000
 
 MAILCHECK=0
 
 cdpath=(~ ~/src ~/Documents)
-fpath=(~/.zsh/functions "${fpath[@]}")
+fpath=($XDG_CONFIG_HOME/zsh/functions "${fpath[@]}")
 
 typeset -U cdpath fpath hosts mailpath manpath path
 
@@ -63,7 +69,7 @@ alias din='din ${DIN_OPTS[@]}'
 command -v rg &>/dev/null &&
 rg() {
     if [[ -t 1 ]]; then
-        command rg -S -p "$@" | less -RMFXK
+        command rg -S -p "$@" | less -RMFXKS
     else
         command rg -S "$@"
     fi
@@ -153,7 +159,7 @@ bindkey '^[r' redo
 # Plugins
 #
 autoload -Uz add-zsh-hook colors compinit is-at-least zmv
-compinit
+compinit -d $XDG_CACHE_HOME/zsh/zcompdump
 colors
 
 ## cdr
@@ -162,6 +168,7 @@ autoload -Uz cdr chpwd_recent_dirs
 add-zsh-hook chpwd chpwd_recent_dirs
 
 zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file $XDG_STATE_HOME/zsh/chpwd-recent-dirs
 zstyle ':chpwd:*' recent-dirs-max 1000
 zstyle ':chpwd:*' recent-dirs-prune "pattern:^${HOME}$"
 zstyle ':completion:*' recent-dirs-insert always
@@ -268,6 +275,7 @@ fpass()
 #
 
 zstyle ':completion:*' use-cache true
+zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 zstyle ':completion:*:default' menu select=2
 
@@ -302,44 +310,6 @@ zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:manuals' separate-sections true
 
 
-### Added by Zinit's installer
-if [[ ! -f $HOME/.zinit/bin/zinit.zsh ]]; then
-    print -P "%F{33}▓▒░ %F{220}Installing %F{33}DHARMA%F{220} Initiative Plugin Manager (%F{33}zdharma/zinit%F{220})…%f"
-    command mkdir -p "$HOME/.zinit" && command chmod g-rwX "$HOME/.zinit"
-    command git clone https://github.com/zdharma/zinit "$HOME/.zinit/bin" && \
-        print -P "%F{33}▓▒░ %F{34}Installation successful.%f%b" || \
-        print -P "%F{160}▓▒░ The clone has failed.%f%b"
-fi
-
-source "$HOME/.zinit/bin/zinit.zsh"
-autoload -Uz _zinit
-(( ${+_comps} )) && _comps[zinit]=_zinit
-
-# Load a few important annexes, without Turbo
-# (this is currently required for annexes)
-zinit light-mode for \
-    zinit-zsh/z-a-as-monitor \
-    zinit-zsh/z-a-patch-dl \
-    zinit-zsh/z-a-bin-gem-node
-
-### End of Zinit's installer chunk
-
-zinit light-mode for \
-    anyakichi/fzf-utils \
-    reegnz/jq-zsh-plugin \
-    romkatv/powerlevel10k \
-    zdharma/fast-syntax-highlighting \
-    zsh-users/zsh-autosuggestions \
-    zsh-users/zsh-completions \
-    zsh-users/zsh-history-substring-search
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-#
-# Local configuration
-#
-if [ -f ~/.zshrc_local ]; then
-    source ~/.zshrc_local
-fi
+for profile in $XDG_CONFIG_HOME/zsh/zshrc.d/*.zsh; do
+    . "$profile"
+done
