@@ -29,8 +29,10 @@ zinit light-mode for \
 zinit light-mode for \
     anyakichi/fzf-utils \
     reegnz/jq-zsh-plugin \
-    romkatv/powerlevel10k \
     zdharma/fast-syntax-highlighting \
     zsh-users/zsh-autosuggestions \
     zsh-users/zsh-completions \
     zsh-users/zsh-history-substring-search
+
+zinit ice depth=1
+zinit light romkatv/powerlevel10k
