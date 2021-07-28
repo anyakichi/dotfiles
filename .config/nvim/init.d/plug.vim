@@ -12,7 +12,7 @@ function s:bootstrap()
     echo 'vim-plug has been installed'
 endfunction
 
-command! -nargs=0 -bar PlugBootstap call s:bootstrap()
+command! -nargs=0 -bar PlugBootstrap call s:bootstrap()
 
 if !filereadable(s:plug_vim_path)
     finish
