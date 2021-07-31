@@ -18,7 +18,7 @@ start_gpgagent() {
     GPG_TTY=$(tty)
     export GPG_TTY
     export PINENTRY_USER_DATA="USE_CURSES=1"
-    gpg-connect-agent updatestartuptty /bye >/dev/null
+    gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
 case "$-" in
