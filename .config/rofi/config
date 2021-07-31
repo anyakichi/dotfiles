@@ -3,6 +3,5 @@ rofi.kb-mode-previous: Shift+Left,Control+ISO_Left_Tab,Super+D
 rofi.modi: drun,run,window
 rofi.show-icons: true
 rofi.sidebar-mode: true
-rofi.terminal: urxvt
+rofi.terminal: termite
 rofi.theme: /usr/share/rofi/themes/Arc-Dark.rasi
-rofi.dpi: 0
