@@ -659,6 +659,7 @@ nmap <silent> <Leader>ee :QuickRun1<CR>
 " neoformat
 let g:neoformat_enabled_lua = ["stylua"]
 let g:neoformat_enabled_python = ["black", "isort"]
+let g:neoformat_enabled_yaml = ["prettier"]
 
 let g:shfmt_opt = "-s -i 4"
 
