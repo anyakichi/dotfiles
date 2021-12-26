@@ -25,9 +25,8 @@ local function t(s)
 end
 
 function M.i_ctrl_k()
-    return vim.fn.pumvisible() == 1 and t("<Up>") or t(
-        "<C-o><cmd>lua vim.lsp.buf.signature_help()<CR>"
-    )
+    return vim.fn.pumvisible() == 1 and t("<Up>")
+        or t("<C-o><cmd>lua vim.lsp.buf.signature_help()<CR>")
 end
 
 local on_attach = function(client, bufnr)
@@ -76,31 +75,17 @@ local on_attach = function(client, bufnr)
     lsp_status.on_attach(client, bufnr)
 end
 
-if not lspconfig.reason_language_server then
-    configs.reason_language_server = {
-        default_config = {
-            cmd = { "reason-language-server" },
-            filetypes = { "ocaml", "reason" },
-            root_dir = function(fname)
-                return lspconfig.util.find_git_ancestor(fname)
-                    or vim.loop.os_homedir()
-            end,
-            root_files = { "package.json" },
-            settings = {},
-        },
-    }
-end
-
 local servers = {
     "bashls",
     "clangd",
     "dockerls",
     "gopls",
     "hls",
+    "ocamllsp",
     "pyright",
-    "reason_language_server",
     "rust_analyzer",
     "sqls",
+    "sumneko_lua",
     "tsserver",
     "vimls",
 }
@@ -118,26 +103,6 @@ lspconfig.rescriptls.setup({
         vim.g.plug_home .. "/vim-rescript/server/out/server.js",
         "--stdio",
     },
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = flags,
-})
-
-lspconfig.sumneko_lua.setup({
-    cmd = {
-        "lua-language-server",
-        "-E",
-        "/usr/share/lua-language-server/main.lua",
-    },
-    root_dir = function(fname)
-        local git_base = lspconfig.util.find_git_ancestor(fname)
-        local home = vim.loop.os_homedir()
-        if git_base ~= home then
-            return git_base
-        else
-            return lspconfig.util.path.dirname(fname)
-        end
-    end,
     on_attach = on_attach,
     capabilities = capabilities,
     flags = flags,
