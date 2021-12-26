@@ -70,8 +70,10 @@ Plug 'yuezk/vim-js'
 if has('nvim-0.5')
     Plug 'ckipp01/stylua-nvim'
     Plug 'hrsh7th/nvim-compe'
+    Plug 'jose-elias-alvarez/null-ls.nvim'
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/lsp-status.nvim'
+    Plug 'nvim-lua/plenary.nvim'
 else
     Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/async.vim'
