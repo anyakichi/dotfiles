@@ -118,12 +118,11 @@ require("compe").setup({
     },
 })
 
-require("null-ls").config({
+require("null-ls").setup({
     sources = {
         require("null-ls").builtins.formatting.prettier,
         require("null-ls").builtins.formatting.stylua,
     },
 })
-lspconfig["null-ls"].setup({})
 
 return M
