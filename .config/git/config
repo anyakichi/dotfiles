@@ -47,6 +47,8 @@
 [core]
 	pager = less -FRX
 	quotepath = false
+[credential]
+	helper = !pass-git-helper $@
 [diff]
 	algorithm = histogram
 	tool = vimdiff
