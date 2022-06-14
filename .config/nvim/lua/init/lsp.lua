@@ -4,20 +4,15 @@ local vim = vim
 local M = {}
 
 local lspconfig = require("lspconfig")
-local configs = require("lspconfig/configs")
+
+local cmp = require("cmp")
 
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
-local capabilities = lsp_status.capabilities
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-        "documentation",
-        "detail",
-        "additionalTextEdits",
-    },
-}
+local capabilities = require("cmp_nvim_lsp").update_capabilities(
+    lsp_status.capabilities
+)
 local flags = { debounce_text_changes = 150 }
 
 local function t(s)
@@ -29,47 +24,43 @@ function M.i_ctrl_k()
         or t("<C-o><cmd>lua vim.lsp.buf.signature_help()<CR>")
 end
 
+local opts = { noremap = true, silent = true }
+vim.keymap.set("n", "[Space]e", vim.diagnostic.open_float, opts)
+vim.keymap.set("n", "[Space]q", vim.diagnostic.setloclist, opts)
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+
 local on_attach = function(client, bufnr)
-    local map = vim.api.nvim_buf_set_keymap
-    local nmap = function(lhs, rhs)
-        map(bufnr, "n", lhs, rhs, { noremap = true, silent = true })
-    end
     vim.api.nvim_win_set_option(0, "signcolumn", "yes")
     vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-    nmap("gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
-    nmap("gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
-
-    nmap("gi", "<cmd>lua vim.lsp.buf.implementation()<CR>")
-    nmap("gr", "<cmd>lua vim.lsp.buf.references()<CR>")
-
-    nmap("K", "<cmd>lua vim.lsp.buf.hover()<CR>")
-    nmap("[Space]k", "<cmd>lua vim.lsp.buf.signature_help()<CR>")
-    nmap("[Space]D", "<cmd>lua vim.lsp.buf.type_definition()<CR>")
-
-    nmap("[Space]wa", "<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>")
-    nmap("[Space]wr", "<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>")
-    nmap(
-        "[Space]wl",
-        "<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>"
+    local bufopts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
+    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "[Space]k", vim.lsp.buf.signature_help, bufopts)
+    vim.keymap.set("n", "[Space]wa", vim.lsp.buf.add_workspace_folder, bufopts)
+    vim.keymap.set(
+        "n",
+        "[space]wr",
+        vim.lsp.buf.remove_workspace_folder,
+        bufopts
     )
+    vim.keymap.set("n", "[Space]wl", function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, bufopts)
+    vim.keymap.set("n", "[Space]D", vim.lsp.buf.type_definition, bufopts)
+    vim.keymap.set("n", "[Space]rn", vim.lsp.buf.rename, bufopts)
+    vim.keymap.set("n", "[Space]ca", vim.lsp.buf.code_action, bufopts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
+    vim.keymap.set("n", "[Space]f", vim.lsp.buf.formatting, bufopts)
 
-    nmap("[Space]rn", "<cmd>lua vim.lsp.buf.rename()<CR>")
-    nmap("[Space]ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
-
-    nmap("[Space]e", "<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>")
-    nmap("[Space]q", "<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>")
-    nmap("[d", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>")
-    nmap("]d", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>")
-
-    nmap("[Space]f", "<cmd>lua vim.lsp.buf.formatting()<CR>")
-
-    map(
-        bufnr,
+    vim.keymap.set(
         "i",
         "<C-k>",
-        [[luaeval('require("init.lsp").i_ctrl_k()')]],
-        { expr = true, noremap = true }
+        require("init.lsp").i_ctrl_k,
+        { expr = true, noremap = true, buffer = bufnr }
     )
 
     lsp_status.on_attach(client, bufnr)
@@ -108,14 +99,52 @@ lspconfig.rescriptls.setup({
     flags = flags,
 })
 
-require("compe").setup({
-    source = {
-        buffer = true,
-        calc = true,
-        nvim_lsp = true,
-        nvim_lua = true,
-        spell = true,
+cmp.setup({
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
     },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4, { "i", "c" }),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4, { "i", "c" }),
+        ["<C-j>"] = cmp.mapping.select_next_item({
+            behavior = cmp.SelectBehavior.Select,
+        }),
+        ["<C-k>"] = cmp.mapping.select_prev_item({
+            behavior = cmp.SelectBehavior.Select,
+        }),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp_signature_help" },
+    }, {
+        { name = "path" },
+    }, {
+        { name = "nvim_lsp" },
+    }, {
+        { name = "emoji" },
+    }, {
+        { name = "calc" },
+        { name = "buffer" },
+    }),
+})
+
+cmp.setup.cmdline("/", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+        { name = "nvim_lsp_document_symbol" },
+        { name = "buffer" },
+    },
+})
+
+cmp.setup.cmdline(":", {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+        { name = "path" },
+    }, {
+        { name = "cmdline" },
+    }),
 })
 
 require("null-ls").setup({
