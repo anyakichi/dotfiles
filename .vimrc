@@ -725,14 +725,6 @@ for s:x in ['''''''\%#''''''', '"""\%#"""', '```\%#```']
 endfor
 unlet s:x
 
-if has('nvim-0.5')
-    function! s:confirm()
-        return compe#confirm({smartinput#sid()}_trigger_or_fallback("\<CR>", "\<CR>"))
-    endfunction
-    inoremap <silent><expr> <CR> <SID>confirm()
-    inoremap <silent><expr> <C-e> compe#close('<End>')
-endif
-
 " surround.vim
 nmap s <Plug>Ysurround
 nmap ss <Plug>Yssurround
@@ -762,6 +754,14 @@ xmap <silent> *  <Plug>(visualstar-*):set hlsearch<CR>
 xmap <silent> #  <Plug>(visualstar-#):set hlsearch<CR>
 xmap <silent> g* <Plug>(visualstar-g*):set hlsearch<CR>
 xmap <silent> g# <Plug>(visualstar-g#):set hlsearch<CR>
+
+" vsnip
+imap <expr> <C-l>   vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+smap <expr> <C-l>   vsnip#available(1) ? '<Plug>(vsnip-expand-or-jump)' : '<C-l>'
+imap <expr> <Tab>   vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+smap <expr> <Tab>   vsnip#jumpable(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab>'
+imap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
+smap <expr> <S-Tab> vsnip#jumpable(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
 
 "
