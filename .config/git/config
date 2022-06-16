@@ -52,6 +52,8 @@
 [diff]
 	algorithm = histogram
 	tool = vimdiff
+[init]
+	defaultBranch = main
 [pager]
 	status = true
 [pull]
