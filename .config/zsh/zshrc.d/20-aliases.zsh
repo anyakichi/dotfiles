@@ -1,12 +1,14 @@
 ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto'
 command -v exa &>/dev/null && \
     alias ls='exa --sort Filename --group-directories-first'
-alias ll='ls -l'
 alias la='ls -a'
+alias ll='ls -l'
 alias lla='ls -la'
 alias llg='ls -lg'
-alias lsd='ls -ld *(-/DN)'
+alias llt='ls -l --sort time'
 alias lsa='ls -ld .*'
+alias lsd='ls -ld *(-/DN)'
+alias lst='ls --sort time'
 
 alias cp='nocorrect cp'
 alias make='nocorrect make'
