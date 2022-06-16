@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import asyncio
 import pprint
 import re
@@ -12,11 +16,11 @@ layout = {
         {
             "layout": "tabbed",
             #"width": 67,
-            "nodes": [
-                {
+            #"nodes": [
+            #    {
                     "swallows": {"app_id": r"qutebrowser"}
-                }
-            ]
+            #    }
+            #]
         },
         {
             "layout": "tabbed",
@@ -111,5 +115,7 @@ async def main():
                     {leaf.get('height', 0)}")
 
     await leaves[0]["con"].command("focus")
+    await sway.command("splith")
+    await sway.command("layout tabbed")
 
 asyncio.run(main())
