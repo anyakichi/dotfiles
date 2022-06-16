@@ -734,6 +734,12 @@ nmap gsgs <Plug>Ygssurround
 nmap gss <Plug>Ygssurround
 nmap gS <Plug>Ygsurround$
 
+" textobj-xbrackets
+omap af <Plug>(textobj-xbrackets-x(_)-a)
+omap if <Plug>(textobj-xbrackets-x(_)-i)
+xmap af <Plug>(textobj-xbrackets-x(_)-a)
+xmap if <Plug>(textobj-xbrackets-x(_)-i)
+
 " vimux.vim
 let g:VimuxResetSequence = ""
 
