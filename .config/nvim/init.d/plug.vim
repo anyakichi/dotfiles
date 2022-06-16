@@ -85,6 +85,7 @@ if has('nvim-0.5')
     Plug 'neovim/nvim-lspconfig'
     Plug 'nvim-lua/lsp-status.nvim'
     Plug 'nvim-lua/plenary.nvim'
+    Plug 'petertriho/cmp-git'
 else
     Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/async.vim'

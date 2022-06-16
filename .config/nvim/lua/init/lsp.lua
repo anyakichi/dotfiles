@@ -132,6 +132,15 @@ cmp.setup({
     }),
 })
 
+cmp.setup.filetype("gitcommit", {
+    sources = cmp.config.sources({
+        { name = "git" },
+    }, {
+        { name = "buffer" },
+    }),
+})
+require("cmp_git").setup()
+
 cmp.setup.cmdline("/", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
