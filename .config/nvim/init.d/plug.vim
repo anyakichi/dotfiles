@@ -70,6 +70,7 @@ Plug 'will133/vim-dirdiff'
 Plug 'yuezk/vim-js'
 
 if has('nvim-0.5')
+    Plug 'b0o/SchemaStore.nvim'
     Plug 'ckipp01/stylua-nvim'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/cmp-calc'

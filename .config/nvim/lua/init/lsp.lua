@@ -88,6 +88,18 @@ for _, lsp in ipairs(servers) do
     })
 end
 
+lspconfig.jsonls.setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = flags,
+    settings = {
+        json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+        },
+    },
+})
+
 lspconfig.rescriptls.setup({
     cmd = {
         "node",
