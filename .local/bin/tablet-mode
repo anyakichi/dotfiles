@@ -1,0 +1,20 @@
+#!/bin/bash
+
+trap "exit" HUP INT TERM
+trap "kill 0" EXIT
+
+TABLET_MODE=/sys/devices/platform/thinkpad_acpi/hotkey_tablet_mode
+
+if [[ -e ${TABLET_MODE} ]]; then
+    inotifywait -e MODIFY -m "${TABLET_MODE}" 2>/dev/null | \
+    while read -r; do
+        case "$(<$TABLET_MODE)" in
+            0)
+                pkill -xu $EUID onboard
+                ;;
+            *)
+                onboard &
+                ;;
+        esac
+    done
+fi
