@@ -73,8 +73,9 @@ config.bind("<Ctrl-w>", "fake-key <Ctrl-backspace>", mode="insert")
 config.bind("<Ctrl-u>", "fake-key <Home><Ctrl-k>", mode="insert")
 
 # pass
-qute_pass = "qute-pass --username-target secret --username-pattern 'username: (.+)'"
+qute_pass = "qute-pass -d 'wofi --dmenu' --username-target secret --username-pattern 'username: (.+)'"
 config.bind("<ctrl-,><ctrl-,>", f"spawn --userscript {qute_pass}", mode="insert")
+config.bind("<ctrl-,><ctrl-.>", f"spawn --userscript {qute_pass} .", mode="insert")
 config.bind(
     "<ctrl-,>u", f"spawn --userscript {qute_pass} --username-only", mode="insert"
 )
