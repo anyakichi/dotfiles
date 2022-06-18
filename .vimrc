@@ -549,10 +549,11 @@ let g:fzf_files_options = [
 command! -bar -bang BCommits call s:fzf_bcommits(<bang>0)
 command! -bar -bang Commits call s:fzf_commits(<bang>0)
 command! -bang -nargs=? -complete=dir Files call s:fzf_files(<q-args>, <bang>0)
-command! -bang -nargs=* History call s:fzf_command_history(<bang>0)
+command! -bang -nargs=* History call s:fzf_history(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
 
 nnoremap <silent> <C-_> :<C-u>Files<CR>
+nnoremap <silent> <C-g>. :<C-u>History<CR>
 nnoremap <silent> <C-g>/ :<C-u>History/<CR>
 nnoremap <silent> <C-g>: :<C-u>History:<CR>
 nnoremap <silent> <C-g>; :<C-u>History:<CR>
@@ -611,12 +612,38 @@ function! s:fzf_cmd_history_sink(lines)
     call call(s:FZF_SID_PREFIX.'cmd_history_sink', [a:lines])
 endfunction
 
+function! s:fzf_search_history_sink(lines)
+    if a:lines[0] == 'ctrl-y'
+        let a:lines[0] = 'ctrl-e'
+    endif
+    call call(s:FZF_SID_PREFIX.'search_history_sink', [a:lines])
+endfunction
+
 function! s:fzf_command_history(fullscreen)
     call fzf#vim#command_history({
     \   'options': ['--no-expect', '--expect', 'ctrl-y'],
     \   'source': s:fzf_history_source(':'),
     \   'sink*': function('s:fzf_cmd_history_sink'),
     \}, a:fullscreen)
+endfunction
+
+function! s:fzf_history(arg, extra, bang)
+    let bang = a:bang || a:arg[len(a:arg)-1] == '!'
+    if a:arg[0] == ':'
+        call fzf#vim#command_history({
+    \   'options': ['--no-expect', '--expect', 'ctrl-y'],
+    \   'source': s:fzf_history_source(':'),
+    \   'sink*': function('s:fzf_cmd_history_sink'),
+    \}, bang)
+    elseif a:arg[0] == '/'
+        call fzf#vim#search_history({
+    \   'options': ['--no-expect', '--expect', 'ctrl-y'],
+    \   'source': s:fzf_history_source('/'),
+    \   'sink*': function('s:fzf_search_history_sink'),
+    \}, bang)
+    else
+        call fzf#vim#history(a:extra, bang)
+    endif
 endfunction
 
 function! s:fzf_rg(query, fullscreen)
