@@ -154,23 +154,11 @@ cmp.setup.filetype("gitcommit", {
 require("cmp_git").setup()
 
 local cmdline_mapping = {
-    ["<Tab>"] = {
-        c = function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            else
-                fallback()
-            end
-        end,
+    ["<C-n>"] = {
+        c = cmp.config.disable
     },
-    ["<S-Tab>"] = {
-        c = function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            else
-                fallback()
-            end
-        end,
+    ["<C-p>"] = {
+        c = cmp.config.disable
     },
     ["<C-j>"] = {
         c = function(fallback)
@@ -203,7 +191,7 @@ local cmdline_mapping = {
 }
 
 cmp.setup.cmdline("/", {
-    mapping = cmdline_mapping,
+    mapping = cmp.mapping.preset.cmdline(cmdline_mapping),
     sources = {
         { name = "nvim_lsp_document_symbol" },
         { name = "buffer" },
@@ -211,7 +199,7 @@ cmp.setup.cmdline("/", {
 })
 
 cmp.setup.cmdline(":", {
-    mapping = cmdline_mapping,
+    mapping = cmp.mapping.preset.cmdline(cmdline_mapping),
     sources = cmp.config.sources({
         { name = "path" },
     }, {
