@@ -538,9 +538,10 @@ let g:fzf_action = {
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = [
 \   '--ansi',
-\   "--bind", "ctrl-d:reload(fzf-file go-parent && fzf-file list)",
-\   "--bind", "ctrl-r:reload(fzf-file toggle-depth && fzf-file list)",
-\   "--bind", "ctrl-s:reload(fzf-file reset-parent && fzf-file list)",
+\   "--bind", "ctrl-d:reload(fzf-file change-directory && fzf-file list)",
+\   "--bind", "ctrl-r:reload(fzf-file cycle-restricted && fzf-file list)",
+\   "--bind", "ctrl-s:reload(fzf-file up-directory && fzf-file list)",
+\   "--bind", "ctrl-x:reload(fzf-file cycle-type && fzf-file list)",
 \   "--bind", "ctrl-/:toggle-preview",
 \   "--preview", 'fzf-file view {} | head -500',
 \   "--preview-window", "hidden"
