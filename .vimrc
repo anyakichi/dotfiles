@@ -546,9 +546,9 @@ let g:fzf_files_options = [
 \   "--preview-window", "hidden"
 \]
 
-command! -bar -bang BCommits call s:fzf_bcommits(<bang>0)
-command! -bar -bang Commits call s:fzf_commits(<bang>0)
-command! -bang -nargs=? -complete=dir Files call s:fzf_files(<q-args>, <bang>0)
+command! -bar -bang -range=% Commits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(0, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
+command! -bar -bang -range=% BCommits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(1, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
+command! -bang -nargs=? -complete=dir Files call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* History call s:fzf_history(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
 
@@ -570,33 +570,36 @@ nnoremap <silent> <C-g>c :<C-u>BCommits<CR>
 nnoremap <silent> <C-s> :<C-u>Buffers<CR>
 nnoremap <silent> [Tab]/ :<C-u>Buffers<CR>
 
-function! s:fzf_bcommits(fullscreen)
+function! s:fzf_commits(buffer_local, extra, bang) range
+    call extend(a:extra["options"], [
+    \   '--bind', 'ctrl-r:execute-silent(fzf-git log toggle-graph)+reload(fzf-git log view)',
+    \   '--bind', 'ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)',
+    \])
+    let range = call(s:FZF_SID_PREFIX.'given_range', [a:firstline, a:lastline])
+    let source = 'fzf-git log view'
+    if len(range) || a:buffer_local
+        let current = expand('%')
+        let source .= len(range)
+        \   ? printf(' -L %d,%d:%s --no-patch', range[0], range[1], fzf#shellescape(current))
+        \   : (' --follow '.fzf#shellescape(current))
+    else
+        call extend(a:extra["options"], [
+        \   '--bind', 'ctrl-d:execute(fzf-git log files)+reload(fzf-git log view)',
+        \])
+    endif
+    let a:extra["source"] = source
     call writefile([], s:fzf_state)
-    call fzf#vim#buffer_commits({
-    \   'options': [
-    \       '--bind', 'ctrl-d:execute(fzf-git log files)+reload(fzf-git log view)',
-    \       '--bind', 'ctrl-r:execute-silent(fzf-git log toggle-graph)+reload(fzf-git log view)',
-    \       '--bind', 'ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)',
-    \   ],
-    \   'source': 'fzf-git log view '.fzf#shellescape(expand('%')),
-    \}, a:fullscreen)
+
+    if exists('b:fzf_winview')
+        call winrestview(b:fzf_winview)
+        unlet b:fzf_winview
+    endif
+    return call(s:FZF_SID_PREFIX.'commits', [range, 0, [a:extra, a:bang]])
 endfunction
 
-function! s:fzf_commits(fullscreen)
-    call writefile([], s:fzf_state)
-    call fzf#vim#commits({
-    \   'options': [
-    \       '--bind', 'ctrl-d:execute(fzf-git log files)+reload(fzf-git log view)',
-    \       '--bind', 'ctrl-r:execute-silent(fzf-git log toggle-graph)+reload(fzf-git log view)',
-    \       '--bind', 'ctrl-x:execute(fzf-git log switch)+reload(fzf-git log view)',
-    \   ],
-    \   'source': 'fzf-git log view',
-    \}, a:fullscreen)
-endfunction
-
-function! s:fzf_files(dir, fullscreen)
+function! s:fzf_files(arg, extra, bang)
     call writefile(["type=f", "depth=0"], s:fzf_state)
-    call fzf#vim#files(a:dir, a:fullscreen)
+    call fzf#vim#files(a:arg, a:extra, a:bang)
 endfunction
 
 function! s:fzf_history_source(type)
@@ -617,14 +620,6 @@ function! s:fzf_search_history_sink(lines)
         let a:lines[0] = 'ctrl-e'
     endif
     call call(s:FZF_SID_PREFIX.'search_history_sink', [a:lines])
-endfunction
-
-function! s:fzf_command_history(fullscreen)
-    call fzf#vim#command_history({
-    \   'options': ['--no-expect', '--expect', 'ctrl-y'],
-    \   'source': s:fzf_history_source(':'),
-    \   'sink*': function('s:fzf_cmd_history_sink'),
-    \}, a:fullscreen)
 endfunction
 
 function! s:fzf_history(arg, extra, bang)
