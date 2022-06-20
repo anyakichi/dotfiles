@@ -153,8 +153,57 @@ cmp.setup.filetype("gitcommit", {
 })
 require("cmp_git").setup()
 
+local cmdline_mapping = {
+    ["<Tab>"] = {
+        c = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item()
+            else
+                fallback()
+            end
+        end,
+    },
+    ["<S-Tab>"] = {
+        c = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item()
+            else
+                fallback()
+            end
+        end,
+    },
+    ["<C-j>"] = {
+        c = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item({
+                    behavior = cmp.SelectBehavior.Select,
+                })
+            else
+                fallback()
+            end
+        end,
+    },
+    ["<C-k>"] = {
+        c = function(fallback)
+            if cmp.visible() then
+                cmp.select_prev_item({
+                    behavior = cmp.SelectBehavior.Select,
+                })
+            else
+                fallback()
+            end
+        end,
+    },
+    ["<C-y>"] = {
+        c = cmp.mapping.confirm({ select = false }),
+    },
+    ["<C-e>"] = {
+        c = cmp.mapping.close(),
+    },
+}
+
 cmp.setup.cmdline("/", {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = cmdline_mapping,
     sources = {
         { name = "nvim_lsp_document_symbol" },
         { name = "buffer" },
@@ -162,7 +211,7 @@ cmp.setup.cmdline("/", {
 })
 
 cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(),
+    mapping = cmdline_mapping,
     sources = cmp.config.sources({
         { name = "path" },
     }, {
