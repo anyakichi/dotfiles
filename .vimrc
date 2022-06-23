@@ -441,6 +441,8 @@ cnoremap <expr> <C-_> <SID>relpath()
 nnoremap <silent> <C-g>, :<C-u>call <SID>separate_number_with_comma_n()<CR>
 inoremap <expr> <C-g>, <SID>separate_number_with_comma_i()
 
+tnoremap <C-\><C-f> <C-\><C-n>:call nvim_win_set_width(0, &columns)<CR>i
+
 
 "
 " Auto commands
