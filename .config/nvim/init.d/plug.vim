@@ -89,6 +89,7 @@ if has('nvim-0.5')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-treesitter/nvim-treesitter'
     Plug 'petertriho/cmp-git'
+    Plug 'williamboman/nvim-lsp-installer'
 else
     Plug 'mattn/vim-lsp-settings'
     Plug 'prabirshrestha/async.vim'
