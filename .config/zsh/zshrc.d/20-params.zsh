@@ -6,6 +6,10 @@ SAVEHIST=100000
 
 MAILCHECK=0
 
+if [[ $TERM == tmux-256color ]]; then
+    export COLORTERM=truecolor
+fi
+
 cdpath=(~ ~/src ~/Documents)
 fpath=($XDG_CONFIG_HOME/zsh/functions "${fpath[@]}")
 
