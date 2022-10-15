@@ -10,9 +10,8 @@ local cmp = require("cmp")
 local lsp_status = require("lsp-status")
 lsp_status.register_progress()
 
-local capabilities = require("cmp_nvim_lsp").update_capabilities(
-    lsp_status.capabilities
-)
+local capabilities =
+    require("cmp_nvim_lsp").default_capabilities(lsp_status.capabilities)
 local flags = { debounce_text_changes = 150 }
 
 local function t(s)
@@ -70,6 +69,7 @@ local servers = {
     "bashls",
     "clangd",
     "dockerls",
+    "eslint",
     "gopls",
     "hls",
     "ocamllsp",
@@ -155,10 +155,10 @@ require("cmp_git").setup()
 
 local cmdline_mapping = {
     ["<C-n>"] = {
-        c = cmp.config.disable
+        c = cmp.config.disable,
     },
     ["<C-p>"] = {
-        c = cmp.config.disable
+        c = cmp.config.disable,
     },
     ["<C-j>"] = {
         c = function(fallback)
