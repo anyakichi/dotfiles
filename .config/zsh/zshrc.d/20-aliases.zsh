@@ -16,7 +16,7 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-alias grep='egrep'
+alias grep='grep -E'
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
