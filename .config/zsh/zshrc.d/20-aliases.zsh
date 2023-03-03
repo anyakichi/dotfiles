@@ -23,7 +23,6 @@ alias picocom='picocom -e \\'
 alias d=fcd
 alias o=rifle
 alias g=fghq
-alias gh='fzf-git hash'
 
 alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
 alias_alt mutt neomutt

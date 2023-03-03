@@ -15,6 +15,7 @@
 	diw = diff --word-diff
 	fp = fetch --prune
 	glog = log --graph --oneline --decorate
+	hash = !fzf-git hash
 	ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
 	qadd = !guilt add
 	qdelete = !guilt delete
