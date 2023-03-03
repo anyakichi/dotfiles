@@ -53,7 +53,9 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "[Space]rn", vim.lsp.buf.rename, bufopts)
     vim.keymap.set("n", "[Space]ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "[Space]f", vim.lsp.buf.formatting, bufopts)
+    vim.keymap.set("n", "[Space]f", function()
+        vim.lsp.buf.format({ async = true })
+    end, bufopts)
 
     vim.keymap.set(
         "i",
@@ -76,7 +78,7 @@ local servers = {
     "pyright",
     "rust_analyzer",
     "sqls",
-    "sumneko_lua",
+    "lua_ls",
     "tsserver",
     "vimls",
 }
