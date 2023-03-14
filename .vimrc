@@ -431,6 +431,8 @@ inoremap <C-g>l <C-o>b<C-o>guw<C-o>w<Right>
 inoremap <expr> <C-g>= <SID>border_line('=')
 inoremap <expr> <C-g>- <SID>border_line('-')
 inoremap <expr> <C-g>~ <SID>border_line('~')
+inoremap <expr> <C-g>^ <SID>border_line('^')
+inoremap <expr> <C-g>" <SID>border_line('"')
 
 cnoremap <C-n> <PageDown>
 cnoremap <C-p> <PageUp>
