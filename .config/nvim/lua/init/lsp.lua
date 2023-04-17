@@ -77,7 +77,6 @@ local servers = {
     "ocamllsp",
     "pyright",
     "rust_analyzer",
-    "sqls",
     "lua_ls",
     "tsserver",
     "vimls",
