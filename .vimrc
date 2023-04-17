@@ -117,12 +117,14 @@ set pastetoggle=<C-q>
 set spelllang=en_us,cjk
 
 " Cscope
-if executable('gtags-cscope')
-    set cscopeprg=gtags-cscope
+if has('cscope')
+    if executable('gtags-cscope')
+        set cscopeprg=gtags-cscope
+    endif
+    set cscopetag
+    set cscopetagorder=0
+    silent! set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 endif
-set cscopetag
-set cscopetagorder=0
-silent! set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 set guicursor=i-ci-ve:ver25,r-cr-o:hor20
 set mouse=a
