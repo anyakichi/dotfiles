@@ -33,6 +33,15 @@ alias_alt vim nvim
 
 alias din='din ${DIN_OPTS[@]}'
 
+command -v jq &>/dev/null &&
+jq() {
+    if [[ -t 1 ]]; then
+        command jq -C "$@" | less -RMFXKS
+    else
+        command jq "$@"
+    fi
+}
+
 command -v rg &>/dev/null &&
 rg() {
     if [[ -t 1 ]]; then
