@@ -55,6 +55,9 @@ config.bind("<Ctrl-Shift-c>", "config-source")
 # Insert mode
 #
 
+config.bind("<Alt-Right>", "forward", mode="insert")
+config.bind("<Alt-Left>", "back", mode="insert")
+
 config.bind("<Ctrl-o>", "edit-text", mode="insert")
 
 # Emacs key binding
