@@ -1,0 +1,20 @@
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 0,0
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x0000F599" enable scale 2 mode 3840x2160 position 1920,0
+    output "YTH YTH133PC Unknown" enable scale 1 position 0,1080
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 0,1080
+    output "Eizo Nanao Corporation EV2785 0x0000F599" enable scale 2 mode 3840x2160 position 0,0
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,0
+    output "YTH YTH133PC Unknown" enable scale 1 position 0,0
+}
+
