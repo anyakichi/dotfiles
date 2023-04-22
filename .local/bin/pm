@@ -217,7 +217,7 @@ main() {
     blank)
         if [[ $WAYLAND_DISPLAY ]]; then
             loginctl lock-session
-            swaymsg "output * dpms off"
+            swaymsg "output * power off"
         else
             dim off
             xset dpms force off &>/dev/null
@@ -228,7 +228,7 @@ main() {
         is_monitor_on && return
         service_kill "$main_argv0" -USR1
         if [[ $WAYLAND_DISPLAY ]]; then
-            swaymsg "output * dpms on"
+            swaymsg "output * power on"
         fi
         ;;
     battery-dim)
