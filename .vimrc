@@ -109,6 +109,9 @@ set winminheight=0
 set nobackup
 set undofile
 
+" Clipboards
+set clipboard=unnamedplus
+
 " Mappings
 set cedit=<C-x>
 set pastetoggle=<C-q>
