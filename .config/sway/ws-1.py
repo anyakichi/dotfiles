@@ -27,7 +27,7 @@ layout = {
             "width": '646 px',
             "nodes": [
                 {
-                    "swallows": {"app_id": r"termite"}
+                    "swallows": {"app_id": r"Alacritty"}
                 }
             ]
         }

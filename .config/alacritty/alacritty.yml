@@ -1,0 +1,41 @@
+window:
+  padding:
+    x: 1
+    y: 1
+
+font:
+  size: 10
+  offset:
+    y: 2
+
+colors:
+  primary:
+    background: "#1b2b34"
+    foreground: "#cdd3de"
+
+  normal:
+    black: "#1b2b34"
+    red: "#ec5f67"
+    green: "#99c794"
+    yellow: "#fac863"
+    blue: "#6699cc"
+    magenta: "#c594c5"
+    cyan: "#5fb3b3"
+    white: "#c0c5ce"
+
+  bright:
+    black: "#65737e"
+    red: "#ec5f67"
+    green: "#99c794"
+    yellow: "#fac863"
+    blue: "#6699cc"
+    magenta: "#c594c5"
+    cyan: "#5fb3b3"
+    white: "#ffffff"
+
+mouse:
+  hide_when_typing: true
+
+key_bindings:
+  - { key: Equals, mods: Control, action: ResetFontSize }
+  - { key: Plus, mods: Control|Shift, action: IncreaseFontSize }
