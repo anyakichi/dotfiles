@@ -1,0 +1,11 @@
+[Unit]
+Description=Rotate screen and touchpad
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/rotate
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target

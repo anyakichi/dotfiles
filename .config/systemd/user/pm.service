@@ -1,0 +1,11 @@
+[Unit]
+Description=Power management daemon
+BindsTo=sway-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/pm start
+Restart=on-failure
+
+[Install]
+WantedBy=sway-session.target
