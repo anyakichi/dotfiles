@@ -280,10 +280,10 @@ nnoremap <silent> [Tab]L :<C-u>tabmove<CR>
 nnoremap <silent> [Tab]H :<C-u>tabmove 0<CR>
 nnoremap <silent> <expr> [Tab]M ":\<C-u>tabmove " . v:count . "\<CR>"
 
-nnoremap [Tab]o :<C-u>edit<Space>
-nnoremap [Tab]t :<C-u>tab split<Space>
-nnoremap [Tab]s :<C-u>split<Space>
-nnoremap [Tab]v :<C-u>vsplit<Space>
+nnoremap [Tab]o :<C-u>Files<Space>
+nnoremap [Tab]t :<C-u>TFiles<Space>
+nnoremap [Tab]s :<C-u>SFiles<Space>
+nnoremap [Tab]v :<C-u>VFiles<Space>
 nmap <expr> [Tab]O "[Tab]o" . <SID>relpath()
 nmap <expr> [Tab]T "[Tab]t" . <SID>relpath()
 nmap <expr> [Tab]S "[Tab]s" . <SID>relpath()
@@ -546,6 +546,7 @@ let g:fzf_action = {
 let g:fzf_buffers_jump = 1
 let g:fzf_files_options = [
 \   '--ansi',
+\   "--header-lines", "1",
 \   "--bind", "ctrl-d:reload(fzf-file change-directory && fzf-file list)",
 \   "--bind", "ctrl-r:reload(fzf-file cycle-restricted && fzf-file list)",
 \   "--bind", "ctrl-s:reload(fzf-file up-directory && fzf-file list)",
@@ -557,7 +558,10 @@ let g:fzf_files_options = [
 
 command! -bar -bang -range=% Commits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(0, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
 command! -bar -bang -range=% BCommits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(1, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
-command! -bang -nargs=? -complete=dir Files call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=? -complete=file Files call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "edit")
+command! -bang -nargs=? -complete=file TFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "tabedit")
+command! -bang -nargs=? -complete=file SFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "split")
+command! -bang -nargs=? -complete=file VFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "vsplit")
 command! -bang -nargs=* History call s:fzf_history(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
 
@@ -606,9 +610,20 @@ function! s:fzf_commits(buffer_local, extra, bang) range
     return call(s:FZF_SID_PREFIX.'commits', [range, 0, [a:extra, a:bang]])
 endfunction
 
-function! s:fzf_files(arg, extra, bang)
-    call writefile(["type=f", "depth=0"], s:fzf_state)
-    call fzf#vim#files(a:arg, a:extra, a:bang)
+function! s:fzf_files(arg, extra, bang, sink)
+    try
+        if a:arg == "" || isdirectory(a:arg)
+            if a:sink != "edit"
+                let a:extra.sink = a:sink
+            endif
+            call writefile(["type=f", "depth=0"], s:fzf_state)
+            call fzf#vim#files(a:arg, a:extra, a:bang)
+        else
+            throw "not a directory"
+        endif
+    catch
+        execute a:sink a:arg
+    endtry
 endfunction
 
 function! s:fzf_history_source(type)
