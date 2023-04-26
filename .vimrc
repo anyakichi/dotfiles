@@ -558,10 +558,10 @@ let g:fzf_files_options = [
 
 command! -bar -bang -range=% Commits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(0, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
 command! -bar -bang -range=% BCommits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(1, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
-command! -bang -nargs=? -complete=file Files call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "edit")
-command! -bang -nargs=? -complete=file TFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "tabedit")
-command! -bang -nargs=? -complete=file SFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "split")
-command! -bang -nargs=? -complete=file VFiles call s:fzf_files(<q-args>, fzf#vim#with_preview(), <bang>0, "vsplit")
+command! -bang -nargs=? -complete=file Files call s:fzf_files(<q-args>, <bang>0, "edit")
+command! -bang -nargs=? -complete=file TFiles call s:fzf_files(<q-args>, <bang>0, "tabedit")
+command! -bang -nargs=? -complete=file SFiles call s:fzf_files(<q-args>, <bang>0, "split")
+command! -bang -nargs=? -complete=file VFiles call s:fzf_files(<q-args>, <bang>0, "vsplit")
 command! -bang -nargs=* History call s:fzf_history(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
 
@@ -610,14 +610,15 @@ function! s:fzf_commits(buffer_local, extra, bang) range
     return call(s:FZF_SID_PREFIX.'commits', [range, 0, [a:extra, a:bang]])
 endfunction
 
-function! s:fzf_files(arg, extra, bang, sink)
+function! s:fzf_files(arg, bang, sink)
     try
         if a:arg == "" || isdirectory(a:arg)
+            let extra = fzf#vim#with_preview()
             if a:sink != "edit"
-                let a:extra.sink = a:sink
+                let extra.sink = a:sink
             endif
             call writefile(["type=f", "depth=0"], s:fzf_state)
-            call fzf#vim#files(a:arg, a:extra, a:bang)
+            call fzf#vim#files(a:arg, extra, a:bang)
         else
             throw "not a directory"
         endif
