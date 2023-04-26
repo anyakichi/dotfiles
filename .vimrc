@@ -109,9 +109,6 @@ set winminheight=0
 set nobackup
 set undofile
 
-" Clipboards
-set clipboard=unnamedplus
-
 " Mappings
 set cedit=<C-x>
 set pastetoggle=<C-q>
@@ -360,6 +357,8 @@ nnoremap qci :<C-u>QFCscope find i<Space>
 nnoremap qca :<C-u>QFCscope find a<Space>
 
 nnoremap <silent> q] :<C-u>call qfutil#ltag()<CR>
+
+nnoremap <silent> + :<C-u>RegSave +<CR>
 
 " Cscope
 nmap <C-\><C-\> <Plug>(csutil-toggle-csto)
