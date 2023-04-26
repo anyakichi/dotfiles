@@ -155,6 +155,15 @@ cmp.setup.filetype("gitcommit", {
 require("cmp_git").setup()
 
 local cmdline_mapping = {
+    ["<C-z>"] = {
+        c = cmp.config.disable,
+    },
+    ["<Tab>"] = {
+        c = cmp.config.disable,
+    },
+    ["<S-Tab>"] = {
+        c = cmp.config.disable,
+    },
     ["<C-n>"] = {
         c = cmp.config.disable,
     },
@@ -183,11 +192,8 @@ local cmdline_mapping = {
             end
         end,
     },
-    ["<C-y>"] = {
+    ["<CR>"] = {
         c = cmp.mapping.confirm({ select = false }),
-    },
-    ["<C-e>"] = {
-        c = cmp.mapping.close(),
     },
 }
 
@@ -197,15 +203,6 @@ cmp.setup.cmdline("/", {
         { name = "nvim_lsp_document_symbol" },
         { name = "buffer" },
     },
-})
-
-cmp.setup.cmdline(":", {
-    mapping = cmp.mapping.preset.cmdline(cmdline_mapping),
-    sources = cmp.config.sources({
-        { name = "path" },
-    }, {
-        { name = "cmdline" },
-    }),
 })
 
 require("null-ls").setup({
