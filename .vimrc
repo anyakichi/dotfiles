@@ -555,13 +555,14 @@ let g:fzf_files_options = [
 \   "--preview", 'fzf-file view {} | head -500',
 \   "--preview-window", "hidden"
 \]
+let g:fzf_preview_window = ['hidden,right,50%,<70(down,40%)', 'ctrl-/']
 
 command! -bar -bang -range=% Commits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(0, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
 command! -bar -bang -range=% BCommits let b:fzf_winview = winsaveview() | <line1>,<line2>call s:fzf_commits(1, fzf#vim#with_preview({ "placeholder": "" }), <bang>0)
-command! -bang -nargs=? -complete=file Files call s:fzf_files(<q-args>, <bang>0, "edit")
-command! -bang -nargs=? -complete=file TFiles call s:fzf_files(<q-args>, <bang>0, "tabedit")
-command! -bang -nargs=? -complete=file SFiles call s:fzf_files(<q-args>, <bang>0, "split")
-command! -bang -nargs=? -complete=file VFiles call s:fzf_files(<q-args>, <bang>0, "vsplit")
+command! -bang -nargs=* -complete=file Files call s:fzf_xfiles("edit", <bang>0, <f-args>)
+command! -bang -nargs=* -complete=file TFiles call s:fzf_xfiles("tabedit", <bang>0, <f-args>)
+command! -bang -nargs=* -complete=file SFiles call s:fzf_xfiles("split", <bang>0, <f-args>)
+command! -bang -nargs=* -complete=file VFiles call s:fzf_xfiles("vsplit", <bang>0, <f-args>)
 command! -bang -nargs=* History call s:fzf_history(<q-args>, fzf#vim#with_preview(), <bang>0)
 command! -bang -nargs=* RG call s:fzf_rg(<q-args>, <bang>0)
 
@@ -610,21 +611,47 @@ function! s:fzf_commits(buffer_local, extra, bang) range
     return call(s:FZF_SID_PREFIX.'commits', [range, 0, [a:extra, a:bang]])
 endfunction
 
-function! s:fzf_files(arg, bang, sink)
+function! s:fzf_files(arg, extra, bang)
+    call writefile(["type=f", "depth=0"], s:fzf_state)
+    call fzf#vim#files(a:arg, a:extra, a:bang)
+endfunction
+
+function! s:fzf_xfile(sink, bang, path)
     try
-        if a:arg == "" || isdirectory(a:arg)
-            let extra = fzf#vim#with_preview()
-            if a:sink != "edit"
-                let extra.sink = a:sink
-            endif
-            call writefile(["type=f", "depth=0"], s:fzf_state)
-            call fzf#vim#files(a:arg, extra, a:bang)
-        else
-            throw "not a directory"
+        let extra = fzf#vim#with_preview()
+        if a:sink != "edit"
+            let extra.sink = a:sink
         endif
+        call s:fzf_files(a:path, extra, a:bang)
     catch
-        execute a:sink a:arg
+        execute a:sink a:path
     endtry
+endfunction
+
+function! s:fzf_xfiles(sink, bang, ...)
+    if a:0 == 0
+        return s:fzf_xfile(a:sink, a:bang, "")
+    else
+        let files = copy(a:000)
+        let dir = ""
+
+        let i = len(files) - 1
+        while i >= 0
+            if isdirectory(files[i])
+                let dir = remove(files, i)
+                break
+            endif
+            let i -= 1
+        endwhile
+
+        for file in files
+            execute a:sink file
+        endfor
+
+        if dir != ""
+            return s:fzf_xfile(a:sink, a:bang, dir)
+        endif
+    endif
 endfunction
 
 function! s:fzf_history_source(type)
