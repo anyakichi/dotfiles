@@ -1,48 +1,124 @@
 scriptencoding utf-8
 
-source ~/.config/nvim/init.d/plug.vim
+let s:plug_vim_path = expand('~/.vim/autoload/plug.vim')
+let s:plug_dir = expand('~/.local/share/vim/plugged')
+
+function s:bootstrap()
+    silent execute '!curl -fLo ' . s:plug_vim_path . ' --create-dirs
+    \   https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    echo 'vim-plug has been installed'
+endfunction
+
+command! -nargs=0 -bar PlugBootstrap call s:bootstrap()
+
+if filereadable(s:plug_vim_path)
+    call plug#begin(s:plug_dir)
+
+    Plug 'AndrewRadev/linediff.vim'
+    Plug 'HerringtonDarkholme/yats.vim'
+    Plug 'andymass/vim-matchup'
+    Plug 'anyakichi/vim-csutil'
+    Plug 'anyakichi/vim-qfutil'
+    Plug 'anyakichi/vim-surround'
+    Plug 'anyakichi/vim-tabutil'
+    Plug 'anyakichi/vim-textobj-ifdef'
+    Plug 'anyakichi/vim-textobj-kakko'
+    Plug 'anyakichi/vim-textobj-subword'
+    Plug 'anyakichi/vim-textobj-xbrackets'
+    Plug 'chrisbra/csv.vim'
+    Plug 'github/copilot.vim'
+    Plug 'glts/vim-textobj-comment'
+    Plug 'haya14busa/vim-edgemotion'
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+    Plug 'itchyny/lightline.vim'
+    Plug 'jamessan/vim-gnupg'
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/vim-easy-align'
+    Plug 'kana/vim-operator-user'
+    Plug 'kana/vim-smartinput'
+    Plug 'kana/vim-textobj-indent'
+    Plug 'kana/vim-textobj-user'
+    Plug 'lambdalisue/suda.vim'
+    Plug 'machakann/vim-swap'
+    Plug 'mattn/vim-lsp-settings'
+    Plug 'maxmellon/vim-jsx-pretty'
+    Plug 'mbbill/undotree'
+    Plug 'mhartington/oceanic-next'
+    Plug 'prabirshrestha/async.vim'
+    Plug 'prabirshrestha/asyncomplete-lsp.vim'
+    Plug 'prabirshrestha/asyncomplete.vim'
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'previm/previm'
+    Plug 'rafamadriz/friendly-snippets'
+    Plug 'rescript-lang/vim-rescript'
+    Plug 'rust-lang/rust.vim'
+    Plug 'sgur/vim-textobj-parameter'
+    Plug 't9md/vim-quickhl'
+    Plug 'thinca/vim-partedit'
+    Plug 'thinca/vim-quickrun'
+    Plug 'thinca/vim-ref'
+    Plug 'thinca/vim-visualstar'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-repeat'
+    Plug 'tyru/capture.vim'
+    Plug 'tyru/open-browser.vim'
+    Plug 'vim-jp/autofmt'
+    Plug 'vim-jp/vital.vim'
+    Plug 'vim-scripts/DoxygenToolkit.vim'
+    Plug 'vim-scripts/DrawIt'
+    Plug 'voldikss/vim-translator'
+    Plug 'will133/vim-dirdiff'
+    Plug 'yuezk/vim-js'
+
+    if !has('patch-8.1.360')
+        Plug 'lambdalisue/vim-unified-diff'
+    endif
+
+    call plug#end()
+endif
 
 
 "
 " Options
 "
-if !has('nvim')
-    set backspace=indent,eol,start
-    set tabpagemax=50
+set backspace=indent,eol,start
+set tabpagemax=50
 
-    set laststatus=2
-    set showcmd
+set laststatus=2
+set showcmd
 
-    set display=lastline
-    set lazyredraw
-    set notitle
+set display=lastline
+set lazyredraw
+set notitle
 
-    set tags=./tags;,tags
+set tags=./tags;,tags
 
-    if $COLORTERM ==# "truecolor"
-        let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-        let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+if $COLORTERM ==# "truecolor"
+    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
 
-        " Undercurl should be supported on modern terminals which support true
-        " colors.
-        let &t_Cs = "\e[4:3m\e[58;5;9m"
-        let &t_Ce = "\e[4:0m\e[59m"
-    endif
-
-    set history=10000
-    set wildmenu
-
-    set directory=~/.local/share/vim/swap//
-    set undodir=~/.local/share/vim/undo//
-    silent !mkdir -p ~/.local/share/vim/swap ~/.local/share/vim/undo
-
-    set timeout
-    set ttimeoutlen=50
-
-    silent! set formatoptions+=j
-
-    source $VIMRUNTIME/macros/matchit.vim
+    " Undercurl should be supported on modern terminals which support true
+    " colors.
+    let &t_Cs = "\e[4:3m\e[58;5;9m"
+    let &t_Ce = "\e[4:0m\e[59m"
 endif
+
+set history=10000
+set wildmenu
+
+set directory=~/.local/share/vim/swap//
+set undodir=~/.local/share/vim/undo//
+silent !mkdir -p ~/.local/share/vim/swap ~/.local/share/vim/undo
+
+set timeout
+set ttimeoutlen=50
+
+silent! set formatoptions+=j
+
+source $VIMRUNTIME/macros/matchit.vim
+
 
 " Encodings
 set fileencoding=utf-8
@@ -220,12 +296,6 @@ colorscheme OceanicNext
 
 
 "
-" Commands
-"
-command! -nargs=? -bang -bar -complete=help H tab help<bang> <args>
-
-
-"
 " Mappings
 "
 let g:maplocalleader = "[Space]"
@@ -314,10 +384,6 @@ nnoremap <Esc>j <C-w>j
 nnoremap <Esc>k <C-w>k
 nnoremap <Esc>l <C-w>l
 
-nnoremap <expr> [Tab]<C-h> &ft =~ "vim\\<Bar>help"
-\                               ? ":tab help "
-\                               : ":Ref -open=tabnew " . ref#detect() . ' '
-
 nnoremap Q q
 nnoremap q <Nop>
 
@@ -328,8 +394,6 @@ nnoremap q? q?
 " Quickfix
 nnoremap <silent> q\ :<C-u>call qfutil#toggle()<CR>
 
-nnoremap <silent> <C-j> :<C-u>call <SID>c_j(v:count)<CR>
-nnoremap <silent> <C-k> :<C-u>call <SID>c_k(v:count)<CR>
 nnoremap <silent> g<C-j> :<C-u>call qfutil#last(v:count)<CR>
 nnoremap <silent> g<C-k> :<C-u>call qfutil#first(v:count)<CR>
 nmap <C-g><C-j> g<C-j>
@@ -378,17 +442,12 @@ for s:type in ['f', 'i']
 endfor
 unlet s:type s:mapping s:target
 
-onoremap aa a>
-onoremap ia i>
-onoremap ar a]
-onoremap ir i]
-
-nnoremap <expr> gc
-\               '`[' .
-\               ((col("'[") == 1 && col("']") >= len(getline("']")))?'V':'v') .
-\               '`]'
-vnoremap <silent> gc :<C-u>normal gc<CR>
-onoremap <silent> gc :<C-u>normal gc<CR>
+onoremap a9 a(
+onoremap i9 i(
+onoremap a0 a{
+onoremap i0 i{
+onoremap a, a<
+onoremap i, i<
 
 try
     call operator#user#define_ex_command('sort', 'sort')
@@ -398,7 +457,6 @@ map [Space]s <Plug>(operator-sort)
 
 nnoremap <silent> [Space]<C-]> <C-]>
 nnoremap <silent> [Space]/ :<C-u>set hlsearch! hlsearch?<CR>
-nnoremap <silent> [Space]] :<C-u>call <SID>toggle_nmap_ctrl_right_bracket()<CR>
 nnoremap <silent> [Space]z :<C-u>call <SID>toggle_spell()<CR>
 nnoremap <silent> [Space]Z :<C-u>let b:spell = -1<CR>
 nnoremap <silent> [Space]V :<C-u>edit $HOME/.vimrc<CR>
@@ -424,9 +482,6 @@ inoremap <expr> <C-e> pumvisible() ? "\<C-e>" : "\<End>"
 inoremap <expr> <C-y> pumvisible() ? "\<C-y>"
 \                                  : <SID>insert_word_from_line(line('.') - 1)
 inoremap <expr> <C-_> <SID>compkey("\<C-x>\<C-f>")
-
-inoremap <C-g><CR> <C-o>o
-inoremap <silent> <C-g><C-x> <C-r>=<SID>newxmlline()<CR>
 
 inoremap <C-g><C-l> <C-o>b<C-o>g~w<C-o>w<Right>
 inoremap <C-g>L <C-o>b<C-o>gUw<C-o>w<Right>
@@ -479,6 +534,7 @@ augroup MyAutoCmd
     autocmd FileType asciidoc,gitcommit,mail,markdown,rst,tex,text
     \   setlocal tw=72 | let b:spell = -1
     autocmd FileType go                 setlocal ts=4
+    autocmd FileType markdown           setlocal fo+=or | nmap [Space]p vi~[Space]p
     autocmd FileType python             setlocal fo-=t sts=0
 
     " Spell checking
@@ -530,9 +586,9 @@ call s:V.load('Vim.ScriptLocal')
 set formatexpr=autofmt#japanese#formatexpr()
 let g:autofmt_allow_over_tw = 2
 
-" cecutil.vim
-nmap [Tab]= <Plug>SaveWinPosn
-nmap [Tab]- <Plug>RestoreWinPosn
+" edgemotion.vim
+nnoremap <C-j> <Plug>(edgemotion-j)
+nnoremap <C-k> <Plug>(edgemotion-k)
 
 " fzf
 let s:FZF_SID_PREFIX = "<SNR>".s:V.Vim.ScriptLocal.sid("autoload/fzf/vim.vim")."_"
@@ -709,6 +765,9 @@ endfunction
 nmap ga <Plug>(EasyAlign)
 xmap ga <Plug>(EasyAlign)
 
+" matchup
+let g:matchup_matchparen_offscreen = {'method': 'popup'}
+
 " qfutil.vim
 let g:qfutil_default_grep_file = '%:h'
 
@@ -730,14 +789,19 @@ nmap <Leader>r <Plug>(quickrun)
 nmap <Leader>e <Plug>(quickrun-op)
 nmap <silent> <Leader>ee :QuickRun1<CR>
 
-" neoformat
-let g:neoformat_enabled_lua = ["stylua"]
-let g:neoformat_enabled_python = ["black", "isort"]
-let g:neoformat_enabled_yaml = ["prettier"]
+" vim-partedit
+let g:partedit#opener = 'split'
+vnoremap [Space]p :Partedit<Space>-filetype<Space><C-r>=<SID>partedit_filetype()<CR>
 
-let g:shfmt_opt = "-s -i 4"
-
-nnoremap [Space]F :<C-u>Neoformat<CR>
+function! s:partedit_filetype()
+    let pre = getline(getpos("'<")[1] - 1)
+    let filetype = matchstr(pre, '\v```\zs[-a-zA-Z0-9_]+\ze')
+    if filetype != ""
+        return filetype
+    else
+        return 'markdown'
+    endif
+endfunction
 
 " ref.vim
 let g:ref_man_cmd = 'man'
@@ -814,20 +878,33 @@ omap if <Plug>(textobj-xbrackets-x(_)-i)
 xmap af <Plug>(textobj-xbrackets-x(_)-a)
 xmap if <Plug>(textobj-xbrackets-x(_)-i)
 
-" vimux.vim
-let g:VimuxResetSequence = ""
+" vim-textobj-user
+call textobj#user#plugin('quotes', {
+  \   'triple_single_quote-a': {
+  \       'pattern': "'''\\_.\\{-}'''",
+  \       'select': "a3'",
+  \   },
+  \   'triple_single_quote-i': {
+  \       'pattern': "'''\\zs\\_.\\{-}\\ze'''",
+  \       'select': "i3'",
+  \   },
+  \   'triple_double_quote-a': {
+  \       'pattern': '"""\_.\{-}"""',
+  \       'select': 'a3"',
+  \   },
+  \   'triple_double_quote-i': {
+  \       'pattern': '"""\zs\_.\{-}\ze"""',
+  \       'select': 'i3"',
+  \   },
+  \   'triple_back_quote-a': {
+  \       'pattern': '\s*```.*\n\_.\{-}\s*```',
+  \       'select': 'a3`',
+  \       'region-type': 'V',
+  \   },
+  \})
 
-nmap <silent> [Space]r  :<C-u>set opfunc=<SID>vimux_send<CR>g@
-nmap <silent> [Space]R  :<C-u>set opfunc=<SID>vimux_send<CR>g@$
-nmap <silent> [Space]rr :<C-u>call <SID>vimux_send(v:count1)<CR>
-nmap <silent> [Space];  :<C-u>call VimuxRunCommand(";;\n", 0)<CR>
-
-xmap <silent> [Space]r  :<C-u>call <SID>vimux_send('v')<CR>
-xmap <silent> [Space]R  :<C-u>call <SID>vimux_send('V')<CR>
-
-function! s:vimux_send(type)
-    call s:do_opfunc(a:type, 'VimuxRunCommand', 0)
-endfunction
+xnoremap i3` <Plug>(textobj-quotes-triple_back_quote-a)o<Down>o<Up>$
+omap i3` :normal Vi3`<CR>
 
 " visualstar.vim
 xmap <silent> *  <Plug>(visualstar-*):set hlsearch<CR>
@@ -852,65 +929,15 @@ function! s:SID_PREFIX()
 endfunction
 
 function! LspStatus() abort
-    if has('nvim-0.5')
-        if luaeval('#vim.lsp.buf_get_clients() > 0')
-            return substitute(luaeval("require('lsp-status').status()"), '%%', '%', 'g')
-        endif
-        return ''
-    else
-        let lsp_counts = lsp#get_buffer_diagnostics_counts()
-        return printf("E%d W%d", lsp_counts['error'], lsp_counts['warning'])
-    endif
+    let lsp_counts = lsp#get_buffer_diagnostics_counts()
+    return printf("E%d W%d", lsp_counts['error'], lsp_counts['warning'])
 endfunction
 
-function! s:toggle_nmap_ctrl_right_bracket()
-    if mapcheck('<C-]>', 'n') == ""
-        nmap <buffer> <C-]> <Plug>(lsp-definition)
-    else
-        silent! nunmap <buffer> <C-]>
-    endif
-endfunction
 
 function! s:lsp_setup()
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
     nmap <buffer> <C-]> <Plug>(lsp-definition)
-endfunction
-
-function! s:do_opfunc(type, func, ...)
-    let type_map = {"char": "v", "line": "V", "block": "\<C-v>"}
-
-    let reg_save = [getreg('a'), getregtype('a')]
-    let sel_save = &selection
-    let cb_save  = &clipboard
-
-    let &selection = "inclusive"
-    set clipboard-=unnamed clipboard-=unnamedplus
-
-    if has_key(type_map, a:type)
-        silent execute 'normal! `[' . type_map[a:type] . '`]"ay'
-    elseif index(["v", "V", "\<C-v>"], a:type) >= 0
-        silent execute 'normal! `<' . a:type . '`>"ay'
-    elseif a:type =~ '^\d\+$'
-        execute 'silent normal! ' . a:type . '"ayy'
-    else
-        let &selection = sel_save
-        let &clipboard = cb_save
-        return
-    endif
-
-    let lines = split(@a, "\n\zs")
-    for line in lines
-        if a:0
-            call call(a:func, [line, a:1])
-        else
-            call call(a:func, [line])
-        endif
-    endfor
-
-    let &clipboard = cb_save
-    let &selection = sel_save
-    call setreg('a', reg_save[0], reg_save[1])
 endfunction
 
 function! s:compkey(key)
@@ -946,22 +973,6 @@ function! s:qfmode_p()
     return getqflist() != [] || getloclist(0) != []
 endfunction
 
-function! s:c_j(count)
-    if s:qfmode_p()
-        call qfutil#next(a:count)
-    else
-        execute 'normal! ' . a:count . ']c'
-    endif
-endfunction
-
-function! s:c_k(count)
-    if s:qfmode_p()
-        call qfutil#previous(a:count)
-    else
-        execute 'normal! ' . a:count . '[c'
-    endif
-endfunction
-
 function! s:p_ctrl_w()
     let pos = searchpos('\<\|\>', 'bn')
     let n = col('.') - pos[1]
@@ -993,16 +1004,6 @@ function! s:border_line(char)
         return ''
     endif
     return repeat(a:char, strdisplaywidth(getline(prevline)) - col('.') + 1)
-endfunction
-
-function! s:newxmlline()
-    let col = col(".")
-    copy .
-    if col != 1
-        execute 'normal!' (col - 1) . 'l'
-    endif
-    normal! dit
-    return ''
 endfunction
 
 function! s:toggle_spell()

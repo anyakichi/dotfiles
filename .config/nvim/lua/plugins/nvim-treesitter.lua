@@ -1,0 +1,115 @@
+return {
+  "nvim-treesitter/nvim-treesitter",
+  event = "VeryLazy",
+  build = ":TSUpdate",
+  dependencies = {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    "RRethy/nvim-treesitter-endwise",
+    "andymass/vim-matchup",
+    "ghostbuster91/nvim-next",
+    "nvim-treesitter/nvim-treesitter-context",
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    "nvim-treesitter/playground",
+    "windwp/nvim-ts-autotag",
+  },
+  config = vim.schedule_wrap(function()
+    require("nvim-next.integrations").treesitter_textobjects()
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = "all",
+
+      endwise = { enable = true },
+      highlight = { enable = true },
+      matchup = { enable = true },
+      context_commentstring = { enable = true, enable_autocmd = false },
+
+      textobjects = {
+        select = {
+          enable = true,
+          lookahead = true,
+          keymaps = {
+            -- module or class
+            ["aM"] = "@class.outer",
+            ["iM"] = "@class.inner",
+
+            -- method or function
+            ["am"] = "@function.outer",
+            ["im"] = "@function.inner",
+
+            -- argument or parameter
+            ["aa"] = "@parameter.outer",
+            ["ia"] = "@parameter.inner",
+
+            -- function call
+            ["af"] = "@call.outer",
+            ["if"] = "@call.inner",
+
+            ["a."] = "@block.outer",
+            ["i."] = "@block.inner",
+
+            ["a;"] = "@statement.outer",
+            ["i;"] = "@statement.outer",
+
+            ["ar"] = "@return.outer",
+            ["ir"] = "@return.inner",
+
+            -- Markdown code block
+            ["i~"] = {
+              query = "@content",
+              query_group = "injections",
+            },
+          },
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ["<Space>l"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["<Space>h"] = "@parameter.inner",
+          },
+        },
+        lsp_interop = {
+          enable = true,
+          border = "none",
+          floating_preview_opts = {},
+          peek_definition_code = {
+            ["<leader>df"] = "@function.outer",
+            ["<leader>dF"] = "@class.outer",
+          },
+        },
+      },
+
+      nvim_next = {
+        enable = true,
+        textobjects = {
+          move = {
+            goto_next_start = {
+              ["]]"] = "@class.outer",
+              ["]a"] = "@parameter.outer",
+              ["]m"] = "@function.outer",
+              ["]r"] = "@return.outer",
+            },
+            goto_next_end = {
+              ["]["] = "@class.outer",
+              ["]M"] = "@function.outer",
+              ["]A"] = "@parameter.outer",
+              ["]R"] = "@return.outer",
+            },
+            goto_previous_start = {
+              ["[["] = "@class.outer",
+              ["[a"] = "@parapeter.outer",
+              ["[m"] = "@function.outer",
+              ["[r"] = "@return.outer",
+            },
+            goto_previous_end = {
+              ["[]"] = "@class.outer",
+              ["[A"] = "@parameter.outer",
+              ["[M"] = "@function.outer",
+              ["[R"] = "@return.outer",
+            },
+          },
+        },
+      },
+    })
+  end),
+}
