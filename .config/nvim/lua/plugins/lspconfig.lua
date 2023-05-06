@@ -40,8 +40,7 @@ return {
       capabilities = capabilities,
       cmd = {
         "node",
-        require("lazy.core.config").options.root
-          .. "/vim-rescript/server/out/server.js",
+        require("lazy.core.config").options.root .. "/vim-rescript/server/out/server.js",
         "--stdio",
       },
     })
@@ -49,8 +48,7 @@ return {
     lspconfig.tsserver.setup({ capabilities = capabilities })
     lspconfig.vimls.setup({ capabilities = capabilities })
 
-    local signs =
-      { Error = " ", Warn = " ", Info = " ", Hint = "💡" }
+    local signs = { Error = " ", Warn = " ", Info = " ", Hint = "💡" }
     for type, text in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = text, texthl = hl })
@@ -89,12 +87,7 @@ return {
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
         vim.keymap.set("n", "<Space>k", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
-        vim.keymap.set(
-          "n",
-          "<Space>wr",
-          vim.lsp.buf.remove_workspace_folder,
-          opts
-        )
+        vim.keymap.set("n", "<Space>wr", vim.lsp.buf.remove_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wl", function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts)

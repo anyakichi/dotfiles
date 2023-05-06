@@ -11,23 +11,7 @@ return {
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
-  { "NvChad/nvim-colorizer.lua", event = "VeryLazy" },
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>R",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-  },
+  { "NvChad/nvim-colorizer.lua", event = "VeryLazy", opts = {} },
   {
     "abecodes/tabout.nvim",
     keys = {
@@ -54,9 +38,14 @@ return {
   },
   { "anyakichi/vim-qfutil", event = "VeryLazy" },
   { "anyakichi/vim-tabutil", event = "VeryLazy" },
-  { "chentoast/marks.nvim", event = "VeryLazy" },
+  { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
-  { "folke/todo-comments.nvim", event = "VeryLazy" },
+  {
+    "dstein64/nvim-scrollview",
+    lazy = false,
+    opts = { column = 1 },
+  },
+  { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   {
     "ggandor/leap.nvim",
     keys = {
@@ -80,14 +69,14 @@ return {
     ft = "markdown",
     cmd = "MarkdownPreview",
   },
-  { "j-hui/fidget.nvim", event = "VeryLazy" },
+  { "j-hui/fidget.nvim", event = "VeryLazy", opts = {} },
   { "jamessan/vim-gnupg", lazy = false },
   {
     "junegunn/vim-easy-align",
     keys = { { "ga", "<Plug>(EasyAlign)", mode = { "n", "x" } } },
   },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy" },
+  { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", opts = {} },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
   {
     "rcarriga/nvim-notify",
@@ -98,7 +87,7 @@ return {
   },
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
-  { "simrat39/rust-tools.nvim", ft = "rust" },
+  { "simrat39/rust-tools.nvim", ft = "rust", opts = {} },
   { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tyru/capture.vim", cmd = "Capture" },

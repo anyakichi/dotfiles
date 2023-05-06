@@ -10,8 +10,6 @@ return {
     vim.cmd(
       'cabbrev <expr> R   (getcmdline() =~# "^R" && getcmdpos() == 2) ? "Ref " . ref#detect() : "R"'
     )
-    vim.cmd(
-      'cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4) ? "Ref man" : "Man"'
-    )
+    vim.cmd('cabbrev <expr> Man (getcmdline() =~# "^Man" && getcmdpos() == 4) ? "Ref man" : "Man"')
   end,
 }

@@ -137,12 +137,7 @@ m("x", "<Space>s", ":sort<CR>")
 m("x", "<Space>S", ":sort!<CR>")
 
 m("n", "<Space>/", "<Cmd>set hlsearch! hlsearch?<CR>", S)
-m(
-  "n",
-  "<Space>z",
-  "<Cmd>setlocal spell! | let b:spell = &l:spell | setlocal spell?<CR>",
-  S
-)
+m("n", "<Space>z", "<Cmd>setlocal spell! | let b:spell = &l:spell | setlocal spell?<CR>", S)
 m("n", "<Space>Z", "<Cmd>let b:spell = -1<CR>", S)
 m("n", "<Space>c", "<Cmd>let &l:cc = &l:cc != 0 ? 0 : 81<CR>", S)
 m("n", "<Space><Tab>", "<Cmd>HlAnnoyingSpaceToggle<CR>", S)
@@ -172,8 +167,7 @@ function _G.border_line(char)
   if prevline_nr == 0 then
     return ""
   end
-  local prevline =
-    vim.api.nvim_buf_get_lines(0, prevline_nr - 1, prevline_nr, false)
+  local prevline = vim.api.nvim_buf_get_lines(0, prevline_nr - 1, prevline_nr, false)
   return string.rep(char, vim.fn.strdisplaywidth(prevline[1]))
 end
 

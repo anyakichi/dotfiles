@@ -60,13 +60,9 @@ return {
     end
 
     for _, cmd in ipairs({ "edit", "split", "vsplit", "tabedit" }) do
-      vim.api.nvim_create_user_command(
-        cmd:sub(1, 1):upper() .. cmd:sub(2),
-        function(opts)
-          fzf_files(cmd, opts)
-        end,
-        { nargs = "*", complete = "file" }
-      )
+      vim.api.nvim_create_user_command(cmd:sub(1, 1):upper() .. cmd:sub(2), function(opts)
+        fzf_files(cmd, opts)
+      end, { nargs = "*", complete = "file" })
     end
   end,
 }

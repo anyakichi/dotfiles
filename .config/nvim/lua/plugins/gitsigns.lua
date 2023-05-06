@@ -8,26 +8,23 @@ return {
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
 
-      local prev_hunk, next_hunk = require("nvim-next.move").make_repeatable_pair(
-        function(_)
-          if vim.wo.diff then
-            vim.cmd("normal! [c")
-          else
-            vim.schedule(function()
-              gs.prev_hunk()
-            end)
-          end
-        end,
-        function(_)
-          if vim.wo.diff then
-            vim.cmd("normal! ]c")
-          else
-            vim.schedule(function()
-              gs.next_hunk()
-            end)
-          end
+      local prev_hunk, next_hunk = require("nvim-next.move").make_repeatable_pair(function(_)
+        if vim.wo.diff then
+          vim.cmd("normal! [c")
+        else
+          vim.schedule(function()
+            gs.prev_hunk()
+          end)
         end
-      )
+      end, function(_)
+        if vim.wo.diff then
+          vim.cmd("normal! ]c")
+        else
+          vim.schedule(function()
+            gs.next_hunk()
+          end)
+        end
+      end)
 
       local function map(mode, l, r, opts)
         opts = opts or {}

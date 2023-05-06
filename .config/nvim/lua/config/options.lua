@@ -1,6 +1,5 @@
 -- Encodings
-vim.opt.fileencodings =
-  "ucs-bom,utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2"
+vim.opt.fileencodings = "ucs-bom,utf-8,euc-jp,cp932,iso-2022-jp,utf-16,ucs-2le,ucs-2"
 
 -- Colors
 if os.getenv("COLORTERM") == "truecolor" then

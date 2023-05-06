@@ -15,12 +15,7 @@ return {
       "L3MON4D3/LuaSnip",
       dependencies = "rafamadriz/friendly-snippets",
       init = function()
-        vim.keymap.set(
-          "s",
-          "<Tab>",
-          "<Cmd>lua require('luasnip').jump(1)<CR>",
-          { silent = true }
-        )
+        vim.keymap.set("s", "<Tab>", "<Cmd>lua require('luasnip').jump(1)<CR>", { silent = true })
         vim.keymap.set(
           "s",
           "<S-Tab>",
