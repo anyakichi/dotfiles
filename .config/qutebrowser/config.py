@@ -35,6 +35,7 @@ config.bind("tm", "back ;; forward -t")
 config.bind("<Ctrl-t>", "config-cycle -t tabs.position top left")
 config.bind("<Ctrl-s>", "set-cmd-text -s :tab-select")
 config.bind("t/", "set-cmd-text -s :tab-select")
+config.bind("<Ctrl-w>", "nop")
 
 config.bind("O", "set-cmd-text :open {url:pretty}")
 config.bind("gU", "run-with-count 99 navigate up")
@@ -106,6 +107,8 @@ c.editor.command = [
     "qutebrowser",
 ]
 c.input.insert_mode.auto_load = True
+
+c.completion.web_history.max_items = 10000
 
 # Search engines
 c.url.searchengines["DEFAULT"] = "https://www.google.com/search?q={}&hl=en"
