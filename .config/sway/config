@@ -210,14 +210,6 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-#
-# Status Bar:
-#
-# Read `man 5 sway-bar` for more information about this section.
-bar {
-    swaybar_command waybar
-}
-
 focus_on_window_activation urgent
 workspace_auto_back_and_forth yes
 
