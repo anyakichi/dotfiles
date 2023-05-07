@@ -5,7 +5,6 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import asyncio
-import pprint
 import re
 
 import i3ipc.aio as i3ipc
@@ -24,7 +23,7 @@ layout = {
         },
         {
             "layout": "tabbed",
-            "width": '646 px',
+            "width": '686 px',
             "nodes": [
                 {
                     "swallows": {"app_id": r"Alacritty"}
