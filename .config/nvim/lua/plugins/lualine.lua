@@ -12,14 +12,14 @@ return {
         lualine_b = { { "filename", path = 1 } },
         lualine_c = {
           "branch",
-          "diff",
+          { "diff", symbols = require("config").icons.git },
           {
             "diagnostics",
             symbols = {
-              error = " ",
-              warn = " ",
-              info = " ",
-              hint = "💡",
+              error = require("config").icons.diagnostics.Error,
+              warn = require("config").icons.diagnostics.Warn,
+              info = require("config").icons.diagnostics.Info,
+              hint = require("config").icons.diagnostics.Hint,
             },
           },
         },

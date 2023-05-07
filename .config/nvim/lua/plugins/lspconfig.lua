@@ -3,7 +3,8 @@ return {
   event = { "BufNewFile", "BufReadPre" },
   dependencies = {
     "b0o/SchemaStore.nvim",
-    "williamboman/mason.nvim",
+    { "williamboman/mason.nvim", build = ":MasonUpdate", opts = {} },
+    { "williamboman/mason-lspconfig.nvim", opts = {} },
   },
   config = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -48,8 +49,7 @@ return {
     lspconfig.tsserver.setup({ capabilities = capabilities })
     lspconfig.vimls.setup({ capabilities = capabilities })
 
-    local signs = { Error = " ", Warn = " ", Info = " ", Hint = "💡" }
-    for type, text in pairs(signs) do
+    for type, text in pairs(require("config").icons.diagnostics) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = text, texthl = hl })
     end

@@ -27,31 +27,6 @@ return {
           enable = true,
           lookahead = true,
           keymaps = {
-            -- module or class
-            ["aM"] = "@class.outer",
-            ["iM"] = "@class.inner",
-
-            -- method or function
-            ["am"] = "@function.outer",
-            ["im"] = "@function.inner",
-
-            -- argument or parameter
-            ["aa"] = "@parameter.outer",
-            ["ia"] = "@parameter.inner",
-
-            -- function call
-            ["af"] = "@call.outer",
-            ["if"] = "@call.inner",
-
-            ["a."] = "@block.outer",
-            ["i."] = "@block.inner",
-
-            ["a;"] = "@statement.outer",
-            ["i;"] = "@statement.outer",
-
-            ["ar"] = "@return.outer",
-            ["ir"] = "@return.inner",
-
             -- Markdown code block
             ["i~"] = {
               query = "@content",

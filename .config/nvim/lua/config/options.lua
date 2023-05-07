@@ -35,6 +35,7 @@ vim.opt.pumheight = 10
 
 -- Appearance
 vim.opt.cursorline = true
+vim.opt.laststatus = 3
 vim.opt.number = true
 vim.opt.signcolumn = "number"
 

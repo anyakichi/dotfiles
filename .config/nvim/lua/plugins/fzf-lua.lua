@@ -43,7 +43,7 @@ return {
       else
         local dir = nil
         for i = #opts.fargs, 1, -1 do
-          if vim.fn.isdirectory(opts.fargs[i]) ~= 0 then
+          if vim.fn.isdirectory(vim.fn.expand(opts.fargs[i])) ~= 0 then
             dir = table.remove(opts.fargs, i)
             break
           end

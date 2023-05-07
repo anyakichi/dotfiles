@@ -124,13 +124,6 @@ m("n", "q]", "<Cmd>call qfutil#ltag()<CR>")
 
 m("n", "+", "<Cmd>let @+ = @@<CR>", S)
 
-m({ "o", "x" }, "a9", "a(")
-m({ "o", "x" }, "i9", "i(")
-m({ "o", "x" }, "a0", "a{")
-m({ "o", "x" }, "i0", "i{")
-m({ "o", "x" }, "a,", "a<")
-m({ "o", "x" }, "i,", "i<")
-
 m("n", "<Space>s", [[<Cmd>let &opfunc="{_ -> execute(\"'[,']sort\")}"<CR>g@]])
 m("n", "<Space>S", [[<Cmd>let &opfunc="{_ -> execute(\"'[,']sort!\")}"<CR>g@]])
 m("x", "<Space>s", ":sort<CR>")
@@ -143,26 +136,22 @@ m("n", "<Space>c", "<Cmd>let &l:cc = &l:cc != 0 ? 0 : 81<CR>", S)
 m("n", "<Space><Tab>", "<Cmd>HlAnnoyingSpaceToggle<CR>", S)
 m("n", "<Space>=", "`[=`]")
 
-m({ "c", "i" }, "<C-a>", "<Home>")
-m({ "c", "i" }, "<C-b>", "<Left>")
-m({ "c", "i" }, "<C-f>", "<Right>")
-
-function _G.ctrl_w()
+local function ctrl_w()
   local line = vim.api.nvim_get_current_line()
   local pos = vim.api.nvim_win_get_cursor(0)
   if line:sub(pos[2] - 1, pos[2]):find("%s%s") then
-    return "<C-o>:let &sts=&ts<CR><BS><C-o>:let &sts=0<CR>"
+    return "<C-g>u<C-o>:let &sts=&ts<CR><BS><C-o>:let &sts=0<CR>"
   end
-  return "<C-w>"
+  return "<C-g>u<C-w>"
 end
 
-m("i", "<C-w>", '"<C-g>u" . v:lua.ctrl_w()', E)
+m("i", "<C-w>", ctrl_w, E)
 
 m("i", "<C-g><C-l>", "<C-o>b<C-o>g~w<C-o>w<Right>")
 m("i", "<C-g>L", "<C-o>b<C-o>gUw<C-o>w<Right>")
 m("i", "<C-g>l", "<C-o>b<C-o>guw<C-o>w<Right>")
 
-function _G.border_line(char)
+local function border_line(char)
   local prevline_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
   if prevline_nr == 0 then
     return ""
@@ -171,12 +160,23 @@ function _G.border_line(char)
   return string.rep(char, vim.fn.strdisplaywidth(prevline[1]))
 end
 
-m("i", "<C-g>=", "v:lua.border_line('=')", E)
-m("i", "<C-g>-", "v:lua.border_line('-')", E)
-m("i", "<C-g>~", "v:lua.border_line('~')", E)
-m("i", "<C-g>^", "v:lua.border_line('^')", E)
-m("i", '<C-g>"', "v:lua.border_line('\"')", E)
+m("i", "<C-g>=", require("config").wrap(border_line, "="), E)
+m("i", "<C-g>-", require("config").wrap(border_line, "-"), E)
+m("i", "<C-g>~", require("config").wrap(border_line, "~"), E)
+m("i", "<C-g>^", require("config").wrap(border_line, "^"), E)
+m("i", '<C-g>"', require("config").wrap(border_line, '"'), E)
 
+m({ "c", "i" }, "<C-a>", "<Home>")
+m({ "c", "i" }, "<C-b>", "<Left>")
+m({ "c", "i" }, "<C-f>", "<Right>")
+
+m("c", "<CR>", function()
+  local cmdtype = vim.fn.getcmdtype()
+  if cmdtype == "/" or cmdtype == "?" then
+    vim.opt.hlsearch = true
+  end
+  return "<CR>"
+end, E)
 m("c", "<C-n>", "<PageDown>")
 m("c", "<C-p>", "<PageUp>")
 --m("c", '<C-g>', "<C-r>=<SID>kill_arg()<CR>")

@@ -11,7 +11,7 @@ return {
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
-  { "NvChad/nvim-colorizer.lua", event = "VeryLazy", opts = {} },
+  { "NvChad/nvim-colorizer.lua", event = { "BufNewFile", "BufReadPre" }, opts = {} },
   {
     "abecodes/tabout.nvim",
     keys = {
@@ -36,15 +36,31 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
     end,
   },
-  { "anyakichi/vim-qfutil", event = "VeryLazy" },
+  {
+    "anyakichi/vim-qfutil",
+    event = "VeryLazy",
+    init = function()
+      vim.g.qfutil_mode = "c"
+    end,
+  },
   { "anyakichi/vim-tabutil", event = "VeryLazy" },
+  {
+    "b0o/incline.nvim",
+    event = "VeryLazy",
+    opts = {
+      hide = { cursorline = true, only_win = true },
+      render = function(props)
+        local bufname = vim.api.nvim_buf_get_name(props.buf)
+        local res = bufname ~= "" and vim.fn.fnamemodify(bufname, ":~:.") or "[No Name]"
+        if vim.api.nvim_buf_get_option(props.buf, "modified") then
+          res = res .. " [+]"
+        end
+        return res
+      end,
+    },
+  },
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
-  {
-    "dstein64/nvim-scrollview",
-    lazy = false,
-    opts = { column = 1 },
-  },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   {
     "ggandor/leap.nvim",
@@ -53,7 +69,6 @@ return {
       { "F", "<Plug>(leap-backward-to)", mode = { "n", "o", "x" } },
     },
   },
-  { "github/copilot.vim", event = "VeryLazy" },
   {
     "haya14busa/vim-edgemotion",
     keys = {
@@ -119,11 +134,6 @@ return {
   },
   {
     "glts/vim-textobj-comment",
-    event = "VeryLazy",
-    dependencies = "kana/vim-textobj-user",
-  },
-  {
-    "kana/vim-textobj-indent",
     event = "VeryLazy",
     dependencies = "kana/vim-textobj-user",
   },
