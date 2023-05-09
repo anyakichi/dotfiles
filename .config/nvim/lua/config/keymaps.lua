@@ -1,9 +1,19 @@
 local m = vim.keymap.set
+local util = require("util")
 
 local E = { expr = true }
 local R = { remap = true }
 local S = { silent = true }
 local ER = { expr = true, remap = true }
+
+local function relpath()
+  local path = vim.fn.expand("%:~:.:h")
+  if path == "" or path == "." then
+    return ""
+  else
+    return path .. "/"
+  end
+end
 
 vim.g.maplocalleader = "<Space>"
 m("n", "<Space>", "<Nop>")
@@ -50,12 +60,9 @@ m("n", "tL", "<Cmd>tabmove<CR>", S)
 m("n", "tH", "<Cmd>tabmove 0<CR>", S)
 m("n", "tM", '":\\<C-u>tabmove " . v:count . "\\<CR>"', E)
 
-function _G.relpath()
-  local path = vim.fn.expand("%:~:.:h")
-  if path == "" or path == "." then
-    return ""
-  else
-    return path .. "/"
+local function relopen(s)
+  return function()
+    return s .. relpath()
   end
 end
 
@@ -63,10 +70,10 @@ m("n", "to", ":<C-u>Edit<Space>")
 m("n", "tt", ":<C-u>Tabedit<Space>")
 m("n", "ts", ":<C-u>Split<Space>")
 m("n", "tv", ":<C-u>Vsplit<Space>")
-m("n", "tO", "'to' . v:lua.relpath()", ER)
-m("n", "tT", "'tt' . v:lua.relpath()", ER)
-m("n", "tS", "'ts' . v:lua.relpath()", ER)
-m("n", "tV", "'tv' . v:lua.relpath()", ER)
+m("n", "tO", relopen("to"), ER)
+m("n", "tT", relopen("tt"), ER)
+m("n", "tS", relopen("ts"), ER)
+m("n", "tV", relopen("tv"), ER)
 
 m("n", "td", "<Cmd>call tabutil#close()<CR>", S)
 m("n", "tq", "<Cmd>call tabutil#only()<CR>", S)
@@ -160,13 +167,14 @@ local function border_line(char)
   return string.rep(char, vim.fn.strdisplaywidth(prevline[1]))
 end
 
-m("i", "<C-g>=", require("config").wrap(border_line, "="), E)
-m("i", "<C-g>-", require("config").wrap(border_line, "-"), E)
-m("i", "<C-g>~", require("config").wrap(border_line, "~"), E)
-m("i", "<C-g>^", require("config").wrap(border_line, "^"), E)
-m("i", '<C-g>"', require("config").wrap(border_line, '"'), E)
+m("i", "<C-g>=", util.wrap(border_line, "="), E)
+m("i", "<C-g>-", util.wrap(border_line, "-"), E)
+m("i", "<C-g>~", util.wrap(border_line, "~"), E)
+m("i", "<C-g>^", util.wrap(border_line, "^"), E)
+m("i", '<C-g>"', util.wrap(border_line, '"'), E)
 
 m({ "c", "i" }, "<C-a>", "<Home>")
+m({ "c", "i" }, "<C-e>", "<End>")
 m({ "c", "i" }, "<C-b>", "<Left>")
 m({ "c", "i" }, "<C-f>", "<Right>")
 
@@ -180,4 +188,4 @@ end, E)
 m("c", "<C-n>", "<PageDown>")
 m("c", "<C-p>", "<PageUp>")
 --m("c", '<C-g>', "<C-r>=<SID>kill_arg()<CR>")
-m("c", "<C-_>", "v:lua.relpath()", E)
+m("c", "<C-_>", util.wrap(relpath), E)

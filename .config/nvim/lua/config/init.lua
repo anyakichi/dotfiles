@@ -58,11 +58,4 @@ M.icons = {
   },
 }
 
-function M.wrap(f, ...)
-  local args = { ... }
-  return function()
-    return f(unpack(args))
-  end
-end
-
 return M

@@ -119,6 +119,24 @@ return {
     "windwp/nvim-autopairs",
     event = "VeryLazy",
     opts = { check_ts = true, map_c_h = true },
+    config = function(_, opts)
+      local Rule = require("nvim-autopairs.rule")
+      local npairs = require("nvim-autopairs")
+      npairs.setup(opts)
+      npairs.add_rules({
+        Rule("{,", "}")
+          :use_regex(true)
+          :replace_endpair(function()
+            return "<BS><Right>,<Left><Left>"
+          end)
+          :set_end_pair_length(0),
+      })
+      npairs.add_rules({
+        Rule("{;", "}"):replace_endpair(function()
+          return "<BS><Right>;<Left><Left>"
+        end, true):set_end_pair_length(0),
+      })
+    end,
   },
 
   -- textobj-user
