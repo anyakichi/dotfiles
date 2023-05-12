@@ -11,12 +11,17 @@ return {
     capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
     local lspconfig = require("lspconfig")
+    lspconfig.ansiblels.setup({ capabilities = capabilities })
     lspconfig.bashls.setup({ capabilities = capabilities })
     lspconfig.clangd.setup({ capabilities = capabilities })
+    lspconfig.cssls.setup({ capabilities = capabilities })
+    lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
     lspconfig.dockerls.setup({ capabilities = capabilities })
+    lspconfig.esbonio.setup({ capabilities = capabilities })
     lspconfig.eslint.setup({ capabilities = capabilities })
     lspconfig.gopls.setup({ capabilities = capabilities })
     lspconfig.hls.setup({ capabilities = capabilities })
+    lspconfig.html.setup({ capabilities = capabilities })
     lspconfig.jsonls.setup({
       capabilities = capabilities,
       settings = {
@@ -31,7 +36,6 @@ return {
       settings = {
         Lua = {
           format = { enable = false },
-          semantic = { enable = false },
         },
       },
     })
@@ -46,8 +50,12 @@ return {
       },
     })
     lspconfig.rust_analyzer.setup({ capabilities = capabilities })
+    lspconfig.tailwindcss.setup({ capabilities = capabilities })
+    lspconfig.taplo.setup({ capabilities = capabilities })
+    lspconfig.texlab.setup({ capabilities = capabilities })
     lspconfig.tsserver.setup({ capabilities = capabilities })
     lspconfig.vimls.setup({ capabilities = capabilities })
+    lspconfig.yamlls.setup({ capabilities = capabilities })
 
     for type, text in pairs(require("config").icons.diagnostics) do
       local hl = "DiagnosticSign" .. type

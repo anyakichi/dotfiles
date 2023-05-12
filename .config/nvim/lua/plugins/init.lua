@@ -5,13 +5,12 @@ return {
     priority = 1000,
     config = function()
       vim.g.oceanic_next_terminal_bold = 1
-      vim.g.oceanic_next_terminal_italic = 1
       vim.cmd([[colorscheme OceanicNext]])
     end,
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
-  { "NvChad/nvim-colorizer.lua", event = { "BufNewFile", "BufReadPre" }, opts = {} },
+  { "NvChad/nvim-colorizer.lua", keys = { { "<Space>C", "<Cmd>ColorizerToggle<CR>" } }, opts = {} },
   {
     "abecodes/tabout.nvim",
     keys = {
@@ -85,6 +84,16 @@ return {
     cmd = "MarkdownPreview",
   },
   { "j-hui/fidget.nvim", event = "VeryLazy", opts = {} },
+  {
+    "jackMort/ChatGPT.nvim",
+    cmd = { "ChatGPT", "ChatGPTRun" },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+    },
+    opts = { api_key_cmd = "pass chatgpt" },
+  },
   { "jamessan/vim-gnupg", lazy = false },
   {
     "junegunn/vim-easy-align",
@@ -102,7 +111,20 @@ return {
   },
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
-  { "simrat39/rust-tools.nvim", ft = "rust", opts = {} },
+  {
+    "simrat39/rust-tools.nvim",
+    ft = "rust",
+    init = function()
+      vim.api.nvim_set_hl(0, "RustToolsInlayHints", { fg = "#65737e", italic = true })
+    end,
+    opts = {
+      tools = {
+        inlay_hints = {
+          highlight = "RustToolsInlayHints",
+        },
+      },
+    },
+  },
   { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tyru/capture.vim", cmd = "Capture" },
@@ -124,15 +146,16 @@ return {
       local npairs = require("nvim-autopairs")
       npairs.setup(opts)
       npairs.add_rules({
-        Rule("{,", "}")
-          :use_regex(true)
-          :replace_endpair(function()
-            return "<BS><Right>,<Left><Left>"
-          end)
-          :set_end_pair_length(0),
-      })
-      npairs.add_rules({
+        Rule("{,", "}"):replace_endpair(function()
+          return "<BS><Right>,<Left><Left>"
+        end, true):set_end_pair_length(0),
         Rule("{;", "}"):replace_endpair(function()
+          return "<BS><Right>;<Left><Left>"
+        end, true):set_end_pair_length(0),
+        Rule("[,", "]"):replace_endpair(function()
+          return "<BS><Right>,<Left><Left>"
+        end, true):set_end_pair_length(0),
+        Rule("[;", "]"):replace_endpair(function()
           return "<BS><Right>;<Left><Left>"
         end, true):set_end_pair_length(0),
       })

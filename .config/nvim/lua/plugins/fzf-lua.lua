@@ -16,13 +16,16 @@ return {
     vim.keymap.set("n", "<C-g>.", require("fzf-lua").files)
     vim.keymap.set("n", "<C-g>q", require("fzf-lua").quickfix)
     vim.keymap.set("n", "<C-g>l", require("fzf-lua").loclist)
-    vim.keymap.set("n", "<C-g><C-g>", require("fzf-lua").live_grep)
-    vim.keymap.set("n", "<C-g>g", require("fzf-lua").live_grep_resume)
+    vim.keymap.set("n", "<C-g><C-g>", ":<C-u>LiveGrep<Space>")
+    vim.keymap.set("n", "<C-g>g", "<Cmd>LiveGrepResume<CR>")
     vim.keymap.set("n", "<C-g><C-m>", require("fzf-lua").marks)
     vim.keymap.set("n", "<C-g><C-t>", require("fzf-lua").tags)
     vim.keymap.set("n", "<C-g>/", require("fzf-lua").search_history)
-    vim.keymap.set("n", "<C-g>:", require("fzf-lua").command_history)
-    vim.keymap.set("n", "<C-g>;", require("fzf-lua").command_history)
+    vim.keymap.set("n", "<C-g>:", function()
+      local fzf = require("fzf-lua")
+      fzf.command_history({ actions = { ["ctrl-e"] = false, ["ctrl-y"] = fzf.actions.ex_run } })
+    end)
+    vim.keymap.set("n", "<C-g>;", "<C-g>:", { remap = true })
     vim.keymap.set("n", "<C-g><C-l>", require("fzf-lua").blines)
     vim.keymap.set("n", "<C-g>L", require("fzf-lua").lines)
     vim.keymap.set("n", "<C-g>C", require("fzf-lua").git_commits)
@@ -64,5 +67,14 @@ return {
         fzf_files(cmd, opts)
       end, { nargs = "*", complete = "file" })
     end
+
+    vim.api.nvim_create_user_command("LiveGrep", function(opts)
+      vim.g.fzf_live_grep_dir = opts.args
+      require("fzf-lua").live_grep({ filespec = opts.args })
+    end, { nargs = "?", complete = "file" })
+
+    vim.api.nvim_create_user_command("LiveGrepResume", function()
+      require("fzf-lua").live_grep_resume({ filespec = vim.g.fzf_live_grep_dir })
+    end, {})
   end,
 }

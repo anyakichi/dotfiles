@@ -46,7 +46,7 @@ vim.opt.diffopt:append({ "vertical", "indent-heuristic", "algorithm:histogram" }
 vim.opt.foldenable = false
 
 -- Command line
-vim.opt.wildmode = "longest,list,full"
+vim.opt.wildmode = "longest:full,full"
 
 -- Visual mode
 vim.opt.virtualedit = "block"

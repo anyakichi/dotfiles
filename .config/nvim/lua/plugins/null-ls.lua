@@ -13,7 +13,6 @@ return {
           extra_args = { "-i", "4", "-s" },
         }),
         null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.taplo,
       },
     }
   end,

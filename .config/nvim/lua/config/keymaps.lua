@@ -185,7 +185,21 @@ m("c", "<CR>", function()
   end
   return "<CR>"
 end, E)
-m("c", "<C-n>", "<PageDown>")
-m("c", "<C-p>", "<PageUp>")
 --m("c", '<C-g>', "<C-r>=<SID>kill_arg()<CR>")
 m("c", "<C-_>", util.wrap(relpath), E)
+m("c", "<C-r><C-_>", util.wrap(relpath), E)
+
+m("c", "<C-j>", function()
+  if vim.fn.wildmenumode() == 1 then
+    return "<C-n>"
+  else
+    return "<C-j>"
+  end
+end, E)
+m("c", "<C-k>", function()
+  if vim.fn.wildmenumode() == 1 then
+    return "<C-p>"
+  else
+    return "<C-k>"
+  end
+end, E)
