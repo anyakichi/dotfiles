@@ -101,6 +101,12 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "LspInformationText", { reverse = true })
 
     vim.api.nvim_set_hl(0, "mailHeaderKey", { link = "Constant" })
+    vim.api.nvim_set_hl(0, "mailQuoted1", { fg = "#62b3b2" })
+    vim.api.nvim_set_hl(0, "mailQuoted2", { fg = "#99c794" })
+    vim.api.nvim_set_hl(0, "mailQuoted3", { fg = "#c594c5" })
+    vim.api.nvim_set_hl(0, "mailQuoted4", { link = "mailQuoted1" })
+    vim.api.nvim_set_hl(0, "mailQuoted5", { link = "mailQuoted2" })
+    vim.api.nvim_set_hl(0, "mailQuoted6", { link = "mailQuoted3" })
   end,
 })
 
