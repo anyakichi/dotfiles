@@ -1,6 +1,4 @@
 set window-title-basename true
-set window-height 997
-set window-width 705
 set recolor-keephue
 set selection-clipboard clipboard
 
