@@ -3,8 +3,10 @@ return {
   event = { "BufNewFile", "BufReadPre" },
   dependencies = {
     "b0o/SchemaStore.nvim",
-    { "williamboman/mason.nvim", build = ":MasonUpdate", opts = {} },
+    { "folke/neoconf.nvim", opts = {} },
+    { "folke/neodev.nvim", opts = {} },
     { "williamboman/mason-lspconfig.nvim", opts = {} },
+    { "williamboman/mason.nvim", build = ":MasonUpdate", opts = {} },
   },
   config = function()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -15,7 +17,6 @@ return {
     lspconfig.bashls.setup({ capabilities = capabilities })
     lspconfig.clangd.setup({ capabilities = capabilities })
     lspconfig.cssls.setup({ capabilities = capabilities })
-    lspconfig.docker_compose_language_service.setup({ capabilities = capabilities })
     lspconfig.dockerls.setup({ capabilities = capabilities })
     lspconfig.esbonio.setup({ capabilities = capabilities })
     lspconfig.eslint.setup({ capabilities = capabilities })
@@ -31,14 +32,7 @@ return {
         },
       },
     })
-    lspconfig.lua_ls.setup({
-      capabilities = capabilities,
-      settings = {
-        Lua = {
-          format = { enable = false },
-        },
-      },
-    })
+    lspconfig.lua_ls.setup({ capabilities = capabilities })
     lspconfig.ocamllsp.setup({ capabilities = capabilities })
     lspconfig.pyright.setup({ capabilities = capabilities })
     lspconfig.rescriptls.setup({
@@ -55,7 +49,14 @@ return {
     lspconfig.texlab.setup({ capabilities = capabilities })
     lspconfig.tsserver.setup({ capabilities = capabilities })
     lspconfig.vimls.setup({ capabilities = capabilities })
-    lspconfig.yamlls.setup({ capabilities = capabilities })
+    lspconfig.yamlls.setup({
+      capabilities = capabilities,
+      settings = {
+        yaml = {
+          schemas = require("schemastore").yaml.schemas(),
+        },
+      },
+    })
 
     for type, text in pairs(require("config").icons.diagnostics) do
       local hl = "DiagnosticSign" .. type
@@ -93,7 +94,7 @@ return {
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
         vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "<Space>k", vim.lsp.buf.signature_help, opts)
+        vim.keymap.set("n", "<Space>K", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wr", vim.lsp.buf.remove_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wl", function()
@@ -103,7 +104,7 @@ return {
         vim.keymap.set("n", "<Space>rn", vim.lsp.buf.rename, opts)
         vim.keymap.set({ "n", "v" }, "<Space>ca", vim.lsp.buf.code_action, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<Space>f", function()
+        vim.keymap.set({ "n", "v" }, "<Space>f", function()
           vim.lsp.buf.format({ async = true })
         end, opts)
       end,

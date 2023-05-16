@@ -103,8 +103,14 @@ return {
   { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", opts = {} },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
   {
+    "nvim-telescope/telescope.nvim",
+    cmd = "Telescope",
+  },
+  {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
+    -- stylua: ignore
+    keys = { { "<Leader>'", function() require("notify").dismiss() end } },
     config = function()
       vim.notify = require("notify")
     end,
@@ -124,6 +130,17 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      local path = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
+      local codelldb_path = path .. "adapter/codelldb"
+      local liblldb_path = path .. "lldb/lib/liblldb.so"
+      if vim.fn.filereadable(codelldb_path) and vim.fn.filereadable(liblldb_path) then
+        opts.dap = {
+          adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+        }
+      end
+      require("rust-tools").setup(opts)
+    end,
   },
   { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-repeat", event = "VeryLazy" },
