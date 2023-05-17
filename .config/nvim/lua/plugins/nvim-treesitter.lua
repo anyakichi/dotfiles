@@ -20,7 +20,7 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       endwise = { enable = true },
       highlight = { enable = true },
-      indent = { enable = true },
+      indent = { enable = true, disable = { "c", "cpp" } },
       matchup = { enable = true },
 
       textobjects = {
@@ -86,23 +86,6 @@ return {
           },
         },
       },
-    })
-
-    vim.api.nvim_create_autocmd("FileType", {
-      group = vim.api.nvim_create_augroup("NvimTreesitter-C", {}),
-      pattern = "c",
-      callback = function()
-        if vim.fn.executable("clang-format") == 1 then
-          local indent_width =
-            tonumber(vim.fn.system("clang-format -dump-config | awk '/^IndentWidth:/ {print $NF}'"))
-          if indent_width == 8 then
-            vim.opt_local.expandtab = false
-            vim.cmd("TSBufDisable indent")
-          else
-            vim.opt_local.shiftwidth = indent_width
-          end
-        end
-      end,
     })
   end,
 }

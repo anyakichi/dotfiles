@@ -174,6 +174,21 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
+  pattern = { "c", "cpp" },
+  callback = function()
+    if vim.fn.executable("clang-format") == 1 then
+      local indent_width =
+        tonumber(vim.fn.system("clang-format -dump-config | awk '/^IndentWidth:/ {print $NF}'"))
+      vim.opt_local.shiftwidth = indent_width
+      if indent_width == 8 then
+        vim.opt_local.expandtab = false
+      end
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
   pattern = { "go", "help" },
   callback = function()
     vim.opt_local.expandtab = false
