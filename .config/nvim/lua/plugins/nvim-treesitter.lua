@@ -20,7 +20,6 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       endwise = { enable = true },
       highlight = { enable = true },
-      indent = { enable = true, disable = { "c", "cpp" } },
       matchup = { enable = true },
 
       textobjects = {
