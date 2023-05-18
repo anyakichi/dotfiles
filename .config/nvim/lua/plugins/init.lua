@@ -110,7 +110,7 @@ return {
     "rcarriga/nvim-notify",
     event = "VeryLazy",
     -- stylua: ignore
-    keys = { { "<Leader>'", function() require("notify").dismiss() end } },
+    keys = { { "<Leader>'", function() require("notify").dismiss({}) end } },
     config = function()
       vim.notify = require("notify")
     end,

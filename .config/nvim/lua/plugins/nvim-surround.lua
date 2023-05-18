@@ -8,7 +8,7 @@ return {
       local textobj = vim.fn.getcharstr()
       local surround = vim.fn.getcharstr()
       vim.cmd("normal sa" .. textobj .. surround)
-      require("nvim-surround").buffer_setup({ move_cursor = nil })
+      require("nvim-surround").buffer_setup({ move_cursor = "begin" })
     end)
   end,
   opts = function()

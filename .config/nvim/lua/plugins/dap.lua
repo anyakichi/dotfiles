@@ -99,7 +99,11 @@ return {
         type = "rt_lldb",
         request = "launch",
         program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          return vim.fn.input({
+            prompt = "Path to executable: ",
+            default = vim.fn.getcwd() .. "/",
+            completion = "file",
+          })
         end,
         cwd = "${workspaceFolder}",
         stopOnEntry = false,
@@ -125,7 +129,11 @@ return {
         end
       end
       if not bin_name or bin_name == "-" then
-        bin_name = vim.fn.input("Path to executable: ", bin_dir .. "/", "file")
+        bin_name = vim.fn.input({
+          prompt = "Path to executable: ",
+          default = bin_dir .. "/",
+          completion = "file",
+        })
       end
       require("dap").run({
         type = "rt_lldb",
