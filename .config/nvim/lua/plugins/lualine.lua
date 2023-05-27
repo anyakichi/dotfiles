@@ -2,8 +2,8 @@ return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = { "nvim-tree/nvim-web-devicons" },
-  config = function()
-    require("lualine").setup({
+  opts = function()
+    return {
       options = {
         component_separators = "",
         section_separators = "",
@@ -39,6 +39,6 @@ return {
           { "filetype", icons_enabled = false },
         },
       },
-    })
+    }
   end,
 }

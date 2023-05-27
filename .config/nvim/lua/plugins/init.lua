@@ -61,11 +61,12 @@ return {
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
+  { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
   {
     "ggandor/leap.nvim",
     keys = {
-      { "f", "<Plug>(leap-forward-to)", mode = { "n", "o", "x" } },
-      { "F", "<Plug>(leap-backward-to)", mode = { "n", "o", "x" } },
+      { "f", "<Plug>(leap-forward-to)", mode = { "n", "o", "x" }, desc = "Leap forward to" },
+      { "F", "<Plug>(leap-backward-to)", mode = { "n", "o", "x" }, desc = "Leap backward to" },
     },
   },
   {

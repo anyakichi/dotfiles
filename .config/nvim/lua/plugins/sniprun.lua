@@ -12,7 +12,7 @@ return {
   build = "bash install.sh",
   opts = {
     display = {
-      "TempFloatingWindow",
+      "Terminal",
     },
     snipruncolors = {
       SniprunFloatingWinOk = { ctermfg = 10, fg = "#cdd3de" },
