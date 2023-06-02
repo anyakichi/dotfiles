@@ -66,6 +66,15 @@ if [[ -n "${TMUX}" ]]; then
         tmux new-window -n "${(@)argv[$#]/.*/}" \
             "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
     }
+
+    waypipe() {
+        if [[ $1 == ssh && $# == 2 ]]; then
+            tmux new-window -n "${(@)argv[$#]/.*/}" \
+                "GPG_TTY=\$(tty) command waypipe $(printf "%q " "${@}")"
+        else
+            command waypipe "$@"
+        fi
+    }
 fi
 
 # Global aliases
