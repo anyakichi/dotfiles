@@ -103,6 +103,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "SpellRare", { sp = "#c594c5", undercurl = true })
     vim.api.nvim_set_hl(0, "LspInformationText", { reverse = true })
 
+    vim.api.nvim_set_hl(0, "IndentBlanklineSpaceChar", { fg = "#4f5b66", nocombine = true })
+
     vim.api.nvim_set_hl(0, "mailHeaderKey", { link = "Constant" })
     vim.api.nvim_set_hl(0, "mailQuoted1", { fg = "#62b3b2" })
     vim.api.nvim_set_hl(0, "mailQuoted2", { fg = "#99c794" })
