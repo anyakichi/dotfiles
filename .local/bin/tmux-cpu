@@ -1,0 +1,35 @@
+#!/bin/bash
+
+calc_stat() {
+    read -ra stats </proc/stat
+    total=0
+    idle=0
+    for ((i = 1; i < ${#stats[@]}; i++)); do
+        total=$((total + stats[i]))
+        if ((i == 4)) || ((i == 5)); then
+            idle=$((idle + stats[i]))
+        fi
+    done
+
+    echo "$total $idle"
+}
+
+read -ra stat1 < <(calc_stat)
+sleep 1
+read -ra stat2 < <(calc_stat)
+
+total=$((stat2[0] - stat1[0]))
+idle=$((stat2[1] - stat1[1]))
+
+awk -v format="%5.1f%%" -v total=$total -v idle=$idle '
+BEGIN {
+    usage = 100 * (total - idle) / total
+    if (usage < 10) {
+        printf("#[fg=colour0,bg=colour2]" format, usage)
+    } else if (usage < 90) {
+        printf("#[fg=colour0,bg=colour3]" format, usage)
+    } else {
+        printf("#[fg=colour0,bg=colour1]" format, usage)
+    }
+}
+'
