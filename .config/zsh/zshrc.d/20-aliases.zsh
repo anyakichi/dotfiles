@@ -1,6 +1,8 @@
 ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto'
 command -v exa &>/dev/null && \
     alias ls='exa --sort Filename --group-directories-first'
+command -v eza &>/dev/null && \
+    alias ls='eza --sort Filename --group-directories-first'
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
@@ -27,6 +29,7 @@ alias g=fghq
 alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
 alias_alt mutt neomutt
 alias_alt top htop
+alias_alt top btm
 alias_alt vi vim
 alias_alt vi nvim
 alias_alt vim nvim
