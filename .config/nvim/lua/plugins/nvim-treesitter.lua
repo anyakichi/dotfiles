@@ -3,7 +3,9 @@ return {
   event = "VeryLazy",
   build = ":TSUpdate",
   dependencies = {
-    "JoosepAlviste/nvim-ts-context-commentstring",
+    { "JoosepAlviste/nvim-ts-context-commentstring", opts = {
+      enable_autocmd = false,
+    } },
     "RRethy/nvim-treesitter-endwise",
     "andymass/vim-matchup",
     "ghostbuster91/nvim-next",
@@ -17,7 +19,6 @@ return {
     require("nvim-treesitter.configs").setup({
       ensure_installed = "all",
 
-      context_commentstring = { enable = true, enable_autocmd = false },
       endwise = { enable = true },
       highlight = { enable = true },
       matchup = { enable = true },

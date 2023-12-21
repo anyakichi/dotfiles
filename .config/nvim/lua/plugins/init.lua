@@ -84,7 +84,7 @@ return {
     ft = "markdown",
     cmd = "MarkdownPreview",
   },
-  { "j-hui/fidget.nvim", branch="legacy", event = "LspAttach", opts = {} },
+  { "j-hui/fidget.nvim", branch = "legacy", event = "LspAttach", opts = {} },
   {
     "jackMort/ChatGPT.nvim",
     cmd = { "ChatGPT", "ChatGPTRun" },
@@ -101,7 +101,7 @@ return {
     keys = { { "ga", "<Plug>(EasyAlign)", mode = { "n", "x" } } },
   },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", opts = {} },
+  { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
   {
     "nvim-telescope/telescope.nvim",
