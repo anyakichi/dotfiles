@@ -36,6 +36,14 @@ alias_alt vim nvim
 
 alias din='din ${DIN_OPTS[@]}'
 
+cpr() {
+    rsync -a -hh --partial --info=stats1,progress2 --modify-window=1 "$@"
+}
+
+mvr() {
+    rsync -a -hh --partial --info=stats1,progress2 --modify-window=1 --remove-source-files "$@"
+}
+
 command -v jq &>/dev/null &&
 jq() {
     if [[ -t 1 ]]; then
