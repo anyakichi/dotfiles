@@ -114,6 +114,7 @@ bind pager h previous-undeleted
 bind pager <BackSpace> search-toggle
 
 macro browser	  q "<exit><quit>"	"save changes to mailbox and quit"
+macro pager       q "<quit><quit>"	"save changes to mailbox and quit"
 macro index	  y "<sync-mailbox><check-stats><imap-fetch-mail><change-folder>?" \
 					"show incoming mailboxes list"
 macro pager	  y "<exit><sync-mailbox><check-stats><imap-fetch-mail><change-vfolder>?" \
