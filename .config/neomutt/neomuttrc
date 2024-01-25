@@ -16,9 +16,9 @@ set pager_stop=yes
 
 set quote_regex="^([ \t]*[|>])+"
 
-set send_charset="us-ascii:iso-2022-jp:utf-8"
+set send_charset="utf-8"
 set assumed_charset="utf-8:cp932:iso-2022-jp:euc-jp"
-set attach_charset="euc-jp:utf-8"
+set attach_charset="utf-8"
 
 set mail_check=60
 set mail_check_stats
