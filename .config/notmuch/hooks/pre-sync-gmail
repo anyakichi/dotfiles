@@ -1,0 +1,5 @@
+#!/bin/bash
+
+while read -r line; do
+    sed -i -E '/^X-Label:/s/ \\Inbox\>//' "$line"
+done < <(notmuch search --output files -- tag:\\Inbox folder:Trash)
