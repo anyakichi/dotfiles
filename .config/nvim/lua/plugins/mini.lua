@@ -30,7 +30,10 @@ return {
     "echasnovski/mini.indentscope",
     event = "VeryLazy",
     main = "mini.indentscope",
-    opts = { symbol = "│" },
+    opts = {
+      options = { try_as_border = true },
+      symbol = "▎",
+    },
     init = function()
       vim.api.nvim_create_autocmd("FileType", {
         pattern = { "help", "lazy", "mason" },
@@ -39,7 +42,7 @@ return {
         end,
       })
 
-      vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = "#4f5b66" })
+      vim.api.nvim_set_hl(0, "MiniIndentscopeSymbol", { fg = "#65737e" })
     end,
   },
   {

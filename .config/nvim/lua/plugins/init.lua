@@ -101,7 +101,26 @@ return {
     keys = { { "ga", "<Plug>(EasyAlign)", mode = { "n", "x" } } },
   },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  { "lukas-reineke/indent-blankline.nvim", event = "VeryLazy", main = "ibl", opts = {} },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "VeryLazy",
+    main = "ibl",
+    opts = {
+      indent = {
+        char = "▏",
+      },
+      scope = { enabled = false },
+      exclude = {
+        filetypes = {
+          "help",
+          "lazy",
+          "mason",
+          "notify",
+          "toggleterm",
+        },
+      },
+    },
+  },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
   {
     "nvim-telescope/telescope.nvim",
