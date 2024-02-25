@@ -27,7 +27,7 @@ return {
           {
             "encoding",
             cond = function()
-              return vim.o.encoding ~= "utf-8"
+              return vim.o.fileencoding ~= "utf-8"
             end,
           },
           {
