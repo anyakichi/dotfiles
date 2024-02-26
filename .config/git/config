@@ -17,6 +17,7 @@
 	glog = log --graph --oneline --decorate
 	hash = !fzf-git hash
 	ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
+	pushf = push --force-with-lease --force-if-includes
 	qadd = !guilt add
 	qdelete = !guilt delete
 	qfold = !guilt fold
@@ -40,19 +41,27 @@
 	shw = show --word-diff
 	sp = stash pop
 	ss = stash
+	ssa = stash -a
 	st = status
 	t = rev-parse --show-cdup
 	top = rev-parse --show-toplevel
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
 [commit]
 	verbose = true
 [core]
 	pager = less -FRX
 	quotepath = false
+	untrackedCache = true
 [credential]
 	helper = !pass-git-helper $@
 [diff]
 	algorithm = histogram
 	tool = vimdiff
+[index]
+	version = 4
 [init]
 	defaultBranch = main
 [pager]
@@ -64,8 +73,10 @@
 [rebase]
 	autosquash = true
 	autostash = true
+[rerere]
+	enabled = true
 [stash]
-        showPatch = true
+	showPatch = true
 [status]
 	branch = true
 	short = true
