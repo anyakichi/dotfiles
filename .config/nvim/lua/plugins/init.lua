@@ -138,6 +138,14 @@ return {
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
   {
+    "seanbreckenridge/yadm-git.vim",
+    event = "BufReadPre",
+    dependencies = "tpope/vim-fugitive",
+    config = function()
+      vim.g.yadm_git_gitgutter_enabled = 0
+    end,
+  },
+  {
     "simrat39/rust-tools.nvim",
     ft = "rust",
     init = function()
