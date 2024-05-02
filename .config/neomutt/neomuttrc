@@ -72,8 +72,6 @@ charset-hook shift-jis cp932
 alternative_order text/plain text
 auto_view text/html text/plain
 
-bind generic,alias,attach,browser,editor,index,compose,pager,pgp,postpone ':' noop
-
 bind generic g first-entry
 bind generic G last-entry
 bind generic f next-page
