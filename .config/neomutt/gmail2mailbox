@@ -4,15 +4,14 @@ export NOTMUCH_PROFILE="${1}"
 
 nm_path="$(notmuch config get database.path)"
 
-anft="and not folder:Trash"
-
-echo "virtual-mailboxes '$1' 'notmuch://${nm_path}?query=tag:\\Inbox $anft'"
-echo "virtual-mailboxes '  Unread' 'notmuch://${nm_path}?query=tag:unread $anft'"
-echo "virtual-mailboxes '  Flagged' 'notmuch://${nm_path}?query=tag:flagged $anft'"
-echo "virtual-mailboxes '  Important' 'notmuch://${nm_path}?query=tag:\\Important $anft'"
-echo "virtual-mailboxes '  Archived' 'notmuch://${nm_path}?query=not tag:\\Inbox $anft'"
-echo "virtual-mailboxes '  Sent' 'notmuch://${nm_path}?query=tag:\\Sent $anft'"
-echo "virtual-mailboxes '  Draft' 'notmuch://${nm_path}?query=tag:\\Draft $anft'"
-echo "virtual-mailboxes '  Trash' 'notmuch://${nm_path}?query=tag:\\Trash or folder:Trash'"
+echo "virtual-mailboxes '$1' 'notmuch://${nm_path}?query=tag:inbox'"
+echo "virtual-mailboxes '  Unread' 'notmuch://${nm_path}?query=tag:unread'"
+echo "virtual-mailboxes '  Flagged' 'notmuch://${nm_path}?query=tag:flagged'"
+echo "virtual-mailboxes '  Important' 'notmuch://${nm_path}?query=tag:important'"
+echo "virtual-mailboxes '  Archived' 'notmuch://${nm_path}?query=not tag:inbox'"
+echo "virtual-mailboxes '  Sent' 'notmuch://${nm_path}?query=tag:sent'"
+echo "virtual-mailboxes '  Draft' 'notmuch://${nm_path}?query=tag:draft'"
+echo "virtual-mailboxes '  Spam' 'notmuch://${nm_path}?query=tag:spam'"
+echo "virtual-mailboxes '  Trash' 'notmuch://${nm_path}?query=tag:trash'"
 
 ~/.config/neomutt/notmuch2mailbox "$1" "$2" '  '
