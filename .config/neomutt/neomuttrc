@@ -2,7 +2,9 @@ set nohelp
 set nomove
 set delete=yes
 set sleep_time=0
-set sort=threads
+set use_threads=threads
+set sort=last-date
+set sort_aux=date
 set include
 
 set date_format="%Y/%m/%d %H:%M:%S"
