@@ -1,0 +1,18 @@
+setenv NOTMUCH_PROFILE="$my_addr"
+
+set my_mail_root="`notmuch config get database.mail_root`"
+
+set nm_config_profile="$my_addr"
+
+set from="$my_addr"
+
+set folder=$my_mail_root
+set spoolfile=$my_addr
+set record=
+set postponed=+Drafts
+
+set sendmail="gmi send -C $my_mail_root"
+
+macro index,pager d "<modify-labels-then-hide>+trash -inbox -spam\n"
+
+# vim:ft=neomuttrc
