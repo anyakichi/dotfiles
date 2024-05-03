@@ -53,8 +53,6 @@ set imap_passive=no
 set header_cache="~/.cache/neomutt"
 set message_cachedir="~/.cache/neomutt"
 
-set nm_exclude_tags=\\Trash
-
 # Cryptographic
 set crypt_use_gpgme
 
