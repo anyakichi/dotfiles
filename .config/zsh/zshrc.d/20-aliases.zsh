@@ -19,6 +19,8 @@ alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
 alias grep='grep -E'
+alias mutt="PINENTRY_USER_DATA=curses mutt"
+alias neomutt="PINENTRY_USER_DATA=curses neomutt"
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 alias ag='ag --pager "less -FRX"'
 alias picocom='picocom -e \\'
