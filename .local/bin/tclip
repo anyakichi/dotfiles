@@ -1,7 +1,66 @@
-#!/bin/sh
+#!/usr/bin/env python
 
-if [ $# -eq 0 ]; then
-    printf "\e]52;c;%s\a" "$(base64 -w 0)"
-else
-    printf "\e]52;c;%s\a" "$(printf "%s" "$*" | base64 -w 0)"
-fi
+import argparse
+import base64
+import curses
+import io
+import re
+import sys
+from contextlib import contextmanager
+
+
+@contextmanager
+def cursescontext():
+    try:
+        curses.initscr()
+        curses.noecho()
+        curses.cbreak()
+        yield
+    finally:
+        curses.nocbreak()
+        curses.echo()
+        curses.endwin()
+
+
+def copy(input: bytes):
+    data = base64.b64encode(input).decode("utf-8")
+    print(f"\x1b]52;c;{data}\a", end="")
+
+
+def paste():
+    data = b""
+
+    with cursescontext():
+        with open("/dev/tty", "wb") as tty:
+            tty.write(b"\x1b]52;c;?\a")
+            tty.flush()
+        with open("/dev/tty", "rb", buffering=0) as tty:
+            while b"\a" not in data:
+                data += tty.read(io.DEFAULT_BUFFER_SIZE)
+
+    data = re.sub(rb"\x1b\]52;[cp]?;(.*)\a", rb"\1", data)
+    data = base64.b64decode(data).decode("utf-8")
+    print(data, end="")
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description="Copy and paste to and from the clipboard."
+    )
+    parser.add_argument("data", nargs="?", help="Data to copy to the clipboard.")
+    parser.add_argument(
+        "-o", action="store_true", help="Paste data from the clipboard."
+    )
+    args = parser.parse_args()
+
+    if args.o:
+        paste()
+    else:
+        if args.data is None:
+            data = sys.stdin.buffer.read()
+        else:
+            data = args.data.encode("utf-8")
+        copy(data)
+
+
+main()
