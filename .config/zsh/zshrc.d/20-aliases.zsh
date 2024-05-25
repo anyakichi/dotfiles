@@ -74,20 +74,27 @@ if [ "$(tmux -V | awk 'NR==1 {print ($2+0 < 3.1)}')" = 1 ]; then
     alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 fi
 
-if [[ -n "${TMUX}" ]]; then
-    ssh() {
+ssht() {
+    if [[ -t 1 ]]; then
         tmux new-window -n "${(@)argv[$#]/.*/}" \
             "GPG_TTY=\$(tty) command ssh $(printf "%q " "${@}")"
-    }
+    else
+        command ssh "$@"
+    fi
+}
 
-    waypipe() {
-        if [[ $1 == ssh && $# == 2 ]]; then
-            tmux new-window -n "${(@)argv[$#]/.*/}" \
-                "GPG_TTY=\$(tty) command waypipe $(printf "%q " "${@}")"
-        else
-            command waypipe "$@"
-        fi
-    }
+waypipet() {
+    if [[ -t 1 && $1 == ssh && $# == 2 ]]; then
+        tmux new-window -n "${(@)argv[$#]/.*/}" \
+            "GPG_TTY=\$(tty) command waypipe $(printf "%q " "${@}")"
+    else
+        command waypipe "$@"
+    fi
+}
+
+if [[ -n "${TMUX}" ]]; then
+    alias ssh=ssht
+    alias waypipe=waypipet
 fi
 
 # Global aliases
