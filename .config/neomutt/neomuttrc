@@ -13,6 +13,8 @@ set index_format='%Z %<[12m?%<[d?%[%H:%M]&%[%m/%d]>&%[%Y/%m/%d]> %-15.15L %s'
 set pager_format="-%Z- %C/%m (%e/%E): %* %D -- (%P)"
 set forward_format="Fw: %s"
 
+set wrap=80
+
 set pager_index_lines=7
 set pager_stop=yes
 
