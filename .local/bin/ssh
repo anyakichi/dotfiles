@@ -1,6 +1,0 @@
-#!/bin/sh
-
-gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
-
-PATH=$(echo "$PATH" | sed "s,$(cd "$(dirname "$0")" && pwd):,,")
-exec "$(basename "$0")" "$@"
