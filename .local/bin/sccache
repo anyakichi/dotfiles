@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$SCCACHE_DISABLE" in
+    1|true|yes|enable)
+        exec "$@"
+        ;;
+    *)
+        PATH=$(echo "$PATH" | sed "s,$(cd "$(dirname "$0")" && pwd):,,")
+        exec sccache "$@"
+esac
