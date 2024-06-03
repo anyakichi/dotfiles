@@ -27,6 +27,7 @@ return {
         require("dap-python").setup()
       end,
     },
+    "nvim-neotest/nvim-nio",
     {
       "rcarriga/nvim-dap-ui",
       -- stylua: ignore
