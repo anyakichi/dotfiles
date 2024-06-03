@@ -91,6 +91,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "Exception", { link = "Statement" })
 
     vim.api.nvim_set_hl(0, "Normal", { fg = "#c0c5ce", bg = "#1b2b34" })
+    vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
     vim.api.nvim_set_hl(0, "Statement", { fg = "#ec5f67" })
     vim.api.nvim_set_hl(0, "PreProc", { fg = "#c594c5" })
     vim.api.nvim_set_hl(0, "Structure", { fg = "#62b3b2", bold = true })
