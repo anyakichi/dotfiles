@@ -17,7 +17,7 @@ return {
     vim.keymap.set("n", "<C-g>q", require("fzf-lua").quickfix)
     vim.keymap.set("n", "<C-g>l", require("fzf-lua").loclist)
     vim.keymap.set("n", "<C-g><C-g>", ":<C-u>LiveGrep<Space>")
-    vim.keymap.set("n", "<C-g>g", "<Cmd>LiveGrepResume<CR>")
+    vim.keymap.set("n", "<C-g>g", require("fzf-lua").live_grep_resume)
     vim.keymap.set("n", "<C-g><C-m>", require("fzf-lua").marks)
     vim.keymap.set("n", "<C-g><C-t>", require("fzf-lua").tags)
     vim.keymap.set("n", "<C-g>/", require("fzf-lua").search_history)
@@ -69,12 +69,9 @@ return {
     end
 
     vim.api.nvim_create_user_command("LiveGrep", function(opts)
-      vim.g.fzf_live_grep_dir = opts.args
-      require("fzf-lua").live_grep({ filespec = opts.args })
-    end, { nargs = "?", complete = "file" })
-
-    vim.api.nvim_create_user_command("LiveGrepResume", function()
-      require("fzf-lua").live_grep_resume({ filespec = vim.g.fzf_live_grep_dir })
-    end, {})
+      local search = table.remove(opts.fargs, 1)
+      local filespec = table.concat(opts.fargs, " ")
+      require("fzf-lua").live_grep({ filespec = filespec, search = search })
+    end, { nargs = "+", complete = "file" })
   end,
 }
