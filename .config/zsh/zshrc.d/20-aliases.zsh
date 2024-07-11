@@ -55,12 +55,19 @@ jq() {
     fi
 }
 
-command -v rg &>/dev/null &&
 rg() {
-    if [[ -t 1 ]]; then
-        command rg -S -p "$@" | less -RMFXKS
+    if command -v rg &>/dev/null; then
+        if [[ -t 1 ]]; then
+            command rg -S --color=always "$@" | less -RMFXKS
+        else
+            command rg -S "$@"
+        fi
     else
-        command rg -S "$@"
+        if [[ -t 1 ]]; then
+            command grep --color=always "$@" | less -RMFXKS
+        else
+            command grep "$@"
+        fi
     fi
 }
 
@@ -73,6 +80,15 @@ rifle()
 if [ "$(tmux -V | awk 'NR==1 {print ($2+0 < 3.1)}')" = 1 ]; then
     alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 fi
+
+st() {
+    if [[ -t 1 ]]; then
+        tmux new-window -n "${(@)argv[$#]/.*/}" \
+            "GPG_TTY=\$(tty) command s $(printf "%q " "${@}")"
+    else
+        command s "$@"
+    fi
+}
 
 ssht() {
     if [[ -t 1 ]]; then
@@ -93,12 +109,14 @@ waypipet() {
 }
 
 if [[ -n "${TMUX}" ]]; then
+    alias s=st
     alias ssh=ssht
     alias waypipe=waypipet
 fi
 
 # Global aliases
-alias -g G='|grep'
+alias -g C='|tclip'
+alias -g G='|rg'
 alias -g L='|less'
 alias -g LL='2>&1|less'
 alias -g M='|more'
