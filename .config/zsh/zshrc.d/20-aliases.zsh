@@ -1,8 +1,14 @@
+alias_if_exists() {
+    command -v "$1" &>/dev/null && alias $1="${${@:2}}"
+}
+
+alias_alt() {
+    command -v "$2" &>/dev/null && alias $1="${${@:2}}"
+}
+
 ls --color=auto >/dev/null 2>&1 && alias ls='ls --color=auto'
-command -v exa &>/dev/null && \
-    alias ls='exa --sort Filename --group-directories-first'
-command -v eza &>/dev/null && \
-    alias ls='eza --sort Filename --group-directories-first'
+alias_alt ls exa --sort Filename --group-directories-first
+alias_alt ls eza --sort Filename --group-directories-first
 alias la='ls -a'
 alias ll='ls -l'
 alias lla='ls -la'
@@ -18,17 +24,15 @@ alias mkdir='nocorrect mkdir'
 alias mv='nocorrect mv'
 alias rm='nocorrect rm'
 
-alias grep='grep -E'
-alias mutt="PINENTRY_USER_DATA=curses mutt"
-alias neomutt="PINENTRY_USER_DATA=curses neomutt"
-alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
-alias ag='ag --pager "less -FRX"'
-alias picocom='picocom -e \\'
-alias d=fcd
-alias o=rifle
 alias g=fghq
+alias neomutt="PINENTRY_USER_DATA=curses neomutt"
+alias o=rifle
+alias picocom='picocom -e \\'
+alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 
-alias_alt() { command -v "$2" &>/dev/null && alias $1="${${@:2}}" }
+alias_if_exists jq 'pipeless jq -C'
+alias_if_exists rg 'pipeless rg -S --color=always'
+
 alias_alt mutt neomutt
 alias_alt top htop
 alias_alt top btm
@@ -44,31 +48,6 @@ cpr() {
 
 mvr() {
     rsync -a -hh --partial --info=stats1,progress2 --modify-window=1 --remove-source-files "$@"
-}
-
-command -v jq &>/dev/null &&
-jq() {
-    if [[ -t 1 ]]; then
-        command jq -C "$@" | less -RMFXKS
-    else
-        command jq "$@"
-    fi
-}
-
-rg() {
-    if command -v rg &>/dev/null; then
-        if [[ -t 1 ]]; then
-            command rg -S --color=always "$@" | less -RMFXKS
-        else
-            command rg -S "$@"
-        fi
-    else
-        if [[ -t 1 ]]; then
-            command grep --color=always "$@" | less -RMFXKS
-        else
-            command grep "$@"
-        fi
-    fi
 }
 
 command -v rifle &>/dev/null &&
