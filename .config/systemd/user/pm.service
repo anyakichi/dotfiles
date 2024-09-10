@@ -5,6 +5,7 @@ BindsTo=sway-session.target
 [Service]
 Type=simple
 ExecStart=%h/.local/bin/pm start
+ExecStop=%h/.local/bin/pm stop
 Restart=on-failure
 
 [Install]
