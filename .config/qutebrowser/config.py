@@ -96,6 +96,8 @@ config.bind("<ctrl-,>X", f"spawn --userscript translate -t ja --text")
 # Settings
 #
 
+c.aliases = {}
+
 c.auto_save.session = True
 c.content.default_encoding = "utf-8"
 c.content.pdfjs = True
