@@ -1,12 +1,10 @@
 return {
   "lewis6991/gitsigns.nvim",
   event = "VeryLazy",
+  dependencies = "seanbreckenridge/gitsigns-yadm.nvim",
   opts = {
     signs = {
       untracked = { text = "" },
-    },
-    yadm = {
-      enable = true,
     },
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
@@ -64,6 +62,9 @@ return {
 
       -- Text object
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
+    end,
+    _on_attach_pre = function(_, callback)
+      require("gitsigns-yadm").yadm_signs(callback)
     end,
   },
 }
