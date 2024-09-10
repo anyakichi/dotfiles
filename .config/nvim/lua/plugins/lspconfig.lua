@@ -65,7 +65,7 @@ return {
     lspconfig.tailwindcss.setup({ capabilities = capabilities })
     lspconfig.taplo.setup({ capabilities = capabilities })
     lspconfig.texlab.setup({ capabilities = capabilities })
-    lspconfig.tsserver.setup({ capabilities = capabilities })
+    lspconfig.ts_ls.setup({ capabilities = capabilities })
     lspconfig.vimls.setup({ capabilities = capabilities })
     lspconfig.yamlls.setup({
       capabilities = capabilities,
