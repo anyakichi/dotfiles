@@ -2,6 +2,7 @@ c = c
 config = config
 
 config.load_autoconfig()
+config.source("hook.py")
 
 #
 # Command mode
