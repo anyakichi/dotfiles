@@ -1,0 +1,10 @@
+[Unit]
+Description=Mozc Server
+
+[Service]
+ExecStart=/usr/lib/mozc/mozc_server
+ExecStop=/bin/kill -SIGTERM $MAINPID
+KillMode=process
+
+[Install]
+WantedBy=sway-session.target
