@@ -1,3 +1,5 @@
+from pathlib import Path
+
 c = c
 config = config
 
@@ -131,6 +133,10 @@ c.tabs.width = 100
 c.window.hide_decoration = True
 
 c.fonts.web.family.standard = "sans-serif"
+
+pac_proxy = Path.home() / ".config/proxy.pac"
+if pac_proxy.exists():
+    c.qt.args.append(f"proxy-pac-url=file://{pac_proxy}")
 
 
 # base16-qutebrowser (https://github.com/theova/base16-qutebrowser)
