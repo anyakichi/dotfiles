@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if command -v waypipe &>/dev/null; then
+    waypipe ssh "$@"
+    exit_code=$?
+    if [[ $exit_code -ne 127 ]]; then
+        exit $exit_code
+    fi
+fi
+
+ssh "$@"
