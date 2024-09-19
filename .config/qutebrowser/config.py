@@ -1,5 +1,3 @@
-from pathlib import Path
-
 c = c
 config = config
 
@@ -134,7 +132,7 @@ c.window.hide_decoration = True
 
 c.fonts.web.family.standard = "sans-serif"
 
-pac_proxy = Path.home() / ".config/proxy.pac"
+pac_proxy = config.configdir / "proxy.pac"
 if pac_proxy.exists():
     c.qt.args.append(f"proxy-pac-url=file://{pac_proxy}")
 
