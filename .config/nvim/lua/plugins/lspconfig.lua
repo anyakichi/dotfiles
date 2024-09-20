@@ -51,6 +51,7 @@ return {
       },
     })
     lspconfig.lua_ls.setup({ capabilities = capabilities })
+    lspconfig.mesonlsp.setup({ capabilities = capabilities })
     lspconfig.ocamllsp.setup({ capabilities = capabilities })
     lspconfig.pyright.setup({ capabilities = capabilities })
     lspconfig.rescriptls.setup({
