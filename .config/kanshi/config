@@ -3,6 +3,33 @@ profile {
 }
 
 profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 0,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 0,0
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 position 0,1080
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 position 0,0
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 1920,0
+    output "YTH YTH133PC " enable scale 1 position 0,1080
+}
+
+profile {
+    output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,0
+    output "YTH YTH133PC " enable scale 1 position 0,0
+}
+
+profile {
     output "LG Display 0x05EF Unknown" enable scale 1.5 position 1920,1080
     output "Eizo Nanao Corporation EV2785 0x0000F599" enable scale 2 mode 3840x2160 position 1920,0
     output "YTH YTH133PC Unknown" enable scale 1 position 0,1080
@@ -18,3 +45,69 @@ profile {
     output "YTH YTH133PC Unknown" enable scale 1 position 0,0
 }
 
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 mode 2880x1800 position 0,0
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 mode 2880x1800 position 0,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 0,0
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 mode 2880x1800 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 mode 1920x1200 position 0,1080
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 mode 2880x1800 position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 mode 1920x1200 position 0,0
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 1920,0
+    output "YTH YTH133PC " enable scale 1 position 0,1080
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 position 1920,0
+    output "YTH YTH133PC " enable scale 1 position 0,0
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x0000F599" enable scale 2 mode 3840x2160 position 1920,0
+    output "YTH YTH133PC Unknown" enable scale 1 position 0,1080
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 position 0,1080
+    output "Eizo Nanao Corporation EV2785 0x0000F599" enable scale 2 mode 3840x2160 position 0,0
+}
+
+profile {
+    output "Samsung Display Corp. 0x419F Unknown" enable scale 1.5 position 1920,0
+    output "YTH YTH133PC 0x01010101" enable scale 1 position 0,0
+}
+
+profile {
+    output "Chimei Innolux Corporation 0x143F Unknown" enable
+}
+
+profile {
+    output "Chimei Innolux Corporation 0x143F Unknown" enable position 0,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 0,0
+}
+
+profile {
+    output "Chimei Innolux Corporation 0x143F Unknown" enable position 1920,1080
+    output "Eizo Nanao Corporation EV2785 0x04F4A599" enable scale 2 mode 3840x2160 position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 mode 1920x1200 position 0,1080
+}
+
+profile {
+    output "Chimei Innolux Corporation 0x143F Unknown" enable position 1920,0
+    output "Dell Inc. RTK WUXGA HDR 8R33926O00QS" enable scale 1 mode 1920x1200 position 0,0
+}
