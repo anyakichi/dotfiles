@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PM_SLEEP_MODE="${PM_SLEEP_MODE:-suspend}"
+PM_SLEEP_MODE="${PM_SLEEP_MODE:-sleep}"
 PM_POWER_SUPPLY_AC="${PM_POWER_SUPPLY_AC:-/sys/class/power_supply/AC/online}"
 
 XIDLEHOOK_SOCKET=${XDG_RUNTIME_DIR}/xidlehook.sock
