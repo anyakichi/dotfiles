@@ -48,6 +48,7 @@ x yay -S --needed --noconfirm \
     pass-otp \
     picocom \
     procs \
+    proxychains-ng \
     ranger-git \
     ripgrep \
     tmux \
