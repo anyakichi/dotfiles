@@ -9,6 +9,9 @@ x() {
 }
 
 sudo -k
+x sudo pacman -Syu
+
+sudo -k
 x sudo pacman -S --needed --noconfirm base base-devel
 
 # yay
@@ -54,8 +57,6 @@ x yay -S --needed --noconfirm \
     zoxide \
     zsh
 
-x systemctl --user enable --now tmux
-
 {% if yadm.class == "devel" %}
 sudo -k
 x yay -S --needed --noconfirm \
@@ -98,8 +99,6 @@ x yay -S --needed --noconfirm \
     vscode-json-languageserver \
     yaml-language-server \
     yarn
-
-x sudo systemctl enable --now docker
 {% endif %}
 
 {% if yadm.class == "gui" %}
@@ -160,8 +159,4 @@ x yay -S --needed --noconfirm \
     xorg-xwayland \
     zathura \
     zathura-pdf-poppler
-
-x systemctl --user enable --now kanshi
-x systemctl --user enable --now pm
-x systemctl --user enable --now waybar
 {% endif %}
