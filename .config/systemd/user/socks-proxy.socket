@@ -1,0 +1,8 @@
+[Unit]
+Description=SOCKS proxy
+
+[Socket]
+ListenStream=1080
+
+[Install]
+WantedBy=sockets.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=SOCKS proxy
+
+BindsTo=socks-proxy-ssh.service
+After=socks-proxy-ssh.service
+Requires=socks-proxy.socket
+After=socks-proxy.socket
+
+[Service]
+ExecStart=/usr/lib/systemd/systemd-socket-proxyd --exit-idle-time=30s 127.0.0.1:11080
