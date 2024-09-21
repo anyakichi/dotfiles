@@ -1,0 +1,167 @@
+#!/bin/bash
+
+set -o errexit
+set -o pipefail
+
+x() {
+    echo "==> $*"
+    "$@"
+}
+
+sudo -k
+x sudo pacman -S --needed --noconfirm base base-devel
+
+# yay
+if ! command -v yay &>/dev/null; then
+    sudo -k
+    x git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
+    x makepkg -D /tmp/yay-bin -si --noconfirm
+    x rm -rf /tmp/yay-bin
+fi
+
+# basic commands
+sudo -k
+x yay -S --needed --noconfirm \
+    bat \
+    bottom \
+    chafa \
+    dust \
+    eza \
+    fd \
+    fzf \
+    ghq \
+    git \
+    git-lfs \
+    gopass \
+    less \
+    lieer \
+    mdcat \
+    neomutt \
+    neovim \
+    notmuch \
+    oama \
+    pass \
+    pass-git-helper \
+    pass-otp \
+    picocom \
+    procs \
+    ranger-git \
+    ripgrep \
+    tmux \
+    unarchiver \
+    vivid \
+    yazi \
+    zoxide \
+    zsh
+
+x systemctl --user enable --now tmux
+
+{% if yadm.class == "devel" %}
+sudo -k
+x yay -S --needed --noconfirm \
+    alsa-utils \
+    bash-language-server \
+    clang \
+    docker \
+    docker-credential-pass \
+    esbonio \
+    eslint-language-server \
+    ffmpeg \
+    gopls \
+    imagemagick \
+    incus \
+    lua-language-server \
+    luarocks \
+    lvm2 \
+    mesonlsp \
+    nodejs \
+    npm \
+    pnpm \
+    prettier \
+    pyright \
+    python-black \
+    python-isort \
+    python-pynvim \
+    qemu-user-static-binfmt \
+    rust \
+    rust-analyzer \
+    shellckeck \
+    shfmt \
+    stylua \
+    tailwindcss-language-server \
+    taplo-cli \
+    texlab \
+    tree-sitter-cli \
+    typescript-language-server \
+    vscode-css-languageserver \
+    vscode-html-languageserver \
+    vscode-json-languageserver \
+    yaml-language-server \
+    yarn
+
+x sudo systemctl enable --now docker
+{% endif %}
+
+{% if yadm.class == "gui" %}
+sudo -k
+x yay -S --needed --noconfirm \
+    arc-gtk-theme \
+    arc-icon-theme \
+    blueman \
+    brightnessctl \
+    browserpass \
+    chromium \
+    fcitx5-im \
+    fcitx5-lua \
+    fcitx5-mozc-ut \
+    firefox \
+    foot \
+    gammastep \
+    google-chrome \
+    greetd \
+    greetd-tuigreet \
+    grim \
+    gtk4 \
+    imv \
+    ipa-fonts \
+    kanshi \
+    kguiaddons \
+    kwindowsystem \
+    libreoffice-still \
+    mako \
+    mozc-ut \
+    mpv \
+    otf-font-awesome \
+    pdfjs \
+    pipewire \
+    pipewire-alsa \
+    pipewire-jack \
+    pipewire-pulse \
+    pulsemixer \
+    python-adblock \
+    qt6 \
+    qutebrowser \
+    remmina \
+    slack-desktop \
+    slurp \
+    sway-contrib \
+    sway-im \
+    swaybg \
+    swayidle \
+    swaylock \
+    ttf-dejavu \
+    waybar \
+    waypipe \
+    wireplumber \
+    wofi \
+    wtype \
+    xdg-desktop-portal-gtk \
+    xdg-desktop-portal-wlr \
+    xorg-xwayland \
+    zathura \
+    zathura-pdf-poppler
+
+x systemctl --user enable --now kanshi
+x systemctl --user enable --now pm
+x systemctl --user enable --now waybar
+{% endif %}
