@@ -9,7 +9,7 @@ x() {
 }
 
 sudo -k
-x sudo pacman -Syu
+x sudo pacman -Syu --needed --noconfirm
 
 sudo -k
 x sudo pacman -S --needed --noconfirm base base-devel
@@ -25,6 +25,7 @@ fi
 # basic commands
 sudo -k
 x yay -S --needed --noconfirm \
+    aws-cli \
     bat \
     bottom \
     chafa \
@@ -39,6 +40,7 @@ x yay -S --needed --noconfirm \
     less \
     lieer \
     mdcat \
+    minicom \
     neomutt \
     neovim \
     notmuch \
@@ -50,10 +52,12 @@ x yay -S --needed --noconfirm \
     procs \
     proxychains-ng \
     ranger-git \
+    rclone \
     ripgrep \
     tmux \
     unarchiver \
     vivid \
+    w3m \
     yazi \
     zoxide \
     zsh
@@ -63,8 +67,10 @@ sudo -k
 x yay -S --needed --noconfirm \
     alsa-utils \
     bash-language-server \
+    ccache \
     clang \
     docker \
+    docker-buildx \
     docker-credential-pass \
     esbonio \
     eslint-language-server \
@@ -87,6 +93,7 @@ x yay -S --needed --noconfirm \
     qemu-user-static-binfmt \
     rust \
     rust-analyzer \
+    sccache \
     shellckeck \
     shfmt \
     stylua \
@@ -111,6 +118,7 @@ x yay -S --needed --noconfirm \
     brightnessctl \
     browserpass \
     chromium \
+    evince \
     fcitx5-im \
     fcitx5-lua \
     fcitx5-mozc-ut \
