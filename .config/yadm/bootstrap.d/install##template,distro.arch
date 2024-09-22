@@ -37,6 +37,7 @@ x yay -S --needed --noconfirm \
     git \
     git-lfs \
     gopass \
+    jq \
     less \
     lieer \
     mdcat \
@@ -45,6 +46,7 @@ x yay -S --needed --noconfirm \
     neovim \
     notmuch \
     oama \
+    pacman-contrib \
     pass \
     pass-git-helper \
     pass-otp \
@@ -54,6 +56,7 @@ x yay -S --needed --noconfirm \
     ranger-git \
     rclone \
     ripgrep \
+    socat \
     tmux \
     unarchiver \
     vivid \
@@ -66,6 +69,8 @@ x yay -S --needed --noconfirm \
 sudo -k
 x yay -S --needed --noconfirm \
     alsa-utils \
+    ansible \
+    ansible-language-server \
     bash-language-server \
     ccache \
     clang \
@@ -78,6 +83,7 @@ x yay -S --needed --noconfirm \
     gopls \
     imagemagick \
     incus \
+    lld \
     lua-language-server \
     luarocks \
     lvm2 \
@@ -139,6 +145,10 @@ x yay -S --needed --noconfirm \
     mako \
     mozc-ut \
     mpv \
+    noto-fonts \
+    noto-fonts-cjk \
+    noto-fonts-emoji \
+    nvim-qt \
     otf-font-awesome \
     pdfjs \
     pipewire \
@@ -160,6 +170,7 @@ x yay -S --needed --noconfirm \
     ttf-dejavu \
     waybar \
     waypipe \
+    wdisplays \
     wireplumber \
     wofi \
     wtype \
