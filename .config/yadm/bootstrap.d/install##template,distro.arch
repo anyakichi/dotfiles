@@ -37,6 +37,7 @@ x yay -S --needed --noconfirm \
     git \
     git-lfs \
     gopass \
+    handlr-regex \
     jq \
     less \
     lieer \
@@ -53,7 +54,6 @@ x yay -S --needed --noconfirm \
     picocom \
     procs \
     proxychains-ng \
-    ranger-git \
     rclone \
     ripgrep \
     socat \

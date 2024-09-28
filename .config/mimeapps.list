@@ -1,0 +1,13 @@
+[Default Applications]
+application/pdf=org.pwmt.zathura.desktop;
+audio/*=mpv.desktop;
+image/*=imv.desktop;
+text/*=nvim.desktop;
+text/html=org.qutebrowser.qutebrowser.desktop;
+video/*=mpv.desktop;
+x-scheme-handler/about=org.qutebrowser.qutebrowser.desktop;
+x-scheme-handler/http=org.qutebrowser.qutebrowser.desktop;
+x-scheme-handler/https=org.qutebrowser.qutebrowser.desktop;
+x-scheme-handler/msteams=teams.desktop;
+x-scheme-handler/terminal=org.codeberg.dnkl.foot.desktop;
+x-scheme-handler/unknown=org.qutebrowser.qutebrowser.desktop;

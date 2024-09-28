@@ -26,7 +26,7 @@ alias rm='nocorrect rm'
 
 alias g=fghq
 alias neomutt="PINENTRY_USER_DATA=curses neomutt"
-alias o=rifle
+alias o='handlr open'
 alias picocom='picocom -e \\'
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
 
