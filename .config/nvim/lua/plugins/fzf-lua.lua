@@ -53,7 +53,7 @@ return {
         end
 
         for _, file in ipairs(opts.fargs) do
-          vim.cmd(string.format("%s %s", edit, file))
+          vim.cmd(string.format("%s %s", edit, vim.fn.fnameescape(file)))
         end
 
         if dir then
