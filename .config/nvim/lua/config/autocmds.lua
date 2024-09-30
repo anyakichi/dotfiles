@@ -2,8 +2,8 @@ local augroup = vim.api.nvim_create_augroup("Config", {})
 
 vim.api.nvim_create_autocmd("ColorScheme", {
   group = augroup,
-  pattern = "OceanicNext",
-  callback = function(_)
+  pattern = { "OceanicNext", "OceanicNextLight" },
+  callback = function(args)
     vim.api.nvim_set_hl(0, "@text", {})
     vim.api.nvim_set_hl(0, "@text.literal", { link = "Comment" })
     vim.api.nvim_set_hl(0, "@text.reference", { link = "Identifier" })
@@ -90,14 +90,16 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "Keyword", { link = "Statement" })
     vim.api.nvim_set_hl(0, "Exception", { link = "Statement" })
 
-    vim.api.nvim_set_hl(0, "Normal", { fg = "#c0c5ce", bg = "#1b2b34" })
+    if args.match == "OceanicNext" then
+      vim.api.nvim_set_hl(0, "Normal", { fg = "#c0c5ce", bg = "#1b2b34" })
+    end
     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
     vim.api.nvim_set_hl(0, "Statement", { fg = "#ec5f67" })
     vim.api.nvim_set_hl(0, "PreProc", { fg = "#c594c5" })
     vim.api.nvim_set_hl(0, "Structure", { fg = "#62b3b2", bold = true })
     vim.api.nvim_set_hl(0, "Special", { fg = "#ab7967" })
-    vim.api.nvim_set_hl(0, "Error", { fg = "bg", bg = "#ec5f67" })
-    vim.api.nvim_set_hl(0, "Todo", { fg = "bg", bg = "#fac863" })
+    vim.api.nvim_set_hl(0, "Error", { fg = "#1b2b34", bg = "#ec5f67" })
+    vim.api.nvim_set_hl(0, "Todo", { fg = "#1b2b34", bg = "#fac863" })
     vim.api.nvim_set_hl(0, "SpellBad", { sp = "#ec5f67", undercurl = true })
     vim.api.nvim_set_hl(0, "SpellLocal", { sp = "#5fb3b3", undercurl = true })
     vim.api.nvim_set_hl(0, "SpellCap", { sp = "#6699cc", undercurl = true })
