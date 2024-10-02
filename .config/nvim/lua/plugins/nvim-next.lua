@@ -31,7 +31,7 @@ return {
       define_move(pkey, "normal! " .. pkey, nkey, "normal! " .. nkey)
     end
 
-    for _, v in ipairs({ "#", "*", "/", "'", "`", "S", "s", "z" }) do
+    for _, v in ipairs({ "#", "*", "/", "'", "`", "S", "c", "s", "z" }) do
       define_move_from_keys("[" .. v, "]" .. v)
     end
 
