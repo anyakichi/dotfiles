@@ -92,6 +92,15 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
     if args.match == "OceanicNext" then
       vim.api.nvim_set_hl(0, "Normal", { fg = "#c0c5ce", bg = "#1b2b34" })
+      vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#2a4727" })
+      vim.api.nvim_set_hl(0, "DiffChange", { bg = "#364761" })
+      vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#472727" })
+      vim.api.nvim_set_hl(0, "DiffText", { fg = "#cdd3de", bg = "#4d688c" })
+    else
+      vim.api.nvim_set_hl(0, "DiffAdd", { bg = "#c3e6be" })
+      vim.api.nvim_set_hl(0, "DiffChange", { bg = "#dde6ee" })
+      vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#f9d8d6" })
+      vim.api.nvim_set_hl(0, "DiffText", { bg = "#b6cbde" })
     end
     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
     vim.api.nvim_set_hl(0, "Statement", { fg = "#ec5f67" })
