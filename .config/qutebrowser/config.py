@@ -100,6 +100,7 @@ c.aliases = {}
 
 c.auto_save.session = True
 c.content.default_encoding = "utf-8"
+c.content.javascript.clipboard = "access"
 c.content.pdfjs = True
 c.editor.command = [
     "tmux",
