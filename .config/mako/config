@@ -1,3 +1,8 @@
+background-color=#285577CC
+text-color=#FFFFFFCC
+border-color=#4C7899CC
+border-radius=4
+width=450
 default-timeout=5000
 
 [mode=do-not-disturb]
