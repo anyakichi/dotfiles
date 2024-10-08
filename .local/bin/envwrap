@@ -1,0 +1,39 @@
+#!/bin/bash
+
+XDG_CONFIG_HOME=${XDG_CONFIG_HOME:-$HOME/.config}
+CONFIG=$XDG_CONFIG_HOME/envwrap/config
+
+while getopts ":c:h" opt; do
+    case $opt in
+    c)
+        CONFIG=$OPTARG
+        ;;
+    h)
+        echo "Usage: envwrap [-h] [-c CONFIG]"
+        exit 0
+        ;;
+    \?)
+        echo "Invalid option: -$OPTARG" >&2
+        exit 1
+        ;;
+    esac
+done
+
+shift $((OPTIND - 1))
+
+found=false
+while IFS='=' read -r key value; do
+    [[ $key =~ ^[[:space:]]*(#.*)?$ ]] && continue
+
+    if [[ $key =~ ^\[(.*)\]$ ]]; then
+        $found && break
+        section="${BASH_REMATCH[1]}"
+        getent hosts "$section" &>/dev/null && found=true
+    elif $found; then
+        key=$(echo "$key" | sed 's/^\s*//;s/\s*$//')
+        value=$(echo "$value" | sed 's/^\s*//;s/\s*$//')
+        export "$key"="$value"
+    fi
+done <"$CONFIG"
+
+exec "$@"
