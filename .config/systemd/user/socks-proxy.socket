@@ -2,7 +2,7 @@
 Description=SOCKS proxy
 
 [Socket]
-ListenStream=1080
+ListenStream=127.0.0.1:1080
 
 [Install]
 WantedBy=sockets.target
