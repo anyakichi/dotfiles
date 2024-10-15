@@ -129,7 +129,9 @@ m("n", "qg", ":<C-u>QFGrep<Space>")
 
 m("n", "q]", "<Cmd>call qfutil#ltag()<CR>")
 
-m("n", "+", "<Cmd>let @+ = @@<CR>", S)
+m("n", "+", function()
+  vim.fn.setreg("+", vim.fn.getreg("@"):gsub("\n$", ""))
+end, S)
 
 m("n", "<Space>s", [[<Cmd>let &opfunc="{_ -> execute(\"'[,']sort\")}"<CR>g@]])
 m("n", "<Space>S", [[<Cmd>let &opfunc="{_ -> execute(\"'[,']sort!\")}"<CR>g@]])
