@@ -57,6 +57,8 @@ x yay -S --needed --noconfirm \
     rclone \
     ripgrep \
     socat \
+    sshfs \
+    tcpdump \
     tmux \
     unarchiver \
     vivid \
@@ -88,7 +90,7 @@ x yay -S --needed --noconfirm \
     luarocks \
     lvm2 \
     mesonlsp \
-    nodejs \
+    nodejs-lts-iron \
     npm \
     pnpm \
     prettier \
