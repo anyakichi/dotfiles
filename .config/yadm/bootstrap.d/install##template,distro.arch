@@ -169,7 +169,7 @@ packages_desktop=(
     remmina
     slurp
     sway-contrib
-    sway-im
+    sway
     swaybg
     swayidle
     swaylock
