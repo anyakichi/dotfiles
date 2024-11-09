@@ -85,7 +85,7 @@ packages_devel=(
     rust
     rust-analyzer
     sccache
-    shellckeck
+    shellcheck
     shfmt
     stylua
     tailwindcss-language-server
@@ -136,10 +136,10 @@ packages_gui=(
     handlr-regex
     ipa-fonts
     libreoffice-still
+    neovim-qt
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
-    nvim-qt
     otf-font-awesome
     pdfjs
     python-adblock
