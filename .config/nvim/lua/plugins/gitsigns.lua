@@ -1,7 +1,7 @@
 return {
   "lewis6991/gitsigns.nvim",
   event = "VeryLazy",
-  dependencies = "seanbreckenridge/gitsigns-yadm.nvim",
+  dependencies = "purarue/gitsigns-yadm.nvim",
   opts = {
     signs = {
       untracked = { text = "" },
