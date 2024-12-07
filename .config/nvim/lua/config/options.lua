@@ -24,6 +24,8 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = false
 
 -- Formatting
+vim.opt.breakindent = true
+vim.opt.breakindentopt = "list:-1"
 vim.opt.formatoptions:append("rolmB")
 vim.opt.textwidth = 78
 
