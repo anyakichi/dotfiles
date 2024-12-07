@@ -3,11 +3,9 @@ return {
   event = "VeryLazy",
   build = ":TSUpdate",
   dependencies = {
-    { "JoosepAlviste/nvim-ts-context-commentstring", opts = {
-      enable_autocmd = false,
-    } },
     "RRethy/nvim-treesitter-endwise",
     "andymass/vim-matchup",
+    "folke/ts-comments.nvim",
     "ghostbuster91/nvim-next",
     "nvim-treesitter/nvim-treesitter-context",
     "nvim-treesitter/nvim-treesitter-textobjects",
