@@ -29,7 +29,9 @@ packages=(
     git
     git-lfs
     gopass
+    inotify-tools
     jq
+    lazygit
     less
     mdcat
     minicom
