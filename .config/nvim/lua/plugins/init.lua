@@ -61,6 +61,7 @@ return {
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
+  { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
   {
     "ggandor/leap.nvim",

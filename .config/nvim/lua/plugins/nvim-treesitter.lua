@@ -5,7 +5,6 @@ return {
   dependencies = {
     "RRethy/nvim-treesitter-endwise",
     "andymass/vim-matchup",
-    "folke/ts-comments.nvim",
     "ghostbuster91/nvim-next",
     "nvim-treesitter/nvim-treesitter-context",
     "nvim-treesitter/nvim-treesitter-textobjects",
