@@ -10,6 +10,12 @@ return {
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    ft = "markdown",
+    opts = {},
+  },
   { "NvChad/nvim-colorizer.lua", keys = { { "<Space>C", "<Cmd>ColorizerToggle<CR>" } }, opts = {} },
   {
     "abecodes/tabout.nvim",
@@ -60,6 +66,33 @@ return {
   },
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
+  {
+    "epwalsh/obsidian.nvim",
+    version = "*",
+    event = "VeryLazy",
+    enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian")) == 1,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {
+      daily_notes = {
+        template = "daily.md",
+      },
+      picker = {
+        name = "fzf-lua",
+      },
+      templates = {
+        folder = "templates",
+      },
+      ui = { enable = false },
+      workspaces = {
+        {
+          name = "default",
+          path = "~/.obsidian",
+        },
+      },
+    },
+  },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
