@@ -1,0 +1,6 @@
+[Unit]
+Description=Timer for obsidian
+
+[Timer]
+OnBootSec=1m
+OnUnitInactiveSec=1m

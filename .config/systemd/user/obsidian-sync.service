@@ -1,0 +1,7 @@
+[Unit]
+Description=Sync obsidian vault
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/.obsidian
+ExecStart=git-sync
