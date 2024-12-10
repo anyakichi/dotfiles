@@ -14,7 +14,11 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = "markdown",
-    opts = {},
+    opts = {
+      pipe_table = {
+        style = "normal",
+      },
+    },
   },
   { "NvChad/nvim-colorizer.lua", keys = { { "<Space>C", "<Cmd>ColorizerToggle<CR>" } }, opts = {} },
   {
@@ -82,7 +86,7 @@ return {
         name = "fzf-lua",
       },
       templates = {
-        folder = "templates",
+        folder = "Templates",
       },
       ui = { enable = false },
       workspaces = {
@@ -116,7 +120,7 @@ return {
       vim.fn["mkdp#util#install"]()
     end,
     ft = "markdown",
-    cmd = "MarkdownPreview",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   },
   { "j-hui/fidget.nvim", branch = "legacy", event = "LspAttach", opts = {} },
   {
