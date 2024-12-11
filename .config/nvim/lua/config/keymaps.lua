@@ -129,7 +129,10 @@ m("n", "qg", ":<C-u>QFGrep<Space>")
 
 m("n", "q]", "<Cmd>call qfutil#ltag()<CR>")
 
-m("n", "+", function()
+m("n", "+", "zr", S)
+m("n", "-", "zm", S)
+
+m("n", "<C-c>", function()
   vim.fn.setreg("+", vim.fn.getreg("@"):gsub("\n$", ""))
 end, S)
 

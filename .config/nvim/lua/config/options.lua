@@ -44,7 +44,18 @@ vim.opt.signcolumn = "number"
 vim.opt.diffopt:append({ "vertical", "indent-heuristic", "algorithm:histogram" })
 
 -- Folding
-vim.opt.foldenable = false
+function Foldtext()
+  local winwidth = vim.fn.winwidth(0)
+  local line = vim.fn.strpart(vim.fn.getline(vim.v.foldstart), 0, winwidth - 18)
+  local nlines = vim.v.foldend - vim.v.foldstart + 1
+  local nfills = winwidth - vim.fn.strwidth(line) - #tostring(nlines) - 12
+  return string.format("%s%s%d lines", line, string.rep("·", nfills), nlines)
+end
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldlevel = 3
+vim.opt.foldmethod = "expr"
+vim.opt.foldnestmax = 3
+vim.opt.foldtext = "v:lua.Foldtext()"
 
 -- Command line
 vim.opt.wildmode = "longest:full,full"
