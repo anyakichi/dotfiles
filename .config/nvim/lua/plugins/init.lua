@@ -176,7 +176,7 @@ return {
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
   {
-    "seanbreckenridge/yadm-git.vim",
+    "purarue/yadm-git.vim",
     event = "BufReadPre",
     dependencies = "tpope/vim-fugitive",
     config = function()
@@ -262,3 +262,4 @@ return {
     dependencies = "kana/vim-textobj-user",
   },
 }
+
