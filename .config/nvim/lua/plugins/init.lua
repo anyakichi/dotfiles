@@ -10,6 +10,7 @@ return {
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
+  { "FabijanZulj/blame.nvim", event = "VeryLazy", opts = { date_format = "%Y-%m-%d" } },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
@@ -208,6 +209,7 @@ return {
       require("rust-tools").setup(opts)
     end,
   },
+  { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
   { "tpope/vim-fugitive", event = "VeryLazy" },
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tyru/capture.vim", cmd = "Capture" },
@@ -262,4 +264,3 @@ return {
     dependencies = "kana/vim-textobj-user",
   },
 }
-
