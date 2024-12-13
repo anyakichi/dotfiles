@@ -75,7 +75,7 @@ return {
     "epwalsh/obsidian.nvim",
     version = "*",
     event = "VeryLazy",
-    enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian")) == 1,
+    enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian-vault")) == 1,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
@@ -87,13 +87,13 @@ return {
         name = "fzf-lua",
       },
       templates = {
-        folder = "Templates",
+        folder = "templates",
       },
       ui = { enable = false },
       workspaces = {
         {
           name = "default",
-          path = "~/.obsidian",
+          path = "~/.obsidian-vault",
         },
       },
     },

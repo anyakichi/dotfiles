@@ -3,5 +3,5 @@ Description=Sync obsidian vault
 
 [Service]
 Type=oneshot
-WorkingDirectory=%h/.obsidian
+WorkingDirectory=%h/.obsidian-vault
 ExecStart=git-sync
