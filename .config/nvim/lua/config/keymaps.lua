@@ -163,6 +163,10 @@ m("i", "<C-g><C-l>", "<C-o>b<C-o>g~w<C-o>w<Right>")
 m("i", "<C-g>L", "<C-o>b<C-o>gUw<C-o>w<Right>")
 m("i", "<C-g>l", "<C-o>b<C-o>guw<C-o>w<Right>")
 
+m("i", "<C-g>d", function()
+  return os.date("%Y-%m-%d")
+end, E)
+
 local function border_line(char)
   local prevline_nr = vim.api.nvim_win_get_cursor(0)[1] - 1
   if prevline_nr == 0 then

@@ -267,6 +267,16 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
+  pattern = "markdown",
+  callback = function()
+    vim.keymap.set("i", "<C-g><C-d>", function()
+      return os.date("## %Y-%m-%d\n\n")
+    end, { expr = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
   pattern = "python",
   callback = function()
     vim.opt_local.softtabstop = 0
