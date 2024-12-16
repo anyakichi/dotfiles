@@ -8,6 +8,10 @@ return {
           default = require("fzf-lua").actions.file_edit,
         },
       },
+      grep = {
+        rg_glob = true,
+        glob_separator = "%s//",
+      },
     }
   end,
   init = function()
@@ -69,9 +73,15 @@ return {
     end
 
     vim.api.nvim_create_user_command("LiveGrep", function(opts)
-      local search = table.remove(opts.fargs, 1)
-      local filespec = table.concat(opts.fargs, " ")
-      require("fzf-lua").live_grep({ filespec = filespec, search = search })
-    end, { nargs = "+", complete = "file" })
+      local args = {}
+      args.search = table.remove(opts.fargs, 1)
+      args.filespec = table.concat(opts.fargs, " ")
+      if args.search == nil then
+        args.continue_last_search = true
+      elseif args.search == "-" then
+        args.search = nil
+      end
+      require("fzf-lua").live_grep(args)
+    end, { nargs = "*", complete = "file" })
   end,
 }
