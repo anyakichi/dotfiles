@@ -71,53 +71,6 @@ return {
   },
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
   { "chrisbra/csv.vim", ft = "csv" },
-  {
-    "epwalsh/obsidian.nvim",
-    version = "*",
-    event = {
-      "BufReadPre " .. vim.fn.expand("~") .. "/.obsidian-vault/*.md",
-      "BufNewFile " .. vim.fn.expand("~") .. "/.obsidian-vault/*.md",
-    },
-    cmd = {
-      "ObsidianDailies",
-      "ObsidianNew",
-      "ObsidianQuickSwitch",
-      "ObsidianSearch",
-      "ObsidianToday",
-    },
-    keys = {
-      { "<Leader>oT", "<cmd>ObsidianToday<CR>", desc = "Today's note" },
-      { "<Leader>oa", "<cmd>ObsidianTemplate<CR>", desc = "Add template" },
-      { "<Leader>ob", "<cmd>ObsidianBacklinks<CR>", desc = "Back links" },
-      { "<Leader>od", "<cmd>ObsidianDailies<CR>", desc = "Daily notes" },
-      { "<Leader>ol", "<cmd>ObsidianLinks<CR>", desc = "Links" },
-      { "<Leader>on", "<cmd>ObsidianNew<CR>", desc = "New note" },
-      { "<Leader>oo", "<cmd>ObsidianQuickSwitch<CR>", desc = "Open a note" },
-      { "<Leader>or", "<cmd>ObsidianRename<CR>", desc = "Rename a note" },
-      { "<Leader>os", "<cmd>ObsidianSearch<CR>", desc = "Search notes" },
-      { "<Leader>ot", "<cmd>ObsidianTags<CR>", desc = "Search tags" },
-    },
-    enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian-vault")) == 1,
-    opts = {
-      daily_notes = {
-        template = "daily.md",
-      },
-      disable_frontmatter = true,
-      picker = {
-        name = "fzf-lua",
-      },
-      templates = {
-        folder = "/Templates",
-      },
-      ui = { enable = false },
-      workspaces = {
-        {
-          name = "default",
-          path = "~/.obsidian-vault",
-        },
-      },
-    },
-  },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
