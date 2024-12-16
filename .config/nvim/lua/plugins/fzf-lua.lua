@@ -11,6 +11,8 @@ return {
       grep = {
         rg_glob = true,
         glob_separator = "%s//",
+      keymap = {
+        fzf = { false },
       },
     }
   end,
