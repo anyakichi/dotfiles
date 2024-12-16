@@ -98,9 +98,6 @@ return {
       { "<Leader>ot", "<cmd>ObsidianTags<CR>", desc = "Search tags" },
     },
     enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian-vault")) == 1,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
     opts = {
       daily_notes = {
         template = "daily.md",
@@ -152,7 +149,6 @@ return {
     cmd = { "ChatGPT", "ChatGPTRun" },
     dependencies = {
       "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim",
     },
     opts = { api_key_cmd = "pass chatgpt" },
@@ -184,6 +180,7 @@ return {
     },
   },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
+  { "nvim-lua/plenary.nvim", lazy = true },
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
