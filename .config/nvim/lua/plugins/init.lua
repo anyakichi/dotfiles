@@ -236,4 +236,9 @@ return {
     event = "VeryLazy",
     dependencies = "kana/vim-textobj-user",
   },
+  {
+    "kana/vim-textobj-fold",
+    event = "VeryLazy",
+    dependencies = "kana/vim-textobj-user",
+  },
 }
