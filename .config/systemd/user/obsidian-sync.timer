@@ -4,3 +4,6 @@ Description=Timer for obsidian
 [Timer]
 OnBootSec=1m
 OnUnitInactiveSec=1m
+
+[Install]
+WantedBy=timers.target

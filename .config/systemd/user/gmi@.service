@@ -5,6 +5,3 @@ Description=gmi for account %i
 Type=oneshot
 Environment=NOTMUCH_PROFILE=%i
 ExecStart=bash -c 'gmi sync -C $(notmuch config get database.mail_root) -s'
-
-[Install]
-WantedBy=default.target
