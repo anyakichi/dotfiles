@@ -100,7 +100,8 @@ c.aliases = {}
 
 c.auto_save.session = True
 c.content.default_encoding = "utf-8"
-c.content.javascript.clipboard = "access"
+for x in ["amazon.co.jp", "chatgpt.com", "github.com"]:
+    config.set("content.javascript.clipboard", "access-paste", x)
 c.content.pdfjs = True
 c.editor.command = [
     "tmux",
@@ -127,7 +128,6 @@ c.tabs.position = "top"
 c.tabs.select_on_remove = "prev"
 c.tabs.show = "always"
 c.tabs.title.format_pinned = c.tabs.title.format
-c.tabs.width = 100
 
 c.window.hide_decoration = True
 
