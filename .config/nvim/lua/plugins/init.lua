@@ -150,14 +150,6 @@ return {
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
   {
-    "purarue/yadm-git.vim",
-    event = "BufReadPre",
-    dependencies = "tpope/vim-fugitive",
-    config = function()
-      vim.g.yadm_git_gitgutter_enabled = 0
-    end,
-  },
-  {
     "simrat39/rust-tools.nvim",
     ft = "rust",
     init = function()
@@ -183,7 +175,35 @@ return {
     end,
   },
   { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
-  { "tpope/vim-fugitive", event = "VeryLazy" },
+  {
+    "tpope/vim-fugitive",
+    event = "VeryLazy",
+    init = function()
+      local group = vim.api.nvim_create_augroup("MyFugitive", {})
+      vim.api.nvim_create_autocmd("BufEnter", {
+        group = group,
+        callback = function()
+          vim.env.GIT_DIR = vim.b.git_dir
+        end,
+      })
+      vim.api.nvim_create_autocmd("BufWinEnter", {
+        group = group,
+        callback = function()
+          local path = vim.fn.expand("%:p")
+          if vim.fn.executable("yadm") == 1 and vim.fn.filereadable(path) == 1 then
+            vim.fn.jobstart({ "yadm", "ls-files", "--error-unmatch", path }, {
+              on_exit = function(_, data, _)
+                if data == 0 then
+                  vim.fn.FugitiveDetect("~/.local/share/yadm/repo.git")
+                  vim.env.GIT_DIR = vim.b.git_dir
+                end
+              end,
+            })
+          end
+        end,
+      })
+    end,
+  },
   { "tpope/vim-repeat", event = "VeryLazy" },
   { "tyru/capture.vim", cmd = "Capture" },
   {
