@@ -205,7 +205,8 @@
     "custom/toggdoro": {
         "format": "{}",
         "interval": 1,
-        "exec": "socat -u unix-connect:${XDG_RUNTIME_DIR}/toggdoro.sock -"
+        "exec": "socat -u unix-connect:${XDG_RUNTIME_DIR}/toggdoro.sock -",
+        "exec-if": "test -S ${XDG_RUNTIME_DIR}/toggdoro.sock"
     },
     "custom/virtual-keyboard": {
         "format": "{}",
@@ -213,6 +214,7 @@
         "interval": 5,
         "on-click": "$HOME/.local/bin/vkbd toggle",
         "exec": "sleep 0.1; $HOME/.local/bin/vkbd",
+        "exec-if": "pgrep squeekboard",
         "exec-on-event": true
     }
 }
