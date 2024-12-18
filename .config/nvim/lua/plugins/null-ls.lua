@@ -1,7 +1,6 @@
 return {
   "nvimtools/none-ls.nvim",
   event = "VeryLazy",
-  dependencies = { "nvim-lua/plenary.nvim" },
   opts = function()
     local null_ls = require("null-ls")
     return {
