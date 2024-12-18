@@ -111,6 +111,9 @@ output * bg #000000 solid_color
     bindsym $mod+Shift+Up move workspace to output up
     bindsym $mod+Shift+Down move workspace to output down
 
+    bindsym $mod+n nop top_next
+    bindsym $mod+p nop top_prev
+
 #
 # Workspaces:
 #
