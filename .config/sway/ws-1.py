@@ -23,7 +23,7 @@ layout = {
         },
         {
             "layout": "tabbed",
-            "width": '686 px',
+            "width": '846 px',
             "nodes": [
                 {
                     "swallows": {"app_id": r"foot"}
