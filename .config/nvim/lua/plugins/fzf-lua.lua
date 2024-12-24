@@ -10,7 +10,21 @@ return {
       },
       grep = {
         rg_glob = true,
-        glob_separator = "%s//",
+        rg_glob_fn = function(query, opts)
+          local utils = require("fzf-lua.utils")
+          local libuv = require("fzf-lua.libuv")
+          local regex, flags = query:match("(.-)" .. opts.glob_separator .. "%s(.*)")
+          if flags then
+            return (regex or query), flags
+          end
+
+          local glob_args = ""
+          regex, flags = query:match("(.*)" .. opts.glob_separator .. "(.*)")
+          for _, s in ipairs(utils.strsplit(flags, "%s")) do
+            glob_args = glob_args .. ("%s %s "):format(opts.glob_flag, libuv.shellescape(s))
+          end
+          return regex, glob_args
+        end,
       },
       keymap = {
         fzf = { false },
@@ -80,7 +94,7 @@ return {
       args.search = table.remove(opts.fargs, 1)
       args.filespec = table.concat(opts.fargs, " ")
       if args.search == nil then
-        args.continue_last_search = true
+        args.resume = true
       elseif args.search == "-" then
         args.search = nil
       end

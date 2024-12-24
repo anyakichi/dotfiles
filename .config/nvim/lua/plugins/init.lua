@@ -15,6 +15,9 @@ return {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = "markdown",
+    keys = {
+      { "<Leader>m", "<Cmd>RenderMarkdown toggle<CR>" },
+    },
     opts = {
       pipe_table = {
         style = "normal",
