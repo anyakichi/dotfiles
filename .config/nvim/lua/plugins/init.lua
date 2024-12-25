@@ -99,7 +99,7 @@ return {
     ft = "markdown",
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   },
-  { "j-hui/fidget.nvim", branch = "legacy", event = "LspAttach", opts = {} },
+  { "j-hui/fidget.nvim", event = "LspAttach", opts = {} },
   {
     "jackMort/ChatGPT.nvim",
     cmd = { "ChatGPT", "ChatGPTRun" },
