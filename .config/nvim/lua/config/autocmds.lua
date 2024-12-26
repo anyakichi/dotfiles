@@ -269,8 +269,11 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   pattern = "markdown",
   callback = function()
-    vim.keymap.set("i", "<C-g><C-d>", function()
+    vim.keymap.set("i", "<C-g>D", function()
       return os.date("## %Y-%m-%d\n\n")
+    end, { expr = true })
+    vim.keymap.set("i", "<C-g><C-d>", function()
+      return os.date("## [[%Y-%m-%d]]\n\n")
     end, { expr = true })
   end,
 })

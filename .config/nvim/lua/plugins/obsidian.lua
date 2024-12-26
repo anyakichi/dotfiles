@@ -35,7 +35,7 @@ return {
   enabled = vim.fn.isdirectory(vim.fn.expand("~/.obsidian-vault")) == 1,
   opts = {
     daily_notes = {
-      folder = "/dailies",
+      date_format = "%Y/%m/%Y-%m-%d",
       template = "daily.md",
     },
     disable_frontmatter = true,
