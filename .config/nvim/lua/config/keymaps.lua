@@ -176,11 +176,11 @@ local function border_line(char)
   return string.rep(char, vim.fn.strdisplaywidth(prevline[1]))
 end
 
-m("i", "<C-g>=", util.wrap(border_line, "="), E)
-m("i", "<C-g>-", util.wrap(border_line, "-"), E)
-m("i", "<C-g>~", util.wrap(border_line, "~"), E)
-m("i", "<C-g>^", util.wrap(border_line, "^"), E)
-m("i", '<C-g>"', util.wrap(border_line, '"'), E)
+m("i", "<C-g>=", util.curry(border_line, "="), E)
+m("i", "<C-g>-", util.curry(border_line, "-"), E)
+m("i", "<C-g>~", util.curry(border_line, "~"), E)
+m("i", "<C-g>^", util.curry(border_line, "^"), E)
+m("i", '<C-g>"', util.curry(border_line, '"'), E)
 
 m({ "c", "i" }, "<C-a>", "<Home>")
 m({ "c", "i" }, "<C-e>", "<End>")
@@ -195,8 +195,8 @@ m("c", "<CR>", function()
   return "<CR>"
 end, E)
 --m("c", '<C-g>', "<C-r>=<SID>kill_arg()<CR>")
-m("c", "<C-_>", util.wrap(relpath), E)
-m("c", "<C-r><C-_>", util.wrap(relpath), E)
+m("c", "<C-_>", util.curry(relpath), E)
+m("c", "<C-r><C-_>", util.curry(relpath), E)
 
 m("c", "<C-j>", function()
   if vim.fn.wildmenumode() == 1 then
@@ -212,3 +212,24 @@ m("c", "<C-k>", function()
     return "<C-k>"
   end
 end, E)
+
+local function increment_dates(s, days)
+  return s:gsub("(%d%d%d%d)%-(%d%d)%-(%d%d)", function(year, month, day)
+    local parsed_date = os.time({ year = year, month = month, day = day })
+    return os.date("%Y-%m-%d", parsed_date + 86400 * days)
+  end)
+end
+
+m({ "n", "x" }, "<Space>d", util.curry(util.filterfunc, util.curry2(increment_dates, 1)), E)
+m({ "n", "x" }, "<Space>-d", util.curry(util.filterfunc, util.curry2(increment_dates, -1)), E)
+
+m("x", "<Space>D", util.curry(util.Filterfunc, util.curry2(increment_dates, 1)), E)
+m("x", "<Space>-D", util.curry(util.Filterfunc, util.curry2(increment_dates, -1)), E)
+
+m("n", "<Space>dd", "<Space>d_", R)
+m("n", "<Space>-dd", "<Space>-d_", R)
+m("n", "<Space>D", "<Space>d$", R)
+m("n", "<Space>-D", "<Space>-d$", R)
+
+m({ "n", "x" }, "<Space><C-d>", "<Space>-d", R)
+m("n", "<Space><C-d><C-d>", "<Space><C-d>_", R)
