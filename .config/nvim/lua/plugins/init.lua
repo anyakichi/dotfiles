@@ -16,7 +16,7 @@ return {
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
     ft = "markdown",
     keys = {
-      { "<Leader>m", "<Cmd>RenderMarkdown toggle<CR>" },
+      { "<Space>h", "<Cmd>RenderMarkdown toggle<CR>" },
     },
     opts = {
       pipe_table = {
@@ -136,6 +136,7 @@ return {
     },
   },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
+  { "mrcjkb/rustaceanvim", version = "*", lazy = false },
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "nvim-telescope/telescope.nvim",
@@ -152,31 +153,6 @@ return {
   },
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
-  {
-    "simrat39/rust-tools.nvim",
-    ft = "rust",
-    init = function()
-      vim.api.nvim_set_hl(0, "RustToolsInlayHints", { fg = "#65737e", italic = true })
-    end,
-    opts = {
-      tools = {
-        inlay_hints = {
-          highlight = "RustToolsInlayHints",
-        },
-      },
-    },
-    config = function(_, opts)
-      local path = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
-      local codelldb_path = path .. "adapter/codelldb"
-      local liblldb_path = path .. "lldb/lib/liblldb.so"
-      if vim.fn.filereadable(codelldb_path) and vim.fn.filereadable(liblldb_path) then
-        opts.dap = {
-          adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-        }
-      end
-      require("rust-tools").setup(opts)
-    end,
-  },
   { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
   {
     "tpope/vim-fugitive",

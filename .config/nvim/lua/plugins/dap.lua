@@ -94,10 +94,20 @@ return {
   },
   config = function()
     local dap = require("dap")
+    local path = vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/"
+    local codelldb_path = path .. "adapter/codelldb"
+    local liblldb_path = path .. "lldb/lib/liblldb.so"
+
+    dap.adapters.codelldb = {
+      type = "executable",
+      command = codelldb_path,
+      args = { "--liblldb", liblldb_path },
+    }
+
     dap.configurations.rust = {
       {
         name = "Launch",
-        type = "rt_lldb",
+        type = "codelldb",
         request = "launch",
         program = function()
           return vim.fn.input({
@@ -137,7 +147,7 @@ return {
         })
       end
       require("dap").run({
-        type = "rt_lldb",
+        type = "codelldb",
         request = "launch",
         program = bin_dir .. "/" .. bin_name,
         cwd = "${workspaceFolder}",

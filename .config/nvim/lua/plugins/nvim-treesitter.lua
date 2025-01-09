@@ -35,10 +35,10 @@ return {
         swap = {
           enable = true,
           swap_next = {
-            ["<Space>l"] = "@parameter.inner",
+            ["gl"] = "@parameter.inner",
           },
           swap_previous = {
-            ["<Space>h"] = "@parameter.inner",
+            ["gh"] = "@parameter.inner",
           },
         },
         lsp_interop = {

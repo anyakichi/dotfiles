@@ -62,7 +62,6 @@ return {
         "--stdio",
       },
     })
-    lspconfig.rust_analyzer.setup({ capabilities = capabilities })
     lspconfig.tailwindcss.setup({ capabilities = capabilities })
     lspconfig.taplo.setup({ capabilities = capabilities })
     lspconfig.texlab.setup({ capabilities = capabilities })
@@ -97,6 +96,8 @@ return {
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
         opts = { buffer = ev.buf }
@@ -117,6 +118,12 @@ return {
         vim.keymap.set({ "n", "v" }, "<Space>f", function()
           vim.lsp.buf.format({ async = true })
         end, opts)
+        if client and client.server_capabilities.inlayHintProvider then
+          vim.keymap.set("n", "<Space>h", function()
+            local current_setting = vim.lsp.inlay_hint.is_enabled(opts)
+            vim.lsp.inlay_hint.enable(not current_setting, opts)
+          end)
+        end
       end,
     })
   end,
