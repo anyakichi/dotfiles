@@ -259,6 +259,33 @@ vim.api.nvim_create_autocmd("FileType", {
 
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
+  pattern = {
+    "asciidoc",
+    "gitcommit",
+    "mail",
+    "markdown",
+    "rst",
+    "text",
+  },
+  callback = function()
+    vim.opt_local.comments:prepend({
+      "b:- [ ]",
+      "b:- [x]",
+      "b:-",
+      "b:* [ ]",
+      "b:* [x]",
+      "b:*",
+      "b:1.",
+      "nb:>",
+      "nb:#",
+    })
+    vim.opt_local.formatoptions:append("ro")
+    vim.opt_local.formatoptions:remove("c")
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
   pattern = "go",
   callback = function()
     vim.opt_local.tabstop = 4

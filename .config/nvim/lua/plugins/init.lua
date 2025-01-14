@@ -19,6 +19,7 @@ return {
       { "<Space>h", "<Cmd>RenderMarkdown toggle<CR>" },
     },
     opts = {
+      enabled = false,
       pipe_table = {
         style = "normal",
       },
