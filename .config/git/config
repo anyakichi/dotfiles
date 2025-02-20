@@ -7,6 +7,7 @@
 	cif = commit --fixup HEAD
 	co = checkout
 	com = "!git checkout $(git symbolic-ref refs/remotes/origin/HEAD | sed 's,^refs/remotes/origin/,,')"
+	czg = "!npx czg"
 	di = diff
 	dic = diff --cached
 	dif = diff
