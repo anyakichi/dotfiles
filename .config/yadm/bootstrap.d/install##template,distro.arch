@@ -61,6 +61,7 @@ packages_devel=(
     ansible-language-server
     aws-cli
     bash-language-server
+    cargo-audit
     ccache
     clang
     docker
@@ -75,7 +76,7 @@ packages_devel=(
     luarocks
     lvm2
     mesonlsp
-    nodejs-lts-iron
+    nodejs-lts-jod
     npm
     pnpm
     prettier
