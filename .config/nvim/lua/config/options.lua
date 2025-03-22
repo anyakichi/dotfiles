@@ -77,3 +77,6 @@ vim.opt.cedit = "<C-x>"
 
 -- Spell checking
 vim.opt.spelllang = "en_us,cjk"
+
+-- Plugin options
+vim.g.markdown_recommended_style = 0
