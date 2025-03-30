@@ -4,10 +4,11 @@ return {
   dependencies = {
     "b0o/SchemaStore.nvim",
     { "folke/neoconf.nvim", opts = {} },
-    { "folke/neodev.nvim", opts = {} },
+    { "folke/lazydev.nvim", ft = "lua", opts = {} },
     {
       "nvimdev/lspsaga.nvim",
       opts = {
+        code_action = { keys = { quit = "<C-c>" } },
         definition = { keys = { edit = "e" }, width = 0.9 },
         lightbulb = {
           virtual_text = false,
@@ -101,20 +102,18 @@ return {
         vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
         opts = { buffer = ev.buf }
+        vim.keymap.set("n", "grn", "<Cmd>Lspsaga rename<CR>A", opts)
+        vim.keymap.set({ "n", "v" }, "gra", "<Cmd>Lspsaga code_action<CR>", opts)
         vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
         vim.keymap.set("n", "g<C-d>", "<Cmd>Lspsaga peek_type_definition<CR>", opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
         vim.keymap.set("n", "<Space>K", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wr", vim.lsp.buf.remove_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wl", function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts)
-        vim.keymap.set("n", "<Space>rn", "<Cmd>Lspsaga rename<CR>A", opts)
-        vim.keymap.set({ "n", "v" }, "<Space>ca", "<Cmd>Lspsaga code_action<CR>", opts)
-        vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
         vim.keymap.set({ "n", "v" }, "<Space>f", function()
           vim.lsp.buf.format({ async = true })
         end, opts)

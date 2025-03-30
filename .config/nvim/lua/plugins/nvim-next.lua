@@ -23,8 +23,8 @@ return {
         end
       end)
 
-      vim.keymap.set("n", pkey, prev, { unique = true })
-      vim.keymap.set("n", nkey, next, { unique = true })
+      vim.keymap.set("n", pkey, prev)
+      vim.keymap.set("n", nkey, next)
     end
 
     local function define_move_from_keys(pkey, nkey)
@@ -41,7 +41,9 @@ return {
     define_move_from_keys("zk", "zj")
     define_move_from_keys("{", "}")
 
-    define_move("[q", "cprevious", "]q", "cnext")
+    define_move("[b", "bprevious", "]b", "bnext")
     define_move("[l", "lprevious", "]l", "lnext")
+    define_move("[q", "cprevious", "]q", "cnext")
+    define_move("[t", "tprevious", "]t", "tnext")
   end,
 }
