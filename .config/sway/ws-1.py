@@ -17,7 +17,8 @@ layout = {
             #"width": 67,
             #"nodes": [
             #    {
-                    "swallows": {"app_id": r"qutebrowser"}
+                    "swallows": {"app_id": r"qutebrowser"},
+                    "marks": ["b"]
             #    }
             #]
         },
@@ -26,7 +27,8 @@ layout = {
             "width": '846 px',
             "nodes": [
                 {
-                    "swallows": {"app_id": r"foot"}
+                    "swallows": {"app_id": r"foot"},
+                    "marks": ["t"]
                 }
             ]
         }
@@ -108,6 +110,8 @@ async def main():
         await con.command("focus")
         await con.command(f"resize set {leaf.get('width', 0)} \
                 {leaf.get('height', 0)}")
+        for mark in leaf.get('marks', []):
+            await con.command(f"mark --add {mark}")
         while leaf := leaf.get("parent"):
             await sway.command("focus parent")
             await sway.command(f"resize set {leaf.get('width', 0)} \
