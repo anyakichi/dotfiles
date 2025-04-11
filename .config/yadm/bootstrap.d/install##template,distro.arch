@@ -147,6 +147,7 @@ packages_gui=(
     pdfjs
     python-adblock
     qt6
+    qt6ct
     qutebrowser
     slack-desktop
     ttf-dejavu
@@ -169,20 +170,24 @@ packages_desktop=(
     kwindowsystem
     mako
     mozc-ut
+    pipectl
     remmina
+    rnote
     slurp
-    sway-contrib
     sway
+    sway-contrib
     swaybg
     swayidle
     swaylock
     waybar
     wdisplays
+    wl-mirror
     wofi
     wtype
     xdg-desktop-portal-gtk
     xdg-desktop-portal-wlr
     xorg-xwayland
+    xournalpp
 )
 
 classes=({{ yadm.classes }})
