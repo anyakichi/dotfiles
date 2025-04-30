@@ -25,6 +25,7 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
+zstyle ':completion:*' list-dirs-first true
 
 # Array access completion
 zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
