@@ -156,6 +156,43 @@ return {
   { "rust-lang/rust.vim", ft = "rust" },
   { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
   {
+    "stevearc/conform.nvim",
+    keys = {
+      {
+        "<Space>f",
+        function()
+          require("conform").format({ async = true })
+        end,
+        mode = "",
+        desc = "Format buffer",
+      },
+    },
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        rust = { "rustfmt", lsp_format = "fallback" },
+        python = function(bufnr)
+          if require("conform").get_formatter_info("ruff_format", bufnr).available then
+            return { "ruff_fix", "ruff_format" }
+          else
+            return { "isort", "black" }
+          end
+        end,
+      },
+      default_format_opts = {
+        lsp_format = "fallback",
+      },
+      formatters = {
+        ruff_fix = {
+          append_args = { "--extend-select", "I" },
+        },
+        shfmt = {
+          prepend_args = { "-s" },
+        },
+      },
+    },
+  },
+  {
     "tpope/vim-fugitive",
     event = "VeryLazy",
     init = function()

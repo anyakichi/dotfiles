@@ -81,10 +81,9 @@ packages_devel=(
     pnpm
     prettier
     pyright
-    python-black
-    python-isort
     python-pynvim
     qemu-user-static-binfmt
+    ruff
     rust
     rust-analyzer
     sccache

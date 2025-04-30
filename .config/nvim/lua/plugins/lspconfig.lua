@@ -114,9 +114,6 @@ return {
         vim.keymap.set("n", "<Space>wl", function()
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts)
-        vim.keymap.set({ "n", "v" }, "<Space>f", function()
-          vim.lsp.buf.format({ async = true })
-        end, opts)
         if client and client.server_capabilities.inlayHintProvider then
           vim.keymap.set("n", "<Space>h", function()
             local current_setting = vim.lsp.inlay_hint.is_enabled(opts)
