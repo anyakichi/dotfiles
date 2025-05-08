@@ -24,7 +24,9 @@ def cursescontext():
 
 def copy(input: bytes):
     data = base64.b64encode(input).decode("utf-8")
-    print(f"\x1b]52;c;{data}\a", end="")
+    with open("/dev/tty", "w") as tty:
+        tty.write(f"\x1b]52;c;{data}\a")
+        tty.flush()
 
 
 def paste():

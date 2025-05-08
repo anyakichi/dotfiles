@@ -123,6 +123,9 @@ macro index,pager \c] "<enter-command>set sidebar_visible=yes<enter><sidebar-nex
                                         "open next mailbox with new mail"
 macro index,pager = "<enter-command>set nm_query_window_duration=0<enter>"
 
+macro index,pager \cb "|urlscan --run 'url-launcher {}'<Enter>" "call urlscan to extract URLs out of a message"
+macro attach,compose \cb "|urlscan --run 'url-launcher {}'<Enter>" "call urlscan to extract URLs out of a message"
+
 source ~/.config/neomutt/sidebar-close
 
 source ~/.config/neomutt/colors/oceanic-next

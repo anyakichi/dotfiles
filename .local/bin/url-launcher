@@ -1,4 +1,8 @@
 #!/bin/sh
 
-which open >/dev/null 2>&1 && open "$@"
-which xdg-open >/dev/null 2>&1 && xdg-open "$@"
+if [ -n "$SSH_CONNECTION" ]; then
+    tclip "$1"
+else
+    which open >/dev/null 2>&1 && open "$@"
+    which xdg-open >/dev/null 2>&1 && xdg-open "$@"
+fi
