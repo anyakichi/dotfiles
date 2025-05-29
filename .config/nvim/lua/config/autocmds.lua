@@ -277,7 +277,6 @@ vim.api.nvim_create_autocmd("FileType", {
       "b:*",
       "b:1.",
       "nb:>",
-      "nb:#",
     })
     vim.opt_local.formatoptions:append("ro")
     vim.opt_local.formatoptions:remove("c")
