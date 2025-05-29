@@ -157,6 +157,7 @@ return {
   { "sindrets/diffview.nvim", cmd = "DiffviewOpen" },
   {
     "stevearc/conform.nvim",
+    cmd = { "ConformInfo" },
     keys = {
       {
         "<Space>f",
@@ -169,23 +170,26 @@ return {
     },
     opts = {
       formatters_by_ft = {
+        javascript = { "prettier" },
+        javascriptreact = { "prettier" },
         lua = { "stylua" },
-        rust = { "rustfmt", lsp_format = "fallback" },
+        markdown = { "prettier" },
         python = function(bufnr)
           if require("conform").get_formatter_info("ruff_format", bufnr).available then
-            return { "ruff_fix", "ruff_format" }
+            return { "ruff_organize_imports", "ruff_format" }
           else
             return { "isort", "black" }
           end
         end,
+        rust = { "rustfmt", lsp_format = "fallback" },
+        sh = { "shfmt" },
+        typescript = { "prettier" },
+        typescriptreact = { "prettier" },
       },
       default_format_opts = {
         lsp_format = "fallback",
       },
       formatters = {
-        ruff_fix = {
-          append_args = { "--extend-select", "I" },
-        },
         shfmt = {
           prepend_args = { "-s" },
         },
