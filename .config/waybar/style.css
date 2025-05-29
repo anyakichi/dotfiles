@@ -6,7 +6,7 @@
 
 window#waybar {
     background-color: rgba(48, 48, 48, 0.85);
-    color: #ffffff;
+    color: #e0e0e0;
     transition-property: background-color;
     transition-duration: .5s;
 }
@@ -44,22 +44,26 @@ button {
 /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -3px #e0e0e0;
 }
 
 #workspaces button {
     padding: 0 5px;
     background-color: transparent;
-    color: #ffffff;
+    color: #d8dee9;
 }
 
 #workspaces button:hover {
     background: rgba(0, 0, 0, 0.2);
 }
 
+#workspaces button.visible {
+    background-color: #64727D;
+}
+
 #workspaces button.focused {
     background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -3px #e0e0e0;
 }
 
 #workspaces button.urgent {
@@ -68,7 +72,7 @@ button:hover {
 
 #mode {
     background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+    box-shadow: inset 0 -3px #e0e0e0;
 }
 
 #clock,
@@ -79,6 +83,7 @@ button:hover {
 #temperature,
 #backlight,
 #network,
+#bluetooth,
 #pulseaudio,
 #wireplumber,
 #custom-media,
@@ -90,9 +95,8 @@ button:hover {
 #scratchpad,
 #power-profiles-daemon,
 #mpd {
-    margin: 2px 0;
-    padding: 0 0.6rem;
-    color: #ffffff;
+    margin: 2px;
+    padding: 0 5px;
     border-radius: 0.5rem;
 }
 
@@ -104,6 +108,7 @@ button:hover {
 #temperature:hover,
 #backlight:hover,
 #network:hover,
+#bluetooth:hover,
 #pulseaudio:hover,
 #wireplumber:hover,
 #custom-media:hover,
@@ -115,7 +120,7 @@ button:hover {
 #scratchpad:hover,
 #power-profiles-daemon:hover,
 #mpd:hover {
-    background: rgba(80, 80, 80, 0.2);
+    background: rgba(80, 80, 80, 0.85);
 }
 
 #window,
@@ -142,12 +147,12 @@ button:hover {
 }
 
 #battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: rgba(38, 166, 91, 0.75);
+    background-color: rgba(38, 166, 91, 0.85);
 }
 
 #battery.warning:not(.charging) {
-    background-color: rgba(250, 200, 99, 0.75);
+    background-color: rgba(241, 196, 15, 0.85);
+    color: #202020;
 }
 
 @keyframes blink {
@@ -160,7 +165,6 @@ button:hover {
 /* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
     background-color: #f53c3c;
-    color: #ffffff;
     animation-name: blink;
     animation-duration: 0.5s;
     animation-timing-function: steps(12);
