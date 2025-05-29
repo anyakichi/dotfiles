@@ -23,7 +23,7 @@ def cursescontext():
 
 
 def copy(input: bytes):
-    data = base64.b64encode(input).decode("utf-8")
+    data = base64.b64encode(input.replace(b"\r\n", b"\n")).decode("utf-8")
     with open("/dev/tty", "w") as tty:
         tty.write(f"\x1b]52;c;{data}\a")
         tty.flush()
