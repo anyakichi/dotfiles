@@ -32,3 +32,6 @@ zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
 # Misc completions
 zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 zstyle ':completion:*:manuals' separate-sections true
+
+# Disable broken completions (temporalily)
+compdef -d handlr
