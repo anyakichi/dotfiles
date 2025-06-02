@@ -28,54 +28,32 @@ return {
     { "williamboman/mason.nvim", build = ":MasonUpdate", opts = {} },
   },
   config = function()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+    vim.lsp.config("*", {
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    })
 
-    local lspconfig = require("lspconfig")
-    lspconfig.ansiblels.setup({ capabilities = capabilities })
-    lspconfig.bashls.setup({ capabilities = capabilities })
-    lspconfig.clangd.setup({ capabilities = capabilities })
-    lspconfig.cssls.setup({ capabilities = capabilities })
-    lspconfig.dockerls.setup({ capabilities = capabilities })
-    lspconfig.esbonio.setup({ capabilities = capabilities })
-    lspconfig.eslint.setup({ capabilities = capabilities })
-    lspconfig.gopls.setup({ capabilities = capabilities })
-    lspconfig.hls.setup({ capabilities = capabilities })
-    lspconfig.html.setup({ capabilities = capabilities })
-    lspconfig.jsonls.setup({
-      capabilities = capabilities,
-      settings = {
-        json = {
-          schemas = require("schemastore").json.schemas(),
-          validate = { enable = true },
-        },
-      },
-    })
-    lspconfig.lua_ls.setup({ capabilities = capabilities })
-    lspconfig.mesonlsp.setup({ capabilities = capabilities })
-    lspconfig.ocamllsp.setup({ capabilities = capabilities })
-    lspconfig.pyright.setup({ capabilities = capabilities })
-    lspconfig.rescriptls.setup({
-      capabilities = capabilities,
-      cmd = {
-        "node",
-        require("lazy.core.config").options.root .. "/vim-rescript/server/out/server.js",
-        "--stdio",
-      },
-    })
-    lspconfig.tailwindcss.setup({ capabilities = capabilities })
-    lspconfig.taplo.setup({ capabilities = capabilities })
-    lspconfig.texlab.setup({ capabilities = capabilities })
-    lspconfig.ts_ls.setup({ capabilities = capabilities })
-    lspconfig.vimls.setup({ capabilities = capabilities })
-    lspconfig.yamlls.setup({
-      capabilities = capabilities,
-      settings = {
-        yaml = {
-          schemas = require("schemastore").yaml.schemas(),
-        },
-      },
-    })
+    vim.lsp.enable("ansiblels")
+    vim.lsp.enable("bashls")
+    vim.lsp.enable("clangd")
+    vim.lsp.enable("cssls")
+    vim.lsp.enable("dockerls")
+    vim.lsp.enable("esbonio")
+    vim.lsp.enable("eslint")
+    vim.lsp.enable("gopls")
+    vim.lsp.enable("hls")
+    vim.lsp.enable("html")
+    vim.lsp.enable("jsonls")
+    vim.lsp.enable("lua_ls")
+    vim.lsp.enable("mesonlsp")
+    vim.lsp.enable("ocamllsp")
+    vim.lsp.enable("pyright")
+    vim.lsp.enable("rescriptls")
+    vim.lsp.enable("tailwindcss")
+    vim.lsp.enable("taplo")
+    vim.lsp.enable("texlab")
+    vim.lsp.enable("ts_ls")
+    vim.lsp.enable("vimls")
+    vim.lsp.enable("yamlls")
 
     for type, text in pairs(require("config").icons.diagnostics) do
       local hl = "DiagnosticSign" .. type
@@ -89,7 +67,6 @@ return {
     end, function(_)
       require("lspsaga.diagnostic"):goto_next()
     end)
-    vim.keymap.set("n", "<Space>e", vim.diagnostic.open_float, opts)
     vim.keymap.set("n", "<Space>q", vim.diagnostic.setloclist, opts)
     vim.keymap.set("n", "[d", prev_diag, opts)
     vim.keymap.set("n", "]d", next_diag, opts)
