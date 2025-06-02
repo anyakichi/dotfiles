@@ -28,6 +28,7 @@ EnumerateSkipFirst=False
 0=l
 1=Escape
 2=Control+bracketleft
+3=Control+apostrophe
 
 [Hotkey/PrevPage]
 0=Up
