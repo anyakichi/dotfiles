@@ -10,3 +10,5 @@ bindkey '^S' history-incremental-pattern-search-forward
 bindkey '^]' insert-last-word
 bindkey '^[u' undo
 bindkey '^[r' redo
+
+bindkey -r '^G'
