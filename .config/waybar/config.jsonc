@@ -133,7 +133,7 @@
     },
     "clock": {
         "tooltip-format": "<tt>{calendar}</tt>",
-        "format": "{:%a %b %d %H:%M}",
+        "format": "{:%m/%d(%a) %H:%M}",
     },
     "cpu": {
         "format": "{usage}% ",
