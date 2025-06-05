@@ -113,6 +113,7 @@ packages_mail=(
 packages_media=(
     alsa-utils
     ffmpeg
+    fluidsynth
     imagemagick
     imv
     mpv
@@ -143,7 +144,7 @@ packages_gui=(
     noto-fonts-cjk
     noto-fonts-emoji
     otf-font-awesome
-    pdfjs
+    pdfjs-legacy
     python-adblock
     qt6
     qt6ct
@@ -168,7 +169,6 @@ packages_desktop=(
     kguiaddons
     kwindowsystem
     mako
-    mozc-ut
     pipectl
     remmina
     rnote
