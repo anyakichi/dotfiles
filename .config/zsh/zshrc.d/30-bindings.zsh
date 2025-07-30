@@ -12,3 +12,6 @@ bindkey '^[u' undo
 bindkey '^[r' redo
 
 bindkey -r '^G'
+
+bindkey "\e[27;2;13~" accept-line
+bindkey "\e[27;5;13~" accept-line
