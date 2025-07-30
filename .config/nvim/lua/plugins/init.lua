@@ -74,7 +74,6 @@ return {
     },
   },
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
-  { "chrisbra/csv.vim", ft = "csv" },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
@@ -83,6 +82,23 @@ return {
     keys = {
       { "f", "<Plug>(leap-forward-to)", mode = { "n", "o", "x" }, desc = "Leap forward to" },
       { "F", "<Plug>(leap-backward-to)", mode = { "n", "o", "x" }, desc = "Leap backward to" },
+    },
+  },
+  {
+    "hat0uma/csvview.nvim",
+    cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    keys = {
+      { "<Space>h", "<Cmd>CsvViewToggle<CR>" },
+    },
+    opts = {
+      keymaps = {
+        textobject_field_inner = { "if", mode = { "o", "x" } },
+        textobject_field_outer = { "af", mode = { "o", "x" } },
+        jump_next_field_end = { "<Tab>", mode = { "n", "v" } },
+        jump_prev_field_end = { "<S-Tab>", mode = { "n", "v" } },
+        jump_next_row = { "<Enter>", mode = { "n", "v" } },
+        jump_prev_row = { "<S-Enter>", mode = { "n", "v" } },
+      },
     },
   },
   {
