@@ -150,7 +150,7 @@ main() {
                 timeout 330 "$0 battery-blank" resume "$0 unblank" \
                 timeout 600 "$0 dim" resume "$0 undim" \
                 timeout 630 "$0 blank" resume "$0 unblank" \
-                lock "swaylock -f" \
+                lock "$0 lock" \
                 before-sleep "$0 lock" \
                 after-resume "$0 unblank; $0 redshift" &
         else
@@ -195,7 +195,7 @@ main() {
         ;;
     lock)
         if [[ $WAYLAND_DISPLAY ]]; then
-            loginctl lock-session
+            swaylock -f
         else
             xset s activate &>/dev/null
         fi
@@ -216,7 +216,7 @@ main() {
         ;;
     blank)
         if [[ $WAYLAND_DISPLAY ]]; then
-            loginctl lock-session
+            swaylock -f
             swaymsg "output * power off"
         else
             dim off
