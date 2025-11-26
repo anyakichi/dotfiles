@@ -199,6 +199,7 @@ return {
         end,
         rust = { "rustfmt", lsp_format = "fallback" },
         sh = { "shfmt" },
+        terraform = { "tofu_fmt" },
         typescript = { "prettier" },
         typescriptreact = { "prettier" },
       },
