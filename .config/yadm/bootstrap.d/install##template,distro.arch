@@ -21,6 +21,7 @@ packages=(
     bat
     bottom
     chafa
+    direnv
     dust
     eza
     fd
