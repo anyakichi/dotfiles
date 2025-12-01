@@ -1,6 +1,7 @@
 import os
 
 import qutebrowser.app
+import qutebrowser.browser.network.proxy
 from qutebrowser.keyinput import modeman
 from qutebrowser.utils import usertypes
 
@@ -22,3 +23,4 @@ class MyApplication(qutebrowser.app.Application):
 
 
 qutebrowser.app.Application = MyApplication
+qutebrowser.browser.network.proxy.init = lambda: None
