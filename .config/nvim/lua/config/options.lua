@@ -40,6 +40,9 @@ vim.opt.cursorline = true
 vim.opt.laststatus = 3
 vim.opt.number = true
 vim.opt.signcolumn = "number"
+if vim.fn.has("gui_running") == 0 then
+  vim.opt.guicursor = ""
+end
 
 -- Diff
 vim.opt.diffopt:append({ "vertical", "indent-heuristic", "algorithm:histogram" })
