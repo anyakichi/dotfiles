@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while true; do
+    echo -e "\n\033[33m--- Press Enter to start (Ctrl+C to quit) ---\033[0m"
+
+    read -r || break
+
+    "$@"
+done
