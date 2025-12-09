@@ -29,6 +29,12 @@ alias neomutt="PINENTRY_USER_DATA=curses neomutt"
 alias o='handlr open'
 alias picocom='picocom -e \\'
 alias vimdiff='vim +next "+execute \"DirDiff\" argv(0) argv(1)"'
+alias zj=zellij
+
+if command -v systemd-run &>/dev/null; then
+    alias tmux='systemd-run -q --user --scope tmux'
+    alias zellij='systemd-run -q --user --scope zellij'
+fi
 
 alias_if_exists jq 'pipeless jq -C'
 alias_if_exists rg 'pipeless rg -S --color=always'
@@ -60,6 +66,39 @@ if [ "$(tmux -V | awk 'NR==1 {print ($2+0 < 3.1)}')" = 1 ]; then
     alias tmux="tmux -f ~/.config/tmux/tmux.conf"
 fi
 
+tmux-rename-wrapper() {
+    if [[ -t 1 ]]; then
+        local auto=$(tmux show-option -wqv automatic-rename)
+        local name=$(tmux display-message -p '#W')
+        tmux rename-window "${(@)argv[$#]/.*/}"
+        "$@"
+        tmux rename-window "$name"
+        if [[ $auto ]];then
+            tmux set-option -wq automatic-rename "$auto"
+        else
+            tmux set-option -wuq automatic-rename
+        fi
+    else
+        "$@"
+    fi
+}
+
+sr() {
+    tmux-rename-wrapper command s "$@"
+}
+
+sshr() {
+    tmux-rename-wrapper command ssh "$@"
+}
+
+waypiper() {
+    if [[ $1 == ssh && $# == 2 ]]; then
+        tmux-rename-wrapper command waypipe "$@"
+    else
+        command waypipe "$@"
+    fi
+}
+
 st() {
     if [[ -t 1 ]]; then
         tmux new-window -n "${(@)argv[$#]/.*/}" \
@@ -88,9 +127,9 @@ waypipet() {
 }
 
 if [[ -n "${TMUX}" ]]; then
-    alias s=st
-    alias ssh=ssht
-    alias waypipe=waypipet
+    alias s=sr
+    alias ssh=sshr
+    alias waypipe=waypiper
 fi
 
 # Global aliases
