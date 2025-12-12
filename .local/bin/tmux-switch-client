@@ -1,0 +1,8 @@
+#!/bin/bash
+
+LS_COLORS=$(vivid generate "$HOME/.config/vivid/oceanic-next.yml")
+FZF_TMUX_PANE="$HOME/.local/share/zinit/plugins/anyakichi---fzf-utils/bin/fzf-tmux-pane"
+
+export LS_COLORS
+
+tmux switch-client -t "$($FZF_TMUX_PANE run --height=100% --preview-window=75%,top,border-down --layout=default)"
