@@ -33,6 +33,7 @@ return {
   end,
   init = function()
     vim.keymap.set("n", "<C-s>", require("fzf-lua").tabs)
+    vim.keymap.set("n", "<C-/>", require("fzf-lua").oldfiles)
     vim.keymap.set("n", "<C-_>", require("fzf-lua").oldfiles)
     vim.keymap.set("n", "<C-g>.", require("fzf-lua").files)
     vim.keymap.set("n", "<C-g>q", require("fzf-lua").quickfix)
