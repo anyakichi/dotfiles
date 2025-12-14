@@ -39,11 +39,6 @@ return {
     },
   },
   {
-    "akinsho/toggleterm.nvim",
-    event = "VeryLazy",
-    opts = { open_mapping = [[<C-\>]] },
-  },
-  {
     "andymass/vim-matchup",
     event = { "BufNewFile", "BufReadPre" },
     init = function()
@@ -74,6 +69,71 @@ return {
     },
   },
   { "chentoast/marks.nvim", event = "VeryLazy", opts = {} },
+  {
+    "coder/claudecode.nvim",
+    opts = {
+      terminal_cmd = "~/.claude/local/claude",
+      diff_opts = {
+        open_in_current_tab = false,
+      },
+    },
+    keys = {
+      { "<Space>a", nil, desc = "AI/Claude Code" },
+      { "<C-,>", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude", mode = { "n", "t" } },
+      { "<Space>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
+      { "<Space>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },
+      { "<Space>ar", "<cmd>ClaudeCode --resume<cr>", desc = "Resume Claude" },
+      { "<Space>aC", "<cmd>ClaudeCode --continue<cr>", desc = "Continue Claude" },
+      { "<Space>am", "<cmd>ClaudeCodeSelectModel<cr>", desc = "Select Claude model" },
+      { "<Space>ab", "<cmd>ClaudeCodeAdd %<cr>", desc = "Add current buffer" },
+      { "<Space>as", "<cmd>ClaudeCodeSend<cr>", mode = "v", desc = "Send to Claude" },
+      {
+        "<Space>as",
+        "<cmd>ClaudeCodeTreeAdd<cr>",
+        desc = "Add file",
+        ft = { "NvimTree", "neo-tree", "oil", "minifiles", "netrw" },
+      },
+      -- Diff management
+      { "<Space>aa", "<cmd>ClaudeCodeDiffAccept<cr>", desc = "Accept diff" },
+      { "<Space>ad", "<cmd>ClaudeCodeDiffDeny<cr>", desc = "Deny diff" },
+    },
+  },
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    opts = {
+      bigfile = { enabled = true },
+      indent = { enabled = true },
+      notifier = { enabled = true },
+      quickfile = { enabled = true },
+      words = { enabled = true },
+    },
+    keys = {
+      {
+        [[<C-\>]],
+        function()
+          Snacks.terminal(nil, { win = { height = 0.25 } })
+        end,
+        desc = "Toggle Terminal",
+        mode = { "n", "t" },
+      },
+      {
+        "<leader>n",
+        function()
+          Snacks.notifier.show_history()
+        end,
+        desc = "Notification History",
+      },
+      {
+        "<leader>'",
+        function()
+          Snacks.notifier.hide()
+        end,
+        desc = "Dismiss All Notifications",
+      },
+    },
+  },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
@@ -132,41 +192,12 @@ return {
     keys = { { "ga", "<Plug>(EasyAlign)", mode = { "n", "x" } } },
   },
   { "lambdalisue/suda.vim", cmd = { "SudaRead", "SudaWrite" } },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
-    main = "ibl",
-    opts = {
-      indent = {
-        char = "▏",
-      },
-      scope = { enabled = false },
-      exclude = {
-        filetypes = {
-          "help",
-          "lazy",
-          "mason",
-          "notify",
-          "toggleterm",
-        },
-      },
-    },
-  },
   { "mbbill/undotree", cmd = "UndotreeToggle" },
   { "mrcjkb/rustaceanvim", version = "*", lazy = false },
   { "nvim-lua/plenary.nvim", lazy = true },
   {
     "nvim-telescope/telescope.nvim",
     cmd = "Telescope",
-  },
-  {
-    "rcarriga/nvim-notify",
-    event = "VeryLazy",
-    -- stylua: ignore
-    keys = { { "<Leader>'", function() require("notify").dismiss({}) end } },
-    config = function()
-      vim.notify = require("notify")
-    end,
   },
   { "rescript-lang/vim-rescript", ft = "rescript" },
   { "rust-lang/rust.vim", ft = "rust" },
