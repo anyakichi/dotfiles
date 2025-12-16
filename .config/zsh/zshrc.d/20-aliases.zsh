@@ -71,13 +71,16 @@ tmux-rename-wrapper() {
         local auto=$(tmux show-option -wqv automatic-rename)
         local name=$(tmux display-message -p '#W')
         tmux rename-window "${(@)argv[$#]/.*/}"
-        "$@"
-        tmux rename-window "$name"
-        if [[ $auto ]];then
-            tmux set-option -wq automatic-rename "$auto"
-        else
-            tmux set-option -wuq automatic-rename
-        fi
+        {
+            "$@"
+        } always {
+            tmux rename-window "$name"
+            if [[ $auto ]];then
+                tmux set-option -wq automatic-rename "$auto"
+            else
+                tmux set-option -wuq automatic-rename
+            fi
+        }
     else
         "$@"
     fi
