@@ -1,0 +1,85 @@
+font-family = ""
+font-family = "DejaVuSansM Nerd Font"
+font-family = "Noto Sans Mono CJK JP"
+font-family = "Font Awesome 7 Free"
+font-family = "Font Awesome 7 Brands"
+font-family = "Noto Color Emoji"
+font-size = 10
+font-feature = -calt, -liga, -dlig
+freetype-load-flags = no-hinting,no-force-autohint,no-monochrome,no-autohint
+
+window-padding-x = 1
+window-padding-y = 1
+
+adjust-cell-width = -1
+adjust-cell-height = 12%
+
+mouse-hide-while-typing = true
+
+cursor-style = block
+cursor-style-blink = true
+
+shell-integration-features = no-cursor
+
+# --- Colors ---
+foreground = #c0c5ce
+background = #1b2b34
+
+palette = 0=#1b2b34
+palette = 1=#ec5f67
+palette = 2=#99c794
+palette = 3=#fac863
+palette = 4=#6699cc
+palette = 5=#c594c5
+palette = 6=#5fb3b3
+palette = 7=#c0c5ce
+
+palette = 8=#65737e
+palette = 9=#ec5f67
+palette = 10=#99c794
+palette = 11=#fac863
+palette = 12=#6699cc
+palette = 13=#c594c5
+palette = 14=#5fb3b3
+palette = 15=#ffffff
+
+palette = 68=#6699cc
+palette = 73=#5fb3b3
+palette = 114=#99c794
+palette = 137=#ab7967
+palette = 145=#a7adba
+palette = 176=#c594c5
+palette = 203=#ec5f67
+palette = 209=#f99157
+palette = 221=#fac863
+palette = 235=#1b2b34
+palette = 237=#343d46
+palette = 240=#4f5b66
+palette = 243=#65737e
+palette = 251=#c0c5ce
+palette = 252=#cdd3de
+palette = 253=#d8dee9
+
+# --- Key Bindings ---
+keybind = clear
+keybind = ctrl++=increase_font_size:1
+keybind = ctrl+-=decrease_font_size:1
+keybind = ctrl+apostrophe=paste_from_clipboard
+keybind = ctrl+equal=reset_font_size
+keybind = ctrl+shift++=increase_font_size:1
+keybind = ctrl+shift+,=reload_config
+keybind = ctrl+shift+a=select_all
+keybind = ctrl+shift+c=copy_to_clipboard
+keybind = ctrl+shift+i=inspector:toggle
+keybind = ctrl+shift+p=toggle_command_palette
+keybind = ctrl+shift+page_down=jump_to_prompt:1
+keybind = ctrl+shift+page_up=jump_to_prompt:-1
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = shift+arrow_down=adjust_selection:down
+keybind = shift+arrow_left=adjust_selection:left
+keybind = shift+arrow_right=adjust_selection:right
+keybind = shift+arrow_up=adjust_selection:up
+keybind = shift+end=scroll_to_bottom
+keybind = shift+home=scroll_to_top
+keybind = shift+page_down=scroll_page_down
+keybind = shift+page_up=scroll_page_up
