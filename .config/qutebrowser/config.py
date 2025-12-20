@@ -35,6 +35,7 @@ config.bind("tU", "undo -w")
 config.bind("tm", "back ;; forward -t")
 config.bind("<Ctrl-t>", "config-cycle -t tabs.position top left")
 config.bind("<Ctrl-s>", "cmd-set-text -s :tab-select")
+config.bind("<Ctrl-/>", "cmd-set-text -s :tab-select")
 config.bind("t/", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-w>", "nop")
 
