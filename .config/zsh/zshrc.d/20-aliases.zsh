@@ -33,6 +33,7 @@ alias zj=zellij
 
 if command -v systemd-run &>/dev/null; then
     alias tmux='systemd-run -q --user --scope tmux'
+    alias tmuxp='systemd-run -q --user --scope tmuxp'
     alias zellij='systemd-run -q --user --scope zellij'
 fi
 
