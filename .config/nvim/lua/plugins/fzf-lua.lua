@@ -1,11 +1,15 @@
 return {
   "ibhagwan/fzf-lua",
   dependencies = { "nvim-tree/nvim-web-devicons" },
+  cmd = "FzfLua",
   opts = function()
     return {
       actions = {
         files = {
-          default = require("fzf-lua").actions.file_edit,
+          true,
+          ["ctrl-]"] = require("fzf-lua").actions.file_edit,
+          ["ctrl-o"] = require("fzf-lua").actions.file_edit,
+          ["enter"] = require("fzf-lua").actions.file_tabedit,
         },
       },
       grep = {
@@ -31,28 +35,52 @@ return {
       },
     }
   end,
+  keys = {
+    { "<C-/>", "<Cmd>FzfLua tabs<CR>", desc = "FzfLua tabs" },
+    { "<C-_>", "<Cmd>FzfLua tabs<CR>", desc = "FzfLua tabs" },
+    { "<C-g>/", "<Cmd>FzfLua search_history<CR>", desc = "FzfLua search_history" },
+    {
+      "<C-g>:",
+      function()
+        FzfLua.command_history({
+          actions = { ["ctrl-e"] = false, ["ctrl-y"] = FzfLua.actions.ex_run },
+        })
+      end,
+      desc = "FzfLua command_history",
+    },
+    { "<C-g>;", "<C-g>:", desc = "FzfLua command_history", remap = true },
+    { "<C-g><C-.>", "<Cmd>FzfLua files<CR>", desc = "FzfLua files" },
+    { "<C-g><C-/>", "<Cmd>FzfLua oldfiles<CR>", desc = "FzfLua oldfiles" },
+    { "<C-g><C-_>", "<Cmd>FzfLua oldfiles<CR>", desc = "FzfLua oldfiles" },
+    {
+      "<C-g><C-d>",
+      "<Cmd>FzfLua diagnostics_document<CR>",
+      desc = "FzfLua diagnostics_document",
+    },
+    { "<C-g><C-f>", "<Cmd>FzfLua lsp_finder<CR>", desc = "FzfLua lsp_finder" },
+    { "<C-g><C-g>", ":<C-u>LiveGrep<Space>", desc = "FzfLua live_grep" },
+    { "<C-g><C-h>", "<Cmd>FzfLua helptags<CR>", desc = "FzfLua helptags" },
+    { "<C-g><C-l>", "<Cmd>FzfLua loclist<CR>", desc = "FzfLua loclist" },
+    { "<C-g><C-m>", "<Cmd>FzfLua marks<CR>", desc = "FzfLua marks" },
+    { "<C-g><C-r>", "<Cmd>FzfLua registers<CR>", desc = "FzfLua registers" },
+    { "<C-g><C-s>", "<Cmd>FzfLua spell_suggest<CR>", desc = "FzfLua spell_suggest" },
+    { "<C-g><C-t>", "<Cmd>FzfLua treesitter<CR>", desc = "FzfLua treesitter" },
+    { "<C-g><C-u>", "<Cmd>FzfLua undotree<CR>", desc = "FzfLua undotree" },
+    { "<C-g>C", "<Cmd>FzfLua git_commits<CR>", desc = "FzfLua git_commits" },
+    { "<C-g>L", "<Cmd>FzfLua lines<CR>", desc = "FzfLua lines" },
+    { "<C-g>T", "<Cmd>FzfLua tags<CR>", desc = "FzfLua tags" },
+    { "<C-g>c", "<Cmd>FzfLua git_bcommits<CR>", desc = "FzfLua git_bcommits" },
+    { "<C-g>g", "<Cmd>FzfLua live_grep_resume<CR>", desc = "FzfLua live_grep_resume" },
+    { "<C-g>h", "<Cmd>FzfLua highlights<CR>", desc = "FzfLua highlights" },
+    { "<C-g>k", "<Cmd>FzfLua keymaps<CR>", desc = "FzfLua keymaps" },
+    { "<C-g>l", "<Cmd>FzfLua blines<CR>", desc = "FzfLua blines" },
+    { "<C-g>m", "<Cmd>FzfLua manpages<CR>", desc = "FzfLua manpages" },
+    { "<C-g>q", "<Cmd>FzfLua quickfix<CR>", desc = "FzfLua quickfix" },
+    { "<C-g>s", "<Cmd>FzfLua spellcheck<CR>", desc = "FzfLua spellcheck" },
+    { "<C-g>t", "<Cmd>FzfLua btags<CR>", desc = "FzfLua btags" },
+    { "<C-s>", "<Cmd>FzfLua buffers<CR>", desc = "FzfLua buffers" },
+  },
   init = function()
-    vim.keymap.set("n", "<C-s>", require("fzf-lua").tabs)
-    vim.keymap.set("n", "<C-/>", require("fzf-lua").oldfiles)
-    vim.keymap.set("n", "<C-_>", require("fzf-lua").oldfiles)
-    vim.keymap.set("n", "<C-g>.", require("fzf-lua").files)
-    vim.keymap.set("n", "<C-g>q", require("fzf-lua").quickfix)
-    vim.keymap.set("n", "<C-g>l", require("fzf-lua").loclist)
-    vim.keymap.set("n", "<C-g><C-g>", ":<C-u>LiveGrep<Space>")
-    vim.keymap.set("n", "<C-g>g", require("fzf-lua").live_grep_resume)
-    vim.keymap.set("n", "<C-g><C-m>", require("fzf-lua").marks)
-    vim.keymap.set("n", "<C-g><C-t>", require("fzf-lua").tags)
-    vim.keymap.set("n", "<C-g>/", require("fzf-lua").search_history)
-    vim.keymap.set("n", "<C-g>:", function()
-      local fzf = require("fzf-lua")
-      fzf.command_history({ actions = { ["ctrl-e"] = false, ["ctrl-y"] = fzf.actions.ex_run } })
-    end)
-    vim.keymap.set("n", "<C-g>;", "<C-g>:", { remap = true })
-    vim.keymap.set("n", "<C-g><C-l>", require("fzf-lua").blines)
-    vim.keymap.set("n", "<C-g>L", require("fzf-lua").lines)
-    vim.keymap.set("n", "<C-g>C", require("fzf-lua").git_commits)
-    vim.keymap.set("n", "<C-g>c", require("fzf-lua").git_bcommits)
-
     local function fzf_files(edit, opts)
       local fzf = require("fzf-lua")
       local map = {

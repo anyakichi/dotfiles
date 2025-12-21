@@ -57,14 +57,67 @@ return {
     "b0o/incline.nvim",
     event = "VeryLazy",
     opts = {
-      hide = { cursorline = true, only_win = true },
+      window = {
+        padding = 0,
+      },
       render = function(props)
         local bufname = vim.api.nvim_buf_get_name(props.buf)
-        local res = bufname ~= "" and vim.fn.fnamemodify(bufname, ":~:.") or "[No Name]"
-        if vim.api.nvim_buf_get_option(props.buf, "modified") then
-          res = res .. " [+]"
+        local filename = bufname ~= "" and vim.fn.fnamemodify(bufname, ":~:.") or "[No Name]"
+        local ft_icon, ft_color = require("nvim-web-devicons").get_icon_color(filename)
+
+        local function get_diagnostic_label()
+          local icons = {
+            error = require("config").icons.diagnostics.Error,
+            warn = require("config").icons.diagnostics.Warn,
+            info = require("config").icons.diagnostics.Info,
+            hint = require("config").icons.diagnostics.Hint,
+          }
+          local label = {}
+
+          for severity, icon in pairs(icons) do
+            local n = #vim.diagnostic.get(
+              props.buf,
+              { severity = vim.diagnostic.severity[string.upper(severity)] }
+            )
+            if n > 0 then
+              table.insert(label, { icon .. n .. " ", group = "DiagnosticSign" .. severity })
+            end
+          end
+          if #label > 0 then
+            table.insert(label, { "┊ " })
+          end
+          return label
         end
-        return res
+
+        local function get_file_info()
+          local info = {}
+          if vim.o.fileformat == "dos" then
+            table.insert(info, "  ")
+          elseif vim.o.fileformat == "mac" then
+            table.insert(info, "  ")
+          end
+          if vim.o.fileencoding ~= "" and vim.o.fileencoding ~= "utf-8" then
+            table.insert(info, vim.o.fileencoding .. " ")
+          end
+          if #info > 0 then
+            table.insert(info, { "┊ " })
+          end
+          return info
+        end
+
+        local fg =
+          string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Pmenu", link = false }).bg)
+        local bg =
+          string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg)
+
+        return {
+          { "  ", guifg = fg, guibg = bg, blend = 0 },
+          { get_diagnostic_label() },
+          { get_file_info() },
+          { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
+          { filename .. " ", gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
+          { " ", guifg = fg, guibg = bg, blend = 0 },
+        }
       end,
     },
   },
@@ -72,7 +125,6 @@ return {
   {
     "coder/claudecode.nvim",
     opts = {
-      terminal_cmd = "~/.claude/local/claude",
       diff_opts = {
         open_in_current_tab = false,
       },
@@ -99,13 +151,71 @@ return {
     },
   },
   {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      views = {
+        cmdline_popup = {
+          position = {
+            row = 4,
+            col = "50%",
+          },
+          size = {
+            min_width = 78,
+            width = "auto",
+            height = "auto",
+          },
+        },
+        cmdline_popupmenu = {
+          relative = "editor",
+          position = {
+            row = 7,
+            col = "50%",
+          },
+          size = {
+            width = 78,
+            height = "auto",
+            max_height = 15,
+          },
+          border = {
+            style = "rounded",
+            padding = { 0, 1 },
+          },
+          win_options = {
+            winhighlight = { Normal = "Normal", FloatBorder = "NoiceCmdlinePopupBorder" },
+          },
+        },
+      },
+      lsp = {
+        override = {
+          ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+          ["vim.lsp.util.stylize_markdown"] = true,
+          ["cmp.entry.get_documentation"] = true,
+        },
+      },
+      presets = {
+        bottom_search = true,
+        command_palette = false,
+        long_message_to_split = true,
+        inc_rename = false,
+        lsp_doc_border = false,
+      },
+      messages = {
+        view_search = false,
+      },
+    },
+  },
+  {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
     opts = {
       bigfile = { enabled = true },
       indent = { enabled = true },
-      notifier = { enabled = true },
+      notifier = { enabled = true, width = { min = 40, max = 0.95 } },
       quickfile = { enabled = true },
       words = { enabled = true },
     },
@@ -119,18 +229,25 @@ return {
         mode = { "n", "t" },
       },
       {
-        "<leader>n",
+        "<Space>n",
         function()
           Snacks.notifier.show_history()
         end,
         desc = "Notification History",
       },
       {
-        "<leader>'",
+        "<Space>'",
         function()
           Snacks.notifier.hide()
         end,
         desc = "Dismiss All Notifications",
+      },
+      {
+        "<Leader>z",
+        function()
+          Snacks.zen()
+        end,
+        desc = "Toggle Zen Mode",
       },
     },
   },

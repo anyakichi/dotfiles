@@ -118,6 +118,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "SpellCap", { sp = "#6699cc", undercurl = true })
     vim.api.nvim_set_hl(0, "SpellRare", { sp = "#c594c5", undercurl = true })
     vim.api.nvim_set_hl(0, "LspInformationText", { reverse = true })
+    vim.api.nvim_set_hl(0, "StatusLine", { link = "Normal" })
+    vim.api.nvim_set_hl(0, "StatusLineNC", { link = "StatusLine" })
 
     vim.api.nvim_set_hl(0, "IndentBlanklineSpaceChar", { fg = "#4f5b66", nocombine = true })
 

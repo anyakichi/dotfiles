@@ -59,8 +59,8 @@ return {
       -- Text object
       map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
     end,
-    _on_attach_pre = function(_, callback)
-      require("gitsigns-yadm").yadm_signs(callback)
+    _on_attach_pre = function(bufnr, callback)
+      require("gitsigns-yadm").yadm_signs(callback, { bufnr = bufnr })
     end,
   },
 }

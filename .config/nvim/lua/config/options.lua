@@ -37,7 +37,9 @@ vim.opt.pumheight = 10
 
 -- Appearance
 vim.opt.cursorline = true
-vim.opt.laststatus = 3
+vim.opt.laststatus = 0
+vim.opt.statusline = "─"
+vim.opt.fillchars:append({ stl = "─", stlnc = "─" })
 vim.opt.number = true
 vim.opt.signcolumn = "number"
 if vim.fn.has("gui_running") == 0 then

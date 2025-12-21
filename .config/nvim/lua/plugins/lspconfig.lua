@@ -82,9 +82,24 @@ return {
         vim.keymap.set("n", "grn", "<Cmd>Lspsaga rename<CR>A", opts)
         vim.keymap.set({ "n", "v" }, "gra", "<Cmd>Lspsaga code_action<CR>", opts)
         vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-        vim.keymap.set("n", "g<C-d>", "<Cmd>Lspsaga peek_type_definition<CR>", opts)
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "gd", "<Cmd>Lspsaga peek_definition<CR>", opts)
+        vim.keymap.set(
+          "n",
+          "g<C-d>",
+          "<Cmd>FzfLua lsp_typedefs jump1=false unique_line_items=true ignore_current_line=true<CR>",
+          opts
+        )
+        vim.keymap.set(
+          "n",
+          "gD",
+          "<Cmd>FzfLua lsp_declarations jump1=false unique_line_items=true ignore_current_line=true<CR>",
+          opts
+        )
+        vim.keymap.set(
+          "n",
+          "gd",
+          "<Cmd>FzfLua lsp_definitions jump1=false unique_line_items=true ignore_current_line=true<CR>",
+          opts
+        )
         vim.keymap.set("n", "<Space>K", vim.lsp.buf.signature_help, opts)
         vim.keymap.set("n", "<Space>wa", vim.lsp.buf.add_workspace_folder, opts)
         vim.keymap.set("n", "<Space>wr", vim.lsp.buf.remove_workspace_folder, opts)
