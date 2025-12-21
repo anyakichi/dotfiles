@@ -111,11 +111,11 @@ return {
           string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg)
 
         return {
-          { "  ", guifg = fg, guibg = bg, blend = 0 },
+          { " ", guifg = fg, guibg = bg, blend = 0 },
           { get_diagnostic_label() },
           { get_file_info() },
-          { (ft_icon or "") .. " ", guifg = ft_color, guibg = "none" },
-          { filename .. " ", gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
+          { ft_icon and ft_icon .. " " or "", guifg = ft_color, guibg = "none" },
+          { filename, gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
           { " ", guifg = fg, guibg = bg, blend = 0 },
         }
       end,
@@ -217,6 +217,7 @@ return {
       indent = { enabled = true },
       notifier = { enabled = true, width = { min = 40, max = 0.95 } },
       quickfile = { enabled = true },
+      scope = { enabled = true },
       words = { enabled = true },
     },
     keys = {
@@ -250,6 +251,15 @@ return {
         desc = "Toggle Zen Mode",
       },
     },
+    init = function()
+      local prev_diag, next_diag = require("nvim-next.move").make_repeatable_pair(function(_)
+        Snacks.words.jump(-vim.v.count1)
+      end, function(_)
+        Snacks.words.jump(vim.v.count1)
+      end)
+      vim.keymap.set("n", "[w", prev_diag)
+      vim.keymap.set("n", "]w", next_diag)
+    end,
   },
   { "folke/todo-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
@@ -264,6 +274,7 @@ return {
   {
     "hat0uma/csvview.nvim",
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
+    ft = "csv",
     keys = {
       { "<Space>h", "<Cmd>CsvViewToggle<CR>" },
     },
