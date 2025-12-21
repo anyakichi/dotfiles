@@ -1,3 +1,6 @@
+title = Ghostty
+window-decoration = none
+
 font-family = ""
 font-family = "DejaVuSansM Nerd Font"
 font-family = "Noto Sans Mono CJK JP"
@@ -19,7 +22,7 @@ mouse-hide-while-typing = true
 cursor-style = block
 cursor-style-blink = true
 
-shell-integration-features = no-cursor
+shell-integration-features = no-cursor,no-title
 
 # --- Colors ---
 foreground = #c0c5ce
