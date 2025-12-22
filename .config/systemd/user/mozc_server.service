@@ -1,5 +1,7 @@
 [Unit]
 Description=Mozc Server
+PartOf=graphical-session.target
+After=graphical-session.target
 
 [Service]
 ExecStart=/usr/lib/mozc/mozc_server
@@ -7,4 +9,4 @@ ExecStop=/bin/kill -SIGTERM $MAINPID
 KillMode=process
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target

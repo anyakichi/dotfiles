@@ -1,6 +1,7 @@
 [Unit]
 Description=Power management daemon
-BindsTo=sway-session.target
+PartOf=graphical-session.target
+After=graphical-session.target
 
 [Service]
 Type=simple
@@ -9,4 +10,4 @@ ExecStop=%h/.local/bin/pm stop
 Restart=on-failure
 
 [Install]
-WantedBy=sway-session.target
+WantedBy=graphical-session.target
