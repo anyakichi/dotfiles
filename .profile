@@ -12,6 +12,6 @@ for conf in ~/.config/environment.d/*.conf; do
 done
 unset conf
 
-if uwsm check may-start && uwsm select; then
+if uwsm check may-start >/dev/null 2>&1 && uwsm select; then
   exec uwsm start default
 fi
