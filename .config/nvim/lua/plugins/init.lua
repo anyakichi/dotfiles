@@ -106,17 +106,17 @@ return {
         end
 
         local fg =
-          string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Pmenu", link = false }).bg)
-        local bg =
           string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Normal", link = false }).bg)
+        local bg =
+          string.format("#%06x", vim.api.nvim_get_hl(0, { name = "Pmenu", link = false }).bg)
 
         return {
-          { " ", guifg = fg, guibg = bg, blend = 0 },
+          { "█▏", guifg = fg, guibg = bg, blend = 0 },
           { get_diagnostic_label() },
           { get_file_info() },
           { ft_icon and ft_icon .. " " or "", guifg = ft_color, guibg = "none" },
           { filename, gui = vim.bo[props.buf].modified and "bold,italic" or "bold" },
-          { " ", guifg = fg, guibg = bg, blend = 0 },
+          { "▕█", guifg = fg, guibg = bg, blend = 0 },
         }
       end,
     },
