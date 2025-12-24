@@ -27,7 +27,7 @@ layout = {
             "width": '846 px',
             "nodes": [
                 {
-                    "swallows": {"app_id": r"wezterm"},
+                    "swallows": {"app_id": r"foot"},
                     "marks": ["t"]
                 }
             ]

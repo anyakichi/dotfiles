@@ -16,7 +16,7 @@ set $down j
 set $up k
 set $right l
 # Your preferred terminal emulator
-set $term wezterm
+set $term footclient
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -221,7 +221,7 @@ hide_edge_borders --i3 none
 smart_borders on
 smart_gaps on
 
-gaps inner 1
+gaps inner 3
 default_border pixel 2
 
 client.focused          #4c7899  #285577  #ffffff  #3daee9   #448bc0
