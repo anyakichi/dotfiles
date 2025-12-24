@@ -134,6 +134,7 @@ m("n", "-", "zm", S)
 
 m("n", "<C-c>", function()
   vim.fn.setreg("+", vim.fn.getreg("@"):gsub("\n$", ""))
+  vim.notify("copied to clipboard", vim.log.levels.INFO, { title = "OSC52" })
 end, S)
 
 m("n", "<Space>s", [[<Cmd>let &opfunc="{_ -> execute(\"'[,']sort\")}"<CR>g@]])
