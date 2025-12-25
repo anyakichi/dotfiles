@@ -1,0 +1,21 @@
+#!/bin/bash
+
+SELECTION=$(echo -e "lock\nlogout\nsleep\nreboot\npoweroff" | fuzzel -d -p " " -w 15 --minimal-lines)
+
+case $SELECTION in
+lock)
+    loginctl lock-session
+    ;;
+logout)
+    uwsm stop
+    ;;
+sleep)
+    systemctl sleep
+    ;;
+reboot)
+    systemctl reboot
+    ;;
+poweroff)
+    systemctl poweroff
+    ;;
+esac
