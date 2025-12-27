@@ -27,11 +27,15 @@ service_restart() {
 }
 
 is_monitor_on() {
-    if [[ $WAYLAND_DISPLAY ]]; then
-        [[ "$(swaymsg -t get_outputs | jq '.[0].dpms')" == true ]]
-    else
-        xset q | grep 'Monitor is On' &>/dev/null
-    fi
+    local dpms
+
+    for dpms in /sys/class/drm/card*-*/dpms; do
+        if [[ -f $dpms && $(<"$dpms") == On ]]; then
+            return 0
+        fi
+    done
+
+    return 1
 }
 
 _dim() {
@@ -217,7 +221,11 @@ main() {
     blank)
         if [[ $WAYLAND_DISPLAY ]]; then
             swaylock -f
-            swaymsg "output * power off"
+            if [[ $SWAYSOCK ]]; then
+                swaymsg "output * power off"
+            elif [[ $NIRI_SOCKET ]]; then
+                niri msg action power-off-monitors
+            fi
         else
             dim off
             xset dpms force off &>/dev/null
@@ -227,8 +235,10 @@ main() {
     unblank)
         is_monitor_on && return
         service_kill "$main_argv0" -USR1
-        if [[ $WAYLAND_DISPLAY ]]; then
+        if [[ $SWAYSOCK ]]; then
             swaymsg "output * power on"
+        elif [[ $NIRI_SOCKET ]]; then
+            niri msg action power-on-monitors
         fi
         ;;
     battery-dim)
