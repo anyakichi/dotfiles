@@ -69,17 +69,18 @@ fi
 
 tmux-rename-wrapper() {
     if [[ -t 1 ]]; then
-        local auto=$(tmux show-option -wqv automatic-rename)
-        local name=$(tmux display-message -p '#W')
-        tmux rename-window "${(@)argv[$#]/.*/}"
+        local pane=$(tmux display-message -p '#{pane_id}')
+        local auto=$(tmux show-option -t "$pane" -wqv automatic-rename)
+        local name=$(tmux display-message -t "$pane" -p '#W')
+        tmux rename-window -t "$pane" "${(@)argv[$#]/.*/}"
         {
             "$@"
         } always {
-            tmux rename-window "$name"
+            tmux rename-window -t "$pane" "$name"
             if [[ $auto ]];then
-                tmux set-option -wq automatic-rename "$auto"
+                tmux set-option -t "$pane" -wq automatic-rename "$auto"
             else
-                tmux set-option -wuq automatic-rename
+                tmux set-option -t "$pane" -wuq automatic-rename
             fi
         }
     else
