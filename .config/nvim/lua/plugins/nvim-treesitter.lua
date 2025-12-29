@@ -1,88 +1,68 @@
 return {
-  "nvim-treesitter/nvim-treesitter",
-  event = "VeryLazy",
-  build = ":TSUpdate",
-  dependencies = {
-    "RRethy/nvim-treesitter-endwise",
-    "andymass/vim-matchup",
-    "ghostbuster91/nvim-next",
-    "nvim-treesitter/nvim-treesitter-context",
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    "nvim-treesitter/playground",
-    "windwp/nvim-ts-autotag",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    build = ":TSUpdate",
+    dependencies = {
+      "RRethy/nvim-treesitter-endwise",
+      "nvim-treesitter/nvim-treesitter-context",
+      "windwp/nvim-ts-autotag",
+    },
+    config = function()
+      local group = vim.api.nvim_create_augroup("nvim-treesitter", {})
+
+      vim.api.nvim_create_autocmd("FileType", {
+        group = group,
+        pattern = { "bash", "c", "cpp", "lua", "markdown", "python", "vim", "vimdoc" },
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
+      })
+    end,
   },
-  config = function()
-    require("nvim-next.integrations").treesitter_textobjects()
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = "all",
-
-      endwise = { enable = true },
-      highlight = { enable = true },
-      matchup = { enable = true },
-
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            -- Markdown code block
-            ["i~"] = {
-              query = "@content",
-              query_group = "injections",
-            },
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            ["gl"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["gh"] = "@parameter.inner",
-          },
-        },
-        lsp_interop = {
-          enable = true,
-          border = "none",
-          floating_preview_opts = {},
-          peek_definition_code = {
-            ["<leader>df"] = "@function.outer",
-            ["<leader>dF"] = "@class.outer",
-          },
-        },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    branch = "main",
+    keys = {
+      {
+        "gl",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+        end,
+        desc = "Swap next parameter",
       },
-
-      nvim_next = {
-        enable = true,
-        textobjects = {
-          move = {
-            goto_next_start = {
-              ["]]"] = "@class.outer",
-              ["]a"] = "@parameter.outer",
-              ["]m"] = "@function.outer",
-              ["]r"] = "@return.outer",
-            },
-            goto_next_end = {
-              ["]["] = "@class.outer",
-              ["]M"] = "@function.outer",
-              ["]A"] = "@parameter.outer",
-              ["]R"] = "@return.outer",
-            },
-            goto_previous_start = {
-              ["[["] = "@class.outer",
-              ["[a"] = "@parapeter.outer",
-              ["[m"] = "@function.outer",
-              ["[r"] = "@return.outer",
-            },
-            goto_previous_end = {
-              ["[]"] = "@class.outer",
-              ["[A"] = "@parameter.outer",
-              ["[M"] = "@function.outer",
-              ["[R"] = "@return.outer",
-            },
-          },
-        },
+      {
+        "gh",
+        function()
+          require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer")
+        end,
+        desc = "Swap previous parameter",
       },
-    })
-  end,
+    },
+    config = function()
+      local ts_tobj_move = require("nvim-treesitter-textobjects.move")
+      local next_move = require("nvim-next.move")
+      local map_pair = function(prev_key, next_key, edge, tobj, desc)
+        local prev, next = next_move.make_repeatable_pair(function(_)
+          ts_tobj_move["goto_previous_" .. edge](tobj, "textobjects")
+        end, function(_)
+          ts_tobj_move["goto_next_" .. edge](tobj, "textobjects")
+        end)
+        vim.keymap.set("n", next_key, next, { desc = "Next " .. desc })
+        vim.keymap.set("n", prev_key, prev, { desc = "Previous " .. desc })
+      end
+
+      map_pair("[[", "]]", "start", "@class.outer", "class start")
+      map_pair("[]", "][", "end", "@class.outer", "class end")
+
+      map_pair("[a", "]a", "start", "@parameter.outer", "parameter start")
+      map_pair("[A", "]A", "end", "@parameter.outer", "parameter end")
+
+      map_pair("[m", "]m", "start", "@function.outer", "function start")
+      map_pair("[M", "]M", "end", "@function.outer", "function end")
+
+      map_pair("[r", "]r", "start", "@return.outer", "return start")
+      map_pair("[R", "]R", "end", "@return.outer", "return end")
+    end,
+  },
 }
