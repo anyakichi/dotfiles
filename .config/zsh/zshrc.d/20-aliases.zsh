@@ -76,6 +76,7 @@ tmux-rename-wrapper() {
         {
             "$@"
         } always {
+            (( $? != 0 )) && reset
             tmux rename-window -t "$pane" "$name"
             if [[ $auto ]];then
                 tmux set-option -t "$pane" -wq automatic-rename "$auto"
