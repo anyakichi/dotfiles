@@ -110,6 +110,7 @@ mods = "Control"
 [mouse]
 hide_when_typing = true
 
-[window.padding]
-x = 1
-y = 1
+[window]
+decorations = "None"
+dynamic_padding = true
+padding = { x = 1, y = 1 }
