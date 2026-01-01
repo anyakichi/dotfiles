@@ -216,7 +216,6 @@ return {
       bigfile = { enabled = true },
       indent = { enabled = true },
       notifier = { enabled = true, width = { min = 40, max = 0.95 } },
-      quickfile = { enabled = true },
       scope = { enabled = true },
       words = { enabled = true },
     },
