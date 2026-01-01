@@ -27,7 +27,6 @@ vim.opt.hlsearch = false
 vim.opt.breakindent = true
 vim.opt.breakindentopt = "list:-1,sbr"
 vim.opt.formatoptions:append("rolmBj")
-vim.opt.showbreak = "↳ "
 vim.opt.textwidth = 78
 
 -- Completion
