@@ -18,25 +18,20 @@ config.bind("<Ctrl+p>", "completion-item-focus --history prev", mode="command")
 #
 
 # Tab management
+config.bind("t", "cmd-set-text -s :open -t")
+config.bind("T", "cmd-set-text :open -t {url:pretty}")
 config.bind("a", "tab-prev")
 config.bind("s", "tab-next")
 config.bind("<Ctrl-p>", "tab-prev")
 config.bind("<Ctrl-n>", "tab-next")
-config.bind("tt", "cmd-set-text -s :open -t")
-config.bind("tT", "cmd-set-text :open -t {url:pretty}")
-config.bind("td", "tab-close")
-config.bind("t'", "tab-focus")
-config.bind("tl", "tab-move +")
-config.bind("th", "tab-move -")
-config.bind("tL", "tab-move ;; tab-move -")
-config.bind("tH", "tab-move")
-config.bind("tu", "undo")
-config.bind("tU", "undo -w")
-config.bind("tm", "back ;; forward -t")
+config.bind("<Ctrl-l>", "tab-move +")
+config.bind("<Ctrl-h>", "tab-move -")
+config.bind("<Ctrl-Shift-l>", "tab-move ;; tab-move -")
+config.bind("<Ctrl-Shift-h>", "tab-move")
+config.bind("<Ctrl-m>", "back ;; forward -t")
 config.bind("<Ctrl-t>", "config-cycle -t tabs.position top left")
 config.bind("<Ctrl-s>", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-/>", "cmd-set-text -s :tab-select")
-config.bind("t/", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-w>", "nop")
 
 config.bind("O", "cmd-set-text :open {url:pretty}")
@@ -122,16 +117,20 @@ c.url.searchengines["g"] = "https://www.google.com/search?q={}&hl=en"
 c.url.searchengines["ge"] = "https://www.google.com/search?q={}&hl=en"
 c.url.searchengines["gj"] = "https://www.google.com/search?q={}&hl=ja"
 
-c.tabs.min_width = 100
-c.tabs.padding = {"bottom": 1, "left": 1, "right": 1, "top": 1}
+c.tabs.min_width = 80
+c.tabs.padding = {"bottom": 2, "left": 1, "right": 1, "top": 2}
 c.tabs.pinned.shrink = False
 c.tabs.position = "top"
 c.tabs.select_on_remove = "prev"
 c.tabs.show = "always"
+c.tabs.title.format = "{audio}{current_title}"
 c.tabs.title.format_pinned = c.tabs.title.format
+c.tabs.width = "10%"
 
 c.window.hide_decoration = True
 
+c.fonts.default_family = "monospace"
+c.fonts.default_size = "10.5pt"
 c.fonts.web.family.standard = "sans-serif"
 
 pac_proxy = config.configdir / "proxy.pac"
