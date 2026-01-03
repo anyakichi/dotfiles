@@ -218,6 +218,18 @@ return {
       notifier = { enabled = true, width = { min = 40, max = 0.95 } },
       scope = { enabled = true },
       words = { enabled = true },
+      zen = {
+        toggles = {
+          dim = false,
+        },
+        win = {
+          width = 80,
+          backdrop = { transparent = false, blend = 99 },
+          wo = {
+            winblend = 0,
+          },
+        },
+      },
     },
     keys = {
       {
