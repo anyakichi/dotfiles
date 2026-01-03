@@ -17,6 +17,7 @@ set $up k
 set $right l
 # Your preferred terminal emulator
 set $term footclient
+set $browser qutebrowser
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -90,16 +91,28 @@ output * bg #000000 solid_color
 # Moving around:
 #
     # Move your focus around
-    bindsym $mod+$left focus left
+    bindsym $mod+$left nop top_prev
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
-    bindsym $mod+$right focus right
+    bindsym $mod+$right nop top_next
+    bindsym $mod+n focus right
+    bindsym $mod+p focus left
 
     # Move the focused window with the same, but add Shift
-    bindsym $mod+Shift+$left move left
-    bindsym $mod+Shift+$down move down
-    bindsym $mod+Shift+$up move up
-    bindsym $mod+Shift+$right move right
+    bindsym $mod+Control+$left move left
+    bindsym $mod+Control+$down move down
+    bindsym $mod+Control+$up move up
+    bindsym $mod+Control+$right move right
+
+    bindsym $mod+Shift+$left focus output left
+    bindsym $mod+Shift+$down focus output down
+    bindsym $mod+Shift+$up focus output up
+    bindsym $mod+Shift+$right focus output right
+
+    bindsym $mod+Shift+Control+$left move workspace to output left
+    bindsym $mod+Shift+Control+$right move workspace to output right
+    bindsym $mod+Shift+Control+$up move workspace to output up
+    bindsym $mod+Shift+Control+$down move workspace to output down
 
     bindsym $mod+Left focus output left
     bindsym $mod+Right focus output right
@@ -110,9 +123,6 @@ output * bg #000000 solid_color
     bindsym $mod+Shift+Right move workspace to output right
     bindsym $mod+Shift+Up move workspace to output up
     bindsym $mod+Shift+Down move workspace to output down
-
-    bindsym $mod+n nop top_next
-    bindsym $mod+p nop top_prev
 
 #
 # Workspaces:

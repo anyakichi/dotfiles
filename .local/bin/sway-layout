@@ -1,0 +1,80 @@
+#!/usr/bin/env python3
+
+import sys
+import time
+
+import i3ipc
+
+BROWSER_APP_IDS = [
+    "chromium",
+    "firefox",
+    "google-chrome",
+    "org.qutebrowser.qutebrowser",
+    "vivaldi-stable",
+]
+
+BROWSER_MARK = "b"
+TERMINAL_MARK = "t"
+
+
+def die(msg: str, code: int = 1) -> None:
+    print(msg, file=sys.stderr)
+    sys.exit(code)
+
+
+def mark(con: i3ipc.con.Con) -> str:
+    if con.app_id in BROWSER_APP_IDS:
+        return BROWSER_MARK
+    return TERMINAL_MARK
+
+
+def main() -> None:
+    sway = i3ipc.Connection()
+
+    while True:
+        tree = sway.get_tree()
+        focused = tree.find_focused()
+        if focused:
+            ws = focused.workspace()
+            if ws is None:
+                die("Failed to detect focused workspace.")
+
+            # leaves on the workspace (includes floating sometimes; filter by floating state)
+            leaves = [n for n in ws.leaves() if n.floating.endswith("_off")]
+
+            qb = [n for n in leaves if n.app_id in BROWSER_APP_IDS]
+            oth = [n for n in leaves if n.app_id not in BROWSER_APP_IDS]
+
+            if qb and oth:
+                break
+
+        time.sleep(1)
+
+    # 1) move all to scratchpad
+    for con in leaves:
+        con.command("move scratchpad")
+
+    # 2) rebuild as left/right
+    sway.command("splith")
+    for con in (qb[0], oth[0]):
+        con.command("scratchpad show; floating disable")
+
+    # 3) tabbed + mark anchors
+    for con in (qb[0], oth[0]):
+        con.command(f"focus; splith; layout tabbed; mark --replace {mark(con)}")
+
+    # 4) move the rest into marks
+    for con in qb[1:] + oth[1:]:
+        con.command(
+            f"scratchpad show; floating disable; move container to mark {mark(con)}"
+        )
+
+    # 5) resize right window
+    sway.command('[con_mark="t"] resize set 846 px')
+
+    # 6) restore focus if possible
+    focused.command("focus")
+
+
+if __name__ == "__main__":
+    main()
