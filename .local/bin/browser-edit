@@ -1,0 +1,7 @@
+#!/bin/bash
+
+swaymsg -q 'mark --add _'
+
+footclient --app-id browser-edit -- nvim "$@"
+
+swaymsg -q '[con_mark="_"] focus; unmark _'

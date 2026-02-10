@@ -1,0 +1,42 @@
+set editorcmd browser-edit
+
+bind z back
+bind x forward
+
+bind a tabprev
+bind s tabnext
+bind <C-p> tabprev
+bind <C-n> tabnext
+bind <C-/> fillcmdline tab
+
+bind <C-1> tab 1
+bind <C-2> tab 2
+bind <C-3> tab 3
+bind <C-4> tab 4
+bind <C-5> tab 5
+bind <C-6> tab 6
+bind <C-7> tab 7
+bind <C-8> tab 8
+bind <C-9> tab 9
+
+bind <C-l> tabmove +1
+bind <C-h> tabmove -1
+bind <C-L> tabmove end
+bind <C-H> tabmove start
+
+bind <C-m> composite tabduplicate; back
+
+bind --mode=ex <C-p> ex.prev_history
+bind --mode=ex <C-n> ex.next_history
+
+bind j scrollline +1
+bind k scrollline -1
+
+bind / fillcmdline find
+bind ? fillcmdline find --reverse
+bind n findnext --search-from-view
+bind N findnext --search-from-view --reverse
+bind gn findselect
+bind gN composite findnext --search-from-view --reverse; findselect
+
+bind <Esc> composite mode normal ; hidecmdline ; nohlsearch
