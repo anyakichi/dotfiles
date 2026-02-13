@@ -2,6 +2,6 @@
 
 swaymsg -q 'mark --add _'
 
-footclient --app-id browser-edit -- nvim "$@"
+footclient --app-id browser-edit -- nvim -c 'setfiletype markdown' "$@"
 
 swaymsg -q '[con_mark="_"] focus; unmark _'
