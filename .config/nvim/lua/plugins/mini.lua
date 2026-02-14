@@ -6,6 +6,7 @@ return {
     config = function()
       local ai = require("mini.ai")
       ai.setup({
+        n_lines = 10000,
         search_method = "cover",
         custom_textobjects = {
           M = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }, {}),
