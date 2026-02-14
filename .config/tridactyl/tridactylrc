@@ -8,6 +8,7 @@ bind s tabnext
 bind <C-p> tabprev
 bind <C-n> tabnext
 bind <C-/> fillcmdline tab
+bind # tab #
 
 bind <C-1> tab 1
 bind <C-2> tab 2
@@ -26,11 +27,12 @@ bind <C-H> tabmove start
 
 bind <C-m> composite tabduplicate; back
 
-bind --mode=ex <C-p> ex.prev_history
-bind --mode=ex <C-n> ex.next_history
-
 bind j scrollline +1
 bind k scrollline -1
+
+bind = zoom 1
+bind + zoom 0.1 true
+bind - zoom -0.1 true
 
 bind / fillcmdline find
 bind ? fillcmdline find --reverse
@@ -39,4 +41,14 @@ bind N findnext --search-from-view --reverse
 bind gn findselect
 bind gN composite findnext --search-from-view --reverse; findselect
 
+bind i focusinput -l
+
+bind <C-[> composite mode normal ; hidecmdline ; nohlsearch
 bind <Esc> composite mode normal ; hidecmdline ; nohlsearch
+
+bind --mode=ex <C-p> ex.prev_history
+bind --mode=ex <C-n> ex.next_history
+
+autocmd TabEnter .* unfocus
+autocmd TabEnter calendar.google.com mode ignore
+autocmd TabEnter mail.google.com mode ignore
