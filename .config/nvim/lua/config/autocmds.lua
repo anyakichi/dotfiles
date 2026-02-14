@@ -101,6 +101,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
       vim.api.nvim_set_hl(0, "DiffChange", { bg = "#dde6ee" })
       vim.api.nvim_set_hl(0, "DiffDelete", { bg = "#f9d8d6" })
       vim.api.nvim_set_hl(0, "DiffText", { bg = "#b6cbde" })
+      vim.api.nvim_set_hl(0, "Search", { bg = "#dcb057" })
     end
     vim.api.nvim_set_hl(0, "NormalFloat", { link = "Pmenu" })
     vim.api.nvim_set_hl(0, "Statement", { fg = "#ec5f67" })
@@ -130,6 +131,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     vim.api.nvim_set_hl(0, "mailQuoted4", { link = "mailQuoted1" })
     vim.api.nvim_set_hl(0, "mailQuoted5", { link = "mailQuoted2" })
     vim.api.nvim_set_hl(0, "mailQuoted6", { link = "mailQuoted3" })
+
+    vim.api.nvim_set_hl(0, "RenderMarkdownCode", { bg = "#2c3640" })
   end,
 })
 
