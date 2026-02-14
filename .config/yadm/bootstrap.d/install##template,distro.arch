@@ -135,8 +135,8 @@ packages_gui=(
     chromium
     evince
     firefox
+    fontforge
     foot
-    fuzzel
     google-chrome
     gtk4
     handlr-regex
@@ -152,7 +152,7 @@ packages_gui=(
     qt6
     qt6ct
     qutebrowser
-    slack-desktop
+    slack-electron
     speech-dispatcher
     ttf-dejavu
     waypipe
@@ -165,6 +165,7 @@ packages_desktop=(
     fcitx5-im
     fcitx5-lua
     fcitx5-mozc-ut
+    fuzzel
     gammastep
     grim
     kanshi
@@ -215,3 +216,17 @@ mapfile -t packages < <(printf "%s\n" "${packages[@]}" | sort -u)
 
 sudo -k
 x yay -Syu --needed --noconfirm --ask=4 "${packages[@]}"
+
+for package in "${packages[@]}"; do
+    if [[ $package == "ipa-fonts" ]]; then
+        mkdir -p ~/.local/share/fonts
+        for font in /usr/share/fonts/OTF/ipa{g,m}.ttf; do
+            bold=~/.local/share/fonts/$(basename "$font" .ttf)-bold.ttf
+            if [[ -f $font && ! -f $bold ]]; then
+                gen-bold-font "$font" "$bold"
+            fi
+        done
+
+        break
+    fi
+done
