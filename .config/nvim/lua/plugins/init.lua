@@ -20,6 +20,9 @@ return {
     },
     opts = {
       enabled = false,
+      code = {
+        border = 'thick',
+      },
       pipe_table = {
         style = "normal",
       },
