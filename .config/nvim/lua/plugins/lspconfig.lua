@@ -112,7 +112,7 @@ return {
             vim.keymap.set("n", "<Space>h", function()
               local current_setting = vim.lsp.inlay_hint.is_enabled(opts)
               vim.lsp.inlay_hint.enable(not current_setting, opts)
-            end)
+            end, opts)
           end
         end,
       })

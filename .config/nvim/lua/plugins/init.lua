@@ -289,9 +289,6 @@ return {
     "hat0uma/csvview.nvim",
     cmd = { "CsvViewEnable", "CsvViewDisable", "CsvViewToggle" },
     ft = "csv",
-    keys = {
-      { "<Space>h", "<Cmd>CsvViewToggle<CR>" },
-    },
     opts = {
       keymaps = {
         textobject_field_inner = { "if", mode = { "o", "x" } },
