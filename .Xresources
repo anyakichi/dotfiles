@@ -1,7 +1,0 @@
-#ifdef SRVR_shiron
-Xft.dpi: 144
-
-i3wm*layout:		wqhd-small
-i3wm*terminalWidth:	992
-i3wm*terminalWidthWide:	1232
-#endif

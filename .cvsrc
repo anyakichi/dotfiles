@@ -1,6 +1,0 @@
-cvs	-q
-
-checkout -P
-diff	-uN
-rdiff	-u
-update	-dP
