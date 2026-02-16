@@ -1,4 +1,11 @@
+sanitise tridactyllocal
+
 set editorcmd browser-edit
+set hintstyles.bg none
+set hintstyles.fg none
+set hintstyles.outline none
+set newtab about:blank
+set tabclosepinned false
 
 bind z back
 bind x forward
@@ -20,12 +27,16 @@ bind <C-7> tab 7
 bind <C-8> tab 8
 bind <C-9> tab 9
 
-bind <C-l> tabmove +1
-bind <C-h> tabmove -1
+bind @ pin
+bind L tabmove +1
+bind H tabmove -1
 bind <C-L> tabmove end
 bind <C-H> tabmove start
+bind d composite tabprev ; tabclose #
+bind D tabprev
 
-bind <C-m> composite tabduplicate; back
+bind F hint -t
+bind <C-m> composite tabduplicate ; back
 
 bind j scrollline +1
 bind k scrollline -1
@@ -46,8 +57,24 @@ bind i focusinput -l
 bind <C-[> composite mode normal ; hidecmdline ; nohlsearch
 bind <Esc> composite mode normal ; hidecmdline ; nohlsearch
 
+bind --mode=browser <C-s> sidebartoggle
+bind S composite get_current_url | sidebaropen
+
 bind --mode=ex <C-p> ex.prev_history
 bind --mode=ex <C-n> ex.next_history
+
+bind --mode=ex <C-a> text.beginning_of_line
+bind --mode=input <C-a> text.beginning_of_line
+bind --mode=insert <C-a> text.beginning_of_line
+
+bind --mode=ex <C-e> text.end_of_line
+bind --mode=input <C-e> text.end_of_line
+bind --mode=insert <C-e> text.end_of_line
+
+bind --mode=ignore <C-p> tabprev
+bind --mode=ignore <C-n> tabnext
+bind --mode=ignore a tabprev
+bind --mode=ignore s tabnext
 
 autocmd TabEnter .* unfocus
 autocmd TabEnter calendar.google.com mode ignore
