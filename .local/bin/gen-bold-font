@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+import argparse
+from pathlib import Path
+
+import fontforge
+
+
+def generate_bold_font(input_font, output_font, weight=60):
+    font = fontforge.open(str(input_font))
+
+    font.selection.all()
+    font.changeWeight(weight, "auto")
+
+    font.fullname = font.familyname + " Bold"
+    font.fontname = font.familyname + "-Bold"
+
+    font.weight = "Bold"
+
+    font.os2_weight = 700
+    font.os2_width = 5
+    font.os2_stylemap = 0x20
+
+    font.macstyle = 1
+
+    sub_families = [x for x in font.sfnt_names if x[1] == "SubFamily"]
+    for name in sub_families:
+        font.appendSFNTName(name[0], name[1], "Bold")
+
+    font.generate(str(output_font))
+    font.close()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("input_font", type=Path, help="Path to the input font file")
+    parser.add_argument(
+        "output_font", type=Path, help="Path to the output bold font file"
+    )
+    parser.add_argument(
+        "--weight",
+        type=int,
+        default=60,
+        help="Weight to apply for bolding (default: 60)",
+    )
+
+    args = parser.parse_args()
+
+    generate_bold_font(args.input_font, args.output_font, args.weight)
+
+
+if __name__ == "__main__":
+    main()
