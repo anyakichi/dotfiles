@@ -6,8 +6,12 @@ j = step_down 5
 k = step_up 5
 h = step_left 5
 l = step_right 5
-g = step_up 100
-Shift+g = step_down 100
+
+g = position top
+Shift+g = position bottom
+
+Ctrl+f = step_down 100
+Ctrl+b = step_up 100
 
 Ctrl+n = next_file
 Ctrl+p = prev_file
