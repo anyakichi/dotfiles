@@ -1,0 +1,17 @@
+[keys.viewer]
+Shift+Plus = zoom +10
+Equal = zoom keep
+
+j = step_down 5
+k = step_up 5
+h = step_left 5
+l = step_right 5
+g = step_up 100
+Shift+g = step_down 100
+
+Ctrl+n = next_file
+Ctrl+p = prev_file
+
+[keys.gallery]
+Shift+Plus = thumb +20
+Equal = thumb 200
