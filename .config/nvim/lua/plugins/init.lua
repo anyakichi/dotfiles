@@ -10,7 +10,18 @@ return {
   },
 
   { "AndrewRadev/linediff.vim", cmd = "Linediff" },
-  { "FabijanZulj/blame.nvim", event = "VeryLazy", opts = { date_format = "%Y-%m-%d" } },
+  {
+    "FabijanZulj/blame.nvim",
+    event = "VeryLazy",
+    init = function()
+      local BlameStack = require("blame.blame_stack")
+      local original_new = BlameStack.new
+      BlameStack.new = function(self, config, blame_view, file_path, _)
+        return original_new(self, config, blame_view, file_path, file_path:match("(.*/)") or "/")
+      end
+    end,
+    opts = { date_format = "%Y-%m-%d" },
+  },
   {
     "MeanderingProgrammer/render-markdown.nvim",
     dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
@@ -21,7 +32,7 @@ return {
     opts = {
       enabled = false,
       code = {
-        border = 'thick',
+        border = "thick",
       },
       pipe_table = {
         style = "normal",
@@ -279,7 +290,7 @@ return {
   { "folke/ts-comments.nvim", event = "VeryLazy", opts = {} },
   { "folke/which-key.nvim", event = "VeryLazy", opts = {} },
   {
-    "ggandor/leap.nvim",
+    "https://codeberg.org/andyg/leap.nvim",
     keys = {
       { "f", "<Plug>(leap-forward-to)", mode = { "n", "o", "x" }, desc = "Leap forward to" },
       { "F", "<Plug>(leap-backward-to)", mode = { "n", "o", "x" }, desc = "Leap backward to" },
