@@ -6,6 +6,10 @@ set hintstyles.fg none
 set hintstyles.outline none
 set newtab about:blank
 set tabclosepinned false
+set tabopenpos last
+set wordpattern [a-zA-Z0-9_]+|[^\x00-\x7F]+
+
+unbind --mode=browser <C-6>
 
 bind z back
 bind x forward
@@ -70,6 +74,18 @@ bind --mode=insert <C-a> text.beginning_of_line
 bind --mode=ex <C-e> text.end_of_line
 bind --mode=input <C-e> text.end_of_line
 bind --mode=insert <C-e> text.end_of_line
+
+bind --mode=ex <C-b> text.backward_char
+bind --mode=input <C-b> text.backward_char
+bind --mode=insert <C-b> text.backward_char
+
+bind --mode=ex <C-u> text.backward_kill_line
+bind --mode=input <C-u> text.backward_kill_line
+bind --mode=insert <C-u> text.backward_kill_line
+
+bind --mode=ex <C-w> text.backward_kill_word
+bind --mode=input <C-w> text.backward_kill_word
+bind --mode=insert <C-w> text.backward_kill_word
 
 bind --mode=ignore <C-p> tabprev
 bind --mode=ignore <C-n> tabnext
