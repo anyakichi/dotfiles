@@ -99,14 +99,7 @@ c.content.default_encoding = "utf-8"
 for x in ["amazon.co.jp", "chatgpt.com", "github.com"]:
     config.set("content.javascript.clipboard", "access-paste", x)
 c.content.pdfjs = True
-c.editor.command = [
-    "tmux",
-    "new-window",
-    "trap 'tmux wait-for -S qutebrowser-{file}' 0 && nvim -c 'normal {line}G{column0}l' {file}",
-    ";",
-    "wait-for",
-    "qutebrowser-{file}",
-]
+c.editor.command = ["browser-edit", "-c", "normal {line}G{column0}l", "{file}"]
 c.input.insert_mode.auto_load = True
 
 c.completion.web_history.max_items = 10000
@@ -120,12 +113,12 @@ c.url.searchengines["gj"] = "https://www.google.com/search?q={}&hl=ja"
 c.tabs.min_width = 80
 c.tabs.padding = {"bottom": 2, "left": 1, "right": 1, "top": 2}
 c.tabs.pinned.shrink = False
-c.tabs.position = "top"
+c.tabs.position = "left"
 c.tabs.select_on_remove = "prev"
 c.tabs.show = "always"
 c.tabs.title.format = "{audio}{current_title}"
 c.tabs.title.format_pinned = c.tabs.title.format
-c.tabs.width = "10%"
+c.tabs.width = 30
 
 c.window.hide_decoration = True
 
