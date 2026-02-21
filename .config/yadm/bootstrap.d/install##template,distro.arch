@@ -162,6 +162,7 @@ packages_gui=(
 
 packages_desktop=(
     brightnessctl
+    darkman
     fcitx5-im
     fcitx5-lua
     fcitx5-mozc-ut
