@@ -3,8 +3,8 @@ import subprocess
 import qutebrowser.app
 import qutebrowser.browser.network.proxy
 from PyQt6.QtCore import QEvent, QObject, Qt, QTimer
-from PyQt6.QtGui import QCursor, QFont, QFontMetrics
-from PyQt6.QtWidgets import QLabel, QVBoxLayout, QWidget
+from PyQt6.QtGui import QCursor, QFontMetrics
+from PyQt6.QtWidgets import QLabel, QTabWidget, QVBoxLayout, QWidget
 from qutebrowser.config import config as config_mod
 from qutebrowser.keyinput import modeman
 from qutebrowser.utils import usertypes
@@ -64,7 +64,7 @@ class FloatingTabPanel(QWidget):
             is_selected = i == current_idx
             is_pinned = tb.widget.widget(i).data.pinned
 
-            font = QFont(label.font())
+            font = label.font()
             font.setBold(is_selected)
             label.setFont(font)
 
@@ -82,18 +82,25 @@ class FloatingTabPanel(QWidget):
                 f" padding: {pad.top + 1}px {pad.right}px {pad.bottom + 1}px {pad.left}px; }}"
                 f"QLabel:hover {{ background: rgba(140,140,140,0.90); }}"
             )
-            idx = i
-            label.mousePressEvent = lambda e, idx=idx: self._switch_tab(idx)
+            label.mousePressEvent = lambda e, idx=i: self._switch_tab(idx)
             self._layout.addWidget(label)
 
         self._layout.addStretch()
         self.adjustSize()
 
         bar = tb.widget.tabBar()
-        bar_topright = bar.parentWidget().mapTo(
-            self.main_window, bar.geometry().topRight()
-        )
-        self.move(bar_topright.x() + 1, bar_topright.y())
+        bar_geom = bar.geometry()
+
+        position = config_mod.instance.get("tabs.position")
+        if position == QTabWidget.TabPosition.East:
+            bar_topleft = bar.parentWidget().mapTo(self.main_window, bar_geom.topLeft())
+            self.move(bar_topleft.x() - EXPANDED_WIDTH, bar_topleft.y())
+        else:
+            bar_topright = bar.parentWidget().mapTo(
+                self.main_window, bar_geom.topRight()
+            )
+            self.move(bar_topright.x() + 1, bar_topright.y())
+
         self.raise_()
         self.show()
 
@@ -138,18 +145,13 @@ class TabBarHoverExpander(QObject):
     def eventFilter(self, obj, event):
         etype = event.type()
 
-        if obj == self._bar:
-            if etype == QEvent.Type.Enter:
+        if etype == QEvent.Type.Enter:
+            if obj == self._bar:
                 self._expand()
-            elif etype == QEvent.Type.Leave:
-                self._collapse()
-            elif etype == QEvent.Type.MouseMove:
-                if self._cursor_in_bar():
-                    self._expand()
-        elif obj == self._panel:
-            if etype == QEvent.Type.Enter:
+            elif obj == self._panel:
                 self._collapse_timer.stop()
-            elif etype == QEvent.Type.Leave:
+        elif etype == QEvent.Type.Leave:
+            if obj == self._bar or obj == self._panel:
                 self._collapse()
 
         return False
@@ -179,9 +181,7 @@ def on_new_window(window):
 
     expander = TabBarHoverExpander(bar, tb, window)
     bar.installEventFilter(expander)
-    bar.setMouseTracking(True)
     expander._panel.installEventFilter(expander)
-    expander._panel.setMouseTracking(True)
 
     watcher = FullscreenWatcher(window)
     window.installEventFilter(watcher)
