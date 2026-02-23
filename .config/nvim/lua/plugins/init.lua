@@ -247,7 +247,7 @@ return {
     },
     keys = {
       {
-        [[<C-\>]],
+        [[<C-.>]],
         function()
           Snacks.terminal(nil, { win = { height = 0.25 } })
         end,
