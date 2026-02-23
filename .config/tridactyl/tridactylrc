@@ -67,6 +67,9 @@ bind S composite get_current_url | sidebaropen
 bind --mode=ex <C-p> ex.prev_history
 bind --mode=ex <C-n> ex.next_history
 
+bind --mode=input <C-o> editor
+bind --mode=insert <C-o> editor
+
 bind --mode=ex <C-a> text.beginning_of_line
 bind --mode=input <C-a> text.beginning_of_line
 bind --mode=insert <C-a> text.beginning_of_line
