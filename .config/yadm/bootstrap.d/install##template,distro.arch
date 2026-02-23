@@ -66,8 +66,6 @@ packages_devel=(
     cargo-audit
     ccache
     clang
-    docker
-    docker-buildx
     docker-credential-pass
     esbonio
     eslint-language-server
@@ -81,6 +79,7 @@ packages_devel=(
     nodejs-lts-jod
     npm
     pnpm
+    podman
     prettier
     pyright
     python-pynvim
