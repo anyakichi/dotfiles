@@ -158,12 +158,24 @@ class TabBarHoverExpander(QObject):
 
 
 class FullscreenWatcher(QObject):
+    def __init__(self, expander):
+        super().__init__(expander)
+        self.expander = expander
+
     def eventFilter(self, obj, event):
-        if event.type() == QEvent.Type.WindowStateChange:
+        etype = event.type()
+
+        if etype == QEvent.Type.WindowStateChange:
             is_fullscreen = obj.windowState() & Qt.WindowState.WindowFullScreen
             config_mod.instance.set_obj(
                 "tabs.show", "never" if is_fullscreen else "always"
             )
+            self.expander._collapse_timer.stop()
+            self.expander._panel.hide()
+        elif etype == QEvent.Type.WindowDeactivate:
+            self.expander._collapse_timer.stop()
+            self.expander._panel.hide()
+
         return False
 
 
@@ -183,7 +195,7 @@ def on_new_window(window):
     bar.installEventFilter(expander)
     expander._panel.installEventFilter(expander)
 
-    watcher = FullscreenWatcher(window)
+    watcher = FullscreenWatcher(expander)
     window.installEventFilter(watcher)
 
 
