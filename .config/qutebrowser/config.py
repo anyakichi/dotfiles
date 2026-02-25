@@ -44,7 +44,6 @@ config.bind(
 )
 config.bind("<Ctrl-s>", "cmd-set-text -s :tab-select")
 config.bind("<Ctrl-/>", "cmd-set-text -s :tab-select")
-config.bind("<Ctrl-w>", "nop")
 for i in range(1, 10):
     config.bind(f"<Ctrl-{i}>", f"tab-focus {i}")
 
@@ -64,6 +63,10 @@ config.bind("<Ctrl-Shift-c>", "config-source")
 
 # workaround for double close
 config.bind("d", "cmd-later 50 tab-close")
+
+config.bind("<Ctrl-q>", "mode-enter passthrough")
+config.unbind("<Ctrl-v>")
+config.unbind("<Ctrl-w>")
 
 #
 # Insert mode
