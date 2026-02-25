@@ -304,6 +304,7 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   pattern = "markdown",
   callback = function()
+    vim.opt_local.formatoptions:remove("t")
     vim.keymap.set("i", "<C-g>D", function()
       return os.date("## %Y-%m-%d\n\n")
     end, { expr = true })
