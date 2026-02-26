@@ -16,16 +16,16 @@ def _color_to_rgba(qcolor, alpha=1.0):
     return f"rgba({qcolor.red()},{qcolor.green()},{qcolor.blue()},{alpha})"
 
 
-def _get_colors(index, is_selected, is_pinned):
+def _get_colors(index, is_selected, is_pinned, alpha=1.0):
     parity = "odd" if index % 2 == 0 else "even"
     pinned = ".pinned" if is_pinned else ""
     selected = ".selected" if is_selected else ""
 
     fg = _color_to_rgba(
-        config_mod.instance.get(f"colors.tabs{pinned}{selected}.{parity}.fg"), 0.90
+        config_mod.instance.get(f"colors.tabs{pinned}{selected}.{parity}.fg"), alpha
     )
     bg = _color_to_rgba(
-        config_mod.instance.get(f"colors.tabs{pinned}{selected}.{parity}.bg"), 0.90
+        config_mod.instance.get(f"colors.tabs{pinned}{selected}.{parity}.bg"), alpha
     )
     return fg, bg
 
@@ -75,12 +75,12 @@ class FloatingTabPanel(QWidget):
             label.setText(elided)
             label.setToolTip(title)
 
-            fg, bg = _get_colors(i, is_selected, is_pinned)
+            fg, bg = _get_colors(i, is_selected, is_pinned, 0.9)
 
             label.setStyleSheet(
                 f"QLabel {{ color: {fg}; background: {bg};"
                 f" padding: {pad.top + 1}px {pad.right}px {pad.bottom + 1}px {pad.left}px; }}"
-                f"QLabel:hover {{ background: rgba(140,140,140,0.90); }}"
+                f"QLabel:hover {{ color: {bg}; background: {fg}; }}"
             )
             label.mousePressEvent = lambda e, idx=i: self._switch_tab(idx)
             self._layout.addWidget(label)
