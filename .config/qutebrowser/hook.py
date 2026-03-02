@@ -2,9 +2,9 @@ import subprocess
 
 import qutebrowser.app
 import qutebrowser.browser.network.proxy
-from PyQt6.QtCore import QEvent, QObject, Qt, QTimer
+from PyQt6.QtCore import QEvent, QObject, QPoint, Qt, QTimer
 from PyQt6.QtGui import QCursor, QFontMetrics
-from PyQt6.QtWidgets import QLabel, QTabWidget, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QLabel, QTabWidget, QWidget
 from qutebrowser.config import config as config_mod
 from qutebrowser.keyinput import modeman
 from qutebrowser.utils import usertypes
@@ -41,24 +41,30 @@ class FloatingTabPanel(QWidget):
         self.setAutoFillBackground(False)
         self.hide()
 
-        self._layout = QVBoxLayout(self)
-        self._layout.setContentsMargins(0, 0, 0, 0)
-        self._layout.setSpacing(0)
+        self._labels = []
 
     def refresh_and_show(self):
-        while self._layout.count():
-            item = self._layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
+        for label in self._labels:
+            label.deleteLater()
+        self._labels.clear()
 
         tb = self.tabbed_browser
         current_idx = tb.widget.currentIndex()
         pad = config_mod.instance.get("tabs.padding")
+        bar = tb.widget.tabBar()
+        visible_rect = bar.rect()
 
+        origin_y = None
         for i in range(tb.widget.count()):
+            tab_rect = bar.tabRect(i)
+            if not tab_rect.intersects(visible_rect):
+                continue
+            if origin_y is None:
+                origin_y = tab_rect.top()
+
             title = tb.widget.tabText(i) or "(untitled)"
 
-            label = QLabel()
+            label = QLabel(self)
             label.setWordWrap(False)
 
             is_selected = i == current_idx
@@ -83,24 +89,28 @@ class FloatingTabPanel(QWidget):
                 f"QLabel:hover {{ color: {bg}; background: {fg}; }}"
             )
             label.mousePressEvent = lambda e, idx=i: self._switch_tab(idx)
-            self._layout.addWidget(label)
 
-        self._layout.addStretch()
-        self.adjustSize()
+            label_y = tab_rect.top() - origin_y
+            label.setGeometry(0, label_y, EXPANDED_WIDTH, tab_rect.height())
+            label.show()
+            self._labels.append(label)
 
-        bar = tb.widget.tabBar()
-        bar_geom = bar.geometry()
+        if origin_y is None:
+            return
 
         position = config_mod.instance.get("tabs.position")
-        if position == QTabWidget.TabPosition.East:
-            bar_topleft = bar.parentWidget().mapTo(self.main_window, bar_geom.topLeft())
-            self.move(bar_topleft.x() - EXPANDED_WIDTH, bar_topleft.y())
-        else:
-            bar_topright = bar.parentWidget().mapTo(
-                self.main_window, bar_geom.topRight()
-            )
-            self.move(bar_topright.x() + 1, bar_topright.y())
+        bar_origin = bar.mapTo(self.main_window, QPoint(0, 0))
 
+        if position == QTabWidget.TabPosition.East:
+            x = bar_origin.x() - EXPANDED_WIDTH
+        else:
+            x = bar_origin.x() + bar.width()
+
+        y = bar_origin.y() + (origin_y - visible_rect.top())
+        panel_height = visible_rect.bottom() - origin_y + 1
+
+        self.setFixedHeight(panel_height)
+        self.move(x, y)
         self.raise_()
         self.show()
 
@@ -119,6 +129,12 @@ class TabBarHoverExpander(QObject):
         self._collapse_timer.setSingleShot(True)
         self._collapse_timer.setInterval(50)
         self._collapse_timer.timeout.connect(self._do_collapse)
+
+        tabbed_browser.widget.currentChanged.connect(self._on_tab_changed)
+
+    def _on_tab_changed(self, index):
+        if self._panel.isVisible():
+            self._panel.refresh_and_show()
 
     def _expand(self):
         self._collapse_timer.stop()
