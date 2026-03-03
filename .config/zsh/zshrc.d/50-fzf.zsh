@@ -2,7 +2,7 @@ __fzf-ghq()
 {
     setopt localoptions pipefail
 
-    command ghq list | fzf -q "$1" --no-multi -0 -1
+    command ghq list | fzf -q "$1" --no-multi -0 -1 --scheme=path
 }
 
 __fzf-pass()
