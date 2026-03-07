@@ -1,0 +1,3 @@
+#!/bin/sh
+
+printf '%s' "$1" | socat - TCP:localhost:7890

@@ -1,0 +1,12 @@
+[Unit]
+Description=Open URLs received via TCP in local browser
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/bin/bash -c 'while true; do url=$(socat -u TCP-LISTEN:7890,reuseaddr -); [ -n "$url" ] && xdg-open "$url"; done'
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=graphical-session.target

@@ -234,3 +234,12 @@ m("n", "<Space>-D", "<Space>-d$", R)
 
 m({ "n", "x" }, "<Space><C-d>", "<Space>-d", R)
 m("n", "<Space><C-d><C-d>", "<Space><C-d>_", R)
+
+m("n", "gx", function()
+  local url = vim.fn.expand("<cfile>")
+  if vim.env.SSH_TTY then
+    vim.fn.system({ "lopen", url })
+  else
+    vim.ui.open(url)
+  end
+end, { desc = "Open URL under cursor" })
