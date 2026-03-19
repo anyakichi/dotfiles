@@ -1,0 +1,8 @@
+[Unit]
+Description=Switch to %i mode on schedule
+
+[Timer]
+Persistent=true
+
+[Install]
+WantedBy=timers.target
