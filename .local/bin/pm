@@ -24,11 +24,24 @@ service_restart() {
     service_start "$@"
 }
 
+is_locked() {
+    #pgrep -U "${USER}" -x swaylock &>/dev/null
+    pgrep -U "${USER}" -x hyprlock &>/dev/null
+}
+
+lock() {
+    #is_locked || swaylock -f
+    is_locked || hyprlock &
+    sleep 1
+}
+
 is_monitor_on() {
     if [[ $SWAYSOCK ]]; then
         swaymsg -t get_outputs | jq -e 'any(.[]; .dpms == true)' >/dev/null
     elif [[ $NIRI_SOCKET ]]; then
         :
+    elif [[ $HYPRLAND_INSTANCE_SIGNATURE ]]; then
+        hyprctl monitors -j | jq -e '[.[].dpmsStatus] | any' >/dev/null
     fi
 }
 
@@ -107,7 +120,7 @@ main() {
         trap " " USR1
 
         swayidle -w \
-            timeout 10 "$0 try-blank" resume "$0 unblank" \
+            timeout 30 "$0 try-blank" resume "$0 unblank" \
             timeout 300 "$0 battery-dim" resume "$0 undim" \
             timeout 330 "$0 battery-blank" resume "$0 unblank" \
             timeout 600 "$0 dim" resume "$0 undim" \
@@ -130,10 +143,13 @@ main() {
         service_stop "$main_argv0"
         ;;
     lock)
-        swaylock -f
+        lock
+        ;;
+    is-locked)
+        is_locked
         ;;
     try-blank)
-        pgrep -U "${USER}" -x swaylock &>/dev/null && main blank
+        is_locked && main blank
         ;;
     battery-blank)
         if is_battery_powered; then
@@ -143,11 +159,13 @@ main() {
         fi
         ;;
     blank)
-        swaylock -f
+        lock
         if [[ $SWAYSOCK ]]; then
             swaymsg "output * power off"
         elif [[ $NIRI_SOCKET ]]; then
             niri msg action power-off-monitors
+        elif [[ $HYPRLAND_INSTANCE_SIGNATURE ]]; then
+            hyprctl dispatch dpms off
         fi
         service_kill "$main_argv0" -USR1
         ;;
@@ -158,6 +176,8 @@ main() {
             swaymsg "output * power on"
         elif [[ $NIRI_SOCKET ]]; then
             niri msg action power-on-monitors
+        elif [[ $HYPRLAND_INSTANCE_SIGNATURE ]]; then
+            hyprctl dispatch dpms on
         fi
         ;;
     battery-dim)
