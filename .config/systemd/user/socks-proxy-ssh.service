@@ -6,4 +6,4 @@ Type=simple
 Environment=SSH_AUTH_SOCK=%t/gnupg/S.gpg-agent.ssh
 Environment=WAYLAND_DISPLAY=wayland-1
 Environment=PINENTRY_USER_DATA=
-ExecStart=/usr/bin/ssh -NTC -D 11080 -o ExitOnForwardFailure=yes -o ServerAliveInterval=20 socks-proxy
+ExecStart=/usr/bin/ssh -NT -D 11080 -o ExitOnForwardFailure=yes -o ServerAliveInterval=20 socks-proxy
