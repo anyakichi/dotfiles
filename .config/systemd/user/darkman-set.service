@@ -1,0 +1,6 @@
+[Unit]
+Description=Set darkman mode based on time
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/darkman-set

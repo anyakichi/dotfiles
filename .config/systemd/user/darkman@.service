@@ -1,6 +1,0 @@
-[Unit]
-Description=Switch to %i mode
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/darkman set %i
