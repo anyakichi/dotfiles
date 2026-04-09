@@ -1,8 +1,9 @@
 #!/bin/bash
 
 hour=$(date +%H)
+hour=$((10#$hour))
 
-if [[ $hour -ge 7 ]] && [[ $hour -lt 20 ]]; then
+if ((hour >= 7)) && ((hour < 20)); then
     darkman set light
 else
     darkman set dark
