@@ -1,25 +1,6 @@
 return {
-  {
-    "nvim-treesitter/nvim-treesitter",
-    lazy = false,
-    build = ":TSUpdate",
-    dependencies = {
-      "RRethy/nvim-treesitter-endwise",
-      "nvim-treesitter/nvim-treesitter-context",
-      "windwp/nvim-ts-autotag",
-    },
-    config = function()
-      local group = vim.api.nvim_create_augroup("nvim-treesitter", {})
-
-      vim.api.nvim_create_autocmd("FileType", {
-        group = group,
-        pattern = { "bash", "c", "cpp", "lua", "markdown", "python", "vim", "vimdoc" },
-        callback = function()
-          pcall(vim.treesitter.start)
-        end,
-      })
-    end,
-  },
+  "RRethy/nvim-treesitter-endwise",
+  "nvim-treesitter/nvim-treesitter-context",
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     branch = "main",
@@ -65,4 +46,5 @@ return {
       map_pair("[R", "]R", "end", "@return.outer", "return end")
     end,
   },
+  "windwp/nvim-ts-autotag",
 }

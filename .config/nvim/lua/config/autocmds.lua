@@ -197,6 +197,18 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
+  callback = function()
+    if not vim.treesitter.get_parser(0, nil, { error = false }) then
+      return
+    end
+    vim.treesitter.start()
+    vim.wo[0][0].foldmethod = "expr"
+    vim.wo[0][0].foldexpr = "v:lua.vim.treesitter.foldexpr()"
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup,
   pattern = { "c", "cpp" },
   callback = function()
     if vim.fn.executable("clang-format") == 1 then
