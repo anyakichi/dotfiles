@@ -21,6 +21,7 @@ packages=(
     bat
     bottom
     chafa
+    cocogitto
     direnv
     dust
     eza
