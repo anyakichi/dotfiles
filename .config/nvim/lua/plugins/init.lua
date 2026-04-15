@@ -24,7 +24,7 @@ return {
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     ft = "markdown",
     keys = {
       { "<Space>h", "<Cmd>RenderMarkdown toggle<CR>" },
@@ -45,7 +45,6 @@ return {
     keys = {
       { "<C-l>", "<Plug>(TaboutMulti)", mode = "i", silent = true },
     },
-    dependencies = "nvim-treesitter/nvim-treesitter",
     opts = {
       tabkey = "",
       backwards_tabkey = "",
