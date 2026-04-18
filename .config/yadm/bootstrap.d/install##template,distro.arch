@@ -3,6 +3,8 @@
 set -o errexit
 set -o pipefail
 
+PACMAN=pacman
+
 x() {
     echo "==> $*"
     "$@"
@@ -15,6 +17,12 @@ if ! command -v yay &>/dev/null; then
     x git clone https://aur.archlinux.org/yay-bin.git /tmp/yay-bin
     x makepkg -D /tmp/yay-bin -si --noconfirm
     x rm -rf /tmp/yay-bin
+fi
+
+if command -v paru &>/dev/null; then
+    PACMAN=paru
+elif command -v yay &>/dev/null; then
+    PACMAN=yay
 fi
 
 packages=(
@@ -67,9 +75,13 @@ packages_devel=(
     ccache
     clang
     docker-credential-pass
+    dockerfile-language-server
     eslint-language-server
+    gitlab-ci-ls
     gopls
+    haskell-language-server
     incus
+    just-lsp
     lld
     lua-language-server
     luarocks
@@ -90,10 +102,12 @@ packages_devel=(
     shellcheck
     shfmt
     stylua
+    systemd-lsp
     tailwindcss-language-server
     taplo-cli
     tcpdump
     texlab
+    tofu-ls-bin
     tree-sitter-cli
     tree-sitter-grammars
     typescript-language-server
@@ -103,6 +117,7 @@ packages_devel=(
     vscode-json-languageserver
     yaml-language-server
     yarn
+    zls
 )
 
 packages_mail=(
@@ -216,7 +231,7 @@ done
 mapfile -t packages < <(printf "%s\n" "${packages[@]}" | sort -u)
 
 sudo -k
-x yay -Syu --needed --noconfirm --ask=4 "${packages[@]}"
+x $PACMAN -Syu --needed --noconfirm --devel "${packages[@]}"
 
 for package in "${packages[@]}"; do
     if [[ $package == "ipa-fonts" ]]; then
