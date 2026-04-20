@@ -48,11 +48,7 @@ return {
         end,
       },
       window = {
-        documentation = vim.tbl_deep_extend(
-          "force",
-          cmp.config.window.bordered(),
-          { max_width = 80 }
-        ),
+        documentation = cmp.config.window.bordered({ border = "rounded", max_width = 80 }),
       },
       snippet = {
         expand = function(args)
