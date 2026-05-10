@@ -46,5 +46,10 @@ return {
       map_pair("[R", "]R", "end", "@return.outer", "return end")
     end,
   },
+  {
+    "romus204/tree-sitter-manager.nvim",
+    opts = {},
+    cmd = { "TSManager" },
+  },
   "windwp/nvim-ts-autotag",
 }
