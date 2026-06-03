@@ -1,8 +1,9 @@
 return {
-  "RRethy/nvim-treesitter-endwise",
-  "nvim-treesitter/nvim-treesitter-context",
+  { "RRethy/nvim-treesitter-endwise", event = "VeryLazy" },
+  { "nvim-treesitter/nvim-treesitter-context", event = "VeryLazy" },
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
+    event = "VeryLazy",
     branch = "main",
     keys = {
       {
@@ -51,5 +52,5 @@ return {
     opts = {},
     cmd = { "TSManager" },
   },
-  "windwp/nvim-ts-autotag",
+  { "windwp/nvim-ts-autotag", event = "VeryLazy" },
 }
