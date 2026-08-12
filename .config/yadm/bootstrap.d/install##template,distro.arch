@@ -70,7 +70,7 @@ packages=(
 packages_devel=(
     ansible
     ansible-language-server
-    aws-cli
+    aws-cli-v2
     bash-language-server
     cargo-audit
     ccache
@@ -87,7 +87,6 @@ packages_devel=(
     lua-language-server
     luarocks
     lvm2
-    mesonlsp
     nodejs-lts-jod
     npm
     pnpm
@@ -232,7 +231,7 @@ done
 mapfile -t packages < <(printf "%s\n" "${packages[@]}" | sort -u)
 
 sudo -k
-x $PACMAN -Syu --needed --noconfirm --devel "${packages[@]}"
+x $PACMAN -Syu --needed --devel "${packages[@]}"
 
 for package in "${packages[@]}"; do
     if [[ $package == "ipa-fonts" ]]; then
