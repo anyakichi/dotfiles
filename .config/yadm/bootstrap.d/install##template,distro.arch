@@ -38,6 +38,7 @@ packages=(
     ghq
     git
     git-lfs
+    github-cli
     gopass
     inotify-tools
     jq
