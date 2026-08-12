@@ -1,10 +1,10 @@
 #text/plain; nkf -w %s; test=echo "%{charset}" | grep -qic "iso-2022-jp"; copiousoutput;
 
-text/html;	RIFLE_WAIT=1 rifle %s; nametemplate=%s.html
+text/html;	handlr open %s; nametemplate=%s.html
 text/html;	w3m -I %{charset} -T text/html -o display_link_number=1; copiousoutput;
 
-application/*;	RIFLE_WAIT=1 rifle %s
-audio/*;	RIFLE_WAIT=1 rifle %s
-image/*;	RIFLE_WAIT=1 rifle %s
-text/*;		RIFLE_WAIT=1 rifle %s
-video/*;	RIFLE_WAIT=1 rifle %s
+application/*;	handlr open %s
+audio/*;	handlr open %s
+image/*;	handlr open %s
+text/*;		handlr open %s
+video/*;	handlr open %s
