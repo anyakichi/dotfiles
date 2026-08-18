@@ -37,8 +37,25 @@ if command -v systemd-run &>/dev/null; then
     alias zellij='systemd-run -q --user --scope zellij'
 fi
 
-alias_if_exists jq 'pipeless jq -C'
-alias_if_exists rg 'pipeless rg -S --color=always'
+command -v jq &>/dev/null &&
+jq() {
+    if [[ -t 1 ]]; then
+        command jq -C "$@" | less -RMFXKS
+    else
+        command jq "$@"
+    fi
+}
+
+command -v rg &>/dev/null &&
+rg() {
+    if command -v rg &>/dev/null; then
+        if [[ -t 1 ]]; then
+            command rg -S --color=always "$@" | less -RMFXKS
+        else
+            command rg -S "$@"
+        fi
+    fi
+}
 
 alias_alt mutt neomutt
 alias_alt top htop
