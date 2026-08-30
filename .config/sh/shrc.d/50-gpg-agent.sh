@@ -1,28 +1,33 @@
 #!/bin/sh
 
-start_gpgagent() {
-    which gpg-agent >/dev/null 2>&1 || return
+setup_gpg_agent() {
+    command -v gpg-agent >/dev/null 2>&1 || return
 
-    if [ -e "${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh" ]; then
-        unset SSH_AGENT_PID
-        if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-            export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/gnupg/S.gpg-agent.ssh"
-        fi
-    elif [ -e "${HOME}/.gnupg/S.gpg-agent.ssh" ]; then
-        unset SSH_AGENT_PID
-        if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-            export SSH_AUTH_SOCK="${HOME}/.gnupg/S.gpg-agent.ssh"
+    gpgconf --launch gpg-agent >/dev/null 2>&1
+
+    ssh_sock=$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null)
+    if [ -S "$ssh_sock" ]; then
+        if [ -z "$SSH_CONNECTION" ] || [ -z "$SSH_AUTH_SOCK" ]; then
+            unset SSH_AGENT_PID
+            export SSH_AUTH_SOCK="$ssh_sock"
         fi
     fi
 
     GPG_TTY=$(tty)
     export GPG_TTY
-    export PINENTRY_USER_DATA=tty
+
+    if [ -n "$TMUX_PANE" ]; then
+        PINENTRY_USER_DATA="tmux:$TMUX_PANE"
+    else
+        PINENTRY_USER_DATA=curses
+    fi
+    export PINENTRY_USER_DATA
+
     gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 }
 
 case "$-" in
 *i*)
-    start_gpgagent
+    setup_gpg_agent
     ;;
 esac
