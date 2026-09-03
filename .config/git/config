@@ -51,6 +51,7 @@
 [column]
 	ui = auto
 [commit]
+	gpgsign = true
 	verbose = true
 [core]
 	pager = less -FRX
@@ -72,6 +73,7 @@
 [push]
 	autoSetupRemote = true
 	default = current
+	gpgSign = if-asked
 [rebase]
 	autosquash = true
 	autostash = true
@@ -83,6 +85,7 @@
 	branch = true
 	short = true
 [tag]
+	gpgsign = true
 	sort = version:refname
 [filter "lfs"]
 	process = git-lfs filter-process
