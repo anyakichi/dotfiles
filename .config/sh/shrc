@@ -8,6 +8,7 @@ if [ -z "$ZSH_VERSION" ]; then
         if command -v zsh >/dev/null 2>&1; then
             SHELL=$(command -v zsh)
             export SHELL
+            echo "Switching to zsh. To make it permanent: chsh -s $SHELL" >&2
             exec "$SHELL" -l
         fi
         ;;
