@@ -2,8 +2,9 @@
 
 # Common rc for interactive shells (zsh, bash, ksh, ...).
 
-# Switch to zsh if available.
-if [ -z "$ZSH_VERSION" ]; then
+# Switch to zsh if available, unless zsh is already the login shell
+# (or we were started from a shell that switched to it).
+if [ -z "$ZSH_VERSION" ] && [ "${SHELL##*/}" != zsh ]; then
     case "$-" in *i*)
         if command -v zsh >/dev/null 2>&1; then
             SHELL=$(command -v zsh)
