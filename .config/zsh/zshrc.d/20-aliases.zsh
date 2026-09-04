@@ -56,6 +56,7 @@ rg() {
     fi
 }
 
+alias_alt fd fdfind
 alias_alt mutt neomutt
 alias_alt top htop
 alias_alt top btm
