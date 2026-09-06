@@ -64,6 +64,9 @@ alias_alt vi vim
 alias_alt vi nvim
 alias_alt vim nvim
 
+command -v procs &>/dev/null && procs --help 2>&1 | grep -q -- --smart &&
+    alias procs='procs --smart'
+
 alias din='din ${DIN_OPTS[@]}'
 
 cpr() {
