@@ -79,17 +79,50 @@ dim() {
     systemctl --user restart gammastep
 }
 
+is_source_silent() {
+    # Sample a quarter second from a monitor source and succeed only if every
+    # byte is zero.  A short or failed capture counts as not silent, so a
+    # broken probe errs on the side of staying awake.
+    timeout 5 parec -d "$1" --raw --format=s16le --channels=2 --rate=48000 \
+        --latency-msec=50 2>/dev/null | cmp -s -n 48000 - /dev/zero
+}
+
 is_audio_playing() {
     # Only count streams that are actually playing.  A sink stays RUNNING
     # while any client merely holds a (paused or silent) stream on it, so the
-    # sink state alone would block sleep forever.
-    pactl -f json list sink-inputs 2>/dev/null |
-        jq -e --arg ignore "${PM_AUDIO_IGNORE:-}" '
-            any(.[];
-                .corked == false and .mute == false
-                and ($ignore == "" or
-                     ((.properties["application.name"] // "") | test($ignore) | not)))
-        ' >/dev/null
+    # sink state alone would block sleep forever.  Even an uncorked, unmuted
+    # stream may carry nothing but silence (fluidsynth keeps one open for as
+    # long as it runs), so sample the monitor of every sink such a stream
+    # feeds and look for actual sound.
+    local monitor monitors
+
+    monitors="$(
+        {
+            pactl -f json list sink-inputs
+            pactl -f json list sinks
+        } 2>/dev/null |
+            jq -rs --arg ignore "${PM_AUDIO_IGNORE:-}" '
+                .[1] as $sinks
+                | .[0][]
+                | select(.corked == false and .mute == false)
+                | select($ignore == "" or
+                         ([.properties["application.name"],
+                           .properties["application.process.binary"],
+                           .properties["node.name"]]
+                          | map(select(. != null))
+                          | any(test($ignore))
+                          | not))
+                | .sink as $index
+                | $sinks[]
+                | select(.index == $index)
+                | .monitor_source
+            ' 2>/dev/null | sort -u
+    )"
+
+    for monitor in ${monitors}; do
+        is_source_silent "${monitor}" || return 0
+    done
+    return 1
 }
 
 is_battery_powered() {
