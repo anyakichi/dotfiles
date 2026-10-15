@@ -79,6 +79,19 @@ dim() {
     systemctl --user restart gammastep
 }
 
+is_audio_playing() {
+    # Only count streams that are actually playing.  A sink stays RUNNING
+    # while any client merely holds a (paused or silent) stream on it, so the
+    # sink state alone would block sleep forever.
+    pactl -f json list sink-inputs 2>/dev/null |
+        jq -e --arg ignore "${PM_AUDIO_IGNORE:-}" '
+            any(.[];
+                .corked == false and .mute == false
+                and ($ignore == "" or
+                     ((.properties["application.name"] // "") | test($ignore) | not)))
+        ' >/dev/null
+}
+
 is_battery_powered() {
     [[ "$(cat "${PM_POWER_SUPPLY_AC}" 2>/dev/null)" == "0" ]]
 }
@@ -92,7 +105,7 @@ sleep_loop() {
 
         is_monitor_on && continue
 
-        pactl list | grep 'State: RUNNING' &>/dev/null && continue
+        is_audio_playing && continue
 
         loadavg1="$(head -c 4 /proc/loadavg)"
         ((${loadavg1%.*} >= 1)) && continue
